@@ -6,21 +6,16 @@ import { useSelector } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Avatar,
-  Card,
   CardContent,
   Chip,
   ClickAwayListener,
-  Divider,
   Grid,
-  InputAdornment,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  OutlinedInput,
   Paper,
   Popper,
-  Switch,
   Typography,
 } from "@material-ui/core";
 
@@ -30,12 +25,12 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 // project imports
 import MainCard from "../../../../ui-component/cards/MainCard";
 import Transitions from "../../../../ui-component/extended/Transitions";
-import UpgradePlanCard from "./UpgradePlanCard";
+// import UpgradePlanCard from "./UpgradePlanCard";
 import useAuth from "../../../../hooks/useAuth";
 
 // assets
-import { IconLogout, IconSearch, IconSettings, IconUser } from "@tabler/icons";
-import User1 from "./../../../../assets/images/users/user-round.svg";
+import { IconLogout, IconSettings } from "@tabler/icons";
+// import User1 from "./../../../../assets/images/users/user-round.svg";
 
 // style const
 const useStyles = makeStyles((theme) => ({
@@ -55,22 +50,22 @@ const useStyles = makeStyles((theme) => ({
     margin: "8px 0 8px 8px !important",
   },
   profileChip: {
-    height: "48px",
-    alignItems: "center",
-    borderRadius: "27px",
-    transition: "all .2s ease-in-out",
-    borderColor:
+    "height": "48px",
+    "alignItems": "center",
+    "borderRadius": "27px",
+    "transition": "all .2s ease-in-out",
+    "borderColor":
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.primary.light,
-    backgroundColor:
+    "backgroundColor":
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.primary.light,
     '&[aria-controls="menu-list-grow"], &:hover': {
-      borderColor: theme.palette.primary.main,
-      background: theme.palette.primary.main + "!important",
-      color: theme.palette.primary.light,
+      "borderColor": theme.palette.primary.main,
+      "background": theme.palette.primary.main + "!important",
+      "color": theme.palette.primary.light,
       "& svg": {
         stroke: theme.palette.primary.light,
       },
@@ -133,9 +128,9 @@ const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
 
-  const [sdm, setSdm] = React.useState(true);
-  const [value, setValue] = React.useState("");
-  const [notification, setNotification] = React.useState(false);
+  // const [sdm, setSdm] = React.useState(true);
+  // const [value, setValue] = React.useState("");
+  // const [notification, setNotification] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const { logout } = useAuth();
   const [open, setOpen] = React.useState(false);
@@ -176,7 +171,7 @@ const ProfileSection = () => {
         className={classes.profileChip}
         icon={
           <Avatar
-            src={User1}
+            // src={User1}
             className={classes.headerAvatar}
             ref={anchorRef}
             aria-controls={open ? "menu-list-grow" : undefined}
@@ -245,7 +240,7 @@ const ProfileSection = () => {
                         </Typography>
                       </Grid>
                     </Grid>
-                    <OutlinedInput
+                    {/* <OutlinedInput
                       className={classes.searchControl}
                       id="input-search-profile"
                       value={value}
@@ -264,12 +259,12 @@ const ProfileSection = () => {
                       inputProps={{
                         "aria-label": "weight",
                       }}
-                    />
-                    <Divider />
+                    /> */}
+                    {/* <Divider /> */}
                     <PerfectScrollbar className={classes.ScrollHeight}>
-                      <UpgradePlanCard />
-                      <Divider />
-                      <Card className={classes.card}>
+                      {/* <UpgradePlanCard /> */}
+                      {/* <Divider /> */}
+                      {/* <Card className={classes.card}>
                         <CardContent>
                           <Grid container spacing={3} direction="column">
                             <Grid item>
@@ -321,8 +316,8 @@ const ProfileSection = () => {
                             </Grid>
                           </Grid>
                         </CardContent>
-                      </Card>
-                      <Divider />
+                      </Card> */}
+                      {/* <Divider /> */}
                       <List component="nav" className={classes.navContainer}>
                         <ListItem
                           className={classes.listItem}
@@ -350,7 +345,7 @@ const ProfileSection = () => {
                             }
                           />
                         </ListItem>
-                        <ListItem
+                        {/* <ListItem
                           className={classes.listItem}
                           sx={{
                             borderRadius: customization.borderRadius + "px",
@@ -390,7 +385,7 @@ const ProfileSection = () => {
                               </Grid>
                             }
                           />
-                        </ListItem>
+                        </ListItem> */}
                         <ListItem
                           className={classes.listItem}
                           sx={{

@@ -15,8 +15,8 @@ import {
 import AuthWrapper1 from "./../AuthWrapper1";
 import Logo from "./../../../../ui-component/Logo";
 import AuthCardWrapper from "./../AuthCardWrapper";
-import FirebaseLogin from "./../login/FirebaseLogin";
-import AuthFooter from "./../../../../ui-component/cards/AuthFooter";
+import JWTLogin from "./../login/JWTLogin";
+// import AuthFooter from "./../../../../ui-component/cards/AuthFooter";
 
 // assets
 
@@ -86,12 +86,12 @@ const Login = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <FirebaseLogin />
+                    <JWTLogin />
                   </Grid>
                   <Grid item xs={12}>
                     <Divider />
                   </Grid>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <Grid
                       item
                       container
@@ -108,15 +108,15 @@ const Login = () => {
                         Don't have an account?
                       </Typography>
                     </Grid>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </AuthCardWrapper>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
+        {/* <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
           <AuthFooter />
-        </Grid>
+        </Grid> */}
       </Grid>
     </AuthWrapper1>
   );

@@ -1,21 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
   Button,
-  Checkbox,
   FormControl,
-  FormControlLabel,
   FormHelperText,
-  Grid,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Typography,
 } from "@material-ui/core";
 
 // third party
@@ -45,7 +41,7 @@ const JWTLogin = (props, { ...others }) => {
   const { login } = useAuth();
   const scriptedRef = useScriptRef();
 
-  const [checked, setChecked] = React.useState(true);
+  // const [checked, setChecked] = React.useState(true);
 
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => {
@@ -177,7 +173,7 @@ const JWTLogin = (props, { ...others }) => {
             )}
           </FormControl>
 
-          <Grid container alignItems="center" justifyContent="space-between">
+          {/* <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
               <FormControlLabel
                 control={
@@ -190,8 +186,8 @@ const JWTLogin = (props, { ...others }) => {
                 }
                 label="Keep me logged in"
               />
-            </Grid>
-            <Grid item>
+            </Grid> 
+             <Grid item>
               <Typography
                 variant="subtitle1"
                 component={Link}
@@ -205,8 +201,8 @@ const JWTLogin = (props, { ...others }) => {
               >
                 Forgot Password?
               </Typography>
-            </Grid>
-          </Grid>
+            </Grid> 
+          </Grid> */}
 
           {errors.submit && (
             <Box mt={3}>
