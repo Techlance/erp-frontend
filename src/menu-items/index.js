@@ -1,9 +1,9 @@
-import { other } from './other';
+import { other } from "./other";
 
 //-----------------------|| MENU ITEMS ||-----------------------//
 
 const menuItems = {
-    items: [other]
+  items: [other],
 };
 
 export default menuItems;

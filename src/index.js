@@ -1,34 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 // third party
-import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { BrowserRouter } from "react-router-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 
 // load mock apis
-import './_mockApis';
+import "./_mockApis";
 
 // project imports
-import * as serviceWorker from './serviceWorker';
-import App from './App';
-import config from './config';
-import reducer from './store/reducer';
+import * as serviceWorker from "./serviceWorker";
+import App from "./App";
+import config from "./config";
+import reducer from "./store/reducer";
 
 // style + assets
-import './assets/scss/style.scss';
+import "./assets/scss/style.scss";
 
 //-----------------------|| REACT DOM RENDER  ||-----------------------//
 
 const store = createStore(reducer);
 
 ReactDOM.render(
-    <Provider store={store}>
-        <BrowserRouter basename={config.basename}>
-            <App />
-        </BrowserRouter>
-    </Provider>,
-    document.getElementById('root')
+  <Provider store={store}>
+    <BrowserRouter basename={config.basename}>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

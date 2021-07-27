@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import PropTypes from "prop-types";
+import React from "react";
+import { Redirect } from "react-router-dom";
 
 // project imports
-import useAuth from '../../hooks/useAuth';
-import config from '../../config';
+import useAuth from "../../hooks/useAuth";
+import config from "../../config";
 
 //-----------------------|| GUEST GUARD ||-----------------------//
 
@@ -13,17 +13,17 @@ import config from '../../config';
  * @param {PropTypes.node} children children element/node
  */
 const GuestGuard = ({ children }) => {
-    const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
 
-    if (isLoggedIn) {
-        return <Redirect to={config.defaultPath} />;
-    }
+  if (isLoggedIn) {
+    return <Redirect to={config.defaultPath} />;
+  }
 
-    return children;
+  return children;
 };
 
 GuestGuard.propTypes = {
-    children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default GuestGuard;

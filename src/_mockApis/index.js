@@ -1,2 +1,2 @@
 // auth
-import './account';
+import "./account";
