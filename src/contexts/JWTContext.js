@@ -26,12 +26,12 @@ const verifyToken = (serviceToken) => {
   return decoded.exp > Date.now() / 1000;
 };
 
-const setSession = (serviceToken) => {
-  if (serviceToken) {
-    localStorage.setItem("serviceToken", serviceToken);
-    axios.defaults.headers.common.Authorization = `Bearer ${serviceToken}`;
+const setSession = (accessToken) => {
+  if (accessToken) {
+    localStorage.setItem("accessToken", accessToken);
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {
-    localStorage.removeItem("serviceToken");
+    localStorage.removeItem("accessToken");
     delete axios.defaults.headers.common.Authorization;
   }
 };
@@ -48,12 +48,13 @@ export const JWTProvider = ({ children }) => {
   const [state, dispatch] = useReducer(accountReducer, initialState);
 
   const login = async (email, password) => {
-    const response = await axios.post("/api/account/login", {
+    const response = await axios.post("/user/login", {
       email,
       password,
     });
-    const { serviceToken, user } = response.data;
-    setSession(serviceToken);
+
+    const { accessToken, user } = response.data;
+    setSession(accessToken);
     dispatch({
       type: LOGIN,
       payload: {
