@@ -1,9 +1,10 @@
-import { other } from "./other";
+// import { other } from "./other";
+import { dashboard } from "./dashboard";
 
 //-----------------------|| MENU ITEMS ||-----------------------//
 
 const menuItems = {
-  items: [other],
+  items: [dashboard],
 };
 
 export default menuItems;

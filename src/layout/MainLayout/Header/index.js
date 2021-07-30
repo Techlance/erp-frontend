@@ -7,11 +7,11 @@ import { Avatar, Box, ButtonBase } from "@material-ui/core";
 
 // project imports
 import LogoSection from "../LogoSection";
-import SearchSection from "./SearchSection";
-import LocalizationSection from "./LocalizationSection";
+// import SearchSection from "./SearchSection";
+// import LocalizationSection from "./LocalizationSection";
 import MobileSection from "./MobileSection";
 import ProfileSection from "./ProfileSection";
-import NotificationSection from "./NotificationSection";
+// import NotificationSection from "./NotificationSection";
 
 // assets
 import { IconMenu2 } from "@tabler/icons";
@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
   headerAvatar: {
     ...theme.typography.commonAvatar,
     ...theme.typography.mediumAvatar,
-    transition: "all .2s ease-in-out",
-    background:
+    "transition": "all .2s ease-in-out",
+    "background":
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.secondary.light,
-    color:
+    "color":
       theme.palette.mode === "dark"
         ? theme.palette.secondary.main
         : theme.palette.secondary.dark,
@@ -81,17 +81,17 @@ const Header = ({ handleLeftDrawerToggle }) => {
       </div>
 
       {/* header search */}
-      <SearchSection theme="light" />
+      {/* <SearchSection theme="light" /> */}
       <div className={classes.grow} />
       <div className={classes.grow} />
 
       {/* live customization & localization */}
-      <Box sx={{ display: { xs: "none", sm: "block" } }}>
+      {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
         <LocalizationSection />
-      </Box>
+      </Box> */}
 
       {/* notification & profile */}
-      <NotificationSection />
+      {/* <NotificationSection /> */}
       <ProfileSection />
 
       {/* mobile header */}

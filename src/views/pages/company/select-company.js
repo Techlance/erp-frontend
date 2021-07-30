@@ -43,7 +43,7 @@ const SelectCompany = ({ title }) => {
               >
                 <Grid item>
                   <div className={classes.userCoverMain}>
-                    <Avatar src={`${MEDIA_URI}/${company.logo}`}>
+                    <Avatar src={`${MEDIA_URI}${company.logo}`}>
                       <BusinessCenter />
                     </Avatar>
                   </div>

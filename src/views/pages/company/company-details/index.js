@@ -184,7 +184,7 @@ const CompanyDetails = () => {
                     <Tab
                       key={tab.company_id}
                       value={tab.company_id}
-                      icon={<Avatar src={`${MEDIA_URI}/${tab.logo}`} />}
+                      icon={<Avatar src={`${MEDIA_URI}${tab.logo}`} />}
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">

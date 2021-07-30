@@ -44,7 +44,7 @@ const CompanyProfile = () => {
           <Grid item>
             <Avatar
               alt={currentCompany.company_name}
-              src={`${MEDIA_URI}/${currentCompany.logo}`}
+              src={`${MEDIA_URI}${currentCompany.logo}`}
               className={classes.userAvatar}
             />
           </Grid>

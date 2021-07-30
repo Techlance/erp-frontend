@@ -1,30 +1,30 @@
 // third-party
-import { FormattedMessage } from "react-intl";
+// import { FormattedMessage } from "react-intl";
 
 // assets
-import { IconBrandChrome, IconHelp, IconSitemap } from "@tabler/icons";
+// import { IconBrandChrome, IconHelp, IconSitemap } from "@tabler/icons";
 
 // constant
-const icons = {
-  IconBrandChrome: IconBrandChrome,
-  IconHelp: IconHelp,
-  IconSitemap: IconSitemap,
-};
+// const icons = {
+//   IconBrandChrome: IconBrandChrome,
+//   IconHelp: IconHelp,
+//   IconSitemap: IconSitemap,
+// };
 
 //-----------------------|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||-----------------------//
 
 export const other = {
-  id: "sample-docs-roadmap",
+  id: "other",
   type: "group",
   children: [
-    {
-      id: "sample-page",
-      title: <FormattedMessage id="sample-page" />,
-      type: "item",
-      url: "/sample-page",
-      icon: icons["IconBrandChrome"],
-      breadcrumbs: false,
-    },
+    // {
+    //   id: "sample-page",
+    //   title: <FormattedMessage id="sample-page" />,
+    //   type: "item",
+    //   url: "/sample-page",
+    //   icon: icons["IconBrandChrome"],
+    //   breadcrumbs: false,
+    // },
     // {
     //   id: "user-management",
     //   title: <FormattedMessage id="user-management" />,

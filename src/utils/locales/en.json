@@ -2,12 +2,10 @@
     "dashboard": "Dashboard",
     "default": "Default",
     "analytics": "Analytics",
-
     "widget": "Widget",
     "statistics": "Statistics",
     "data": "Data",
     "chart": "Chart",
-
     "application": "Application",
     "users": "Users",
     "social-profile": "Social Profile",
@@ -26,7 +24,6 @@
     "mail": "Mail",
     "contact": "Contact",
     "calendar": "Calendar",
-
     "forms": "Forms",
     "components": "Components",
     "autocomplete": "Autocomplete",
@@ -55,7 +52,6 @@
     "apexchart": "Apexchart",
     "forms-validation": "Forms Validation",
     "forms-wizard": "Forms Wizard",
-
     "ui-element": "UI Element",
     "basic": "Basic",
     "basic-caption": "8+ Basic Components",
@@ -65,7 +61,6 @@
     "breadcrumb": "Breadcrumb",
     "chip": "Chip",
     "tabs": "Tabs",
-
     "advance": "Advance",
     "alert": "Alert",
     "dialog": "Dialog",
@@ -78,7 +73,6 @@
     "timeline": "Timeline",
     "toggle-button": "Toggle Button",
     "treeview": "Treeview",
-
     "pages": "Pages",
     "pages-caption": "Prebuild Pages",
     "authentication": "Authentication",
@@ -96,7 +90,6 @@
     "under-construction": "Under Construction",
     "landing": "Landing",
     "contact-us": "Contact US",
-
     "utilities": "Utilities",
     "typography": "Typography",
     "color": "Color",
@@ -106,7 +99,6 @@
     "material-icons": "Material Icons",
     "animation": "Animation",
     "grid": "Grid",
-
     "others": "Others",
     "menu-level": "Menu Levels",
     "level": "Level",
@@ -120,11 +112,11 @@
     "coded": "Coded",
     "c": "C",
     "outlined": "Outlined",
-
     "sample-page": "Sample Page",
     "documentation": "Documentation",
     "roadmap": "Roadmap",
-
+    "user-mangement": "User Mnagement",
+    "company-management": "Company Management",
     "title": "Multi Language",
     "home": "Home",
     "change": "Change Language",
