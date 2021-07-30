@@ -4,6 +4,7 @@ import { Redirect, Switch } from "react-router-dom";
 // routes
 import MainRoutes from "./MainRoutes";
 import LoginRoutes from "./LoginRoutes";
+import CompanyRoutes from "./ComapanyRoutes";
 import AuthenticationRoutes from "./AuthenticationRoutes";
 
 // project imports
@@ -21,6 +22,9 @@ const Routes = () => {
 
         {/* Route for login */}
         <LoginRoutes />
+
+        {/* Routes for Company master */}
+        <CompanyRoutes />
 
         {/* Routes for main layouts */}
         <MainRoutes />

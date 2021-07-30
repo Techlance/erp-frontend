@@ -5,7 +5,6 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import MainLayout from "./../layout/MainLayout";
 import Loadable from "../ui-component/Loadable";
 import AuthGuard from "./../utils/route-guard/AuthGuard";
-import CompanyDetails from '../application/CompanyDetails/CompanyDetails'
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import("../views/sample-page")));
@@ -16,12 +15,11 @@ const MainRoutes = () => {
   const location = useLocation();
 
   return (
-    <Route path={["/sample-page","/company-details"]}>
+    <Route path={["/sample-page"]}>
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <AuthGuard>
             <Route path="/sample-page" component={SamplePage} />
-            <Route path="/company-details" component={CompanyDetails} />
           </AuthGuard>
         </Switch>
       </MainLayout>
