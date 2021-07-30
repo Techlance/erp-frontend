@@ -5,7 +5,7 @@
 import axios from "axios";
 
 const axiosServices = axios.create({
-  baseURL: "http://localhost:8000/api/user",
+  baseURL: "http://localhost:8000/api",
 });
 
 // interceptor for http
