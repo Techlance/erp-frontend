@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 
 // material-ui
 import {
@@ -39,6 +39,10 @@ const FormControlSelect = ({
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
+
+  useEffect(() => {
+    setCurrency(selected);
+  }, [selected]);
 
   return (
     <FormControl fullWidth variant="outlined" error={errorState}>
@@ -84,8 +88,8 @@ const FormControlSelect = ({
         }}
       >
         {currencies.map((option, index) => (
-          <MenuItem key={index} value={option.value}>
-            {option.label}
+          <MenuItem key={index} value={option.currency}>
+            {option.currency}
           </MenuItem>
         ))}
       </TextField>

@@ -13,6 +13,7 @@ import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 
 import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
 import useCompany from "../../../../hooks/useCompany";
+import FormControlSelect from "../../../../ui-component/extended/Form/FormControlSelect";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -33,12 +34,18 @@ const useStyles = makeStyles((theme) => ({
 const CompanyProfile = () => {
   const classes = useStyles();
 
-  const { currentCompany } = useCompany();
+  const { currentCompany, currency } = useCompany();
 
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        {/* <pre>{JSON.stringify(currentCompany, null, 2)}</pre> */}
+        <pre>
+          {JSON.stringify(
+            { selected: currentCompany.base_currency?.id, currency },
+            null,
+            2
+          )}
+        </pre>
 
         <Grid container spacing={2} alignItems="center">
           <Grid item>
@@ -115,11 +122,12 @@ const CompanyProfile = () => {
         />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <TextField
+        <FormControlSelect
           fullWidth
           label="Base Currency"
           InputLabelProps={{ shrink: true }}
-          defaultValue="BTC"
+          currencies={currency}
+          selected={currentCompany.base_currency?.id}
         />
       </Grid>
       <Grid item xs={12} sm={6}>

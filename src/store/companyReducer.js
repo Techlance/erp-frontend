@@ -1,5 +1,6 @@
 import {
   COMPANIES_INITIALIZE,
+  GET_CURRENCY,
   GET_USER_COMPANIES,
   VIEW_COMPANY,
 } from "./actions";
@@ -25,6 +26,13 @@ const companyReducer = (state, action) => {
       return {
         ...state,
         currentCompany: action.payload.data,
+      };
+    }
+
+    case GET_CURRENCY: {
+      return {
+        ...state,
+        currency: action.payload.data,
       };
     }
 

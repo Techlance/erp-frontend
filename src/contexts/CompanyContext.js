@@ -2,6 +2,8 @@ import React, { createContext, useEffect, useReducer } from "react";
 import useAuth from "../hooks/useAuth";
 import {
   COMPANIES_INITIALIZE,
+  CREATE_COMPANY,
+  GET_CURRENCY,
   GET_USER_COMPANIES,
   VIEW_COMPANY,
 } from "../store/actions";
@@ -16,6 +18,7 @@ const initialState = {
   currentCompany: {
     id: -1,
   },
+  currency: [],
 };
 
 export const CompanyContext = createContext({
@@ -31,13 +34,22 @@ export const CompanyProvider = ({ children }) => {
     const init = async () => {
       try {
         if (user) {
-          const response = await axios.get("/company/get-user-company");
+          const companyResponse = await axios.get("/company/get-user-company");
 
           dispatch({
             type: GET_USER_COMPANIES,
             payload: {
               isInitialized: true,
-              companies: response.data.data.companies,
+              companies: companyResponse.data.data.companies,
+            },
+          });
+
+          const currencyResponse = await axios.get("/company/get-currency");
+
+          dispatch({
+            type: GET_CURRENCY,
+            payload: {
+              data: currencyResponse.data.data.data,
             },
           });
         } else {
@@ -78,6 +90,31 @@ export const CompanyProvider = ({ children }) => {
         data: response.data.data.data,
       },
     });
+
+    const currencyResponse = await axios.get("/company/get-currency");
+
+    dispatch({
+      type: GET_CURRENCY,
+      payload: {
+        data: currencyResponse.data.data.data,
+      },
+    });
+  };
+
+  const createCompany = async (data) => {
+    await axios.post("/company/create-company", data);
+
+    dispatch({
+      type: CREATE_COMPANY,
+    });
+  };
+
+  const updateCompany = async (id, data) => {
+    await axios.put(`/company/edit-company/${id}`, data);
+  };
+
+  const deleteCompany = async (id) => {
+    await axios.delete(`/company/delete-company/${id}`);
   };
 
   if (!state.isInitialized) {
@@ -85,7 +122,15 @@ export const CompanyProvider = ({ children }) => {
   }
 
   return (
-    <CompanyContext.Provider value={{ ...state, getSelectedCompany }}>
+    <CompanyContext.Provider
+      value={{
+        ...state,
+        getSelectedCompany,
+        createCompany,
+        updateCompany,
+        deleteCompany,
+      }}
+    >
       {children}
     </CompanyContext.Provider>
   );
