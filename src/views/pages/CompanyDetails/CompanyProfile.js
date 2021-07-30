@@ -5,11 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Stack, TextField, Typography } from '@material-ui/core';
 
 // project imports
-import Avatar from '../../ui-component/extended/Avatar';
-import { gridSpacing } from '../../store/constant';
+import Avatar from '../../../ui-component/extended/Avatar';
+import { gridSpacing } from '../../../store/constant';
 
 // assets
-import Avatar1 from './../../assets/images/users/user-round.svg';
+import Avatar1 from '../../../assets/images/users/user-round.svg';
 
 import ErrorTwoToneIcon from '@material-ui/icons/ErrorTwoTone';
 

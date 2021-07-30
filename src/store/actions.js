@@ -26,3 +26,10 @@ export const SET_OUTLINED_FILLED = "@customization/SET_OUTLINED_FILLED";
 
 // action - snackbar
 export const SNACKBAR_OPEN = "@snackbar/SNACKBAR_OPEN";
+
+// action - company reducer
+export const GET_COMPANY_LIST = "GET_COMPANY_LIST"
+export const GET_COMPANY_DETAILS = "GET_COMPANY_DETAILS"
+export const UPDATE_COMPANY_DETAILS = "UPDATE_COMPANY_DETAILS"
+export const DELETE_COMPANY = "DELETE_COMPANY"
+ 

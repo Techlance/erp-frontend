@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 // material-ui
@@ -18,15 +18,12 @@ import {
 
 // project imports
 import UserProfile from "./CompanyProfile";
-// import Billing from './Billing';
-// import Payment from './Payment';
-// import ChangePassword from './ChangePassword';
-import MainCard from "../../ui-component/cards/MainCard";
-import AnimateButton from "../../ui-component/extended/AnimateButton";
-import { gridSpacing } from "../../store/constant";
+import MainCard from "../../../ui-component/cards/MainCard";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import { gridSpacing } from "../../../store/constant";
 
 // assets
-import Avatar1 from "./../../assets/images/users/user-round.svg";
+import Avatar1 from "../../../assets/images/users/user-round.svg";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 // style constant
@@ -158,8 +155,8 @@ const tabsOption = [
 const CompanyDetails = () => {
   const classes = useStyles();
   const customization = useSelector((state) => state.customization);
-  const [value, setValue] = React.useState(0);
-
+  const [value, setValue] = useState(0);
+  const [formValues, setFormValues] = useState({});
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
