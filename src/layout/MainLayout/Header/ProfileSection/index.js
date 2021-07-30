@@ -30,6 +30,7 @@ import useAuth from "../../../../hooks/useAuth";
 
 // assets
 import { IconLogout, IconSettings } from "@tabler/icons";
+import BusinessIcon from '@material-ui/icons/Business';
 // import User1 from "./../../../../assets/images/users/user-round.svg";
 
 // style const
@@ -341,6 +342,32 @@ const ProfileSection = () => {
                             primary={
                               <Typography variant="body2">
                                 Account Settings
+                              </Typography>
+                            }
+                          />
+                        </ListItem>
+                        <ListItem
+                          className={classes.listItem}
+                          sx={{
+                            borderRadius: customization.borderRadius + "px",
+                          }}
+                          button
+                          selected={selectedIndex === 1}
+                          onClick={(event) => handleListItemClick(event, 1)}
+                          component={React.forwardRef((props, ref) => (
+                            <RouterLink
+                              {...props}
+                              to="/company-details"
+                            />
+                          ))}
+                        >
+                          <ListItemIcon>
+                            <BusinessIcon stroke={1.5} size="1.3rem" />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={
+                              <Typography variant="body2">
+                                Company Details
                               </Typography>
                             }
                           />
