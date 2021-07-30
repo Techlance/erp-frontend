@@ -115,6 +115,16 @@ const tabsOption = [
         caption: 'Created On: MM-DD-YYYY'
     },
     {
+        label: 'Company Name 3',
+        icon: <Avatar src = {Avatar1}/>,
+        caption: 'Created On: MM-DD-YYYY'
+    },
+    {
+        label: 'Company Name 3',
+        icon: <Avatar src = {Avatar1}/>,
+        caption: 'Created On: MM-DD-YYYY'
+    },
+    {
         label: 'Company Name 4',
         icon: <Avatar src = {Avatar1}/>,
         caption: 'Created On: MM-DD-YYYY'
@@ -201,7 +211,7 @@ const CompanyDetails = () => {
                                 )}
                             </Grid>
                             <Grid item>
-                                {value < 3 && (
+                                {/* {value < 3 && ( */}
                                     <AnimateButton>
                                         <Button
                                             variant="contained"
@@ -212,7 +222,7 @@ const CompanyDetails = () => {
                                             {value===0?"Create":"Update"}
                                         </Button>
                                     </AnimateButton>
-                                )}
+                                {/* )} */}
                             </Grid>
                         </Grid>
                     </CardActions>
