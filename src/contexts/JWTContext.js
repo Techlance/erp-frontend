@@ -29,7 +29,7 @@ const verifyToken = (accessToken) => {
 const setSession = (accessToken) => {
   if (accessToken) {
     localStorage.setItem("accessToken", accessToken);
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    axios.defaults.headers.common.Authorization = `${accessToken}`;
   } else {
     localStorage.removeItem("accessToken");
     delete axios.defaults.headers.common.Authorization;
@@ -71,11 +71,11 @@ export const JWTProvider = ({ children }) => {
   useEffect(() => {
     const init = async () => {
       try {
-        const serviceToken = window.localStorage.getItem("serviceToken");
-        if (serviceToken && verifyToken(serviceToken)) {
-          setSession(serviceToken);
-          const response = await axios.get("/api/account/me");
-          const { user } = response.data;
+        const accessToken = window.localStorage.getItem("accessToken");
+        if (accessToken && verifyToken(accessToken)) {
+          setSession(accessToken);
+          const response = await axios.get("/user/me");
+          const { user } = response.data.data;
           dispatch({
             type: ACCOUNT_INITIALIZE,
             payload: {
