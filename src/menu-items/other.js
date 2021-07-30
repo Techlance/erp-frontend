@@ -25,14 +25,14 @@ export const other = {
       icon: icons["IconBrandChrome"],
       breadcrumbs: false,
     },
-    {
-      id: "user-management",
-      title: <FormattedMessage id="user-management" />,
-      type: "item",
-      url: "/user-management",
-      icon: icons["IconBrandChrome"],
-      breadcrumbs: false,
-    },
+    // {
+    //   id: "user-management",
+    //   title: <FormattedMessage id="user-management" />,
+    //   type: "item",
+    //   url: "/user-management",
+    //   icon: icons["IconBrandChrome"],
+    //   breadcrumbs: false,
+    // },
     // {
     //   id: "documentation",
     //   title: <FormattedMessage id="documentation" />,

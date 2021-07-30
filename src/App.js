@@ -16,10 +16,8 @@ import NavigationScroll from "./layout/NavigationScroll";
 // import RTLLayout from './ui-component/RTLLayout';
 import Snackbar from "./ui-component/extended/Snackbar";
 
-// auth provider
-// import { FirebaseProvider } from "./contexts/FirebaseContext";
-import { JWTProvider } from "./contexts/JWTContext";
-// import {Auth0Provider} from '../contexts/Auth0Context';
+// context provider
+import AppContextProvider from "./contexts";
 
 //-----------------------|| APP ||-----------------------//
 
@@ -34,10 +32,10 @@ const App = () => {
         {/* <RTLLayout> */}
         <Locales>
           <NavigationScroll>
-            <JWTProvider>
+            <AppContextProvider>
               <Routes />
               <Snackbar />
-            </JWTProvider>
+            </AppContextProvider>
           </NavigationScroll>
         </Locales>
         {/* </RTLLayout> */}

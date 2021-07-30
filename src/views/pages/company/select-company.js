@@ -6,9 +6,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CardContent, Grid, Typography } from "@material-ui/core";
 
 // project imports
+import useCompany from "../../../hooks/useCompany";
 import Avatar from "./../../../ui-component/extended/Avatar";
 import MainCard from "./../../../ui-component/cards/MainCard";
-import { gridSpacing } from "./../../../store/constant";
+import { gridSpacing, MEDIA_URI } from "./../../../store/constant";
+import formatDate from "../../../utils/format-date";
 
 // assets
 import BusinessCenter from "@material-ui/icons/BusinessCenter";
@@ -24,161 +26,45 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectCompany = ({ title }) => {
   const classes = useStyles();
+  const { companies } = useCompany();
 
   return (
     <MainCard title={title} content={false}>
       <CardContent>
         <Grid container spacing={gridSpacing}>
-          <Grid item xs={12}>
-            <Grid
-              container
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Grid item>
-                <div className={classes.userCoverMain}>
-                  <Avatar color="primary">
-                    <BusinessCenter />
-                  </Avatar>
-                </div>
-              </Grid>
-              <Grid item xs zeroMinWidth>
-                <Grid container spacing={1}>
-                  <Grid item xs zeroMinWidth>
-                    <Typography align="left" variant="body2">
-                      You have 3 pending tasks.
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography align="left" variant="caption">
-                      Just Now
-                    </Typography>
+          {/* <pre>{JSON.stringify(companies, null, 2)}</pre> */}
+          {companies.map((company) => (
+            <Grid item xs={12} key={company.company_id}>
+              <Grid
+                container
+                spacing={2}
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Grid item>
+                  <div className={classes.userCoverMain}>
+                    <Avatar src={`${MEDIA_URI}/${company.logo}`}>
+                      <BusinessCenter />
+                    </Avatar>
+                  </div>
+                </Grid>
+                <Grid item xs zeroMinWidth>
+                  <Grid container spacing={1}>
+                    <Grid item xs zeroMinWidth>
+                      <Typography align="left" variant="body2">
+                        {company.company_name}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography align="left" variant="caption">
+                        {formatDate(company.created_on)}
+                      </Typography>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid
-              container
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Grid item>
-                <div className={classes.userCoverMain}>
-                  <Avatar color="error">
-                    <BusinessCenter />
-                  </Avatar>
-                </div>
-              </Grid>
-              <Grid item xs zeroMinWidth>
-                <Grid container spacing={1}>
-                  <Grid item xs zeroMinWidth>
-                    <Typography align="left" variant="body2">
-                      New order received
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography align="left" variant="caption">
-                      Just Now
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid
-              container
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Grid item>
-                <div className={classes.userCoverMain}>
-                  <Avatar color="success">
-                    <BusinessCenter />
-                  </Avatar>
-                </div>
-              </Grid>
-              <Grid item xs zeroMinWidth>
-                <Grid container spacing={1}>
-                  <Grid item xs zeroMinWidth>
-                    <Typography align="left" variant="body2">
-                      You have 3 pending tasks.
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography align="left" variant="caption">
-                      Just Now
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid
-              container
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Grid item>
-                <div className={classes.userCoverMain}>
-                  <Avatar color="primary">
-                    <BusinessCenter />
-                  </Avatar>
-                </div>
-              </Grid>
-              <Grid item xs zeroMinWidth>
-                <Grid container spacing={1}>
-                  <Grid item xs zeroMinWidth>
-                    <Typography align="left" variant="body2">
-                      New order received
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography align="left" variant="caption">
-                      Just Now
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid
-              container
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Grid item>
-                <div className={classes.userCoverMain}>
-                  <Avatar color="warning">
-                    <BusinessCenter />
-                  </Avatar>
-                </div>
-              </Grid>
-              <Grid item xs zeroMinWidth>
-                <Grid container spacing={1}>
-                  <Grid item xs zeroMinWidth>
-                    <Typography align="left" variant="body2">
-                      Order cancelled
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography align="left" variant="caption">
-                      Just Now
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          ))}
         </Grid>
       </CardContent>
     </MainCard>
