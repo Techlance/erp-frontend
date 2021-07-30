@@ -173,25 +173,13 @@ const CompanyDetails = () => {
                         </Grid>
                         <Grid item xs={12} lg={8}>
                             <CardContent className={classes.cardPanels}>
-                                <TabPanel value={value} index={0}>
-                                    <UserProfile />
-                                </TabPanel>
-                                <TabPanel value={value} index={1}>
-                                    {/* <Billing /> */}
-                                    <UserProfile />
-                                </TabPanel>
-                                <TabPanel value={value} index={2}>
-                                    {/* <Payment /> */}
-                                    <UserProfile />
-                                </TabPanel>
-                                <TabPanel value={value} index={3}>
-                                    {/* <ChangePassword /> */}
-                                    <UserProfile />
-                                </TabPanel>
-                                <TabPanel value={value} index={4}>
-                                    {/* <ChangePassword /> */}
-                                    <UserProfile />
-                                </TabPanel>
+                                {tabsOption.map((x,index)=>
+                                    {return (
+                                        <TabPanel value={value} index={index}>
+                                            <UserProfile />
+                                        </TabPanel>
+                                    )})
+                                }
                             </CardContent>
                         </Grid>
                     </Grid>
