@@ -18,11 +18,11 @@ const initialState = {
   user: null,
 };
 
-const verifyToken = (serviceToken) => {
-  if (!serviceToken) {
+const verifyToken = (accessToken) => {
+  if (!accessToken) {
     return false;
   }
-  const decoded = jwtDecode(serviceToken);
+  const decoded = jwtDecode(accessToken);
   return decoded.exp > Date.now() / 1000;
 };
 
@@ -48,12 +48,12 @@ export const JWTProvider = ({ children }) => {
   const [state, dispatch] = useReducer(accountReducer, initialState);
 
   const login = async (email, password) => {
-    const response = await axios.post("/user/login", {
+    const response = await axios.post("/login", {
       email,
       password,
     });
 
-    const { accessToken, user } = response.data;
+    const { accessToken, user } = response.data.data;
     setSession(accessToken);
     dispatch({
       type: LOGIN,
