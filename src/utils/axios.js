@@ -5,12 +5,18 @@
 import axios from "axios";
 
 const axiosServices = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL: "http://localhost:8000/api",
 });
 
 // interceptor for http
 axiosServices.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if (response.data.success) {
+      return response;
+    } else {
+      throw new Error(response.data.message);
+    }
+  },
   (error) =>
     Promise.reject((error.response && error.response.data) || "Wrong Services")
 );
