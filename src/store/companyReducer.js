@@ -1,4 +1,8 @@
-import { COMPANIES_INITIALIZE, GET_USER_COMPANIES } from "./actions";
+import {
+  COMPANIES_INITIALIZE,
+  GET_USER_COMPANIES,
+  VIEW_COMPANY,
+} from "./actions";
 
 const companyReducer = (state, action) => {
   switch (action.type) {
@@ -14,6 +18,13 @@ const companyReducer = (state, action) => {
       return {
         ...state,
         ...action.payload,
+      };
+    }
+
+    case VIEW_COMPANY: {
+      return {
+        ...state,
+        currentCompany: action.payload.data,
       };
     }
 

@@ -11,7 +11,7 @@ const SelectCompany = Loadable(
   lazy(() => import("../views/pages/company/select-company"))
 );
 const CompanyDetails = Loadable(
-  lazy(() => import("../application/CompanyDetails/CompanyDetails"))
+  lazy(() => import("../views/pages/company/company-details"))
 );
 
 //-----------------------|| MAIN ROUTING ||-----------------------//

@@ -17,14 +17,16 @@ import {
 } from "@material-ui/core";
 
 // project imports
-import UserProfile from "./CompanyProfile";
-import MainCard from "../../../ui-component/cards/MainCard";
-import AnimateButton from "../../../ui-component/extended/AnimateButton";
-import { gridSpacing } from "../../../store/constant";
+import CompanyProfile from "./CompanyProfile";
+import MainCard from "../../../../ui-component/cards/MainCard";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 
 // assets
-import Avatar1 from "../../../assets/images/users/user-round.svg";
+// import Avatar1 from "../../../../assets/images/users/user-round.svg";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import useCompany from "../../../../hooks/useCompany";
+import formatDate from "../../../../utils/format-date";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -112,53 +114,30 @@ function a11yProps(index) {
 }
 
 // tabs option
-const tabsOption = [
-  {
-    label: "CREATE",
-    icon: <AddCircleIcon fontSize="large" />,
-    caption: "Add A New Company",
-  },
-  {
-    label: "Company Name 1",
-    icon: <Avatar src={Avatar1} />,
-    caption: "Created On: MM-DD-YYYY",
-  },
-  {
-    label: "Company Name 2",
-    icon: <Avatar src={Avatar1} />,
-    caption: "Created On: MM-DD-YYYY",
-  },
-  {
-    label: "Company Name 3",
-    icon: <Avatar src={Avatar1} />,
-    caption: "Created On: MM-DD-YYYY",
-  },
-  {
-    label: "Company Name 3",
-    icon: <Avatar src={Avatar1} />,
-    caption: "Created On: MM-DD-YYYY",
-  },
-  {
-    label: "Company Name 3",
-    icon: <Avatar src={Avatar1} />,
-    caption: "Created On: MM-DD-YYYY",
-  },
-  {
-    label: "Company Name 4",
-    icon: <Avatar src={Avatar1} />,
-    caption: "Created On: MM-DD-YYYY",
-  },
-];
+// let tabsOption = [
+//   {
+//     label: "CREATE",
+//     icon: <AddCircleIcon fontSize="large" />,
+//     caption: "Add A New Company",
+//   },
+// ];
+
+// const transformCompany = (companies) => {
+
+//   return
+// }
 
 //-----------------------|| PROFILE 2 ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();
+  const { companies, currentCompany, getSelectedCompany } = useCompany();
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
-  const [formValues, setFormValues] = useState({});
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    getSelectedCompany(newValue);
   };
 
   return (
@@ -180,15 +159,37 @@ const CompanyDetails = () => {
                     },
                   }}
                 >
-                  {tabsOption.map((tab, index) => (
+                  <Tab
+                    key="-1"
+                    icon={<AddCircleIcon fontSize="large" />}
+                    label={
+                      <Grid container direction="column">
+                        <Typography variant="subtitle1" color="inherit">
+                          <span style={{ margin: "0 10px" }}>CREATE</span>
+                        </Typography>
+                        <Typography
+                          component="div"
+                          variant="caption"
+                          sx={{ textTransform: "capitalize" }}
+                        >
+                          <span style={{ margin: "0 10px" }}>
+                            Add A New Company
+                          </span>
+                        </Typography>
+                      </Grid>
+                    }
+                    {...a11yProps("-1")}
+                  />
+                  {companies.map((tab) => (
                     <Tab
-                      key={index}
-                      icon={tab.icon}
+                      key={tab.company_id}
+                      value={tab.company_id}
+                      icon={<Avatar src={`${MEDIA_URI}/${tab.logo}`} />}
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">
                             <span style={{ margin: "0 10px" }}>
-                              {tab.label}
+                              {`${tab.company_name} ${tab.company_id}`}
                             </span>
                           </Typography>
                           <Typography
@@ -197,12 +198,12 @@ const CompanyDetails = () => {
                             sx={{ textTransform: "capitalize" }}
                           >
                             <span style={{ margin: "0 10px" }}>
-                              {tab.caption}
+                              {formatDate(tab.created_on)}
                             </span>
                           </Typography>
                         </Grid>
                       }
-                      {...a11yProps(index)}
+                      {...a11yProps(tab.company_id)}
                     />
                   ))}
                 </Tabs>
@@ -210,13 +211,9 @@ const CompanyDetails = () => {
             </Grid>
             <Grid item xs={12} lg={8}>
               <CardContent className={classes.cardPanels}>
-                {tabsOption.map((x, index) => {
-                  return (
-                    <TabPanel value={value} index={index}>
-                      <UserProfile />
-                    </TabPanel>
-                  );
-                })}
+                <TabPanel value={value} index={value}>
+                  <CompanyProfile currentCompany={currentCompany} />
+                </TabPanel>
               </CardContent>
             </Grid>
           </Grid>
@@ -224,7 +221,7 @@ const CompanyDetails = () => {
           <CardActions>
             <Grid container justifyContent="space-between" spacing={0}>
               <Grid item>
-                {value > 0 && (
+                {value >= -1 && (
                   <AnimateButton>
                     <Button
                       variant="outlined"
