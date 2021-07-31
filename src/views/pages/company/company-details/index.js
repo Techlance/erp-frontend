@@ -131,7 +131,7 @@ function a11yProps(index) {
 
 const CompanyDetails = () => {
   const classes = useStyles();
-  const { companies, currentCompany, getSelectedCompany } = useCompany();
+  const { companies, currentCompany, getSelectedCompany, updateCompany, deleteCompany } = useCompany();
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
 
@@ -160,7 +160,7 @@ const CompanyDetails = () => {
                   }}
                 >
                   <Tab
-                    key="-1"
+                    key={-1}
                     icon={<AddCircleIcon fontSize="large" />}
                     label={
                       <Grid container direction="column">
@@ -178,7 +178,7 @@ const CompanyDetails = () => {
                         </Typography>
                       </Grid>
                     }
-                    {...a11yProps("-1")}
+                    {...a11yProps(-1)}
                   />
                   {companies.map((tab) => (
                     <Tab
@@ -227,26 +227,42 @@ const CompanyDetails = () => {
                       variant="outlined"
                       size="large"
                       color="primary"
-                      onClick={(e) => handleChange(e, parseInt(value) - 1)}
                     >
                       Back
                     </Button>
                   </AnimateButton>
                 )}
               </Grid>
+              
               <Grid item>
-                {/* {value < 3 && ( */}
+                <Grid container justifyContent="space-between" spacing={10}>
+                {currentCompany.id!==-1?<Grid item>
+                <AnimateButton>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    color="error"
+                    // onClick={(e) => handleChange(e, 1 + parseInt(value))}
+                    onClick={(e) =>{deleteCompany(currentCompany.id)}}
+                  >
+                    Delete
+                  </Button>
+                </AnimateButton>
+                </Grid>:null}
+                  <Grid item>
                 <AnimateButton>
                   <Button
                     variant="contained"
                     size="large"
                     color="primary"
-                    onClick={(e) => handleChange(e, 1 + parseInt(value))}
+                    // onClick={(e) => handleChange(e, 1 + parseInt(value))}
+                    onClick = {(e)=>{updateCompany(currentCompany.id,currentCompany)}}
                   >
-                    {value === 0 ? "Create" : "Update"}
+                    {currentCompany.id === -1 ? "Create" : "Update"}
                   </Button>
                 </AnimateButton>
-                {/* )} */}
+                </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </CardActions>

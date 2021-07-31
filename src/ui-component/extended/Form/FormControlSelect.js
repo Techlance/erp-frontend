@@ -21,6 +21,7 @@ const FormControlSelect = ({
   selected,
   textPrimary,
   textSecondary,
+  onChange
 }) => {
   const IconPrimary = iconPrimary;
   const primaryIcon = iconPrimary ? (
@@ -33,15 +34,18 @@ const FormControlSelect = ({
   ) : null;
 
   const errorState = formState === "error" ? true : false;
-  const val = selected ? selected : "";
+  // const val = selected ? selected : "";
 
-  const [currency, setCurrency] = React.useState(val);
+  // const [currency, setCurrency] = React.useState(val);
   const handleChange = (event) => {
-    setCurrency(event.target.value);
+    // setCurrency(event.target.value);
+    console.log(event.target.value)
+    onChange({base_currency:event.target.value})
   };
 
   useEffect(() => {
-    setCurrency(selected);
+    // setCurrency(selected);
+    // onChange({base_currency:selected})
   }, [selected]);
 
   return (
@@ -51,7 +55,7 @@ const FormControlSelect = ({
         select
         fullWidth
         label={captionLabel}
-        value={currency}
+        value={selected}
         onChange={handleChange}
         variant="outlined"
         InputProps={{
@@ -88,7 +92,7 @@ const FormControlSelect = ({
         }}
       >
         {currencies.map((option, index) => (
-          <MenuItem key={index} value={option.currency}>
+          <MenuItem key={index} value={option.id}>
             {option.currency}
           </MenuItem>
         ))}

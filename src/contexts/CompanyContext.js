@@ -3,8 +3,10 @@ import useAuth from "../hooks/useAuth";
 import {
   COMPANIES_INITIALIZE,
   CREATE_COMPANY,
+  DELETE_COMPANY,
   GET_CURRENCY,
   GET_USER_COMPANIES,
+  UPDATE_FORM,
   VIEW_COMPANY,
 } from "../store/actions";
 import companyReducer from "../store/companyReducer";
@@ -17,6 +19,21 @@ const initialState = {
   companies: [],
   currentCompany: {
     id: -1,
+    company_name:"",
+    address:"",
+    country:"",
+    state:"",
+    email:"",
+    website:"",
+    contact_no:"",
+    base_currency:2,
+    cr_no:"",
+    registration_no:"",
+    tax_id_no:"",
+    vat_id_no:"",
+    year_start_date:"",
+    year_end_date:"",
+    created_by: ""
   },
   currency: [],
 };
@@ -80,16 +97,25 @@ export const CompanyProvider = ({ children }) => {
   }, []);
 
   const getSelectedCompany = async (id) => {
-    if (!id) return;
-
-    const response = await axios.get(`/company/view-company/${id}`);
-
-    dispatch({
-      type: VIEW_COMPANY,
-      payload: {
-        data: response.data.data.data,
-      },
-    });
+    if (!id){
+      dispatch({
+        type: VIEW_COMPANY,
+        payload: {
+          data: initialState.currentCompany,
+        },
+      });
+  
+    }
+    else{
+      const response = await axios.get(`/company/view-company/${id}`);
+      console.log(response.data.data.data)
+      dispatch({
+        type: VIEW_COMPANY,
+        payload: {
+          data: response.data.data.data,
+        },
+      });
+    }
 
     const currencyResponse = await axios.get("/company/get-currency");
 
@@ -102,7 +128,10 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const createCompany = async (data) => {
-    await axios.post("/company/create-company", data);
+    await axios.post("/company/create-company", data)    
+    .then(respData=>{
+      console.log(respData);
+    })
 
     dispatch({
       type: CREATE_COMPANY,
@@ -110,13 +139,42 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const updateCompany = async (id, data) => {
-    await axios.put(`/company/edit-company/${id}`, data);
+    // data.base_currency = data.base_currency.id
+    data.created_by = 'chirayu'
+    // console.log(data)
+    if(data.id===-1){
+      createCompany(data)
+    }
+    else{
+      delete data['logo']
+      console.log(data)
+      await axios.put(`/company/edit-company/${id}`, data);
+    }
   };
 
   const deleteCompany = async (id) => {
-    await axios.delete(`/company/delete-company/${id}`);
+    await axios.delete(`/company/delete-company/${id}`)
+    .then(refData=>{
+      if(refData.data.success === true){
+        dispatch({
+          type:DELETE_COMPANY,
+          payload:{
+            data:initialState.currentCompany
+          }
+        })
+      }
+    })
   };
 
+  const updateForm = async (data) => {
+    console.log(data)
+    dispatch({
+      type:UPDATE_FORM,
+      payload:{
+        data:data
+      }
+    })
+  }
   if (!state.isInitialized) {
     return <Loader />;
   }
@@ -129,6 +187,7 @@ export const CompanyProvider = ({ children }) => {
         createCompany,
         updateCompany,
         deleteCompany,
+        updateForm
       }}
     >
       {children}

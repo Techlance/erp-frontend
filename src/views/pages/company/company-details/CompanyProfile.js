@@ -34,18 +34,19 @@ const useStyles = makeStyles((theme) => ({
 const CompanyProfile = () => {
   const classes = useStyles();
 
-  const { currentCompany, currency } = useCompany();
+  const { currentCompany, currency, updateForm } = useCompany();
 
   return (
+    
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <pre>
+        {/* <pre>
           {JSON.stringify(
             { selected: currentCompany.base_currency?.id, currency },
             null,
             2
           )}
-        </pre>
+        </pre> */}
 
         <Grid container spacing={2} alignItems="center">
           <Grid item>
@@ -84,16 +85,17 @@ const CompanyProfile = () => {
           label="Company Name"
           value={currentCompany.company_name}
           InputLabelProps={{ shrink: true }}
+          onChange={(e)=>{updateForm({company_name:e.target.value})}}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <TextField fullWidth label="Address" value={currentCompany.address} />
+        <TextField fullWidth label="Address" value={currentCompany.address} InputLabelProps={{ shrink: true }} onChange={(e)=>{updateForm({address:e.target.value})}}/>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <TextField fullWidth label="Country" defaultValue="country name" />
+        <TextField fullWidth label="Country" value={currentCompany.country} InputLabelProps={{ shrink: true }} onChange={(e)=>{updateForm({country:e.target.value})}}/>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <TextField fullWidth label="State" defaultValue="state Name" />
+        <TextField fullWidth label="State" value={currentCompany.state} InputLabelProps={{ shrink: true }} onChange={(e)=>{updateForm({state:e.target.value})}}/>
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
@@ -102,6 +104,7 @@ const CompanyProfile = () => {
           label="Email"
           type="email"
           value={currentCompany.email}
+          onChange={(e)=>{updateForm({email:e.target.value})}}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -109,7 +112,8 @@ const CompanyProfile = () => {
           fullWidth
           label="Website"
           InputLabelProps={{ shrink: true }}
-          defaultValue="www.company.com"
+          value={currentCompany.website}
+          onChange={(e)=>{updateForm({website:e.target.value})}}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -117,8 +121,9 @@ const CompanyProfile = () => {
           fullWidth
           label="Contact Number"
           type="number"
-          defaultValue={1234567890}
+          value={currentCompany.contact_no}
           InputLabelProps={{ shrink: true }}
+          onChange={(e)=>{updateForm({contact_no:e.target.value})}}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -127,7 +132,9 @@ const CompanyProfile = () => {
           label="Base Currency"
           InputLabelProps={{ shrink: true }}
           currencies={currency}
-          selected={currentCompany.base_currency?.id}
+          selected={currentCompany.base_currency?currentCompany.base_currency.id:null}
+          // onChange={(e)=>{updateForm({base_currency:e.target.value})}}
+          onChange={updateForm}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -135,18 +142,20 @@ const CompanyProfile = () => {
           fullWidth
           label="CR. No."
           InputLabelProps={{ shrink: true }}
-          defaultValue="x"
+          value={currentCompany.cr_no}
+          onChange={(e)=>{updateForm({cr_no:e.target.value})}}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <TextField fullWidth label="Registration No." defaultValue="NJjs788" />
+        <TextField fullWidth label="Registration No." value={currentCompany.registration_no} InputLabelProps={{ shrink: true }} onChange={(e)=>{updateForm({registration_no:e.target.value})}}/>
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
           label="Tax ID No."
           InputLabelProps={{ shrink: true }}
-          defaultValue="IDID"
+          value={currentCompany.tax_id_no}
+          onChange={(e)=>{updateForm({tax_id_no:e.target.value})}}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -154,7 +163,8 @@ const CompanyProfile = () => {
           fullWidth
           label="VAT ID No."
           InputLabelProps={{ shrink: true }}
-          defaultValue="IDID"
+          value={currentCompany.vat_id_no}
+          onChange={(e)=>{updateForm({vat_id_no:e.target.value})}}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -163,6 +173,8 @@ const CompanyProfile = () => {
           label="Year Start Date"
           InputLabelProps={{ shrink: true }}
           type="date"
+          value={currentCompany.year_start_date}
+          onChange={(e)=>{updateForm({year_start_date:e.target.value})}}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -171,6 +183,8 @@ const CompanyProfile = () => {
           label="Year End Date"
           InputLabelProps={{ shrink: true }}
           type="date"
+          value={currentCompany.year_end_date}
+          onChange={(e)=>{updateForm({year_end_date:e.target.value})}}
         />
       </Grid>
     </Grid>

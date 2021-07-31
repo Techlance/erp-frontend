@@ -13,6 +13,7 @@ export const CREATE_COMPANY = "CREATE_COMPANY";
 export const EDIT_COMPANY = "EDIT_COMPANY";
 export const DELETE_COMPANY = "DELETE_COMPANY";
 export const GET_CURRENCY = "GET_CURRENCY";
+export const UPDATE_FORM = "UPDATE_FORM";
 
 // action - customization reducer
 export const MENU_TOGGLE = "@customization/MENU_TOGGLE";
