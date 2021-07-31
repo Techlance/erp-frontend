@@ -17,7 +17,7 @@ import {
 } from "@material-ui/core";
 
 // project imports
-import CompanyProfile from "./CompanyProfile";
+import GroupsProfile from "./GroupsProfile";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
@@ -173,7 +173,7 @@ const CompanyDetails = () => {
                           sx={{ textTransform: "capitalize" }}
                         >
                           <span style={{ margin: "0 10px" }}>
-                            Add A New Company
+                            Add A User Group
                           </span>
                         </Typography>
                       </Grid>
@@ -212,7 +212,7 @@ const CompanyDetails = () => {
             <Grid item xs={12} lg={8}>
               <CardContent className={classes.cardPanels}>
                 <TabPanel value={value} index={value}>
-                  <CompanyProfile currentCompany={currentCompany} />
+                  <GroupsProfile currentCompany={currentCompany} />
                 </TabPanel>
               </CardContent>
             </Grid>

@@ -93,8 +93,8 @@ export const CompanyProvider = ({ children }) => {
     };
 
     init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+  }, [user]);
 
   const getSelectedCompany = async (id) => {
     if (!id){

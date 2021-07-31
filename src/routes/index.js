@@ -6,6 +6,7 @@ import MainRoutes from "./MainRoutes";
 import LoginRoutes from "./LoginRoutes";
 import CompanyRoutes from "./ComapanyRoutes";
 import AuthenticationRoutes from "./AuthenticationRoutes";
+import UserManagerRoutes from './UserManagerRoutes'
 
 // project imports
 import config from "./../config";
@@ -25,6 +26,9 @@ const Routes = () => {
 
         {/* Routes for Company master */}
         <CompanyRoutes />
+
+        {/* Routes for User Manager */}
+        <UserManagerRoutes />
 
         {/* Routes for main layouts */}
         <MainRoutes />
