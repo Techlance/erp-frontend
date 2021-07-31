@@ -21,7 +21,7 @@ const FormControlSelect = ({
   selected,
   textPrimary,
   textSecondary,
-  onChange
+  onChange,
 }) => {
   const IconPrimary = iconPrimary;
   const primaryIcon = iconPrimary ? (
@@ -34,18 +34,15 @@ const FormControlSelect = ({
   ) : null;
 
   const errorState = formState === "error" ? true : false;
-  // const val = selected ? selected : "";
 
-  // const [currency, setCurrency] = React.useState(val);
   const handleChange = (event) => {
-    // setCurrency(event.target.value);
-    console.log(event.target.value)
-    onChange({base_currency:event.target.value})
+    onChange({ base_currency: event.target.value });
   };
 
   useEffect(() => {
-    // setCurrency(selected);
-    // onChange({base_currency:selected})
+    console.log(selected);
+    // onChange({ base_currency: selected });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   return (

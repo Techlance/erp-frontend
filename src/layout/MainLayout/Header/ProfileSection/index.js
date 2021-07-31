@@ -30,7 +30,7 @@ import useAuth from "../../../../hooks/useAuth";
 
 // assets
 import { IconLogout, IconSettings } from "@tabler/icons";
-import BusinessIcon from '@material-ui/icons/Business';
+import BusinessIcon from "@material-ui/icons/Business";
 // import User1 from "./../../../../assets/images/users/user-round.svg";
 
 // style const
@@ -51,22 +51,22 @@ const useStyles = makeStyles((theme) => ({
     margin: "8px 0 8px 8px !important",
   },
   profileChip: {
-    "height": "48px",
-    "alignItems": "center",
-    "borderRadius": "27px",
-    "transition": "all .2s ease-in-out",
-    "borderColor":
+    height: "48px",
+    alignItems: "center",
+    borderRadius: "27px",
+    transition: "all .2s ease-in-out",
+    borderColor:
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.primary.light,
-    "backgroundColor":
+    backgroundColor:
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.primary.light,
     '&[aria-controls="menu-list-grow"], &:hover': {
-      "borderColor": theme.palette.primary.main,
-      "background": theme.palette.primary.main + "!important",
-      "color": theme.palette.primary.light,
+      borderColor: theme.palette.primary.main,
+      background: theme.palette.primary.main + "!important",
+      color: theme.palette.primary.light,
       "& svg": {
         stroke: theme.palette.primary.light,
       },
@@ -355,10 +355,7 @@ const ProfileSection = () => {
                           selected={selectedIndex === 1}
                           onClick={(event) => handleListItemClick(event, 1)}
                           component={React.forwardRef((props, ref) => (
-                            <RouterLink
-                              {...props}
-                              to="/company-details"
-                            />
+                            <RouterLink {...props} to="/company-details" />
                           ))}
                         >
                           <ListItemIcon>

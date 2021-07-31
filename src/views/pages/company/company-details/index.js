@@ -122,16 +122,17 @@ function a11yProps(index) {
 //   },
 // ];
 
-// const transformCompany = (companies) => {
-
-//   return
-// }
-
 //-----------------------|| PROFILE 2 ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();
-  const { companies, currentCompany, getSelectedCompany, updateCompany, deleteCompany } = useCompany();
+  const {
+    companies,
+    currentCompany,
+    getSelectedCompany,
+    updateCompany,
+    deleteCompany,
+  } = useCompany();
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
 
@@ -184,12 +185,17 @@ const CompanyDetails = () => {
                     <Tab
                       key={tab.company_id}
                       value={tab.company_id}
-                      icon={<Avatar src={`${MEDIA_URI}${tab.logo}`} />}
+                      icon={
+                        <Avatar
+                          src={`${MEDIA_URI}${tab.logo}`}
+                          alt={tab.company_name}
+                        />
+                      }
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">
                             <span style={{ margin: "0 10px" }}>
-                              {`${tab.company_name} ${tab.company_id}`}
+                              {tab.company_name}
                             </span>
                           </Typography>
                           <Typography
@@ -212,7 +218,7 @@ const CompanyDetails = () => {
             <Grid item xs={12} lg={8}>
               <CardContent className={classes.cardPanels}>
                 <TabPanel value={value} index={value}>
-                  <CompanyProfile currentCompany={currentCompany} />
+                  <CompanyProfile />
                 </TabPanel>
               </CardContent>
             </Grid>
@@ -223,45 +229,47 @@ const CompanyDetails = () => {
               <Grid item>
                 {value >= -1 && (
                   <AnimateButton>
-                    <Button
-                      variant="outlined"
-                      size="large"
-                      color="primary"
-                    >
+                    <Button variant="outlined" size="large" color="primary">
                       Back
                     </Button>
                   </AnimateButton>
                 )}
               </Grid>
-              
+
               <Grid item>
                 <Grid container justifyContent="space-between" spacing={10}>
-                {currentCompany.id!==-1?<Grid item>
-                <AnimateButton>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    color="error"
-                    // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                    onClick={(e) =>{deleteCompany(currentCompany.id)}}
-                  >
-                    Delete
-                  </Button>
-                </AnimateButton>
-                </Grid>:null}
+                  {currentCompany.id !== -1 ? (
+                    <Grid item>
+                      <AnimateButton>
+                        <Button
+                          variant="contained"
+                          size="large"
+                          color="error"
+                          // onClick={(e) => handleChange(e, 1 + parseInt(value))}
+                          onClick={(e) => {
+                            deleteCompany(currentCompany.id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </AnimateButton>
+                    </Grid>
+                  ) : null}
                   <Grid item>
-                <AnimateButton>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                    // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                    onClick = {(e)=>{updateCompany(currentCompany.id,currentCompany)}}
-                  >
-                    {currentCompany.id === -1 ? "Create" : "Update"}
-                  </Button>
-                </AnimateButton>
-                </Grid>
+                    <AnimateButton>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        color="primary"
+                        // onClick={(e) => handleChange(e, 1 + parseInt(value))}
+                        onClick={(e) => {
+                          updateCompany(currentCompany.id, currentCompany);
+                        }}
+                      >
+                        {currentCompany.id === -1 ? "Create" : "Update"}
+                      </Button>
+                    </AnimateButton>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

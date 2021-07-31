@@ -4,7 +4,7 @@ import {
   GET_USER_COMPANIES,
   UPDATE_FORM,
   VIEW_COMPANY,
-  DELETE_COMPANY
+  DELETE_COMPANY,
 } from "./actions";
 
 const companyReducer = (state, action) => {
@@ -27,10 +27,10 @@ const companyReducer = (state, action) => {
     case VIEW_COMPANY: {
       return {
         ...state,
-        currentCompany:{
-            ...action.payload.data,
-            base_currency:action.payload.data.base_currency.id
-        }
+        currentCompany: {
+          ...action.payload.data,
+          base_currency: action.payload.data.base_currency.id,
+        },
       };
     }
 
@@ -40,31 +40,36 @@ const companyReducer = (state, action) => {
         currency: action.payload.data,
       };
     }
-    case UPDATE_FORM:{
-        return{
-            ...state,
-            currentCompany:{
-                ...state.currentCompany,
-                ...action.payload.data
-            }
-        }
+
+    case UPDATE_FORM: {
+      return {
+        ...state,
+        currentCompany: {
+          ...state.currentCompany,
+          ...action.payload.data,
+        },
+      };
     }
-    case DELETE_COMPANY:{
-        let companyCopy = [...state.companies]
-        console.log(companyCopy)
-        companyCopy.forEach((element,index) => {
-            console.log(element)
-            console.log("emenet"+element.company_id+" "+state.currentCompany.id)
-            if(element.company_id===state.currentCompany.id){
-                delete companyCopy[index]
-            }
-        });
-        return{
-            ...state,
-            currentCompany:action.payload.data,
-            companies:companyCopy
+
+    case DELETE_COMPANY: {
+      let companyCopy = [...state.companies];
+      console.log(companyCopy);
+      companyCopy.forEach((element, index) => {
+        console.log(element);
+        console.log(
+          "emenet" + element.company_id + " " + state.currentCompany.id
+        );
+        if (element.company_id === state.currentCompany.id) {
+          delete companyCopy[index];
         }
+      });
+      return {
+        ...state,
+        currentCompany: action.payload.data,
+        companies: companyCopy,
+      };
     }
+
     default: {
       return { ...state };
     }
