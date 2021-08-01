@@ -70,7 +70,7 @@ const Snackbar = () => {
         <MuiSnackbar
           anchorOrigin={snackbarInitial.anchorOrigin}
           open={open}
-          autoHideDuration={3000}
+          autoHideDuration={1600}
           onClose={handleClose}
           message={snackbarInitial.message}
           TransitionComponent={transition[snackbarInitial.transition]}
@@ -98,7 +98,7 @@ const Snackbar = () => {
           TransitionComponent={transition[snackbarInitial.transition]}
           anchorOrigin={snackbarInitial.anchorOrigin}
           open={open}
-          autoHideDuration={3000}
+          autoHideDuration={1600}
           onClose={handleClose}
         >
           <Alert

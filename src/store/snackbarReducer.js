@@ -7,7 +7,7 @@ const initialState = {
   message: "Note archived",
   anchorOrigin: {
     vertical: "top",
-    horizontal: "right",
+    horizontal: "center",
   },
   variant: "default",
   alertSeverity: "success",
