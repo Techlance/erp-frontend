@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
   headerAvatar: {
     ...theme.typography.commonAvatar,
     ...theme.typography.mediumAvatar,
-    "transition": "all .2s ease-in-out",
-    "background":
+    transition: "all .2s ease-in-out",
+    background:
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.secondary.light,
-    "color":
+    color:
       theme.palette.mode === "dark"
         ? theme.palette.secondary.main
         : theme.palette.secondary.dark,
