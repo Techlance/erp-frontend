@@ -1,14 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 // material-ui
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 
 // project imports
 import MainCard from "../../ui-component/cards/MainCard";
 
+import { SNACKBAR_OPEN } from "../../store/actions";
+
 //==============================|| SAMPLE PAGE ||==============================//
 
 const SamplePage = () => {
+  const dispatch = useDispatch();
+
   return (
     <MainCard title="Sample Card">
       <Typography variant="body2">
@@ -20,6 +25,26 @@ const SamplePage = () => {
         non president, sunk in culpa qui officiate descent molls anim id est
         labours.
       </Typography>
+
+      <br />
+      <br />
+
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() =>
+          dispatch({
+            type: SNACKBAR_OPEN,
+            open: true,
+            message: "This is Success",
+            variant: "alert",
+            alertSeverity: "success",
+            close: true,
+          })
+        }
+      >
+        Notify
+      </Button>
     </MainCard>
   );
 };

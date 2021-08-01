@@ -6,12 +6,12 @@ const initialState = {
   open: false,
   message: "Note archived",
   anchorOrigin: {
-    vertical: "bottom",
+    vertical: "top",
     horizontal: "right",
   },
   variant: "default",
   alertSeverity: "success",
-  transition: "Fade",
+  transition: "Grow",
   close: true,
   actionButton: false,
 };

@@ -3,10 +3,10 @@
  */
 
 import axios from "axios";
-import { API_URI } from "../store/constant";
+import config from "../config";
 
 const axiosServices = axios.create({
-  baseURL: API_URI,
+  baseURL: config.api_uri,
 });
 
 // interceptor for http
