@@ -47,54 +47,49 @@ export const CompanyProvider = ({ children }) => {
 
   const { user } = useAuth();
 
-  useEffect(() => {
-    const init = async () => {
-      try {
-        if (user) {
-          const companyResponse = await axios.get("/company/get-user-company");
+  const init = async () => {
+    try {
+      if (user) {
+        const companyResponse = await axios.get("/company/get-user-company");
 
-          dispatch({
-            type: GET_USER_COMPANIES,
-            payload: {
-              isInitialized: true,
-              companies: companyResponse.data.data.companies,
-            },
-          });
+        dispatch({
+          type: GET_USER_COMPANIES,
+          payload: {
+            isInitialized: true,
+            companies: companyResponse.data.data.companies,
+          },
+        });
 
-          const currencyResponse = await axios.get("/company/get-currency");
+        const currencyResponse = await axios.get("/company/get-currency");
 
-          dispatch({
-            type: GET_CURRENCY,
-            payload: {
-              data: currencyResponse.data.data.data,
-            },
-          });
-        } else {
-          dispatch({
-            type: COMPANIES_INITIALIZE,
-            payload: {
-              isInitialized: true,
-              companies: [],
-              currentCompany: {},
-            },
-          });
-        }
-      } catch (err) {
-        console.error(err);
+        dispatch({
+          type: GET_CURRENCY,
+          payload: {
+            data: currencyResponse.data.data.data,
+          },
+        });
+      } else {
         dispatch({
           type: COMPANIES_INITIALIZE,
           payload: {
-            isInitialized: false,
+            isInitialized: true,
             companies: [],
             currentCompany: {},
           },
         });
       }
-    };
-
-    init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    } catch (err) {
+      console.error(err);
+      dispatch({
+        type: COMPANIES_INITIALIZE,
+        payload: {
+          isInitialized: false,
+          companies: [],
+          currentCompany: {},
+        },
+      });
+    }
+  };
 
   const getSelectedCompany = async (id) => {
     if (!id) {
@@ -147,16 +142,16 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const deleteCompany = async (id) => {
-    await axios.delete(`/company/delete-company/${id}`).then((refData) => {
-      if (refData.data.success === true) {
-        dispatch({
-          type: DELETE_COMPANY,
-          payload: {
-            data: initialState.currentCompany,
-          },
-        });
-      }
-    });
+    const response = await axios.delete(`/company/delete-company/${id}`);
+
+    if (response.data.success === true) {
+      dispatch({
+        type: DELETE_COMPANY,
+        payload: {
+          data: initialState.currentCompany,
+        },
+      });
+    }
   };
 
   const updateForm = async (data) => {
@@ -168,6 +163,12 @@ export const CompanyProvider = ({ children }) => {
       },
     });
   };
+
+  useEffect(() => {
+    init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (!state.isInitialized) {
     return <Loader />;
   }
@@ -176,6 +177,7 @@ export const CompanyProvider = ({ children }) => {
     <CompanyContext.Provider
       value={{
         ...state,
+        init,
         getSelectedCompany,
         createCompany,
         updateCompany,
