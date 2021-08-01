@@ -141,6 +141,8 @@ const CompanyDetails = () => {
     getSelectedCompany(newValue);
   };
 
+  console.log({ companies, currentCompany });
+
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>

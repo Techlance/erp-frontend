@@ -65,7 +65,7 @@ export const CompanyProvider = ({ children }) => {
         dispatch({
           type: GET_CURRENCY,
           payload: {
-            data: currencyResponse.data.data.data,
+            data: currencyResponse.data.data,
           },
         });
       } else {
@@ -105,7 +105,7 @@ export const CompanyProvider = ({ children }) => {
       dispatch({
         type: VIEW_COMPANY,
         payload: {
-          data: response.data.data.data,
+          data: response.data.data,
         },
       });
 
@@ -114,7 +114,7 @@ export const CompanyProvider = ({ children }) => {
       dispatch({
         type: GET_CURRENCY,
         payload: {
-          data: currencyResponse.data.data.data,
+          data: currencyResponse.data.data,
         },
       });
     }
