@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useReducer } from "react";
+import { useDispatch } from "react-redux";
 import useAuth from "../hooks/useAuth";
 import {
   COMPANIES_INITIALIZE,
@@ -12,6 +13,7 @@ import {
 import companyReducer from "../store/companyReducer";
 import Loader from "../ui-component/Loader";
 import axios from "../utils/axios";
+import sendNotification from "../utils/sendNotification";
 
 // constant
 const initialState = {
@@ -26,7 +28,7 @@ const initialState = {
     email: "",
     website: "",
     contact_no: "",
-    base_currency: 2,
+    base_currency: 1,
     cr_no: "",
     registration_no: "",
     tax_id_no: "",
@@ -43,6 +45,7 @@ export const CompanyContext = createContext({
 });
 
 export const CompanyProvider = ({ children }) => {
+  const globalDispatch = useDispatch();
   const [state, dispatch] = useReducer(companyReducer, initialState);
 
   const { user } = useAuth();
@@ -121,10 +124,16 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const createCompany = async (data) => {
-    await axios.post("/company/create-company", data);
+    const response = await axios.post("/company/create-company", data);
 
     dispatch({
       type: CREATE_COMPANY,
+    });
+
+    sendNotification({
+      globalDispatch,
+      success: response.data.success,
+      message: response.data.message,
     });
   };
 
@@ -137,14 +146,20 @@ export const CompanyProvider = ({ children }) => {
     } else {
       delete data["logo"];
       console.log(data);
-      await axios.put(`/company/edit-company/${id}`, data);
+      const response = await axios.put(`/company/edit-company/${id}`, data);
+
+      sendNotification({
+        globalDispatch,
+        success: response.data.success,
+        message: response.data.message,
+      });
     }
   };
 
   const deleteCompany = async (id) => {
     const response = await axios.delete(`/company/delete-company/${id}`);
 
-    if (response.data.success === true) {
+    if (response.data.success) {
       dispatch({
         type: DELETE_COMPANY,
         payload: {
@@ -152,16 +167,42 @@ export const CompanyProvider = ({ children }) => {
         },
       });
     }
+
+    sendNotification({
+      globalDispatch,
+      success: response.data.success,
+      message: response.data.message,
+    });
   };
 
   const updateForm = async (data) => {
-    console.log(data);
     dispatch({
       type: UPDATE_FORM,
       payload: {
         data: data,
       },
     });
+  };
+
+  const addCurrency = async (data, next) => {
+    const response = await axios.post("/company/add-currency", data);
+
+    sendNotification({
+      globalDispatch,
+      success: response.data.success,
+      message: response.data.message,
+    });
+
+    const currencyResponse = await axios.get("/company/get-currency");
+
+    dispatch({
+      type: GET_CURRENCY,
+      payload: {
+        data: currencyResponse.data.data,
+      },
+    });
+
+    next();
   };
 
   useEffect(() => {
@@ -182,6 +223,7 @@ export const CompanyProvider = ({ children }) => {
         createCompany,
         updateCompany,
         deleteCompany,
+        addCurrency,
         updateForm,
       }}
     >

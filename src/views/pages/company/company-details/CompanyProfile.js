@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Stack, TextField, Typography } from "@material-ui/core";
+import {
+  IconButton,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 // project imports
 import Avatar from "../../../../ui-component/extended/Avatar";
@@ -11,6 +18,7 @@ import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
 import useCompany from "../../../../hooks/useCompany";
 import FormControlSelect from "../../../../ui-component/extended/Form/FormControlSelect";
+import AddCurrenyDialog from "../../../../components/AddCurrencyDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
     height: "80px",
     width: "80px",
   },
+  addButtonGrid: {
+    paddingTop: "1 !important",
+    paddingLeft: "0 !important",
+  },
 }));
 
 //-----------------------|| Company Profile ||-----------------------//
@@ -33,18 +45,12 @@ const CompanyProfile = () => {
 
   const { currentCompany, currency, updateForm } = useCompany();
 
+  const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
+
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        {/* 
-          <pre>
-            {JSON.stringify(
-              { selected: currentCompany.base_currency?.id, currency },
-              null,
-              2
-            )}
-          </pre>
-        */}
+        {/* <pre>{JSON.stringify({ currentCompany, currency }, null, 2)}</pre> */}
 
         <Grid container spacing={2} alignItems="center">
           <Grid item>
@@ -157,16 +163,30 @@ const CompanyProfile = () => {
           }}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={5}>
         <FormControlSelect
           fullWidth
-          label="Base Currency"
+          captionLabel="Base Currency"
           InputLabelProps={{ shrink: true }}
           currencies={currency}
-          selected={currentCompany.base_currency?.id || null}
+          selected={currentCompany.base_currency}
           onChange={updateForm}
         />
       </Grid>
+      <Grid item xs={12} sm={1} className={classes.addButtonGrid}>
+        <IconButton
+          aria-label="add-currency"
+          onClick={() => setShowAddCurrencyModal(true)}
+        >
+          <AddCircleOutlineIcon fontSize="large" />
+        </IconButton>
+
+        <AddCurrenyDialog
+          open={showAddCurrencyModal}
+          handleClose={() => setShowAddCurrencyModal(false)}
+        />
+      </Grid>
+
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth

@@ -27,6 +27,7 @@ import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import useCompany from "../../../../hooks/useCompany";
 import formatDate from "../../../../utils/format-date";
+import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -135,13 +136,12 @@ const CompanyDetails = () => {
   } = useCompany();
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     getSelectedCompany(newValue);
   };
-
-  console.log({ companies, currentCompany });
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -248,9 +248,7 @@ const CompanyDetails = () => {
                           size="large"
                           color="error"
                           // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                          onClick={(e) => {
-                            deleteCompany(currentCompany.id);
-                          }}
+                          onClick={() => setShowDeleteModal(true)}
                         >
                           Delete
                         </Button>
@@ -276,6 +274,15 @@ const CompanyDetails = () => {
               </Grid>
             </Grid>
           </CardActions>
+          <ConfirmDeleteDialog
+            open={showDeleteModal}
+            handleAgree={() => {
+              deleteCompany(currentCompany.id);
+            }}
+            handleClose={() => setShowDeleteModal(false)}
+            title="Are you sure?"
+            body="Are you sure you want to delete this company records? Once deleted the data can not be retrived!"
+          />
         </MainCard>
       </Grid>
     </Grid>

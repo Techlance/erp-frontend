@@ -15,7 +15,8 @@ axiosServices.interceptors.response.use(
     if (response.data.success) {
       return response;
     } else {
-      throw new Error(response.data.message);
+      console.log(response.data.message);
+      return response;
     }
   },
   (error) =>
