@@ -6,7 +6,7 @@ import { Grid, TextField } from "@material-ui/core";
 // project imports
 import { gridSpacing } from "../../../../store/constant";
 import useAuth from "../../../../hooks/useAuth";
-import PermissionsChecklist from "../../../../components/user-management.js/permissions-checklist";
+import PermissionsChecklist from "../../../../components/user-management/permissions-checklist";
 
 //-----------------------|| User Management - Users ||-----------------------//
 
@@ -17,7 +17,7 @@ const UserProfile = () => {
     name: "",
     email: "",
     password: null,
-    created_by: user.email,
+    created_by: user.name,
     can_create_company: true,
     can_edit_company: true,
     can_delete_company: true,
@@ -33,7 +33,6 @@ const UserProfile = () => {
   });
 
   const handleChange = (event) => {
-    console.log({ [event.target.id]: event.target.value });
     setValues({
       ...values,
       [event.target.id]: event.target.value,
