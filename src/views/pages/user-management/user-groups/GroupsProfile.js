@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 // material-ui
 import { Grid, TextField } from "@material-ui/core";
 
@@ -11,9 +10,6 @@ import { gridSpacing } from "../../../../store/constant";
 import useCompany from "../../../../hooks/useCompany";
 import useAuth from "../../../../hooks/useAuth";
 
-
-
-
 //-----------------------|| USER Management - Group PROFILE ||-----------------------//
 
 const GroupsProfile = () => {
@@ -22,11 +18,10 @@ const GroupsProfile = () => {
   const { currentCompany, updateForm } = useCompany();
 
   const [values, setValues] = useState({
-    "user_group_name": "",
-    "backdated_days": "",
+    user_group_name: "",
+    backdated_days: "",
     created_by: user.name,
-
-  })
+  });
 
   const handleChange = (event) => {
     setValues({
@@ -36,7 +31,6 @@ const GroupsProfile = () => {
   };
 
   return (
-    
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12} sm={12}>
         <TextField
@@ -48,7 +42,14 @@ const GroupsProfile = () => {
         />
       </Grid>
       <Grid item xs={12} sm={12}>
-        <TextField fullWidth label="Backdated Days" type="number" value={values.backdated_days} InputLabelProps={{ shrink: true }} onChange={handleChange}/>
+        <TextField
+          fullWidth
+          label="Backdated Days"
+          type="number"
+          value={values.backdated_days}
+          InputLabelProps={{ shrink: true }}
+          onChange={handleChange}
+        />
       </Grid>
     </Grid>
   );

@@ -83,7 +83,6 @@ const PermissionsChecklist = ({ values, setValues }) => {
               label="View Company"
             />
           </Grid>
-
         </Grid>
       </Grid>
 
@@ -96,7 +95,6 @@ const PermissionsChecklist = ({ values, setValues }) => {
           User Related Fields
         </Typography>
       </Grid>
-      
 
       <Grid item xs={12}>
         <Grid container direction="column" spacing={0}>
@@ -159,10 +157,8 @@ const PermissionsChecklist = ({ values, setValues }) => {
               label="Delete User"
             />
           </Grid>
-
         </Grid>
       </Grid>
-
 
       <Grid item xs={12}>
         <Typography
@@ -235,7 +231,6 @@ const PermissionsChecklist = ({ values, setValues }) => {
               label="Delete User Group"
             />
           </Grid>
-
         </Grid>
       </Grid>
     </Grid>
