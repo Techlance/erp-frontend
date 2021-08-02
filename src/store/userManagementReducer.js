@@ -14,6 +14,7 @@ import {
   VIEW_USER_BY_ID,
   VIEW_USER_GROUP,
   VIEW_USER_RIGHTS,
+  VIEW_USER_RIGHTS_BY_ID,
 } from "./actions";
 
 //-----------------------|| USER MANAGEMENT REDUCER ||-----------------------//
@@ -87,11 +88,18 @@ const userManagementReducer = (state, action) => {
     case VIEW_USER_RIGHTS: {
       return {
         ...state,
+        user_rights: action.payload,
       };
     }
     case DELETE_USER_RIGHTS: {
       return {
         ...state,
+      };
+    }
+    case VIEW_USER_RIGHTS_BY_ID: {
+      return {
+        ...state,
+        current_user_right: action.payload,
       };
     }
 

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 // material-ui
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
   TextField,
@@ -11,48 +10,17 @@ import {
 } from "@material-ui/core";
 
 // project imports
-// import Avatar from "../../../../ui-component/extended/Avatar";
 import { gridSpacing } from "../../../../store/constant";
-
-// assets
-// import Avatar1 from "../../../assets/images/users/user-round.svg";
-
-// import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
-import useCompany from "../../../../hooks/useCompany";
-import useAuth from "../../../../hooks/useAuth";
-// import FormControlSelect from "../../../../ui-component/extended/Form/FormControlSelect";
-
-// style constant
-const useStyles = makeStyles((theme) => ({
-  alertIcon: {
-    height: "16px",
-    width: "16px",
-    marginRight: "8px",
-    verticalAlign: "text-bottom",
-  },
-  userAvatar: {
-    height: "80px",
-    width: "80px",
-  },
-}));
 
 //-----------------------|| PROFILE 2 - USER PROFILE ||-----------------------//
 
-const RightsProfile = () => {
-  const classes = useStyles();
-  const { user } = useAuth();
-
-  const { currentCompany, updateForm } = useCompany();
-
-  const [values, setValues] = useState({
-    user_group_id: 3,
-    transaction_id: 4,
-    can_create: true,
-    can_alter: true,
-    can_delete: true,
-    can_view: true,
-    created_by: user.email,
-  });
+const RightsProfile = ({ values, setValues }) => {
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.id]: event.target.value,
+    });
+  };
 
   const handleChecked = (event) => {
     setValues({
@@ -70,26 +38,22 @@ const RightsProfile = () => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
-          label="User Group - ID"
-          type="number"
-          value={currentCompany.name}
+          // id="user_group_id"
+          label="User Group Name"
+          value={values.user_group_id?.user_group_name}
           InputLabelProps={{ shrink: true }}
-          onChange={(e) => {
-            updateForm({ name: e.target.value });
-          }}
+          onChange={handleChange}
         />
       </Grid>
 
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
-          label="Transaction ID"
-          type="number"
-          value={currentCompany.email}
+          // id="transaction_id"
+          label="Transaction"
+          value={values.transaction_id?.transactions}
           InputLabelProps={{ shrink: true }}
-          onChange={(e) => {
-            updateForm({ email: e.target.value });
-          }}
+          onChange={handleChange}
         />
       </Grid>
 
@@ -97,7 +61,6 @@ const RightsProfile = () => {
         <Grid container direction="row" spacing={3}>
           <Grid item xs={12}>
             <Typography
-              className={classes.cardTitle}
               variant="h5"
               component="span"
               sx={{ textTransform: "uppercase" }}

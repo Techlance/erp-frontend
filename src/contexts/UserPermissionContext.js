@@ -4,18 +4,16 @@ import React, { createContext, useEffect, useReducer, useState } from "react";
 import {
   VIEW_USER,
   CREATE_USER,
-  EDIT_USER,
   DELETE_USER,
   VIEW_USER_BY_ID,
   CREATE_USER_GROUP,
-  EDIT_USER_GROUP,
   DELETE_USER_GROUP,
   CREATE_USER_RIGHTS,
-  EDIT_USER_RIGHTS,
   DELETE_USER_RIGHTS,
   VIEW_USER_GROUP,
   VIEW_USER_RIGHTS,
   VIEW_USER_GROUP_BY_ID,
+  VIEW_USER_RIGHTS_BY_ID,
 } from "../store/actions";
 import userManagementReducer from "../store/userManagementReducer";
 
@@ -32,7 +30,7 @@ const initialState = {
   user_groups: [],
   current_user_group: { id: 0 },
   user_rights: [],
-  current_user_right: {},
+  current_user_right: { id: 0 },
 };
 
 const UserPermissionContext = createContext({
@@ -75,13 +73,13 @@ export const UserPermissionProvider = ({ children }) => {
       type: CREATE_USER,
     });
 
-    getUser();
-
     sendNotification({
       globalDispatch,
       success: response.data.success,
       message: response.data.message,
     });
+
+    getUser();
   };
 
   const updateUser = async (id, data) => {
@@ -96,9 +94,8 @@ export const UserPermissionProvider = ({ children }) => {
         success: response.data.success,
         message: response.data.message,
       });
+      getUser();
     }
-
-    getUser();
   };
 
   const getSelectedUserAccount = async (id) => {
@@ -179,9 +176,8 @@ export const UserPermissionProvider = ({ children }) => {
         success: response.data.success,
         message: response.data.message,
       });
+      getUserGroups();
     }
-
-    getUserGroups();
   };
 
   const deleteUserGroup = async (id) => {
@@ -219,14 +215,19 @@ export const UserPermissionProvider = ({ children }) => {
 
   const getUserRights = async () => {
     try {
+      setLoading(true);
       const response = await axios.get("/user/get-user-right");
+
+      console.log(response.data.data);
 
       dispatch({
         type: VIEW_USER_RIGHTS,
         payload: response.data.data,
       });
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -242,14 +243,17 @@ export const UserPermissionProvider = ({ children }) => {
       success: response.data.success,
       message: response.data.message,
     });
+
+    getUserRights();
   };
 
   const updateUserRights = async (id, data) => {
-    if (data.id === -1) {
+    if (id === 0) {
       createUserRights(data);
     } else {
-      delete data["logo"];
-      console.log(data);
+      delete data.id;
+      data.user_group_id = data.user_group_id.id;
+      data.transaction_id = data.transaction_id.id;
       const response = await axios.put(`/user/edit-user-right/${id}`, data);
 
       sendNotification({
@@ -257,6 +261,7 @@ export const UserPermissionProvider = ({ children }) => {
         success: response.data.success,
         message: response.data.message,
       });
+      getUserRights();
     }
   };
 
@@ -274,7 +279,26 @@ export const UserPermissionProvider = ({ children }) => {
       success: response.data.success,
       message: response.data.message,
     });
+
+    getUserRights();
   };
+
+  const getSelectedUserRight = async (id) => {
+    if (!id) {
+      return;
+    }
+
+    const userRight = state.user_rights.find((item) => item.id === id);
+
+    console.log(userRight, id);
+
+    dispatch({
+      type: VIEW_USER_RIGHTS_BY_ID,
+      payload: userRight,
+    });
+  };
+
+  // ================================= USER MANAGEMENT - END =================================
 
   if (loading) {
     return <Loader />;
@@ -295,6 +319,7 @@ export const UserPermissionProvider = ({ children }) => {
         createUserRights,
         updateUserRights,
         deleteUserRights,
+        getSelectedUserRight,
       }}
     >
       {children}

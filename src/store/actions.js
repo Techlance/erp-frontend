@@ -46,6 +46,7 @@ export const CREATE_USER_RIGHTS = "CREATE_USER_RIGHTS";
 export const EDIT_USER_RIGHTS = "EDIT_USER_RIGHTS";
 export const VIEW_USER_RIGHTS = "VIEW_USER_RIGHTS";
 export const DELETE_USER_RIGHTS = "DELETE_USER_RIGHTS";
+export const VIEW_USER_RIGHTS_BY_ID = "VIEW_USER_RIGHTS_BY_ID";
 
 // action - snackbar
 export const SNACKBAR_OPEN = "@snackbar/SNACKBAR_OPEN";

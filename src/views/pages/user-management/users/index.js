@@ -160,7 +160,7 @@ const UserAccountDetails = () => {
   };
 
   const [values, setValues] = useState(() => {
-    if (value.id === 0) {
+    if (value === 0) {
       return INIT_STATE;
     }
     return {
