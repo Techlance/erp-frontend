@@ -176,16 +176,16 @@ const CompanyDetails = () => {
                     }
                     {...a11yProps(-1)}
                   />
-                  {companies.map((tab) => (
+                  {user_accounts.map((tab) => (
                     <Tab
-                      key={tab.company_id}
-                      value={tab.company_id}
+                      key={tab.id}
+                      value={tab.id}
                       icon={<Avatar src={`${MEDIA_URI}${tab.logo}`} />}
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">
                             <span style={{ margin: "0 10px" }}>
-                              {`${tab.company_name}`}
+                              {`${tab.name}`}
                             </span>
                           </Typography>
                           <Typography

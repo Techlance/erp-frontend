@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useReducer } from "react";
 
 // reducer - state management
-import { VIEW_USER, CREATE_USER, EDIT_USER, DELETE_USER, VIEW_USER_BY_ID, CREATE_USER_GROUP, EDIT_USER_GROUP, DELETE_USER_GROUP, CREATE_USER_RIGHTS, EDIT_USER_RIGHTS, DELETE_USER_RIGHTS } from "../store/actions";
+import { VIEW_USER, CREATE_USER, EDIT_USER, DELETE_USER, VIEW_USER_BY_ID, CREATE_USER_GROUP, EDIT_USER_GROUP, DELETE_USER_GROUP, CREATE_USER_RIGHTS, EDIT_USER_RIGHTS, DELETE_USER_RIGHTS, VIEW_USER_GROUP, VIEW_USER_RIGHTS } from "../store/actions";
 import userManagementReducer from "../store/userManagementReducer";
 
 // project imports
@@ -31,22 +31,25 @@ export const UserPermissionProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userManagementReducer, initialState);
 
   useEffect(() => {
-    const init = async () => {
+    getUser();
+    getUserGroup();
+    getUserRights();
+  }, []);
+
+  // ================================= USER MANAGEMENT - USER =================================
+
+    const getUser = async () => {
       try {
-        const response = await axios.get("user/get-users")
+        const response = await axios.get("/user/get-users")
         console.log(response.data)
         dispatch({
             type:VIEW_USER,
             payload:response.data.data
         })
       } catch (err) {}
-    };
+    }; 
 
-    init();
-  }, []);
-
-  // ================================= USER MANAGEMENT - USER =================================
-  const createUser = async (data) => {
+    const createUser = async (data) => {
     const response = await axios.post("/user/add-user", data);
 
     dispatch({
@@ -66,7 +69,7 @@ export const UserPermissionProvider = ({ children }) => {
     } else {
       delete data["logo"];
       console.log(data);
-      const response = await axios.put(`user/edit-user/${id}`, data);
+      const response = await axios.put(`/user/edit-user/${id}`, data);
 
       sendNotification({
         globalDispatch,
@@ -112,8 +115,21 @@ export const UserPermissionProvider = ({ children }) => {
 
   // ================================= USER MANAGEMENT - USER GROUP =================================
 
+
+    const getUserGroup = async () => {
+      try {
+        const response = await axios.get("/user/get-user-group")
+        console.log(response.data)
+        dispatch({
+            type:VIEW_USER_GROUP,
+            payload:response.data.data
+        })
+      } catch (err) {}
+    }; 
+
     const createUserGroup = async (data) => {
     const response = await axios.post("/user/add-user-group", data);
+    
 
     dispatch({
       type: CREATE_USER_GROUP,
@@ -132,7 +148,7 @@ export const UserPermissionProvider = ({ children }) => {
     } else {
       delete data["logo"];
       console.log(data);
-      const response = await axios.put(`user/edit-user-group/${id}`, data);
+      const response = await axios.put(`/user/edit-user-group/${id}`, data);
 
       sendNotification({
         globalDispatch,
@@ -163,6 +179,16 @@ export const UserPermissionProvider = ({ children }) => {
 
   // ================================= USER MANAGEMENT - USER RIGHTS =================================
 
+    const getUserRights = async () => {
+      try {
+        const response = await axios.get("/user/add-user-right")
+        console.log(response.data)
+        dispatch({
+            type:VIEW_USER_RIGHTS,
+            payload:response.data.data
+        })
+      } catch (err) {}
+    }; 
 
     const createUserRights = async (data) => {
     const response = await axios.post("/user/add-user-right", data);
@@ -184,7 +210,7 @@ export const UserPermissionProvider = ({ children }) => {
     } else {
       delete data["logo"];
       console.log(data);
-      const response = await axios.put(`user/edit-user-right/${id}`, data);
+      const response = await axios.put(`/user/edit-user-right/${id}`, data);
 
       sendNotification({
         globalDispatch,
@@ -216,7 +242,7 @@ export const UserPermissionProvider = ({ children }) => {
   }
 
   return (
-    <UserPermissionContext.Provider value={{ ...state, createUser, updateUser, getSelectedUser, deleteUser, createUserGroup, updateUserGroup, deleteUserGroup, createUserRights, updateUserRights, deleteUserRights }}>
+    <UserPermissionContext.Provider value={{ ...state, getUserRights, getUserGroup, createUser, updateUser, getSelectedUser, deleteUser, createUserGroup, updateUserGroup, deleteUserGroup, createUserRights, updateUserRights, deleteUserRights }}>
       {children}
     </UserPermissionContext.Provider>
   );
