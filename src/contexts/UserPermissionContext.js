@@ -96,6 +96,8 @@ export const UserPermissionProvider = ({ children }) => {
         message: response.data.message,
       });
     }
+
+    getUser();
   };
 
   const getSelectedUserAccount = async (id) => {

@@ -187,10 +187,8 @@ const UserAccountDetails = () => {
 
   useEffect(() => {
     setValues(() => {
-      if (value === 0) {
-        console.log("TEST");
-        return INIT_STATE;
-      }
+      if (value === 0) return INIT_STATE;
+
       return {
         name: current_user_account.name,
         email: current_user_account.email,
