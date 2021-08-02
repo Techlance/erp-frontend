@@ -176,10 +176,10 @@ const PermissionsChecklist = ({ values, setValues }) => {
             <FormControlLabel
               control={
                 <Switch
-                  id="can_create_user_group"
-                  checked={values.can_create_user_group}
+                  id="can_create_user_groups"
+                  checked={values.can_create_user_groups}
                   onChange={handleChecked}
-                  name="can_create_user_group"
+                  name="can_create_user_groups"
                   color="primary"
                 />
               }
@@ -191,10 +191,10 @@ const PermissionsChecklist = ({ values, setValues }) => {
             <FormControlLabel
               control={
                 <Switch
-                  id="can_edit_user_group"
-                  checked={values.can_edit_user_group}
+                  id="can_edit_user_groups"
+                  checked={values.can_edit_user_groups}
                   onChange={handleChecked}
-                  name="can_edit_user_group"
+                  name="can_edit_user_groups"
                   color="primary"
                 />
               }
@@ -206,10 +206,10 @@ const PermissionsChecklist = ({ values, setValues }) => {
             <FormControlLabel
               control={
                 <Switch
-                  id="can_view_user_group"
-                  checked={values.can_view_user_group}
+                  id="can_view_user_groups"
+                  checked={values.can_view_user_groups}
                   onChange={handleChecked}
-                  name="can_view_user_group"
+                  name="can_view_user_groups"
                   color="primary"
                 />
               }
@@ -221,10 +221,10 @@ const PermissionsChecklist = ({ values, setValues }) => {
             <FormControlLabel
               control={
                 <Switch
-                  id="can_delete_user_group"
-                  checked={values.can_delete_user_group}
+                  id="can_delete_user_groups"
+                  checked={values.can_delete_user_groups}
                   onChange={handleChecked}
-                  name="can_delete_user_group"
+                  name="can_delete_user_groups"
                   color="primary"
                 />
               }
