@@ -51,7 +51,7 @@ const RightsProfile = () => {
     can_alter: true,
     can_delete: true,
     can_view: true,
-    created_by: "harsh@gmail.com",
+    created_by: user.email,
   });
 
   const handleChange = (event) => {

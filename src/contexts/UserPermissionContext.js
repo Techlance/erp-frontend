@@ -1,7 +1,21 @@
 import React, { createContext, useEffect, useReducer } from "react";
 
 // reducer - state management
-import { VIEW_USER, CREATE_USER, EDIT_USER, DELETE_USER, VIEW_USER_BY_ID, CREATE_USER_GROUP, EDIT_USER_GROUP, DELETE_USER_GROUP, CREATE_USER_RIGHTS, EDIT_USER_RIGHTS, DELETE_USER_RIGHTS, VIEW_USER_GROUP, VIEW_USER_RIGHTS } from "../store/actions";
+import {
+  VIEW_USER,
+  CREATE_USER,
+  EDIT_USER,
+  DELETE_USER,
+  VIEW_USER_BY_ID,
+  CREATE_USER_GROUP,
+  EDIT_USER_GROUP,
+  DELETE_USER_GROUP,
+  CREATE_USER_RIGHTS,
+  EDIT_USER_RIGHTS,
+  DELETE_USER_RIGHTS,
+  VIEW_USER_GROUP,
+  VIEW_USER_RIGHTS,
+} from "../store/actions";
 import userManagementReducer from "../store/userManagementReducer";
 
 // project imports
@@ -12,7 +26,7 @@ import sendNotification from "../utils/sendNotification";
 
 // constant
 const initialState = {
-  isInitialized:true,
+  isInitialized: true,
   user_accounts: [],
   current_user_account: {},
   user_groups: [],
@@ -23,7 +37,6 @@ const initialState = {
 
 const UserPermissionContext = createContext({
   ...initialState,
-  
 });
 
 export const UserPermissionProvider = ({ children }) => {
@@ -38,18 +51,20 @@ export const UserPermissionProvider = ({ children }) => {
 
   // ================================= USER MANAGEMENT - USER =================================
 
-    const getUser = async () => {
-      try {
-        const response = await axios.get("/user/get-users")
-        console.log(response.data)
-        dispatch({
-            type:VIEW_USER,
-            payload:response.data.data
-        })
-      } catch (err) {}
-    }; 
+  const getUser = async () => {
+    try {
+      const response = await axios.get("/user/get-users");
+      console.log(response.data);
+      dispatch({
+        type: VIEW_USER,
+        payload: response.data.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    const createUser = async (data) => {
+  const createUser = async (data) => {
     const response = await axios.post("/user/add-user", data);
 
     dispatch({
@@ -79,21 +94,18 @@ export const UserPermissionProvider = ({ children }) => {
     }
   };
 
-  const getSelectedUser = async (id) => {
+  const getSelectedUserAccount = async (id) => {
     if (!id) {
-      dispatch({
-        type: VIEW_USER_BY_ID,
-      });
-    } else {
-      const response = await axios.get(`/user/get-users/${id}`);
-
-      dispatch({
-        type: VIEW_USER_BY_ID,
-        payload: {
-          data: response.data.data,
-        },
-      });
+      return;
     }
+    const response = await axios.get(`/user/get-users/${id}`);
+
+    dispatch({
+      type: VIEW_USER_BY_ID,
+      payload: {
+        data: response.data.data,
+      },
+    });
   };
 
   const deleteUser = async (id) => {
@@ -112,24 +124,23 @@ export const UserPermissionProvider = ({ children }) => {
     });
   };
 
-
   // ================================= USER MANAGEMENT - USER GROUP =================================
 
+  const getUserGroup = async () => {
+    try {
+      const response = await axios.get("/user/get-user-group");
+      console.log(response.data);
+      dispatch({
+        type: VIEW_USER_GROUP,
+        payload: response.data.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    const getUserGroup = async () => {
-      try {
-        const response = await axios.get("/user/get-user-group")
-        console.log(response.data)
-        dispatch({
-            type:VIEW_USER_GROUP,
-            payload:response.data.data
-        })
-      } catch (err) {}
-    }; 
-
-    const createUserGroup = async (data) => {
+  const createUserGroup = async (data) => {
     const response = await axios.post("/user/add-user-group", data);
-    
 
     dispatch({
       type: CREATE_USER_GROUP,
@@ -174,23 +185,22 @@ export const UserPermissionProvider = ({ children }) => {
     });
   };
 
-
-
-
   // ================================= USER MANAGEMENT - USER RIGHTS =================================
 
-    const getUserRights = async () => {
-      try {
-        const response = await axios.get("/user/add-user-right")
-        console.log(response.data)
-        dispatch({
-            type:VIEW_USER_RIGHTS,
-            payload:response.data.data
-        })
-      } catch (err) {}
-    }; 
+  const getUserRights = async () => {
+    try {
+      const response = await axios.get("/user/add-user-right");
 
-    const createUserRights = async (data) => {
+      dispatch({
+        type: VIEW_USER_RIGHTS,
+        payload: response.data.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const createUserRights = async (data) => {
     const response = await axios.post("/user/add-user-right", data);
 
     dispatch({
@@ -236,13 +246,28 @@ export const UserPermissionProvider = ({ children }) => {
     });
   };
 
-
   if (!state.isInitialized) {
     return <Loader />;
   }
 
   return (
-    <UserPermissionContext.Provider value={{ ...state, getUserRights, getUserGroup, createUser, updateUser, getSelectedUser, deleteUser, createUserGroup, updateUserGroup, deleteUserGroup, createUserRights, updateUserRights, deleteUserRights }}>
+    <UserPermissionContext.Provider
+      value={{
+        ...state,
+        getUserRights,
+        getUserGroup,
+        createUser,
+        updateUser,
+        getSelectedUserAccount,
+        deleteUser,
+        createUserGroup,
+        updateUserGroup,
+        deleteUserGroup,
+        createUserRights,
+        updateUserRights,
+        deleteUserRights,
+      }}
+    >
       {children}
     </UserPermissionContext.Provider>
   );
