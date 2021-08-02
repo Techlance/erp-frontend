@@ -1,6 +1,6 @@
 // third-party
 import { FormattedMessage } from "react-intl";
-import React from 'react'
+import React from "react";
 // assets
 import { IconDashboard, IconDeviceAnalytics } from "@tabler/icons";
 
@@ -27,46 +27,31 @@ export const dashboard = {
     },
     {
       id: "user-management",
-      title: <FormattedMessage id="user-management" />,
+      title: <FormattedMessage id="menu.user-management" />,
       type: "collapse",
       // url: "/user-management",
       icon: icons["IconDeviceAnalytics"],
       breadcrumbs: false,
-      children:[
+      children: [
         {
-          id: 'Users',
-          title: (
-              <React.Fragment>
-                  {' '}
-                  <FormattedMessage id="Users" /> {' '}
-              </React.Fragment>
-          ),
-          type: 'item',
-          url: '/user-manager/users'
+          id: "Users",
+          title: <FormattedMessage id="menu.users" />,
+          type: "item",
+          url: "/user-manager/users",
         },
         {
-          id: 'User Groups ',
-          title: (
-              <React.Fragment>
-                  {' '}
-                  <FormattedMessage id="User Groups" /> {' '}
-              </React.Fragment>
-          ),
-          type: 'item',
-          url: '/user-manager/groups'
+          id: "User Groups ",
+          title: <FormattedMessage id="menu.user-groups" />,
+          type: "item",
+          url: "/user-manager/groups",
         },
         {
-          id: 'User Rights',
-          title: (
-              <React.Fragment>
-                  {' '}
-                  <FormattedMessage id="User Rights" /> {' '}
-              </React.Fragment>
-          ),
-          type: 'item',
-          url: '/user-manager/rights'
-        }
-      ]
+          id: "User Rights",
+          title: <FormattedMessage id="menu.user-rights" />,
+          type: "item",
+          url: "/user-manager/rights",
+        },
+      ],
     },
   ],
 };

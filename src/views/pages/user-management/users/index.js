@@ -131,7 +131,13 @@ function a11yProps(index) {
 
 const CompanyDetails = () => {
   const classes = useStyles();
-  const { companies, currentCompany, getSelectedCompany, updateCompany, deleteCompany } = useCompany();
+  const {
+    companies,
+    currentCompany,
+    getSelectedCompany,
+    updateCompany,
+    deleteCompany,
+  } = useCompany();
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
 
@@ -223,45 +229,47 @@ const CompanyDetails = () => {
               <Grid item>
                 {value >= -1 && (
                   <AnimateButton>
-                    <Button
-                      variant="outlined"
-                      size="large"
-                      color="primary"
-                    >
+                    <Button variant="outlined" size="large" color="primary">
                       Back
                     </Button>
                   </AnimateButton>
                 )}
               </Grid>
-              
+
               <Grid item>
                 <Grid container justifyContent="space-between" spacing={10}>
-                {currentCompany.id!==-1?<Grid item>
-                <AnimateButton>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    color="error"
-                    // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                    onClick={(e) =>{deleteCompany(currentCompany.id)}}
-                  >
-                    Delete
-                  </Button>
-                </AnimateButton>
-                </Grid>:null}
+                  {currentCompany.id !== -1 ? (
+                    <Grid item>
+                      <AnimateButton>
+                        <Button
+                          variant="contained"
+                          size="large"
+                          color="error"
+                          // onClick={(e) => handleChange(e, 1 + parseInt(value))}
+                          onClick={(e) => {
+                            deleteCompany(currentCompany.id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </AnimateButton>
+                    </Grid>
+                  ) : null}
                   <Grid item>
-                <AnimateButton>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                    // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                    onClick = {(e)=>{updateCompany(currentCompany.id,currentCompany)}}
-                  >
-                    {currentCompany.id === -1 ? "Create" : "Update"}
-                  </Button>
-                </AnimateButton>
-                </Grid>
+                    <AnimateButton>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        color="primary"
+                        // onClick={(e) => handleChange(e, 1 + parseInt(value))}
+                        onClick={(e) => {
+                          updateCompany(currentCompany.id, currentCompany);
+                        }}
+                      >
+                        {currentCompany.id === -1 ? "Create" : "Update"}
+                      </Button>
+                    </AnimateButton>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

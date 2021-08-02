@@ -8,21 +8,27 @@ import AuthGuard from "../utils/route-guard/AuthGuard";
 
 // company page routing
 const UserGroups = Loadable(
-    lazy(()=> import("../views/pages/userManagement/UserGroups"))
-)
+  lazy(() => import("../views/pages/user-management/user-groups"))
+);
 const UserRights = Loadable(
-    lazy(()=> import("../views/pages/userManagement/UserRights"))
-)
+  lazy(() => import("../views/pages/user-management/user-rights"))
+);
 const Users = Loadable(
-    lazy(()=> import("../views/pages/userManagement/Users"))
-)
+  lazy(() => import("../views/pages/user-management/users"))
+);
 
 //-----------------------|| MAIN ROUTING ||-----------------------//
 const MainRoutes = () => {
   const location = useLocation();
 
   return (
-    <Route path={["/user-manager/users", "/user-manager/groups","/user-manager/rights"]}>
+    <Route
+      path={[
+        "/user-manager/users",
+        "/user-manager/groups",
+        "/user-manager/rights",
+      ]}
+    >
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <AuthGuard>
