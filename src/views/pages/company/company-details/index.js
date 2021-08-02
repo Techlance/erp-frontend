@@ -109,7 +109,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -247,7 +247,6 @@ const CompanyDetails = () => {
                           variant="contained"
                           size="large"
                           color="error"
-                          // onClick={(e) => handleChange(e, 1 + parseInt(value))}
                           onClick={() => setShowDeleteModal(true)}
                         >
                           Delete

@@ -10,7 +10,7 @@ import PermissionsChecklist from "../../../../components/user-management/permiss
 
 //-----------------------|| User Management - Users ||-----------------------//
 
-const UserProfile = ({ current_user_account }) => {
+const UserProfile = ({ current_user_account, updateUser }) => {
   const { user } = useAuth();
 
   // constants
@@ -60,21 +60,21 @@ const UserProfile = ({ current_user_account }) => {
   useEffect(() => {
     setValues({
       name: current_user_account.name,
-      email: "",
+      email: current_user_account.email,
       password: null,
-      created_by: user.name,
-      can_create_company: true,
-      can_edit_company: true,
-      can_delete_company: true,
-      can_view_user_groups: true,
-      can_view_company: true,
-      can_create_user: true,
-      can_edit_user: true,
-      can_delete_user_groups: true,
-      can_edit_user_groups: true,
-      can_create_user_groups: true,
-      can_view_user: true,
-      can_delete_user: true,
+      created_by: current_user_account.email,
+      can_create_company: current_user_account.can_create_company,
+      can_edit_company: current_user_account.can_edit_company,
+      can_delete_company: current_user_account.can_delete_company,
+      can_view_user_groups: current_user_account.can_view_user_groups,
+      can_view_company: current_user_account.can_view_company,
+      can_create_user: current_user_account.can_create_user,
+      can_edit_user: current_user_account.can_edit_user,
+      can_delete_user_groups: current_user_account.can_delete_user_groups,
+      can_edit_user_groups: current_user_account.can_edit_user_groups,
+      can_create_user_groups: current_user_account.can_create_user_groups,
+      can_view_user: current_user_account.can_view_user,
+      can_delete_user: current_user_account.can_delete_user,
     });
   }, [current_user_account]);
 
@@ -83,6 +83,7 @@ const UserProfile = ({ current_user_account }) => {
       ...values,
       [event.target.id]: event.target.value,
     });
+    updateUser(current_user_account.id, values);
   };
 
   return (
