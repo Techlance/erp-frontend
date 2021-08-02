@@ -34,7 +34,6 @@ export const VIEW_USER = "VIEW_USER";
 export const DELETE_USER = "DELETE_USER";
 export const VIEW_USER_BY_ID = "VIEW_USER_BY_ID";
 
-
 // action - user management - user group reducer
 export const CREATE_USER_GROUP = "CREATE_USER_GROUP";
 export const EDIT_USER_GROUP = "EDIT_USER_GROUP";

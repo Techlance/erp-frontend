@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import { useDispatch } from "react-redux";
-import useAuth from "../hooks/useAuth";
+
+// reducer - state management
 import {
   COMPANIES_INITIALIZE,
   CREATE_COMPANY,
@@ -11,8 +12,11 @@ import {
   VIEW_COMPANY,
 } from "../store/actions";
 import companyReducer from "../store/companyReducer";
-import Loader from "../ui-component/Loader";
+
+// project imports
 import axios from "../utils/axios";
+import Loader from "../ui-component/Loader";
+import useAuth from "../hooks/useAuth";
 import sendNotification from "../utils/sendNotification";
 
 // constant
