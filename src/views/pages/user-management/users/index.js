@@ -27,6 +27,7 @@ import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import useCompany from "../../../../hooks/useCompany";
 import formatDate from "../../../../utils/format-date";
+import useUserPermissions from "../../../../hooks/useUserPermissions";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -113,21 +114,8 @@ function a11yProps(index) {
   };
 }
 
-// tabs option
-// let tabsOption = [
-//   {
-//     label: "CREATE",
-//     icon: <AddCircleIcon fontSize="large" />,
-//     caption: "Add A New Company",
-//   },
-// ];
 
-// const transformCompany = (companies) => {
-
-//   return
-// }
-
-//-----------------------|| PROFILE 2 ||-----------------------//
+//-----------------------|| USER MANAGEMENT - USER ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();
@@ -138,6 +126,7 @@ const CompanyDetails = () => {
     updateCompany,
     deleteCompany,
   } = useCompany();
+  const {user_accounts} = useUserPermissions()
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
 
@@ -148,6 +137,7 @@ const CompanyDetails = () => {
 
   return (
     <Grid container spacing={gridSpacing}>
+      <pre>{JSON.stringify(user_accounts, null, 2)}</pre>
       <Grid item xs={12}>
         <MainCard title="Account Settings" content={false}>
           <Grid container spacing={gridSpacing}>

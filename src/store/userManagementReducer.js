@@ -32,6 +32,7 @@ const userManagementReducer = (state, action) => {
     case VIEW_USER: {
       return {
         ...state,
+        user_accounts:action.payload
       };
     }
     case DELETE_USER: {
