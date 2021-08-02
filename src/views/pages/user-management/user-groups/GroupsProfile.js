@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 
 // material-ui
 import { Grid, TextField } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../../store/constant";
-import useAuth from "../../../../hooks/useAuth";
 
 //-----------------------|| USER Management - Group PROFILE ||-----------------------//
 
-const GroupsProfile = () => {
-  const { user } = useAuth();
-
-  const [values, setValues] = useState({
-    user_group_name: "",
-    backdated_days: "",
-    created_by: user.name,
-  });
-
+const GroupsProfile = ({ values, setValues }) => {
   const handleChange = (event) => {
     setValues({
       ...values,
@@ -27,9 +18,14 @@ const GroupsProfile = () => {
 
   return (
     <Grid container spacing={gridSpacing}>
+      <Grid>
+        <pre>{JSON.stringify(values, null, 2)}</pre>
+      </Grid>
+
       <Grid item xs={12} sm={12}>
         <TextField
           fullWidth
+          id="user_group_name"
           label="Group Name"
           value={values.user_group_name}
           InputLabelProps={{ shrink: true }}
@@ -39,6 +35,7 @@ const GroupsProfile = () => {
       <Grid item xs={12} sm={12}>
         <TextField
           fullWidth
+          id="backdated_days"
           label="Backdated Days"
           type="number"
           value={values.backdated_days}

@@ -7,6 +7,7 @@ import {
   DELETE_USER_GROUP,
   DELETE_USER_RIGHTS,
   EDIT_USER,
+  VIEW_USER_GROUP_BY_ID,
   EDIT_USER_GROUP,
   EDIT_USER_RIGHTS,
   VIEW_USER,
@@ -59,11 +60,18 @@ const userManagementReducer = (state, action) => {
     case VIEW_USER_GROUP: {
       return {
         ...state,
+        user_groups: action.payload,
       };
     }
     case DELETE_USER_GROUP: {
       return {
         ...state,
+      };
+    }
+    case VIEW_USER_GROUP_BY_ID: {
+      return {
+        ...state,
+        current_user_group: action.payload,
       };
     }
     case CREATE_USER_RIGHTS: {

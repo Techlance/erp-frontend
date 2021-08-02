@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // material-ui
@@ -17,16 +17,18 @@ import {
 } from "@material-ui/core";
 
 // project imports
-import GroupsProfile from "./GroupsProfile";
-import MainCard from "../../../../ui-component/cards/MainCard";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
+import { gridSpacing } from "../../../../store/constant";
 
 // assets
-// import Avatar1 from "../../../../assets/images/users/user-round.svg";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import useCompany from "../../../../hooks/useCompany";
-import formatDate from "../../../../utils/format-date";
+import MainCard from "../../../../ui-component/cards/MainCard";
+import GroupsProfile from "./GroupsProfile";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+
+// project imports
+import useAuth from "../../../../hooks/useAuth";
+import useUserPermissions from "../../../../hooks/useUserPermissions";
+import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -113,38 +115,60 @@ function a11yProps(index) {
   };
 }
 
-// tabs option
-// let tabsOption = [
-//   {
-//     label: "CREATE",
-//     icon: <AddCircleIcon fontSize="large" />,
-//     caption: "Add A New Company",
-//   },
-// ];
-
-// const transformCompany = (companies) => {
-
-//   return
-// }
-
-//-----------------------|| PROFILE 2 ||-----------------------//
+//-----------------------|| USER MANAGEMENT - USER GROUPS ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();
-  const {
-    companies,
-    currentCompany,
-    getSelectedCompany,
-    updateCompany,
-    deleteCompany,
-  } = useCompany();
+  const { user } = useAuth();
+
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleChange = (event, newValue) => {
+  const {
+    user_groups,
+    current_user_group,
+    getSelectedUserGroup,
+    updateUserGroup,
+    deleteUserGroup,
+  } = useUserPermissions();
+
+  const handleTabChange = (event, newValue) => {
+    console.log(newValue);
     setValue(newValue);
-    getSelectedCompany(newValue);
+    getSelectedUserGroup(newValue);
   };
+
+  // constants
+  const INIT_STATE = {
+    user_group_name: "",
+    backdated_days: "",
+    created_by: user.email,
+  };
+
+  const [values, setValues] = useState(() => {
+    if (value.id === 0) {
+      return INIT_STATE;
+    }
+    return {
+      user_group_name: current_user_group.user_group_name,
+      backdated_days: current_user_group.backdated_days,
+      created_by: current_user_group.created_by,
+    };
+  });
+
+  useEffect(() => {
+    setValues(() => {
+      if (value === 0) return INIT_STATE;
+
+      return {
+        user_group_name: current_user_group.user_group_name,
+        backdated_days: current_user_group.backdated_days,
+        created_by: current_user_group.created_by,
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current_user_group, value]);
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -155,7 +179,7 @@ const CompanyDetails = () => {
               <CardContent>
                 <Tabs
                   value={value}
-                  onChange={handleChange}
+                  onChange={handleTabChange}
                   orientation="vertical"
                   className={classes.profileTab}
                   variant="scrollable"
@@ -166,7 +190,7 @@ const CompanyDetails = () => {
                   }}
                 >
                   <Tab
-                    key={-1}
+                    key={0}
                     icon={<AddCircleIcon fontSize="large" />}
                     label={
                       <Grid container direction="column">
@@ -184,32 +208,30 @@ const CompanyDetails = () => {
                         </Typography>
                       </Grid>
                     }
-                    {...a11yProps(-1)}
+                    {...a11yProps(0)}
                   />
-                  {companies.map((tab) => (
+                  {user_groups.map((tab) => (
                     <Tab
-                      key={tab.user_group_name}
-                      value={tab.user_group_name}
-                      icon={<Avatar src={`${MEDIA_URI}${tab.logo}`} />}
+                      key={tab.id}
+                      value={tab.id}
+                      icon={<Avatar />}
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">
                             <span style={{ margin: "0 10px" }}>
-                              {`${tab.user_group_name}`}
+                              {tab.user_group_name}
                             </span>
                           </Typography>
                           <Typography
                             component="div"
                             variant="caption"
-                            sx={{ textTransform: "capitalize" }}
+                            sx={{ textTransform: "lowercase" }}
                           >
-                            <span style={{ margin: "0 10px" }}>
-                              {formatDate(tab.backdated_days)}
-                            </span>
+                            <p style={{ margin: "0 10px" }}>{tab.created_by}</p>
                           </Typography>
                         </Grid>
                       }
-                      {...a11yProps(tab.user_group_name)}
+                      {...a11yProps(tab.id)}
                     />
                   ))}
                 </Tabs>
@@ -218,7 +240,7 @@ const CompanyDetails = () => {
             <Grid item xs={12} lg={8}>
               <CardContent className={classes.cardPanels}>
                 <TabPanel value={value} index={value}>
-                  <GroupsProfile currentCompany={currentCompany} />
+                  <GroupsProfile values={values} setValues={setValues} />
                 </TabPanel>
               </CardContent>
             </Grid>
@@ -238,17 +260,14 @@ const CompanyDetails = () => {
 
               <Grid item>
                 <Grid container justifyContent="space-between" spacing={10}>
-                  {currentCompany.id !== -1 ? (
+                  {value !== 0 ? (
                     <Grid item>
                       <AnimateButton>
                         <Button
                           variant="contained"
                           size="large"
                           color="error"
-                          // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                          onClick={(e) => {
-                            deleteCompany(currentCompany.id);
-                          }}
+                          onClick={() => setShowDeleteModal(true)}
                         >
                           Delete
                         </Button>
@@ -263,10 +282,10 @@ const CompanyDetails = () => {
                         color="primary"
                         // onClick={(e) => handleChange(e, 1 + parseInt(value))}
                         onClick={(e) => {
-                          updateCompany(currentCompany.id, currentCompany);
+                          updateUserGroup(value, values);
                         }}
                       >
-                        {currentCompany.id === -1 ? "Create" : "Update"}
+                        {value === 0 ? "Create" : "Update"}
                       </Button>
                     </AnimateButton>
                   </Grid>
@@ -274,6 +293,13 @@ const CompanyDetails = () => {
               </Grid>
             </Grid>
           </CardActions>
+          <ConfirmDeleteDialog
+            open={showDeleteModal}
+            handleAgree={() => deleteUserGroup(current_user_group.id)}
+            handleClose={() => setShowDeleteModal(false)}
+            title="Are you sure?"
+            body="Are you sure you want to delete this user records? Once deleted the data can not be retrived!"
+          />
         </MainCard>
       </Grid>
     </Grid>

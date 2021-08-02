@@ -124,7 +124,6 @@ const UserAccountDetails = () => {
   const {
     user_accounts,
     current_user_account,
-    getUser,
     getSelectedUserAccount,
     updateUser,
     deleteUser,
@@ -162,7 +161,6 @@ const UserAccountDetails = () => {
 
   const [values, setValues] = useState(() => {
     if (value.id === 0) {
-      console.log("TEST");
       return INIT_STATE;
     }
     return {
@@ -331,10 +329,7 @@ const UserAccountDetails = () => {
           </CardActions>
           <ConfirmDeleteDialog
             open={showDeleteModal}
-            handleAgree={() => {
-              deleteUser(current_user_account.id);
-              getUser();
-            }}
+            handleAgree={() => deleteUser(current_user_account.id)}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
             body="Are you sure you want to delete this user records? Once deleted the data can not be retrived!"

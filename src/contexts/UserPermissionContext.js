@@ -15,6 +15,7 @@ import {
   DELETE_USER_RIGHTS,
   VIEW_USER_GROUP,
   VIEW_USER_RIGHTS,
+  VIEW_USER_GROUP_BY_ID,
 } from "../store/actions";
 import userManagementReducer from "../store/userManagementReducer";
 
@@ -27,9 +28,9 @@ import sendNotification from "../utils/sendNotification";
 // constant
 const initialState = {
   user_accounts: [],
-  current_user_account: { id: -1 },
+  current_user_account: { id: 0 },
   user_groups: [],
-  current_user_group: {},
+  current_user_group: { id: 0 },
   user_rights: [],
   current_user_right: {},
 };
@@ -46,7 +47,7 @@ export const UserPermissionProvider = ({ children }) => {
 
   useEffect(() => {
     getUser();
-    getUserGroup();
+    getUserGroups();
     getUserRights();
   }, []);
 
@@ -134,16 +135,19 @@ export const UserPermissionProvider = ({ children }) => {
 
   // ================================= USER MANAGEMENT - USER GROUP =================================
 
-  const getUserGroup = async () => {
+  const getUserGroups = async () => {
     try {
+      setLoading(true);
       const response = await axios.get("/user/get-user-group");
 
       dispatch({
         type: VIEW_USER_GROUP,
         payload: response.data.data,
       });
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -159,14 +163,15 @@ export const UserPermissionProvider = ({ children }) => {
       success: response.data.success,
       message: response.data.message,
     });
+
+    getUserGroups();
   };
 
   const updateUserGroup = async (id, data) => {
-    if (data.id === -1) {
+    if (id === 0) {
       createUserGroup(data);
     } else {
-      delete data["logo"];
-      console.log(data);
+      delete data.id;
       const response = await axios.put(`/user/edit-user-group/${id}`, data);
 
       sendNotification({
@@ -175,6 +180,8 @@ export const UserPermissionProvider = ({ children }) => {
         message: response.data.message,
       });
     }
+
+    getUserGroups();
   };
 
   const deleteUserGroup = async (id) => {
@@ -190,6 +197,21 @@ export const UserPermissionProvider = ({ children }) => {
       globalDispatch,
       success: response.data.success,
       message: response.data.message,
+    });
+
+    getUserGroups();
+  };
+
+  const getSelectedUserGroup = async (id) => {
+    if (!id) {
+      return;
+    }
+
+    const userGroup = state.user_groups.find((item) => item.id === id);
+
+    dispatch({
+      type: VIEW_USER_GROUP_BY_ID,
+      payload: userGroup,
     });
   };
 
@@ -262,16 +284,14 @@ export const UserPermissionProvider = ({ children }) => {
     <UserPermissionContext.Provider
       value={{
         ...state,
-        getUser,
-        getUserRights,
-        getUserGroup,
         createUser,
         updateUser,
-        getSelectedUserAccount,
         deleteUser,
+        getSelectedUserAccount,
         createUserGroup,
         updateUserGroup,
         deleteUserGroup,
+        getSelectedUserGroup,
         createUserRights,
         updateUserRights,
         deleteUserRights,

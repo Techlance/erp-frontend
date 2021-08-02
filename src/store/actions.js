@@ -39,6 +39,7 @@ export const CREATE_USER_GROUP = "CREATE_USER_GROUP";
 export const EDIT_USER_GROUP = "EDIT_USER_GROUP";
 export const VIEW_USER_GROUP = "VIEW_USER_GROUP";
 export const DELETE_USER_GROUP = "DELETE_USER_GROUP";
+export const VIEW_USER_GROUP_BY_ID = "VIEW_USER_GROUP_BY_ID";
 
 // action - user management - user rights reducer
 export const CREATE_USER_RIGHTS = "CREATE_USER_RIGHTS";
