@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
+
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -27,6 +28,8 @@ import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import useCompany from "../../../../hooks/useCompany";
 import formatDate from "../../../../utils/format-date";
+import UserPermissionContext from "../../../../contexts/UserPermissionContext";
+import useUserPermissions from "../../../../hooks/useUserPermissions";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -127,7 +130,7 @@ function a11yProps(index) {
 //   return
 // }
 
-//-----------------------|| PROFILE 2 ||-----------------------//
+//-----------------------|| USER MANAGEMENT - USER RIGHTS ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();
@@ -138,6 +141,8 @@ const CompanyDetails = () => {
     updateCompany,
     deleteCompany,
   } = useCompany();
+  const {user_rights} = useUserPermissions()
+
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
 
@@ -186,16 +191,16 @@ const CompanyDetails = () => {
                     }
                     {...a11yProps(-1)}
                   />
-                  {companies.map((tab) => (
+                  {user_rights.map((tab) => (
                     <Tab
-                      key={tab.company_id}
-                      value={tab.company_id}
+                      key={tab.user_group_id}
+                      value={tab.user_group_id}
                       icon={<Avatar src={`${MEDIA_URI}${tab.logo}`} />}
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">
                             <span style={{ margin: "0 10px" }}>
-                              {`${tab.company_name}`}
+                              {`${tab.user_group_id}`}
                             </span>
                           </Typography>
                           <Typography
@@ -203,13 +208,13 @@ const CompanyDetails = () => {
                             variant="caption"
                             sx={{ textTransform: "capitalize" }}
                           >
-                            <span style={{ margin: "0 10px" }}>
-                              {formatDate(tab.created_on)}
-                            </span>
+                            {/* <span style={{ margin: "0 10px" }}>
+                              {formatDate(tab.email)}
+                            </span> */}
                           </Typography>
                         </Grid>
                       }
-                      {...a11yProps(tab.company_id)}
+                      {...a11yProps(tab.user_group_id)}
                     />
                   ))}
                 </Tabs>
