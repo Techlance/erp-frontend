@@ -195,7 +195,7 @@ const UserAccountDetails = () => {
         name: current_user_account.name,
         email: current_user_account.email,
         password: null,
-        created_by: current_user_account.email,
+        created_by: current_user_account.created_by,
         can_create_company: current_user_account.can_create_company,
         can_edit_company: current_user_account.can_edit_company,
         can_delete_company: current_user_account.can_delete_company,
@@ -233,7 +233,7 @@ const UserAccountDetails = () => {
                   }}
                 >
                   <Tab
-                    key={-1}
+                    key={0}
                     icon={<AddCircleIcon fontSize="large" />}
                     label={
                       <Grid container direction="column">
@@ -251,7 +251,7 @@ const UserAccountDetails = () => {
                         </Typography>
                       </Grid>
                     }
-                    {...a11yProps(-1)}
+                    {...a11yProps(0)}
                   />
                   {user_accounts.map((tab) => (
                     <Tab
