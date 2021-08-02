@@ -189,7 +189,7 @@ export const UserPermissionProvider = ({ children }) => {
 
   const getUserRights = async () => {
     try {
-      const response = await axios.get("/user/add-user-right");
+      const response = await axios.get("/user/get-user-right");
 
       dispatch({
         type: VIEW_USER_RIGHTS,

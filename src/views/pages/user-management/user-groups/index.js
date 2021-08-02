@@ -188,14 +188,14 @@ const CompanyDetails = () => {
                   />
                   {companies.map((tab) => (
                     <Tab
-                      key={tab.company_id}
-                      value={tab.company_id}
+                      key={tab.user_group_name}
+                      value={tab.user_group_name}
                       icon={<Avatar src={`${MEDIA_URI}${tab.logo}`} />}
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">
                             <span style={{ margin: "0 10px" }}>
-                              {`${tab.company_name}`}
+                              {`${tab.user_group_name}`}
                             </span>
                           </Typography>
                           <Typography
@@ -204,12 +204,12 @@ const CompanyDetails = () => {
                             sx={{ textTransform: "capitalize" }}
                           >
                             <span style={{ margin: "0 10px" }}>
-                              {formatDate(tab.created_on)}
+                              {formatDate(tab.backdated_days)}
                             </span>
                           </Typography>
                         </Grid>
                       }
-                      {...a11yProps(tab.company_id)}
+                      {...a11yProps(tab.user_group_name)}
                     />
                   ))}
                 </Tabs>

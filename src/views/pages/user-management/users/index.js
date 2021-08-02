@@ -188,7 +188,7 @@ const CompanyDetails = () => {
                           </Typography>
                         </Grid>
                       }
-                      {...a11yProps(tab.company_id)}
+                      {...a11yProps(tab.user_id)}
                     />
                   ))}
                 </Tabs>
