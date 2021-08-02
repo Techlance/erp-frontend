@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // material-ui
@@ -23,10 +23,12 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { gridSpacing } from "../../../../store/constant";
 
 // assets
-// import Avatar1 from "../../../../assets/images/users/user-round.svg";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+
+// project imports
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
+import useAuth from "../../../../hooks/useAuth";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -117,6 +119,7 @@ function a11yProps(index) {
 
 const UserAccountDetails = () => {
   const classes = useStyles();
+  const { user } = useAuth();
 
   const {
     user_accounts,
@@ -131,10 +134,84 @@ const UserAccountDetails = () => {
   const [value, setValue] = useState(0);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleChange = (event, newValue) => {
+  const handleTabChange = (event, newValue) => {
+    console.log(newValue);
     setValue(newValue);
     getSelectedUserAccount(newValue);
   };
+
+  // constants
+  const INIT_STATE = {
+    name: "",
+    email: "",
+    password: null,
+    created_by: user.email,
+    can_create_company: true,
+    can_edit_company: true,
+    can_delete_company: true,
+    can_view_user_groups: true,
+    can_view_company: true,
+    can_create_user: true,
+    can_edit_user: true,
+    can_delete_user_groups: true,
+    can_edit_user_groups: true,
+    can_create_user_groups: true,
+    can_view_user: true,
+    can_delete_user: true,
+  };
+
+  const [values, setValues] = useState(() => {
+    if (value.id === 0) {
+      console.log("TEST");
+      return INIT_STATE;
+    }
+    return {
+      name: current_user_account.name,
+      email: current_user_account.email,
+      password: null,
+      created_by: current_user_account.created_by,
+      can_create_company: current_user_account.can_create_company,
+      can_edit_company: current_user_account.can_edit_company,
+      can_delete_company: current_user_account.can_delete_company,
+      can_view_user_groups: current_user_account.can_view_user_groups,
+      can_view_company: current_user_account.can_view_company,
+      can_create_user: current_user_account.can_create_user,
+      can_edit_user: current_user_account.can_edit_user,
+      can_delete_user_groups: current_user_account.can_delete_user_groups,
+      can_edit_user_groups: current_user_account.can_edit_user_groups,
+      can_create_user_groups: current_user_account.can_create_user_groups,
+      can_view_user: current_user_account.can_view_user,
+      can_delete_user: current_user_account.can_delete_user,
+    };
+  });
+
+  useEffect(() => {
+    setValues(() => {
+      if (value === 0) {
+        console.log("TEST");
+        return INIT_STATE;
+      }
+      return {
+        name: current_user_account.name,
+        email: current_user_account.email,
+        password: null,
+        created_by: current_user_account.email,
+        can_create_company: current_user_account.can_create_company,
+        can_edit_company: current_user_account.can_edit_company,
+        can_delete_company: current_user_account.can_delete_company,
+        can_view_user_groups: current_user_account.can_view_user_groups,
+        can_view_company: current_user_account.can_view_company,
+        can_create_user: current_user_account.can_create_user,
+        can_edit_user: current_user_account.can_edit_user,
+        can_delete_user_groups: current_user_account.can_delete_user_groups,
+        can_edit_user_groups: current_user_account.can_edit_user_groups,
+        can_create_user_groups: current_user_account.can_create_user_groups,
+        can_view_user: current_user_account.can_view_user,
+        can_delete_user: current_user_account.can_delete_user,
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current_user_account, value]);
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -145,7 +222,7 @@ const UserAccountDetails = () => {
               <CardContent>
                 <Tabs
                   value={value}
-                  onChange={handleChange}
+                  onChange={handleTabChange}
                   orientation="vertical"
                   className={classes.profileTab}
                   variant="scrollable"
@@ -204,7 +281,7 @@ const UserAccountDetails = () => {
             <Grid item xs={12} lg={8}>
               <CardContent className={classes.cardPanels}>
                 <TabPanel value={value} index={value}>
-                  <UserProfile current_user_account={current_user_account} />
+                  <UserProfile values={values} setValues={setValues} />
                 </TabPanel>
               </CardContent>
             </Grid>
@@ -224,7 +301,7 @@ const UserAccountDetails = () => {
 
               <Grid item>
                 <Grid container justifyContent="space-between" spacing={10}>
-                  {current_user_account.id !== -1 ? (
+                  {value !== 0 ? (
                     <Grid item>
                       <AnimateButton>
                         <Button
@@ -244,14 +321,9 @@ const UserAccountDetails = () => {
                         variant="contained"
                         size="large"
                         color="primary"
-                        onClick={() =>
-                          updateUser(
-                            current_user_account.id,
-                            current_user_account
-                          )
-                        }
+                        onClick={() => updateUser(value, values)}
                       >
-                        {current_user_account.id === -1 ? "Create" : "Update"}
+                        {value === 0 ? "Create" : "Update"}
                       </Button>
                     </AnimateButton>
                   </Grid>

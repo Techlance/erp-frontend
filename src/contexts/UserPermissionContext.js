@@ -74,6 +74,8 @@ export const UserPermissionProvider = ({ children }) => {
       type: CREATE_USER,
     });
 
+    getUser();
+
     sendNotification({
       globalDispatch,
       success: response.data.success,
@@ -82,7 +84,8 @@ export const UserPermissionProvider = ({ children }) => {
   };
 
   const updateUser = async (id, data) => {
-    if (data.id === -1) {
+    if (id === 0) {
+      delete data.id;
       createUser(data);
     } else {
       const response = await axios.put(`/user/edit-user/${id}`, data);
@@ -117,6 +120,8 @@ export const UserPermissionProvider = ({ children }) => {
         type: DELETE_USER,
       });
     }
+
+    getUser();
 
     sendNotification({
       globalDispatch,

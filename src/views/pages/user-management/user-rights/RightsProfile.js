@@ -54,13 +54,6 @@ const RightsProfile = () => {
     created_by: user.email,
   });
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.id]: event.target.value,
-    });
-  };
-
   const handleChecked = (event) => {
     setValues({
       ...values,
@@ -119,11 +112,10 @@ const RightsProfile = () => {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={true}
-                      onChange={handleChecked}
-                      name="can_create"
                       id="can_create"
+                      name="can_create"
                       checked={values.can_create}
+                      onChange={handleChecked}
                       color="primary"
                     />
                   }

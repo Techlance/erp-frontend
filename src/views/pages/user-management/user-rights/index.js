@@ -23,11 +23,10 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 
 // assets
-// import Avatar1 from "../../../../assets/images/users/user-round.svg";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+
+// project imports
 import useCompany from "../../../../hooks/useCompany";
-import formatDate from "../../../../utils/format-date";
-import UserPermissionContext from "../../../../contexts/UserPermissionContext";
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 
 // style constant
@@ -110,36 +109,17 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
-// tabs option
-// let tabsOption = [
-//   {
-//     label: "CREATE",
-//     icon: <AddCircleIcon fontSize="large" />,
-//     caption: "Add A New Company",
-//   },
-// ];
-
-// const transformCompany = (companies) => {
-
-//   return
-// }
 
 //-----------------------|| USER MANAGEMENT - USER RIGHTS ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();
-  const {
-    companies,
-    currentCompany,
-    getSelectedCompany,
-    updateCompany,
-    deleteCompany,
-  } = useCompany();
+  const { currentCompany, getSelectedCompany, updateCompany, deleteCompany } =
+    useCompany();
   const { user_rights } = useUserPermissions();
 
   const customization = useSelector((state) => state.customization);
@@ -170,7 +150,7 @@ const CompanyDetails = () => {
                   }}
                 >
                   <Tab
-                    key={-1}
+                    key={0}
                     icon={<AddCircleIcon fontSize="large" />}
                     label={
                       <Grid container direction="column">
@@ -188,7 +168,7 @@ const CompanyDetails = () => {
                         </Typography>
                       </Grid>
                     }
-                    {...a11yProps(-1)}
+                    {...a11yProps(0)}
                   />
                   {user_rights.map((tab) => (
                     <Tab

@@ -5,17 +5,12 @@ import { Grid, TextField } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../../store/constant";
-
-// assets
-import useCompany from "../../../../hooks/useCompany";
 import useAuth from "../../../../hooks/useAuth";
 
 //-----------------------|| USER Management - Group PROFILE ||-----------------------//
 
 const GroupsProfile = () => {
   const { user } = useAuth();
-
-  const { currentCompany, updateForm } = useCompany();
 
   const [values, setValues] = useState({
     user_group_name: "",
