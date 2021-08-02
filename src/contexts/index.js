@@ -8,9 +8,7 @@ const AppContextProvider = ({ children }) => {
   return (
     <JWTProvider>
       <CompanyProvider>
-        <UserPermissionProvider>
-          {children}
-        </UserPermissionProvider>
+        <UserPermissionProvider>{children}</UserPermissionProvider>
       </CompanyProvider>
     </JWTProvider>
   );

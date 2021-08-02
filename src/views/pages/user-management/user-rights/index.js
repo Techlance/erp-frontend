@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -141,7 +140,7 @@ const CompanyDetails = () => {
     updateCompany,
     deleteCompany,
   } = useCompany();
-  const {user_rights} = useUserPermissions()
+  const { user_rights } = useUserPermissions();
 
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);

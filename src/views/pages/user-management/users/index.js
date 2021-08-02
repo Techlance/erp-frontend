@@ -26,7 +26,6 @@ import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 // import Avatar1 from "../../../../assets/images/users/user-round.svg";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import useCompany from "../../../../hooks/useCompany";
-import formatDate from "../../../../utils/format-date";
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 
 // style constant
@@ -114,30 +113,24 @@ function a11yProps(index) {
   };
 }
 
-
 //-----------------------|| USER MANAGEMENT - USER ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();
-  const {
-    companies,
-    currentCompany,
-    getSelectedCompany,
-    updateCompany,
-    deleteCompany,
-  } = useCompany();
-  const {user_accounts} = useUserPermissions()
+  const { currentCompany, updateCompany, deleteCompany } = useCompany();
+
+  const { user_accounts, current_user_account, getSelectedUserAccount } =
+    useUserPermissions();
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    getSelectedCompany(newValue);
+    getSelectedUserAccount(newValue);
   };
 
   return (
     <Grid container spacing={gridSpacing}>
-      <pre>{JSON.stringify(user_accounts, null, 2)}</pre>
       <Grid item xs={12}>
         <MainCard title="Account Settings" content={false}>
           <Grid container spacing={gridSpacing}>
@@ -184,18 +177,14 @@ const CompanyDetails = () => {
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">
-                            <span style={{ margin: "0 10px" }}>
-                              {`${tab.name}`}
-                            </span>
+                            <span style={{ margin: "0 10px" }}>{tab.name}</span>
                           </Typography>
                           <Typography
                             component="div"
                             variant="caption"
-                            sx={{ textTransform: "capitalize" }}
+                            sx={{ textTransform: "lowercase" }}
                           >
-                            <span style={{ margin: "0 10px" }}>
-                              {formatDate(tab.created_on)}
-                            </span>
+                            <p style={{ margin: "0 10px" }}>{tab.email}</p>
                           </Typography>
                         </Grid>
                       }
@@ -208,7 +197,7 @@ const CompanyDetails = () => {
             <Grid item xs={12} lg={8}>
               <CardContent className={classes.cardPanels}>
                 <TabPanel value={value} index={value}>
-                  <UserProfile currentCompany={currentCompany} />
+                  <UserProfile current_user_account={current_user_account} />
                 </TabPanel>
               </CardContent>
             </Grid>
@@ -228,7 +217,7 @@ const CompanyDetails = () => {
 
               <Grid item>
                 <Grid container justifyContent="space-between" spacing={10}>
-                  {currentCompany.id !== -1 ? (
+                  {current_user_account.id !== -1 ? (
                     <Grid item>
                       <AnimateButton>
                         <Button
@@ -237,7 +226,7 @@ const CompanyDetails = () => {
                           color="error"
                           // onClick={(e) => handleChange(e, 1 + parseInt(value))}
                           onClick={(e) => {
-                            deleteCompany(currentCompany.id);
+                            deleteCompany(current_user_account.id);
                           }}
                         >
                           Delete
@@ -253,10 +242,13 @@ const CompanyDetails = () => {
                         color="primary"
                         // onClick={(e) => handleChange(e, 1 + parseInt(value))}
                         onClick={(e) => {
-                          updateCompany(currentCompany.id, currentCompany);
+                          updateCompany(
+                            current_user_account.id,
+                            current_user_account
+                          );
                         }}
                       >
-                        {currentCompany.id === -1 ? "Create" : "Update"}
+                        {current_user_account.id === -1 ? "Create" : "Update"}
                       </Button>
                     </AnimateButton>
                   </Grid>

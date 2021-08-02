@@ -32,7 +32,7 @@ const userManagementReducer = (state, action) => {
     case VIEW_USER: {
       return {
         ...state,
-        user_accounts:action.payload
+        user_accounts: action.payload,
       };
     }
     case DELETE_USER: {
@@ -43,6 +43,7 @@ const userManagementReducer = (state, action) => {
     case VIEW_USER_BY_ID: {
       return {
         ...state,
+        current_user_account: action.payload.data,
       };
     }
     case CREATE_USER_GROUP: {

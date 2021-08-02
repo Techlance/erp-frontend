@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // material-ui
 import { Grid, TextField } from "@material-ui/core";
@@ -10,10 +10,11 @@ import PermissionsChecklist from "../../../../components/user-management/permiss
 
 //-----------------------|| User Management - Users ||-----------------------//
 
-const UserProfile = () => {
+const UserProfile = ({ current_user_account }) => {
   const { user } = useAuth();
 
-  const [values, setValues] = useState({
+  // constants
+  const INIT_STATE = {
     name: "",
     email: "",
     password: null,
@@ -30,7 +31,52 @@ const UserProfile = () => {
     can_create_user_groups: true,
     can_view_user: true,
     can_delete_user: true,
+  };
+
+  const [values, setValues] = useState(() => {
+    if (current_user_account) {
+      return {
+        name: current_user_account.name,
+        email: "",
+        password: null,
+        created_by: user.name,
+        can_create_company: true,
+        can_edit_company: true,
+        can_delete_company: true,
+        can_view_user_groups: true,
+        can_view_company: true,
+        can_create_user: true,
+        can_edit_user: true,
+        can_delete_user_groups: true,
+        can_edit_user_groups: true,
+        can_create_user_groups: true,
+        can_view_user: true,
+        can_delete_user: true,
+      };
+    }
+    return INIT_STATE;
   });
+
+  useEffect(() => {
+    setValues({
+      name: current_user_account.name,
+      email: "",
+      password: null,
+      created_by: user.name,
+      can_create_company: true,
+      can_edit_company: true,
+      can_delete_company: true,
+      can_view_user_groups: true,
+      can_view_company: true,
+      can_create_user: true,
+      can_edit_user: true,
+      can_delete_user_groups: true,
+      can_edit_user_groups: true,
+      can_create_user_groups: true,
+      can_view_user: true,
+      can_delete_user: true,
+    });
+  }, [current_user_account]);
 
   const handleChange = (event) => {
     setValues({
@@ -45,7 +91,7 @@ const UserProfile = () => {
         <pre>{JSON.stringify(values, null, 2)}</pre>
       </Grid>
 
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={6} sx={{ textTransform: "capitalize" }}>
         <TextField
           fullWidth
           id="name"
@@ -53,6 +99,7 @@ const UserProfile = () => {
           value={values.name}
           InputLabelProps={{ shrink: true }}
           onChange={handleChange}
+          sx={{ textTransform: "capitalize" }}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
