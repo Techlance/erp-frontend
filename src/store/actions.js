@@ -27,5 +27,25 @@ export const SET_FONT_FAMILY = "@customization/SET_FONT_FAMILY";
 export const SET_BORDER_RADIUS = "@customization/SET_BORDER_RADIUS";
 export const SET_OUTLINED_FILLED = "@customization/SET_OUTLINED_FILLED";
 
+// action - user management - user reducer
+export const CREATE_USER = "CREATE_USER";
+export const EDIT_USER = "EDIT_USER";
+export const VIEW_USER = "VIEW_USER";
+export const DELETE_USER = "DELETE_USER";
+export const VIEW_USER_BY_ID = "VIEW_USER_BY_ID";
+
+
+// action - user management - user group reducer
+export const CREATE_USER_GROUP = "CREATE_USER_GROUP";
+export const EDIT_USER_GROUP = "EDIT_USER_GROUP";
+export const VIEW_USER_GROUP = "VIEW_USER_GROUP";
+export const DELETE_USER_GROUP = "DELETE_USER_GROUP";
+
+// action - user management - user rights reducer
+export const CREATE_USER_RIGHTS = "CREATE_USER_RIGHTS";
+export const EDIT_USER_RIGHTS = "EDIT_USER_RIGHTS";
+export const VIEW_USER_RIGHTS = "VIEW_USER_RIGHTS";
+export const DELETE_USER_RIGHTS = "DELETE_USER_RIGHTS";
+
 // action - snackbar
 export const SNACKBAR_OPEN = "@snackbar/SNACKBAR_OPEN";
