@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useReducer, useState } from "react";
 
 // reducer - state management
 import {
@@ -26,9 +26,8 @@ import sendNotification from "../utils/sendNotification";
 
 // constant
 const initialState = {
-  isInitialized: true,
   user_accounts: [],
-  current_user_account: {},
+  current_user_account: { id: -1 },
   user_groups: [],
   current_user_group: {},
   user_rights: [],
@@ -43,6 +42,8 @@ export const UserPermissionProvider = ({ children }) => {
   const globalDispatch = useDispatch();
   const [state, dispatch] = useReducer(userManagementReducer, initialState);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getUser();
     getUserGroup();
@@ -53,14 +54,16 @@ export const UserPermissionProvider = ({ children }) => {
 
   const getUser = async () => {
     try {
+      setLoading(true);
       const response = await axios.get("/user/get-users");
-      console.log(response.data);
       dispatch({
         type: VIEW_USER,
         payload: response.data.data,
       });
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -82,8 +85,6 @@ export const UserPermissionProvider = ({ children }) => {
     if (data.id === -1) {
       createUser(data);
     } else {
-      delete data["logo"];
-      console.log(data);
       const response = await axios.put(`/user/edit-user/${id}`, data);
 
       sendNotification({
@@ -129,7 +130,7 @@ export const UserPermissionProvider = ({ children }) => {
   const getUserGroup = async () => {
     try {
       const response = await axios.get("/user/get-user-group");
-      console.log(response.data);
+
       dispatch({
         type: VIEW_USER_GROUP,
         payload: response.data.data,
@@ -246,7 +247,7 @@ export const UserPermissionProvider = ({ children }) => {
     });
   };
 
-  if (!state.isInitialized) {
+  if (loading) {
     return <Loader />;
   }
 
@@ -254,6 +255,7 @@ export const UserPermissionProvider = ({ children }) => {
     <UserPermissionContext.Provider
       value={{
         ...state,
+        getUser,
         getUserRights,
         getUserGroup,
         createUser,

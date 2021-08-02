@@ -20,13 +20,13 @@ import {
 import UserProfile from "./UserProfile";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
+import { gridSpacing } from "../../../../store/constant";
 
 // assets
 // import Avatar1 from "../../../../assets/images/users/user-round.svg";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import useCompany from "../../../../hooks/useCompany";
 import useUserPermissions from "../../../../hooks/useUserPermissions";
+import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -108,21 +108,28 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
 //-----------------------|| USER MANAGEMENT - USER ||-----------------------//
 
-const CompanyDetails = () => {
+const UserAccountDetails = () => {
   const classes = useStyles();
-  const { currentCompany, updateCompany, deleteCompany } = useCompany();
 
-  const { user_accounts, current_user_account, getSelectedUserAccount } =
-    useUserPermissions();
+  const {
+    user_accounts,
+    current_user_account,
+    getUser,
+    getSelectedUserAccount,
+    updateUser,
+    deleteUser,
+  } = useUserPermissions();
+
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -173,7 +180,7 @@ const CompanyDetails = () => {
                     <Tab
                       key={tab.id}
                       value={tab.id}
-                      icon={<Avatar src={`${MEDIA_URI}${tab.logo}`} />}
+                      icon={<Avatar />}
                       label={
                         <Grid container direction="column">
                           <Typography variant="subtitle1" color="inherit">
@@ -224,10 +231,7 @@ const CompanyDetails = () => {
                           variant="contained"
                           size="large"
                           color="error"
-                          // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                          onClick={(e) => {
-                            deleteCompany(current_user_account.id);
-                          }}
+                          onClick={() => setShowDeleteModal(true)}
                         >
                           Delete
                         </Button>
@@ -240,13 +244,12 @@ const CompanyDetails = () => {
                         variant="contained"
                         size="large"
                         color="primary"
-                        // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                        onClick={(e) => {
-                          updateCompany(
+                        onClick={() =>
+                          updateUser(
                             current_user_account.id,
                             current_user_account
-                          );
-                        }}
+                          )
+                        }
                       >
                         {current_user_account.id === -1 ? "Create" : "Update"}
                       </Button>
@@ -256,10 +259,20 @@ const CompanyDetails = () => {
               </Grid>
             </Grid>
           </CardActions>
+          <ConfirmDeleteDialog
+            open={showDeleteModal}
+            handleAgree={() => {
+              deleteUser(current_user_account.id);
+              getUser();
+            }}
+            handleClose={() => setShowDeleteModal(false)}
+            title="Are you sure?"
+            body="Are you sure you want to delete this user records? Once deleted the data can not be retrived!"
+          />
         </MainCard>
       </Grid>
     </Grid>
   );
 };
 
-export default CompanyDetails;
+export default UserAccountDetails;
