@@ -9,11 +9,12 @@ import { CardContent, Grid, Typography } from "@material-ui/core";
 import useCompany from "../../../hooks/useCompany";
 import Avatar from "./../../../ui-component/extended/Avatar";
 import MainCard from "./../../../ui-component/cards/MainCard";
-import { gridSpacing, MEDIA_URI } from "./../../../store/constant";
+import { gridSpacing } from "./../../../store/constant";
 import formatDate from "../../../utils/format-date";
 
 // assets
 import BusinessCenter from "@material-ui/icons/BusinessCenter";
+import config from "../../../config";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,7 @@ const SelectCompany = ({ title }) => {
               >
                 <Grid item>
                   <div className={classes.userCoverMain}>
-                    <Avatar src={`${MEDIA_URI}${company.logo}`}>
+                    <Avatar src={`${config.media_uri}${company.logo}`}>
                       <BusinessCenter />
                     </Avatar>
                   </div>

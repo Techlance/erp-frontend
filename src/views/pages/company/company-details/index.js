@@ -19,7 +19,7 @@ import {
 // project imports
 import CompanyProfile from "./CompanyProfile";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
+import { gridSpacing} from "../../../../store/constant";
 import useCompany from "../../../../hooks/useCompany";
 import useAuth from "../../../../hooks/useAuth";
 import formatDate from "../../../../utils/format-date";
@@ -28,6 +28,7 @@ import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 // assets
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import MainCard from "../../../../ui-component/cards/MainCard";
+import config from "../../../../config";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -260,7 +261,7 @@ const CompanyDetails = () => {
                       value={tab.company_id}
                       icon={
                         <Avatar
-                          src={`${MEDIA_URI}${tab.logo}`}
+                          src={`${config.media_uri}${tab.logo}`}
                           alt={tab.company_name}
                         />
                       }

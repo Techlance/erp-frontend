@@ -16,9 +16,10 @@ import Avatar from "../../../../ui-component/extended/Avatar";
 import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
 
 // project imports
-import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
+import { gridSpacing } from "../../../../store/constant";
 import AddCurrenyDialog from "../../../../components/company/AddCurrencyDialog";
 import CurrencySelect from "../../../../components/company/CurrencySelect";
+import config from "../../../../config";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +77,7 @@ const CompanyProfile = ({ values, setValues }) => {
           <Grid item>
             <Avatar
               alt={values.company_name}
-              src={`${MEDIA_URI}${values.logo}`}
+              src={`${config.media_uri}${values.logo}`}
               className={classes.userAvatar}
             />
           </Grid>
