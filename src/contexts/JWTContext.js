@@ -10,6 +10,8 @@ import accountReducer from "../store/accountReducer";
 // project imports
 import axios from "../utils/axios";
 import Loader from "../ui-component/Loader";
+import sendNotification from "../utils/sendNotification";
+import { useDispatch } from "react-redux";
 
 // constant
 const initialState = {
@@ -40,11 +42,11 @@ const setSession = (accessToken) => {
 
 const JWTContext = createContext({
   ...initialState,
-  login: () => Promise.resolve(),
-  logout: () => {},
 });
 
 export const JWTProvider = ({ children }) => {
+  const globalDispatch = useDispatch();
+
   const [state, dispatch] = useReducer(accountReducer, initialState);
 
   const login = async (email, password) => {
@@ -53,14 +55,27 @@ export const JWTProvider = ({ children }) => {
       password,
     });
 
-    const { accessToken, user } = response.data.data;
-    setSession(accessToken);
-    dispatch({
-      type: LOGIN,
-      payload: {
-        user,
-      },
-    });
+    if (response.data.success) {
+      const { accessToken, user } = response.data.data;
+      setSession(accessToken);
+      dispatch({
+        type: LOGIN,
+        payload: {
+          user,
+        },
+      });
+      sendNotification({
+        globalDispatch,
+        success: response.data.success,
+        message: response.data.message,
+      });
+    } else {
+      sendNotification({
+        globalDispatch,
+        success: response.data.success,
+        message: response.data.message,
+      });
+    }
   };
 
   const logout = () => {
