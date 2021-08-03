@@ -27,10 +27,7 @@ const companyReducer = (state, action) => {
     case VIEW_COMPANY: {
       return {
         ...state,
-        currentCompany: {
-          ...action.payload.data,
-          base_currency: action.payload.data.base_currency.id,
-        },
+        current_company: action.payload,
       };
     }
 
@@ -44,8 +41,8 @@ const companyReducer = (state, action) => {
     case UPDATE_FORM: {
       return {
         ...state,
-        currentCompany: {
-          ...state.currentCompany,
+        current_company: {
+          ...state.current_company,
           ...action.payload.data,
         },
       };
@@ -57,15 +54,15 @@ const companyReducer = (state, action) => {
       companyCopy.forEach((element, index) => {
         console.log(element);
         console.log(
-          "emenet" + element.company_id + " " + state.currentCompany.id
+          "emenet" + element.company_id + " " + state.current_company.id
         );
-        if (element.company_id === state.currentCompany.id) {
+        if (element.company_id === state.current_company.id) {
           delete companyCopy[index];
         }
       });
       return {
         ...state,
-        currentCompany: action.payload.data,
+        current_company: action.payload.data,
         companies: companyCopy,
       };
     }

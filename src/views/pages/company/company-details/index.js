@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // material-ui
@@ -18,15 +18,16 @@ import {
 
 // project imports
 import CompanyProfile from "./CompanyProfile";
-import MainCard from "../../../../ui-component/cards/MainCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
 import useCompany from "../../../../hooks/useCompany";
+import useAuth from "../../../../hooks/useAuth";
 import formatDate from "../../../../utils/format-date";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 
 // assets
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import MainCard from "../../../../ui-component/cards/MainCard";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -117,21 +118,96 @@ function a11yProps(index) {
 
 const CompanyDetails = () => {
   const classes = useStyles();
+
+  const { user } = useAuth();
+
   const {
     companies,
-    currentCompany,
+    current_company,
     getSelectedCompany,
     updateCompany,
     deleteCompany,
   } = useCompany();
+
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleChange = (event, newValue) => {
+  const handleTabChange = (event, newValue) => {
+    console.log(newValue);
     setValue(newValue);
     getSelectedCompany(newValue);
   };
+
+  // constants
+  const INIT_STATE = {
+    id: 0,
+    company_name: "",
+    address: "",
+    country: "",
+    state: "",
+    email: "",
+    website: "",
+    contact_no: "",
+    cr_no: "",
+    registration_no: "",
+    tax_id_no: "",
+    vat_id_no: "",
+    year_start_date: "",
+    year_end_date: "",
+    created_by: user.email,
+  };
+
+  const [values, setValues] = useState(() => {
+    if (value === 0) {
+      return INIT_STATE;
+    }
+
+    return {
+      id: current_company.id,
+      company_name: current_company.company_name,
+      address: "",
+      country: "",
+      state: "",
+      email: "",
+      website: "",
+      contact_no: "",
+      cr_no: "",
+      registration_no: "",
+      tax_id_no: "",
+      vat_id_no: "",
+      year_start_date: "",
+      year_end_date: "",
+      created_by: current_company.created_by,
+    };
+  });
+
+  useEffect(() => {
+    setValues(() => {
+      if (value === 0) {
+        return INIT_STATE;
+      }
+
+      return {
+        id: current_company.id,
+        company_name: current_company.company_name,
+        address: "",
+        country: "",
+        state: "",
+        email: "",
+        website: "",
+        contact_no: "",
+        cr_no: "",
+        registration_no: "",
+        tax_id_no: "",
+        vat_id_no: "",
+        year_start_date: "",
+        year_end_date: "",
+        created_by: current_company.created_by,
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current_company, value]);
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -142,7 +218,7 @@ const CompanyDetails = () => {
               <CardContent>
                 <Tabs
                   value={value}
-                  onChange={handleChange}
+                  onChange={handleTabChange}
                   orientation="vertical"
                   className={classes.profileTab}
                   variant="scrollable"
@@ -153,7 +229,7 @@ const CompanyDetails = () => {
                   }}
                 >
                   <Tab
-                    key={-1}
+                    key={0}
                     icon={<AddCircleIcon fontSize="large" />}
                     label={
                       <Grid container direction="column">
@@ -171,7 +247,7 @@ const CompanyDetails = () => {
                         </Typography>
                       </Grid>
                     }
-                    {...a11yProps(-1)}
+                    {...a11yProps(0)}
                   />
                   {companies.map((tab) => (
                     <Tab
@@ -210,7 +286,7 @@ const CompanyDetails = () => {
             <Grid item xs={12} lg={8}>
               <CardContent className={classes.cardPanels}>
                 <TabPanel value={value} index={value}>
-                  <CompanyProfile />
+                  <CompanyProfile values={values} setValues={setValues} />
                 </TabPanel>
               </CardContent>
             </Grid>
@@ -219,7 +295,7 @@ const CompanyDetails = () => {
           <CardActions>
             <Grid container justifyContent="space-between" spacing={0}>
               <Grid item>
-                {value >= -1 && (
+                {value >= 0 && (
                   <AnimateButton>
                     <Button variant="outlined" size="large" color="primary">
                       Back
@@ -230,7 +306,7 @@ const CompanyDetails = () => {
 
               <Grid item>
                 <Grid container justifyContent="space-between" spacing={10}>
-                  {currentCompany.id !== -1 ? (
+                  {value !== 0 ? (
                     <Grid item>
                       <AnimateButton>
                         <Button
@@ -252,10 +328,10 @@ const CompanyDetails = () => {
                         color="primary"
                         // onClick={(e) => handleChange(e, 1 + parseInt(value))}
                         onClick={(e) => {
-                          updateCompany(currentCompany.id, currentCompany);
+                          updateCompany(value, values);
                         }}
                       >
-                        {currentCompany.id === -1 ? "Create" : "Update"}
+                        {value === 0 ? "Create" : "Update"}
                       </Button>
                     </AnimateButton>
                   </Grid>
@@ -266,11 +342,11 @@ const CompanyDetails = () => {
           <ConfirmDeleteDialog
             open={showDeleteModal}
             handleAgree={() => {
-              deleteCompany(currentCompany.id);
+              deleteCompany(value);
             }}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
-            body="Are you sure you want to delete this company records? Once deleted the data can not be retrived!"
+            body="Are you sure you want to delete this Company records? Once deleted the data can not be retrived!"
           />
         </MainCard>
       </Grid>

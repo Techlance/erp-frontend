@@ -5,7 +5,7 @@ import { Grid, TextField } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../../store/constant";
-import PermissionsChecklist from "../../../../components/user-management/permissions-checklist";
+import PermissionsChecklist from "../../../../components/user-management/PermissionChecklist";
 
 //-----------------------|| User Management - Users ||-----------------------//
 

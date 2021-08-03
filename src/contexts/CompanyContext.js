@@ -6,7 +6,6 @@ import {
   COMPANIES_INITIALIZE,
   CREATE_COMPANY,
   DELETE_COMPANY,
-  GET_CURRENCY,
   GET_USER_COMPANIES,
   UPDATE_FORM,
   VIEW_COMPANY,
@@ -23,8 +22,8 @@ import sendNotification from "../utils/sendNotification";
 const initialState = {
   isInitialized: false,
   companies: [],
-  currentCompany: {
-    id: -1,
+  current_company: {
+    id: 0,
     company_name: "",
     address: "",
     country: "",
@@ -32,7 +31,7 @@ const initialState = {
     email: "",
     website: "",
     contact_no: "",
-    base_currency: 1,
+    base_currency: { id: 0 },
     cr_no: "",
     registration_no: "",
     tax_id_no: "",
@@ -41,7 +40,6 @@ const initialState = {
     year_end_date: "",
     created_by: "",
   },
-  currency: [],
 };
 
 export const CompanyContext = createContext({
@@ -66,22 +64,13 @@ export const CompanyProvider = ({ children }) => {
             companies: companyResponse.data.data.companies,
           },
         });
-
-        const currencyResponse = await axios.get("/company/get-currency");
-
-        dispatch({
-          type: GET_CURRENCY,
-          payload: {
-            data: currencyResponse.data.data,
-          },
-        });
       } else {
         dispatch({
           type: COMPANIES_INITIALIZE,
           payload: {
             isInitialized: true,
             companies: [],
-            currentCompany: {},
+            current_company: {},
           },
         });
       }
@@ -92,7 +81,7 @@ export const CompanyProvider = ({ children }) => {
         payload: {
           isInitialized: false,
           companies: [],
-          currentCompany: {},
+          current_company: {},
         },
       });
     }
@@ -102,27 +91,14 @@ export const CompanyProvider = ({ children }) => {
     if (!id) {
       dispatch({
         type: VIEW_COMPANY,
-        payload: {
-          data: initialState.currentCompany,
-        },
+        payload: initialState.current_company,
       });
     } else {
       const response = await axios.get(`/company/view-company/${id}`);
 
       dispatch({
         type: VIEW_COMPANY,
-        payload: {
-          data: response.data.data,
-        },
-      });
-
-      const currencyResponse = await axios.get("/company/get-currency");
-
-      dispatch({
-        type: GET_CURRENCY,
-        payload: {
-          data: currencyResponse.data.data,
-        },
+        payload: response.data.data,
       });
     }
   };
@@ -145,7 +121,7 @@ export const CompanyProvider = ({ children }) => {
     // data.base_currency = data.base_currency.id
     data.created_by = "chirayu";
     // console.log(data)
-    if (data.id === -1) {
+    if (id === 0) {
       createCompany(data);
     } else {
       delete data["logo"];
@@ -197,22 +173,13 @@ export const CompanyProvider = ({ children }) => {
       message: response.data.message,
     });
 
-    const currencyResponse = await axios.get("/company/get-currency");
-
-    dispatch({
-      type: GET_CURRENCY,
-      payload: {
-        data: currencyResponse.data.data,
-      },
-    });
-
     next();
   };
 
   useEffect(() => {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   if (!state.isInitialized) {
     return <Loader />;

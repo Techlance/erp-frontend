@@ -9,18 +9,12 @@ import useRequest from "../../hooks/useRequest";
 
 //-----------------------|| TRANSACTION SELECT ||-----------------------//
 
-const UserGroupsSelect = ({
-  captionLabel,
-  formState,
-
-  selected,
-
-  onChange,
-}) => {
+const UserGroupsSelect = ({ captionLabel, formState, selected, onChange }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
     return null;
   });
+
   const errorState = formState === "error" ? true : false;
 
   const [getTransactions, , , data] = useRequest({

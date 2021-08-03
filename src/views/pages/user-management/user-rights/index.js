@@ -151,6 +151,7 @@ const CompanyDetails = () => {
     if (value === 0) {
       return INIT_STATE;
     }
+
     return {
       user_group_id: current_user_right.user_group_id,
       transaction_id: current_user_right.transaction_id,
