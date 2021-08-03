@@ -101,7 +101,7 @@ const JWTLogin = (props, { ...others }) => {
             variant="outlined"
           >
             <InputLabel htmlFor="outlined-adornment-email-login">
-              Email Address / Username
+              Email Address
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-email-login"
