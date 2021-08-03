@@ -99,6 +99,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "company_name"
           label="Company Name"
           value={values.company_name}
           InputLabelProps={{ shrink: true }}
@@ -108,6 +109,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "address"
           label="Address"
           value={values.address}
           InputLabelProps={{ shrink: true }}
@@ -117,6 +119,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "country"
           label="Country"
           value={values.country}
           InputLabelProps={{ shrink: true }}
@@ -126,6 +129,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "state"
           label="State"
           value={values.state}
           InputLabelProps={{ shrink: true }}
@@ -135,6 +139,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "email"
           InputLabelProps={{ shrink: true }}
           label="Email"
           type="email"
@@ -145,6 +150,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "website"
           label="Website"
           InputLabelProps={{ shrink: true }}
           value={values.website}
@@ -154,6 +160,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "number"
           label="Contact Number"
           type="number"
           value={values.contact_no}
@@ -186,6 +193,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "cr_no"
           label="CR. No."
           InputLabelProps={{ shrink: true }}
           value={values.cr_no}
@@ -195,6 +203,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "registration_no"
           label="Registration No."
           value={values.registration_no}
           InputLabelProps={{ shrink: true }}
@@ -204,6 +213,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "tax_id_no"
           label="Tax ID No."
           InputLabelProps={{ shrink: true }}
           value={values.tax_id_no}
@@ -213,6 +223,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "vat_id_no"
           label="VAT ID No."
           InputLabelProps={{ shrink: true }}
           value={values.vat_id_no}
@@ -222,6 +233,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "year_start_date"
           label="Year Start Date"
           InputLabelProps={{ shrink: true }}
           type="date"
@@ -232,10 +244,11 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          id = "year_end_date"
           label="Year End Date"
           InputLabelProps={{ shrink: true }}
           type="date"
-          InputProps={{ inputProps: { min: values.year_start_date } }}
+          InputProps={{ inputProps: { min: values.year_end_date } }}
           value={values.year_end_date}
           onChange={handleChange}
         />
