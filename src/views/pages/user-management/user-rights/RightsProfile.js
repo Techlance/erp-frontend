@@ -19,7 +19,6 @@ const RightsProfile = ({ values, setValues }) => {
   };
 
   const handleSelect = (key, value) => {
-    console.log(value);
     setValues({
       ...values,
       [key]: value,
@@ -35,12 +34,17 @@ const RightsProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <UserGroupsSelect
           captionLabel="User Group Name"
+          selected={values.user_group_id}
           onChange={handleSelect}
         />
       </Grid>
 
       <Grid item xs={12} sm={6}>
-        <TransactionSelect captionLabel="Transaction" onChange={handleSelect} />
+        <TransactionSelect
+          captionLabel="Transaction"
+          selected={values.transaction_id}
+          onChange={handleSelect}
+        />
       </Grid>
 
       <Grid item xs={12} sm={6}>

@@ -1,37 +1,17 @@
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // material-ui
-import {
-  Divider,
-  FormControl,
-  InputAdornment,
-  MenuItem,
-  TextField,
-} from "@material-ui/core";
+import { FormControl, MenuItem, TextField } from "@material-ui/core";
 import useRequest from "../../hooks/useRequest";
 
 //-----------------------|| USRT GROUPS SELECT ||-----------------------//
 
-const UserGroupsSelect = ({
-  captionLabel,
-  formState,
-  iconPrimary,
-  iconSecondary,
-  selected,
-  textPrimary,
-  textSecondary,
-  onChange,
-}) => {
-  const IconPrimary = iconPrimary;
-  const primaryIcon = iconPrimary ? (
-    <IconPrimary fontSize="small" sx={{ color: "grey.700" }} />
-  ) : null;
-
-  const IconSecondary = iconSecondary;
-  const secondaryIcon = iconSecondary ? (
-    <IconSecondary fontSize="small" sx={{ color: "grey.700" }} />
-  ) : null;
+const UserGroupsSelect = ({ captionLabel, formState, selected, onChange }) => {
+  const [current, setCurrent] = useState(() => {
+    if (selected) return selected.id;
+    return null;
+  });
 
   const errorState = formState === "error" ? true : false;
 
@@ -41,13 +21,22 @@ const UserGroupsSelect = ({
   });
 
   useEffect(() => {
-    console.log(selected);
     getUserGroups();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setCurrent(() => {
+      if (selected) return selected.id;
+      return null;
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
+
   const handleChange = (event) => {
-    onChange("user_group_id", event.target.value);
+    const item = data.find((option) => option.id === event.target.value);
+    onChange("user_group_id", item);
   };
 
   return (
@@ -57,44 +46,13 @@ const UserGroupsSelect = ({
         select
         fullWidth
         label={captionLabel}
-        value={selected}
+        value={current}
         onChange={handleChange}
         variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <React.Fragment>
-              {primaryIcon && (
-                <InputAdornment position="start">{primaryIcon}</InputAdornment>
-              )}
-              {textPrimary && (
-                <React.Fragment>
-                  <InputAdornment position="start">
-                    {textPrimary}
-                  </InputAdornment>
-                  <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          ),
-          endAdornment: (
-            <React.Fragment>
-              {secondaryIcon && (
-                <InputAdornment position="end">{secondaryIcon}</InputAdornment>
-              )}
-              {textSecondary && (
-                <React.Fragment>
-                  <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                  <InputAdornment position="end">
-                    {textSecondary}
-                  </InputAdornment>
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          ),
-        }}
+        InputLabelProps={{ shrink: true }}
       >
         {data.map((option, index) => (
-          <MenuItem key={index} value={option}>
+          <MenuItem key={index} value={option.id}>
             {`${option.user_group_name}`.toUpperCase()}
           </MenuItem>
         ))}

@@ -218,8 +218,6 @@ export const UserPermissionProvider = ({ children }) => {
       setLoading(true);
       const response = await axios.get("/user/get-user-right");
 
-      console.log(response.data.data);
-
       dispatch({
         type: VIEW_USER_RIGHTS,
         payload: response.data.data,
@@ -248,9 +246,6 @@ export const UserPermissionProvider = ({ children }) => {
   };
 
   const updateUserRights = async (id, data) => {
-    data.user_group_id = data.user_group_id.id;
-    data.transaction_id = data.transaction_id.id;
-
     if (id === 0) {
       createUserRights(data);
     } else {
@@ -290,8 +285,6 @@ export const UserPermissionProvider = ({ children }) => {
     }
 
     const userRight = state.user_rights.find((item) => item.id === id);
-
-    console.log(userRight, id);
 
     dispatch({
       type: VIEW_USER_RIGHTS_BY_ID,
