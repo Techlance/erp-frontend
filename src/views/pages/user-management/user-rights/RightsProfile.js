@@ -1,31 +1,28 @@
 import React from "react";
 
 // material-ui
-import {
-  Grid,
-  TextField,
-  Typography,
-  FormControlLabel,
-  Switch,
-} from "@material-ui/core";
+import { Grid, Typography, FormControlLabel, Switch } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../../store/constant";
+import UserGroupsSelect from "../../../../components/user-management/UserGroupsSelect";
+import TransactionSelect from "../../../../components/user-management/TransactionSelect";
 
 //-----------------------|| PROFILE 2 - USER PROFILE ||-----------------------//
 
 const RightsProfile = ({ values, setValues }) => {
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.id]: event.target.value,
-    });
-  };
-
   const handleChecked = (event) => {
     setValues({
       ...values,
       [event.target.name]: event.target.checked,
+    });
+  };
+
+  const handleSelect = (key, value) => {
+    console.log(value);
+    setValues({
+      ...values,
+      [key]: value,
     });
   };
 
@@ -36,25 +33,14 @@ const RightsProfile = ({ values, setValues }) => {
       </Grid>
 
       <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          // id="user_group_id"
-          label="User Group Name"
-          value={values.user_group_id?.user_group_name}
-          InputLabelProps={{ shrink: true }}
-          onChange={handleChange}
+        <UserGroupsSelect
+          captionLabel="User Group Name"
+          onChange={handleSelect}
         />
       </Grid>
 
       <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          // id="transaction_id"
-          label="Transaction"
-          value={values.transaction_id?.transactions}
-          InputLabelProps={{ shrink: true }}
-          onChange={handleChange}
-        />
+        <TransactionSelect captionLabel="Transaction" onChange={handleSelect} />
       </Grid>
 
       <Grid item xs={12} sm={6}>

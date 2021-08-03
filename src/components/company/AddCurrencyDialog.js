@@ -11,8 +11,10 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import useAuth from "../hooks/useAuth";
-import useCompany from "../hooks/useCompany";
+
+// project imports
+import useAuth from "../../hooks/useAuth";
+import useCompany from "../../hooks/useCompany";
 
 const AddCurrenyDialog = ({ open, handleClose }) => {
   const { user } = useAuth();

@@ -9,16 +9,17 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+
+// assets
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import Avatar from "../../../../ui-component/extended/Avatar";
+import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
 
 // project imports
-import Avatar from "../../../../ui-component/extended/Avatar";
 import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
-
-import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
 import useCompany from "../../../../hooks/useCompany";
-import FormControlSelect from "../../../../ui-component/extended/Form/FormControlSelect";
-import AddCurrenyDialog from "../../../../components/AddCurrencyDialog";
+import AddCurrenyDialog from "../../../../components/company/AddCurrencyDialog";
+import CurrencySelect from "../../../../components/company/CurrencySelect";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -164,7 +165,7 @@ const CompanyProfile = () => {
         />
       </Grid>
       <Grid item xs={12} sm={5}>
-        <FormControlSelect
+        <CurrencySelect
           fullWidth
           captionLabel="Base Currency"
           InputLabelProps={{ shrink: true }}

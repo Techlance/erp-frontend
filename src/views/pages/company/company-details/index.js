@@ -21,13 +21,12 @@ import CompanyProfile from "./CompanyProfile";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { gridSpacing, MEDIA_URI } from "../../../../store/constant";
-
-// assets
-// import Avatar1 from "../../../../assets/images/users/user-round.svg";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 import useCompany from "../../../../hooks/useCompany";
 import formatDate from "../../../../utils/format-date";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
+
+// assets
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -109,21 +108,12 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-// tabs option
-// let tabsOption = [
-//   {
-//     label: "CREATE",
-//     icon: <AddCircleIcon fontSize="large" />,
-//     caption: "Add A New Company",
-//   },
-// ];
-
-//-----------------------|| PROFILE 2 ||-----------------------//
+//-----------------------|| COMPANY PROFILE ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();

@@ -248,12 +248,13 @@ export const UserPermissionProvider = ({ children }) => {
   };
 
   const updateUserRights = async (id, data) => {
+    data.user_group_id = data.user_group_id.id;
+    data.transaction_id = data.transaction_id.id;
+
     if (id === 0) {
       createUserRights(data);
     } else {
       delete data.id;
-      data.user_group_id = data.user_group_id.id;
-      data.transaction_id = data.transaction_id.id;
       const response = await axios.put(`/user/edit-user-right/${id}`, data);
 
       sendNotification({

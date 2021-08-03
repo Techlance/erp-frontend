@@ -108,7 +108,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -308,7 +308,7 @@ const CompanyDetails = () => {
             handleAgree={() => deleteUserRights(value)}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
-            body="Are you sure you want to delete this user records? Once deleted the data can not be retrived!"
+            body="Are you sure you want to delete this User Rights record? Once deleted the data can not be retrived!"
           />
         </MainCard>
       </Grid>
