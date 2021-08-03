@@ -88,19 +88,16 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const getSelectedCompany = async (id) => {
-    if (!id) {
-      dispatch({
-        type: VIEW_COMPANY,
-        payload: initialState.current_company,
-      });
-    } else {
-      const response = await axios.get(`/company/view-company/${id}`);
+    if (!id) return;
 
-      dispatch({
-        type: VIEW_COMPANY,
-        payload: response.data.data,
-      });
-    }
+    const response = await axios.get(`/company/view-company/${id}`);
+
+    console.log(response.data.data);
+
+    dispatch({
+      type: VIEW_COMPANY,
+      payload: response.data.data,
+    });
   };
 
   const createCompany = async (data) => {
@@ -118,9 +115,7 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const updateCompany = async (id, data) => {
-    // data.base_currency = data.base_currency.id
-    data.created_by = "chirayu";
-    // console.log(data)
+    data.base_currency = data.base_currency.id;
     if (id === 0) {
       createCompany(data);
     } else {

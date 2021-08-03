@@ -38,7 +38,7 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
 
   const handleChange = (event) => {
     const item = data.find((option) => option.id === event.target.value);
-    onChange("transaction_id", item);
+    onChange("base_currency", item);
   };
 
   return (

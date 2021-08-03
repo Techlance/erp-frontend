@@ -143,6 +143,7 @@ const CompanyDetails = () => {
   const INIT_STATE = {
     id: 0,
     company_name: "",
+    base_currency: { id: 0 },
     address: "",
     country: "",
     state: "",
@@ -165,6 +166,7 @@ const CompanyDetails = () => {
 
     return {
       id: current_company.id,
+      base_currency: current_company.base_currency,
       company_name: current_company.company_name,
       address: current_company.address,
       country: current_company.country,
@@ -173,6 +175,7 @@ const CompanyDetails = () => {
       website: current_company.website,
       contact_no: current_company.contact_no,
       cr_no: current_company.cr_no,
+      logo: null,
       registration_no: current_company.registration_no,
       tax_id_no: current_company.tax_id_no,
       vat_id_no: current_company.vat_id_no,
@@ -190,6 +193,7 @@ const CompanyDetails = () => {
 
       return {
         id: current_company.id,
+        base_currency: current_company.base_currency,
         company_name: current_company.company_name,
         address: current_company.address,
         country: current_company.country,
@@ -198,6 +202,7 @@ const CompanyDetails = () => {
         website: current_company.website,
         contact_no: current_company.contact_no,
         cr_no: current_company.cr_no,
+        logo: null,
         registration_no: current_company.registration_no,
         tax_id_no: current_company.tax_id_no,
         vat_id_no: current_company.vat_id_no,
