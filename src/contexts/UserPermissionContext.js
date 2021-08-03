@@ -47,6 +47,7 @@ export const UserPermissionProvider = ({ children }) => {
     getUser();
     getUserGroups();
     getUserRights();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ================================= USER MANAGEMENT - USER =================================
@@ -60,6 +61,14 @@ export const UserPermissionProvider = ({ children }) => {
         payload: response.data.data,
       });
       setLoading(false);
+
+      if (!response.data.success) {
+        sendNotification({
+          globalDispatch,
+          success: response.data.success,
+          message: response.data.message,
+        });
+      }
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -142,6 +151,14 @@ export const UserPermissionProvider = ({ children }) => {
         payload: response.data.data,
       });
       setLoading(false);
+
+      if (!response.data.success) {
+        sendNotification({
+          globalDispatch,
+          success: response.data.success,
+          message: response.data.message,
+        });
+      }
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -223,6 +240,14 @@ export const UserPermissionProvider = ({ children }) => {
         payload: response.data.data,
       });
       setLoading(false);
+
+      if (!response.data.success) {
+        sendNotification({
+          globalDispatch,
+          success: response.data.success,
+          message: response.data.message,
+        });
+      }
     } catch (err) {
       console.log(err);
       setLoading(false);

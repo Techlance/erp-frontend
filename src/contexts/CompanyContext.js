@@ -55,15 +55,23 @@ export const CompanyProvider = ({ children }) => {
   const init = async () => {
     try {
       if (user) {
-        const companyResponse = await axios.get("/company/get-user-company");
+        const response = await axios.get("/company/get-user-company");
 
         dispatch({
           type: GET_USER_COMPANIES,
           payload: {
             isInitialized: true,
-            companies: companyResponse.data.data.companies,
+            companies: response.data.data.companies,
           },
         });
+
+        if (!response.data.success) {
+          sendNotification({
+            globalDispatch,
+            success: response.data.success,
+            message: response.data.message,
+          });
+        }
       } else {
         dispatch({
           type: COMPANIES_INITIALIZE,
@@ -116,12 +124,18 @@ export const CompanyProvider = ({ children }) => {
 
   const updateCompany = async (id, data) => {
     data.base_currency = data.base_currency.id;
+    const form = new FormData();
+    for (let each in data) {
+      form.append([each], data[each]);
+    }
+
     if (id === 0) {
       createCompany(data);
     } else {
-      delete data["logo"];
-      console.log(data);
-      const response = await axios.put(`/company/edit-company/${id}`, data);
+      // delete data["logo"];
+      // console.log(data);
+
+      const response = await axios.put(`/company/edit-company/${id}`, form);
 
       sendNotification({
         globalDispatch,

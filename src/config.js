@@ -11,7 +11,8 @@ const config = {
   // 'en' - English, 'fr' - French, 'ro' - Romanian, 'zh' - Chinese
   i18n: "en",
   rtlLayout: false,
-  api_uri: "https://erp-software.herokuapp.com/api",
+  // api_uri: "https://erp-software.herokuapp.com/api",
+  api_uri: "http://localhost:8000/api",
   jwt: {
     secret: "SECRET-KEY",
     timeout: "1 days",
