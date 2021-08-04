@@ -43,7 +43,8 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
   };
 
   const handleAddCurrency = () => {
-    addCurrency(values, handleCloseModal);
+    addCurrency(values);
+    handleCloseModal();
   };
 
   return (

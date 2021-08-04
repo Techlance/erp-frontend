@@ -74,14 +74,19 @@ const CompanyProfile = ({ values, setValues }) => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
-        <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
+        <pre>
+          {JSON.stringify(
+            { current_company: values, current_company_docs },
+            null,
+            2
+          )}
+        </pre>
 
         <Grid container spacing={2} alignItems="center">
           <Grid item>
             <Avatar
               alt={values.company_name}
-              src={`${config.media_uri}${values.logo}`}
+              src={values.logo}
               className={classes.userAvatar}
             />
           </Grid>

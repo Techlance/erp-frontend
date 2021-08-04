@@ -34,21 +34,14 @@ const companyReducer = (state, action) => {
     case GET_CURRENCY: {
       return {
         ...state,
-        currency: action.payload.data,
+        currencies: action.payload,
       };
     }
 
     case DELETE_COMPANY: {
-      let companyCopy = [...state.companies];
-      companyCopy.forEach((element, index) => {
-        if (element.company_id === state.current_company.id) {
-          delete companyCopy[index];
-        }
-      });
       return {
         ...state,
-        current_company: action.payload.data,
-        companies: companyCopy,
+        current_company: action.payload,
       };
     }
 
