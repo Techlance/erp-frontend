@@ -19,7 +19,7 @@ import {
 // project imports
 import CompanyProfile from "./CompanyProfile";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import { gridSpacing} from "../../../../store/constant";
+import { gridSpacing } from "../../../../store/constant";
 import useCompany from "../../../../hooks/useCompany";
 import useAuth from "../../../../hooks/useAuth";
 import formatDate from "../../../../utils/format-date";
@@ -110,7 +110,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -126,6 +126,7 @@ const CompanyDetails = () => {
     companies,
     current_company,
     getSelectedCompany,
+    getSelectedCompanyDocs,
     updateCompany,
     deleteCompany,
   } = useCompany();
@@ -138,6 +139,7 @@ const CompanyDetails = () => {
     console.log(newValue);
     setValue(newValue);
     getSelectedCompany(newValue);
+    getSelectedCompanyDocs(newValue);
   };
 
   // constants

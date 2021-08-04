@@ -20,6 +20,7 @@ import { gridSpacing } from "../../../../store/constant";
 import AddCurrenyDialog from "../../../../components/company/AddCurrencyDialog";
 import CurrencySelect from "../../../../components/company/CurrencySelect";
 import config from "../../../../config";
+import useCompany from "../../../../hooks/useCompany";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CompanyProfile = ({ values, setValues }) => {
   const classes = useStyles();
+
+  const { current_company_docs } = useCompany();
 
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
 
@@ -72,6 +75,7 @@ const CompanyProfile = ({ values, setValues }) => {
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <pre>{JSON.stringify(values, null, 2)}</pre>
+        <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
 
         <Grid container spacing={2} alignItems="center">
           <Grid item>

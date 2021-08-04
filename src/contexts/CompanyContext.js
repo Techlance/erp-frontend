@@ -7,16 +7,17 @@ import {
   CREATE_COMPANY,
   DELETE_COMPANY,
   GET_USER_COMPANIES,
-  UPDATE_FORM,
   VIEW_COMPANY,
+  VIEW_COMPANY_DOCS,
 } from "../store/actions";
 import companyReducer from "../store/companyReducer";
 
 // project imports
-import axios from "../utils/axios";
+import instance from "../utils/axios";
 import Loader from "../ui-component/Loader";
 import useAuth from "../hooks/useAuth";
 import sendNotification from "../utils/sendNotification";
+import { dataToForm } from "../utils";
 
 // constant
 const initialState = {
@@ -40,6 +41,7 @@ const initialState = {
     year_end_date: "",
     created_by: "",
   },
+  current_company_docs: [],
 };
 
 export const CompanyContext = createContext({
@@ -55,7 +57,7 @@ export const CompanyProvider = ({ children }) => {
   const init = async () => {
     try {
       if (user) {
-        const response = await axios.get("/company/get-user-company");
+        const response = await instance.get("/company/get-user-company");
 
         dispatch({
           type: GET_USER_COMPANIES,
@@ -86,11 +88,7 @@ export const CompanyProvider = ({ children }) => {
       console.error(err);
       dispatch({
         type: COMPANIES_INITIALIZE,
-        payload: {
-          isInitialized: false,
-          companies: [],
-          current_company: {},
-        },
+        payload: { ...initialState },
       });
     }
   };
@@ -98,7 +96,7 @@ export const CompanyProvider = ({ children }) => {
   const getSelectedCompany = async (id) => {
     if (!id) return;
 
-    const response = await axios.get(`/company/view-company/${id}`);
+    const response = await instance.get(`/company/view-company/${id}`);
 
     console.log(response.data.data);
 
@@ -109,7 +107,7 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const createCompany = async (data) => {
-    const response = await axios.post("/company/create-company", data);
+    const response = await instance.post("/company/create-company", data);
 
     dispatch({
       type: CREATE_COMPANY,
@@ -124,18 +122,12 @@ export const CompanyProvider = ({ children }) => {
 
   const updateCompany = async (id, data) => {
     data.base_currency = data.base_currency.id;
-    const form = new FormData();
-    for (let each in data) {
-      form.append([each], data[each]);
-    }
+    const form = dataToForm(data);
 
     if (id === 0) {
       createCompany(data);
     } else {
-      // delete data["logo"];
-      // console.log(data);
-
-      const response = await axios.put(`/company/edit-company/${id}`, form);
+      const response = await instance.put(`/company/edit-company/${id}`, form);
 
       sendNotification({
         globalDispatch,
@@ -146,7 +138,7 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const deleteCompany = async (id) => {
-    const response = await axios.delete(`/company/delete-company/${id}`);
+    const response = await instance.delete(`/company/delete-company/${id}`);
 
     if (response.data.success) {
       dispatch({
@@ -164,17 +156,8 @@ export const CompanyProvider = ({ children }) => {
     });
   };
 
-  const updateForm = async (data) => {
-    dispatch({
-      type: UPDATE_FORM,
-      payload: {
-        data: data,
-      },
-    });
-  };
-
   const addCurrency = async (data, next) => {
-    const response = await axios.post("/company/add-currency", data);
+    const response = await instance.post("/company/add-currency", data);
 
     sendNotification({
       globalDispatch,
@@ -183,6 +166,41 @@ export const CompanyProvider = ({ children }) => {
     });
 
     next();
+  };
+
+  const getSelectedCompanyDocs = async (id) => {
+    const response = await instance.get(`/company/get-company-document/${id}`);
+
+    if (response.data.success) {
+      dispatch({
+        type: VIEW_COMPANY_DOCS,
+        payload: response.data.data,
+      });
+    }
+  };
+
+  const createCompanyDoc = async (data) => {
+    const form = dataToForm(data);
+
+    const response = await instance.post("/company/add-company-document", form);
+
+    sendNotification({
+      globalDispatch,
+      success: response.data.success,
+      message: response.data.message,
+    });
+  };
+
+  const deleteCompanyDoc = async (id) => {
+    const response = await instance.delete(
+      `/company/delete-company-document/${id}`
+    );
+
+    sendNotification({
+      globalDispatch,
+      success: response.data.success,
+      message: response.data.message,
+    });
   };
 
   useEffect(() => {
@@ -204,7 +222,9 @@ export const CompanyProvider = ({ children }) => {
         updateCompany,
         deleteCompany,
         addCurrency,
-        updateForm,
+        getSelectedCompanyDocs,
+        createCompanyDoc,
+        deleteCompanyDoc,
       }}
     >
       {children}

@@ -2,9 +2,9 @@ import {
   COMPANIES_INITIALIZE,
   GET_CURRENCY,
   GET_USER_COMPANIES,
-  UPDATE_FORM,
   VIEW_COMPANY,
   DELETE_COMPANY,
+  VIEW_COMPANY_DOCS,
 } from "./actions";
 
 const companyReducer = (state, action) => {
@@ -38,24 +38,9 @@ const companyReducer = (state, action) => {
       };
     }
 
-    case UPDATE_FORM: {
-      return {
-        ...state,
-        current_company: {
-          ...state.current_company,
-          ...action.payload.data,
-        },
-      };
-    }
-
     case DELETE_COMPANY: {
       let companyCopy = [...state.companies];
-      console.log(companyCopy);
       companyCopy.forEach((element, index) => {
-        console.log(element);
-        console.log(
-          "emenet" + element.company_id + " " + state.current_company.id
-        );
         if (element.company_id === state.current_company.id) {
           delete companyCopy[index];
         }
@@ -64,6 +49,13 @@ const companyReducer = (state, action) => {
         ...state,
         current_company: action.payload.data,
         companies: companyCopy,
+      };
+    }
+
+    case VIEW_COMPANY_DOCS: {
+      return {
+        ...state,
+        current_company_docs: action.payload,
       };
     }
 
