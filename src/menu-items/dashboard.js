@@ -23,7 +23,7 @@ export const dashboard = {
       type: "item",
       url: "/company-details",
       icon: icons["IconDashboard"],
-      breadcrumbs: false,
+      breadcrumbs: true,
     },
     {
       id: "user-management",
@@ -31,7 +31,7 @@ export const dashboard = {
       type: "collapse",
       // url: "/user-management",
       icon: icons["IconDeviceAnalytics"],
-      breadcrumbs: false,
+      breadcrumbs: true,
       children: [
         {
           id: "Users",

@@ -174,7 +174,7 @@ const CompanyProfile = ({ values, setValues }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
-          id="number"
+          id="contact_no"
           label="Contact Number"
           type="number"
           value={values.contact_no}

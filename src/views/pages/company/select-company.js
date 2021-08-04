@@ -11,10 +11,11 @@ import Avatar from "./../../../ui-component/extended/Avatar";
 import MainCard from "./../../../ui-component/cards/MainCard";
 import { gridSpacing } from "./../../../store/constant";
 import formatDate from "../../../utils/format-date";
+import config from "../../../config";
+import useAuth from "../../../hooks/useAuth";
 
 // assets
 import BusinessCenter from "@material-ui/icons/BusinessCenter";
-import config from "../../../config";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const SelectCompany = ({ title }) => {
   const classes = useStyles();
   const { companies } = useCompany();
+  const { user } = useAuth();
 
   return (
     <MainCard title={title} content={false}>
@@ -67,6 +69,7 @@ const SelectCompany = ({ title }) => {
             </Grid>
           ))}
         </Grid>
+        <pre>{JSON.stringify(user, null, 2)}</pre>
       </CardContent>
     </MainCard>
   );
