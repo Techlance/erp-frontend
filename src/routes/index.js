@@ -4,12 +4,11 @@ import { Redirect, Switch } from "react-router-dom";
 // routes
 import MainRoutes from "./MainRoutes";
 import LoginRoutes from "./LoginRoutes";
-import AuthenticationRoutes from "./AuthenticationRoutes";
+import AdminRoutes from "./AdminRoutes";
+// import AuthenticationRoutes from "./AuthenticationRoutes";
 
 // project imports
 import config from "./../config";
-import AuthGuard from "../utils/route-guard/AuthGuard";
-import AdminRoutes from "./AdminRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -21,7 +20,7 @@ const Routes = () => {
       <Redirect exact from="/" to={config.defaultPath} />
       <React.Fragment>
         {/* Routes for authentication pages */}
-        <AuthenticationRoutes />
+        {/* <AuthenticationRoutes /> */}
 
         {/* Route for login */}
         <LoginRoutes />

@@ -9,7 +9,7 @@ import useRequest from "../../hooks/useRequest";
 
 //-----------------------|| TRANSACTION SELECT ||-----------------------//
 
-const UserGroupsSelect = ({ captionLabel, formState, selected, onChange }) => {
+const TransactionSelect = ({ captionLabel, formState, selected, onChange }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
     return null;
@@ -63,7 +63,7 @@ const UserGroupsSelect = ({ captionLabel, formState, selected, onChange }) => {
   );
 };
 
-UserGroupsSelect.propTypes = {
+TransactionSelect.propTypes = {
   captionLabel: PropTypes.string,
   currencies: PropTypes.array,
   formState: PropTypes.string,
@@ -74,4 +74,4 @@ UserGroupsSelect.propTypes = {
   textSecondary: PropTypes.string,
 };
 
-export default UserGroupsSelect;
+export default TransactionSelect;

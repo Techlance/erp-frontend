@@ -5,11 +5,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Tab, Tabs } from "@material-ui/core";
 import { useParams } from "react-router-dom";
-import useCompany from "../../../../hooks/useCompany";
+import useCompany from "../../../hooks/useCompany";
 
 // project imports
 import CompanyForm from "./CompanyForm";
-import MainCard from "../../../../ui-component/cards/MainCard";
+import MainCard from "../../../ui-component/cards/MainCard";
 
 // style constant
 const useStyles = makeStyles((theme) => ({

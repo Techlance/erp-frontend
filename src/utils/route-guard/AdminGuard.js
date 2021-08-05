@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
+import config from "../../config";
 
 //-----------------------|| Admin Guard ||-----------------------//
 
@@ -13,10 +14,11 @@ import useAuth from "../../hooks/useAuth";
  */
 const AdminGuard = ({ children }) => {
   const { user } = useAuth();
+
   console.log("in AdminGuard.js");
 
   if (!user.is_superuser) {
-    return <Redirect to="/" />;
+    return <Redirect to={config.defaultPath} />;
   }
 
   return children;

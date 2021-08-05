@@ -12,19 +12,16 @@ import {
   IconButton,
 } from "@material-ui/core";
 
-// project imports
-import SubCard from "../../../../ui-component/cards/SubCard";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import { gridSpacing } from "../../../../store/constant";
-
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-
-import AddCurrenyDialog from "../../../../components/company/AddCurrencyDialog";
-import CurrencySelect from "../../../../components/company/CurrencySelect";
-import useCompany from "../../../../hooks/useCompany";
-
 // assets
-// import Avatar1 from './../../../../assets/images/users/avatar-1.png';
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import useCompany from "../../../hooks/useCompany";
+import { gridSpacing } from "../../../store/constant";
+import SubCard from "../../../ui-component/cards/SubCard";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import CurrencySelect from "../../../components/company/CurrencySelect";
+import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
+
+// project imports
 
 // style constant
 const useStyles = makeStyles((theme) => ({

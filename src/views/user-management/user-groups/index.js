@@ -17,18 +17,18 @@ import {
 } from "@material-ui/core";
 
 // project imports
-import { gridSpacing } from "../../../../store/constant";
+import { gridSpacing } from "../../../store/constant";
 
 // assets
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import MainCard from "../../../../ui-component/cards/MainCard";
+import MainCard from "../../../ui-component/cards/MainCard";
 import GroupsProfile from "./GroupsProfile";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
 
 // project imports
-import useAuth from "../../../../hooks/useAuth";
-import useUserPermissions from "../../../../hooks/useUserPermissions";
-import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
+import useAuth from "../../../hooks/useAuth";
+import useUserPermissions from "../../../hooks/useUserPermissions";
+import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -110,7 +110,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }

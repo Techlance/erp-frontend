@@ -5,15 +5,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CardContent, Grid, Typography } from "@material-ui/core";
 
 // project imports
-import useCompany from "../../../hooks/useCompany";
-import Avatar from "./../../../ui-component/extended/Avatar";
-import MainCard from "./../../../ui-component/cards/MainCard";
-import { gridSpacing } from "./../../../store/constant";
-import config from "../../../config";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
+import useCompany from "../../hooks/useCompany";
+import { gridSpacing } from "./../../store/constant";
+import config from "../../config";
 
 // assets
 import BusinessCenter from "@material-ui/icons/BusinessCenter";
+import Avatar from "./../../ui-component/extended/Avatar";
+import MainCard from "./../../ui-component/cards/MainCard";
 
 // style constant
 const useStyles = makeStyles((theme) => ({

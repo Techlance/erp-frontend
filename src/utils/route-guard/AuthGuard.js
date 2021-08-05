@@ -14,6 +14,8 @@ import useAuth from "../../hooks/useAuth";
 const AuthGuard = ({ children }) => {
   const { isLoggedIn } = useAuth();
 
+  console.log("in AuthGuard.js");
+
   if (!isLoggedIn) {
     return <Redirect to="/login" />;
   }

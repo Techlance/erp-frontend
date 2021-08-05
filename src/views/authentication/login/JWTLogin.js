@@ -19,9 +19,9 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 
 // project imports
-import AnimateButton from "./../../../../ui-component/extended/AnimateButton";
-import useAuth from "../../../../hooks/useAuth";
-import useScriptRef from "../../../../hooks/useScriptRef";
+import AnimateButton from "./../../../ui-component/extended/AnimateButton";
+import useAuth from "../../../hooks/useAuth";
+import useScriptRef from "../../../hooks/useScriptRef";
 
 // assets
 import Visibility from "@material-ui/icons/Visibility";

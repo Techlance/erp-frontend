@@ -2,10 +2,10 @@ import React from "react";
 
 // material-ui
 import { Grid, TextField } from "@material-ui/core";
+import { gridSpacing } from "../../../store/constant";
+import PermissionChecklist from "../../../components/user-management/PermissionChecklist";
 
 // project imports
-import { gridSpacing } from "../../../../store/constant";
-import PermissionsChecklist from "../../../../components/user-management/PermissionChecklist";
 
 //-----------------------|| User Management - Users ||-----------------------//
 
@@ -59,7 +59,7 @@ const UserProfile = ({ values, setValues }) => {
       </Grid>
 
       <Grid item xs={12}>
-        <PermissionsChecklist values={values} setValues={setValues} />
+        <PermissionChecklist values={values} setValues={setValues} />
       </Grid>
     </Grid>
   );

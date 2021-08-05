@@ -16,19 +16,17 @@ import {
   Avatar,
 } from "@material-ui/core";
 
-// project imports
-import UserProfile from "./UserProfile";
-import MainCard from "../../../../ui-component/cards/MainCard";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import { gridSpacing } from "../../../../store/constant";
-
 // assets
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 // project imports
-import useUserPermissions from "../../../../hooks/useUserPermissions";
-import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
-import useAuth from "../../../../hooks/useAuth";
+import UserProfile from "./UserProfile";
+import useAuth from "../../../hooks/useAuth";
+import useUserPermissions from "../../../hooks/useUserPermissions";
+import { gridSpacing } from "../../../store/constant";
+import MainCard from "../../../ui-component/cards/MainCard";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -110,7 +108,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }

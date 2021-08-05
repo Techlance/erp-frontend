@@ -13,12 +13,10 @@ import {
 
 // project imports
 import AuthWrapper1 from "./../AuthWrapper1";
-import Logo from "./../../../../ui-component/Logo";
+import Logo from "./../../../ui-component/Logo";
 import AuthCardWrapper from "./../AuthCardWrapper";
 import JWTLogin from "./../login/JWTLogin";
 // import AuthFooter from "./../../../../ui-component/cards/AuthFooter";
-
-// assets
 
 //================================|| LOGIN MAIN ||================================//
 

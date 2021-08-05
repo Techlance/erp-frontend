@@ -19,7 +19,7 @@ export const dashboard = {
   children: [
     {
       id: "company-management",
-      title: "Company List",
+      title: <FormattedMessage id="company-management" />,
       type: "item",
       url: "/admin/companies",
       icon: icons["IconDashboard"],

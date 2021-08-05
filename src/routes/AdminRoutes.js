@@ -13,13 +13,14 @@ const AdminRoutes = () => {
 
   return (
     <Route path={["/admin/*"]}>
-      <Redirect exact from="/admin" to="/admin/companies" />
+      <React.Fragment>
+        <Redirect exact from="/admin" to="/admin/companies" />
+        {/* Routes for Company master */}
+        <CompanyRoutes />
 
-      {/* Routes for Company master */}
-      <CompanyRoutes />
-
-      {/* Routes for User Manager */}
-      <UserManagerRoutes />
+        {/* Routes for User Manager */}
+        <UserManagerRoutes />
+      </React.Fragment>
     </Route>
   );
 };

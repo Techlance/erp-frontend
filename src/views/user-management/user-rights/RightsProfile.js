@@ -2,11 +2,11 @@ import React from "react";
 
 // material-ui
 import { Grid, Typography, FormControlLabel, Switch } from "@material-ui/core";
+import { gridSpacing } from "../../../store/constant";
+import UserGroupsSelect from "../../../components/user-management/UserGroupsSelect";
+import TransactionSelect from "../../../components/user-management/TransactionSelect";
 
 // project imports
-import { gridSpacing } from "../../../../store/constant";
-import UserGroupsSelect from "../../../../components/user-management/UserGroupsSelect";
-import TransactionSelect from "../../../../components/user-management/TransactionSelect";
 
 //-----------------------|| PROFILE 2 - USER PROFILE ||-----------------------//
 

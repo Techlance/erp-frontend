@@ -8,7 +8,7 @@ import AuthGuard from "./../utils/route-guard/AuthGuard";
 
 // app routing
 const SelectCompany = Loadable(
-  lazy(() => import("../views/pages/company/select-company"))
+  lazy(() => import("../views/company/select-company"))
 );
 const SamplePage = Loadable(lazy(() => import("../views/sample-page")));
 
@@ -16,6 +16,8 @@ const SamplePage = Loadable(lazy(() => import("../views/sample-page")));
 
 const MainRoutes = () => {
   const location = useLocation();
+
+  console.log("in MainRoutes.js");
 
   return (
     <Route path={["/sample-page", "/select-company"]}>

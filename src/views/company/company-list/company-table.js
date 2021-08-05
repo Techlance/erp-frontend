@@ -14,13 +14,13 @@ import {
 } from "@material-ui/core";
 
 // assets
-import Avatar from "../../../../ui-component/extended/Avatar";
+import Avatar from "../../../ui-component/extended/Avatar";
 import { IconArrowRight } from "@tabler/icons";
+import useCompany from "../../../hooks/useCompany";
+import config from "../../../config";
+import formatDate from "../../../utils/format-date";
 
 // project imports
-import useCompany from "../../../../hooks/useCompany";
-import config from "../../../../config";
-import formatDate from "../../../../utils/format-date";
 
 //-----------------------|| Company List ||-----------------------//
 

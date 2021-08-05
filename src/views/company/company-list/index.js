@@ -5,10 +5,10 @@ import { Button, Grid, Typography } from "@material-ui/core";
 
 // project imports
 import CompanyTable from "./company-table";
-import { gridSpacing } from "../../../../store/constant";
-import AddCompanyDialog from "../../../../components/company/AddCompanyDialog";
-import MainCard from "../../../../ui-component/cards/MainCard";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import MainCard from "../../../ui-component/cards/MainCard";
+import { gridSpacing } from "../../../store/constant";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import AddCompanyDialog from "../../../components/company/AddCompanyDialog";
 
 //-----------------------|| Company List ||-----------------------//
 const CompanyList = () => {

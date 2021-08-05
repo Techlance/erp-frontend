@@ -18,15 +18,15 @@ import {
 
 // project imports
 import RightsProfile from "./RightsProfile";
-import MainCard from "../../../../ui-component/cards/MainCard";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import { gridSpacing } from "../../../../store/constant";
-import useUserPermissions from "../../../../hooks/useUserPermissions";
-import useAuth from "../../../../hooks/useAuth";
-import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
+import useAuth from "../../../hooks/useAuth";
+import useUserPermissions from "../../../hooks/useUserPermissions";
+import { gridSpacing } from "../../../store/constant";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 
 // assets
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import MainCard from "../../../ui-component/cards/MainCard";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -108,7 +108,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }

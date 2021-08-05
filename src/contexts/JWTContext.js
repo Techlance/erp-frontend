@@ -64,18 +64,12 @@ export const JWTProvider = ({ children }) => {
           user,
         },
       });
-      sendNotification({
-        globalDispatch,
-        success: response.data.success,
-        message: response.data.message,
-      });
-    } else {
-      sendNotification({
-        globalDispatch,
-        success: response.data.success,
-        message: response.data.message,
-      });
     }
+    sendNotification({
+      globalDispatch,
+      success: response.data.success,
+      message: response.data.message,
+    });
   };
 
   const logout = () => {

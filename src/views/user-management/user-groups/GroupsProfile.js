@@ -4,9 +4,9 @@ import React from "react";
 import { Grid, TextField } from "@material-ui/core";
 
 // project imports
-import { gridSpacing } from "../../../../store/constant";
+import { gridSpacing } from "../../../store/constant";
 
-//-----------------------|| USER Management - Group PROFILE ||-----------------------//
+//-----------------------|| User Management - Group Profile ||-----------------------//
 
 const GroupsProfile = ({ values, setValues }) => {
   const handleChange = (event) => {

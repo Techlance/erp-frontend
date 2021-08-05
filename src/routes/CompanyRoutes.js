@@ -8,16 +8,15 @@ import AdminGuard from "../utils/route-guard/AdminGuard";
 
 // company page routing
 const CompanyDetails = Loadable(
-  lazy(() => import("../views/pages/company/company-details"))
+  lazy(() => import("../views/company/company-details"))
 );
 const CompanyList = Loadable(
-  lazy(() => import("../views/pages/company/company-list"))
+  lazy(() => import("../views/company/company-list"))
 );
 
 //-----------------------|| Companies Routing ||-----------------------//
 const CompanyRoutes = () => {
   const location = useLocation();
-
   console.log("in CompanyRoutes.js");
 
   return (
@@ -25,8 +24,8 @@ const CompanyRoutes = () => {
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <AdminGuard>
-            <Route path="/companies/:cid" component={CompanyDetails} />
-            <Route path="/companies" component={CompanyList} />
+            <Route path="/admin/companies/:cid" component={CompanyDetails} />
+            <Route path="/admin/companies" component={CompanyList} />
           </AdminGuard>
         </Switch>
       </MainLayout>

@@ -3,7 +3,7 @@ import React from "react";
 // material-ui
 import { Grid, Typography, FormControlLabel, Switch } from "@material-ui/core";
 
-const PermissionsChecklist = ({ values, setValues }) => {
+const PermissionChecklist = ({ values, setValues }) => {
   const handleChecked = (event) => {
     setValues({
       ...values,
@@ -237,4 +237,4 @@ const PermissionsChecklist = ({ values, setValues }) => {
   );
 };
 
-export default PermissionsChecklist;
+export default PermissionChecklist;
