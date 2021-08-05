@@ -59,7 +59,7 @@ const CompanyDetails = () => {
         if(!cid)
             return
         getSelectedCompany(cid)
-    },[])
+    },[cid,getSelectedCompany])
 
     const [value, setValue] = React.useState(0);
 

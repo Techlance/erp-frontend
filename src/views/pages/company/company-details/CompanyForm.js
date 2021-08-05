@@ -10,11 +10,9 @@ import AnimateButton from '../../../../ui-component/extended/AnimateButton';
 import { gridSpacing } from '../../../../store/constant';
 
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
 
 import AddCurrenyDialog from "../../../../components/company/AddCurrencyDialog";
 import CurrencySelect from "../../../../components/company/CurrencySelect";
-import config from "../../../../config";
 import useCompany from "../../../../hooks/useCompany";
 
 // assets
@@ -55,7 +53,7 @@ const CompanyForm = () => {
       });
     };
   
-    const hadleFileUpload = (event) => {
+    const handleFileUpload = (event) => {
       console.log(event.target.files[0]);
       setValues({
         ...values,

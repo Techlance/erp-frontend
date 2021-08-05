@@ -2,17 +2,13 @@ import React from 'react';
 
 // material-ui
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Chip, Grid, IconButton, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, Typography } from '@material-ui/core';
+import { Grid, IconButton, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, Typography } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 // project imports
 import Avatar from './../../../../ui-component/extended/Avatar';
-import axios from './../../../../utils/axios';
 
 // assets
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ChatBubbleTwoToneIcon from '@material-ui/icons/ChatBubbleTwoTone';
-import BlockTwoToneIcon from '@material-ui/icons/BlockTwoTone';
 import useCompany from '../../../../hooks/useCompany'
 import config from "../../../../config";
 import formatDate from "../../../../utils/format-date";
