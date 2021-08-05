@@ -1,118 +1,101 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from 'react';
 
 // material-ui
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  IconButton,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-
-// assets
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import Avatar from "../../../../ui-component/extended/Avatar";
-import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
+import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, Button, Grid, Stack, TextField, Typography, IconButton} from '@material-ui/core';
 
 // project imports
-import { gridSpacing } from "../../../../store/constant";
+import SubCard from '../../../../ui-component/cards/SubCard';
+import AnimateButton from '../../../../ui-component/extended/AnimateButton';
+import { gridSpacing } from '../../../../store/constant';
+
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import ErrorTwoToneIcon from "@material-ui/icons/ErrorTwoTone";
+
 import AddCurrenyDialog from "../../../../components/company/AddCurrencyDialog";
 import CurrencySelect from "../../../../components/company/CurrencySelect";
 import config from "../../../../config";
 import useCompany from "../../../../hooks/useCompany";
 
+// assets
+// import Avatar1 from './../../../../assets/images/users/avatar-1.png';
+
 // style constant
 const useStyles = makeStyles((theme) => ({
-  alertIcon: {
-    height: "16px",
-    width: "16px",
-    marginRight: "8px",
-    verticalAlign: "text-bottom",
-  },
-  userAvatar: {
-    height: "80px",
-    width: "80px",
-  },
-  addButtonGrid: {
-    paddingTop: "1 !important",
-    paddingLeft: "0 !important",
-  },
+    accountAvatar: {
+        width: '100px',
+        height: '100px',
+        margin: '0 auto'
+    },
+    accountContent: {
+        textAlign: 'center'
+    }
 }));
 
-//-----------------------|| Company Profile ||-----------------------//
+//-----------------------|| PROFILE 3 - PROFILE ||-----------------------//
 
-const CompanyProfile = ({ values, setValues }) => {
-  const classes = useStyles();
-
-  const { current_company_docs } = useCompany();
-
-  const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.id]: event.target.value,
-    });
-  };
-
-  const handleSelect = (key, value) => {
-    setValues({
-      ...values,
-      [key]: value,
-    });
-  };
-
-  const hadleFileUpload = (event) => {
-    console.log(event.target.files[0]);
-    setValues({
-      ...values,
-      logo: event.target.files[0],
-    });
-  };
-
-  return (
-    <Grid container spacing={gridSpacing}>
-      <pre>
-      </pre>
-      <Grid item xs={12}>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
-        <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
-
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <Avatar
-              alt={values.company_name}
-              src={`${config.media_uri}${values.logo}`}
-              className={classes.userAvatar}
-            />
-          </Grid>
-          <Grid item sm zeroMinWidth>
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Stack direction="row" spacing={2} alignItems="center">
-                  <input
-                    id="contained-button-file button"
-                    accept="image/*"
-                    class="MuiInput-root"
-                    multiple
-                    type="file"
-                    sx={{ display: "none" }}
-                    onChange={hadleFileUpload}
-                  />
-                </Stack>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="caption">
-                  <ErrorTwoToneIcon className={classes.alertIcon} />
-                  Image size Limit should be 125kb Max.
-                </Typography>
-              </Grid>
+const CompanyForm = () => {
+    const classes = useStyles();
+    const {current_company,updateCompany} = useCompany();
+    const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
+    const [values,setValues] = useState({...current_company});
+    const handleChange = (event) => {
+      console.log(event.target.id)
+      console.log(event.target.value)
+      setValues({
+        ...values,
+        [event.target.id]: event.target.value,
+      });
+    };
+  
+    const handleSelect = (key, value) => {
+      setValues({
+        ...values,
+        [key]: value,
+      });
+    };
+  
+    const hadleFileUpload = (event) => {
+      console.log(event.target.files[0]);
+      setValues({
+        ...values,
+        logo: event.target.files[0],
+      });
+    };
+    useEffect(()=>{
+      setValues({...current_company})
+    },[current_company])
+    
+    return (
+        <Grid container spacing={gridSpacing}>
+          <pre>
+            {JSON.stringify(values,null,2)}
+          </pre>
+            <Grid item sm={6} md={4}>
+                <SubCard title="Profile Picture" contentClass={classes.accountContent}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Avatar alt="User 1" src="" className={classes.accountAvatar} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="subtitle2" align="center">
+                                Upload/Change Your Profile Image
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <AnimateButton>
+                                <Button variant="contained" color="primary" size="small">
+                                    Upload Avatar
+                                </Button>
+                            </AnimateButton>
+                        </Grid>
+                    </Grid>
+                </SubCard>
             </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12} sm={6}>
+            <Grid item sm={6} md={8}>
+                <SubCard title="Edit Account Details">
+                    <Grid container spacing={gridSpacing}>
+                    <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
           id="company_name"
@@ -269,8 +252,27 @@ const CompanyProfile = ({ values, setValues }) => {
           onChange={handleChange}
         />
       </Grid>
-    </Grid>
-  );
+
+                        <Grid item xs={12}>
+                            <Stack direction="row">
+                                <AnimateButton>
+                                    <Button 
+                                      variant="contained" 
+                                      color="primary"
+                                      onClick={(e) => {
+                                        updateCompany(values);
+                                      }}
+                                    >
+                                        Change Details
+                                    </Button>
+                                </AnimateButton>
+                            </Stack>
+                        </Grid>
+                    </Grid>
+                </SubCard>
+            </Grid>
+        </Grid>
+    );
 };
 
-export default CompanyProfile;
+export default CompanyForm;

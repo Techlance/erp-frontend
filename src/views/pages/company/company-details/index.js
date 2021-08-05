@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
@@ -8,8 +8,8 @@ import {useParams} from 'react-router-dom'
 import useCompany from '../../../../hooks/useCompany';
 
 // project imports
-import Profile from './Profile';
-import MainCard from './../../../../ui-component/cards/MainCard';
+import CompanyForm from './CompanyForm';
+import MainCard from '../../../../ui-component/cards/MainCard';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -54,10 +54,19 @@ const CompanyDetails = () => {
     const classes = useStyles();
     const {cid} = useParams();
 
-    const [value, setValue] = React.useState(get);
+    const {getSelectedCompany} = useCompany();
+    useEffect(()=>{
+        if(!cid)
+            return
+        getSelectedCompany(cid)
+    },[])
+
+    const [value, setValue] = React.useState(0);
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
     return (
         <MainCard title="Account">
             <div className={classes.root}>
@@ -70,13 +79,13 @@ const CompanyDetails = () => {
                     variant="scrollable"
                 >
                     <Tab component={RouterLink} to="#" label="Profile" {...a11yProps(0)} />
-                    <Tab component={RouterLink} to="#" label="Billing" {...a11yProps(1)} />
+                    <Tab component={RouterLink} to="#" label="Docs" {...a11yProps(1)} />
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <Profile />
+                    <CompanyForm />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Profile />
+                    <CompanyForm />
                 </TabPanel>
             </div>
         </MainCard>

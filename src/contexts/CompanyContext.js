@@ -120,14 +120,14 @@ export const CompanyProvider = ({ children }) => {
     });
   };
 
-  const updateCompany = async (id, data) => {
+  const updateCompany = async (data) => {
     data.base_currency = data.base_currency.id;
     const form = dataToForm(data);
 
-    if (id === 0) {
+    if (data.id === 0) {
       createCompany(data);
     } else {
-      const response = await instance.put(`/company/edit-company/${id}`, form);
+      const response = await instance.put(`/company/edit-company/${data.id}`, form);
 
       sendNotification({
         globalDispatch,

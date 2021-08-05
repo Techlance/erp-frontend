@@ -14,7 +14,7 @@ const CompanyDetailsOld = Loadable(
   lazy(() => import("../views/pages/company/company-details-old"))
 );
 const CompanyDetails = Loadable(
-  lazy(() => import("../views/pages/company/CompanyDetails"))
+  lazy(() => import("../views/pages/company/company-details"))
 );
 const CompanyList = Loadable(
   lazy(() => import("../views/pages/company/CompanyList"))
@@ -31,8 +31,10 @@ const MainRoutes = () => {
           <AuthGuard>
             <Route path="/select-company" component={SelectCompany} />
             <Route path="/company-details-old" component={CompanyDetailsOld} />
-            <Route path="/company-details/:cid" component={CompanyDetails} />
-            <Route path="/companies" component={CompanyList} />
+            <Switch>
+              <Route path="/companies/:cid" component={CompanyDetails} />
+              <Route path="/companies" component={CompanyList} />
+            </Switch>
           </AuthGuard>
         </Switch>
       </MainLayout>
