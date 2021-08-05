@@ -2,7 +2,6 @@ import React, { lazy } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 
 // project imports
-import GuestGuard from "./../utils/route-guard/GuestGuard";
 import MinimalLayout from "./../layout/MinimalLayout";
 import NavMotion from "./../layout/NavMotion";
 import Loadable from "../ui-component/Loadable";
@@ -22,9 +21,7 @@ const LoginRoutes = () => {
       <MinimalLayout>
         <Switch location={location} key={location.pathname}>
           <NavMotion>
-            <GuestGuard>
-              <Route path="/login" component={AuthLogin} />
-            </GuestGuard>
+            <Route path="/login" component={AuthLogin} />
           </NavMotion>
         </Switch>
       </MinimalLayout>

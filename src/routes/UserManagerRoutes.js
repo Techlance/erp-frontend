@@ -4,7 +4,6 @@ import { Route, Switch, useLocation } from "react-router-dom";
 // project imports
 import MainLayout from "../layout/MainLayout";
 import Loadable from "../ui-component/Loadable";
-import AuthGuard from "../utils/route-guard/AuthGuard";
 
 // company page routing
 const UserGroups = Loadable(
@@ -24,18 +23,16 @@ const MainRoutes = () => {
   return (
     <Route
       path={[
-        "/user-manager/users",
         "/user-manager/groups",
         "/user-manager/rights",
+        "/user-manager/users",
       ]}
     >
       <MainLayout>
         <Switch location={location} key={location.pathname}>
-          <AuthGuard>
-            <Route path="/user-manager/users" component={Users} />
-            <Route path="/user-manager/groups" component={UserGroups} />
-            <Route path="/user-manager/rights" component={UserRights} />
-          </AuthGuard>
+          <Route path="/user-manager/groups" component={UserGroups} />
+          <Route path="/user-manager/rights" component={UserRights} />
+          <Route path="/user-manager/users" component={Users} />
         </Switch>
       </MainLayout>
     </Route>

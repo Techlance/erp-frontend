@@ -4,16 +4,18 @@ import { Redirect, Switch } from "react-router-dom";
 // routes
 import MainRoutes from "./MainRoutes";
 import LoginRoutes from "./LoginRoutes";
-import CompanyRoutes from "./ComapanyRoutes";
 import AuthenticationRoutes from "./AuthenticationRoutes";
-import UserManagerRoutes from "./UserManagerRoutes";
 
 // project imports
 import config from "./../config";
+import AuthGuard from "../utils/route-guard/AuthGuard";
+import AdminRoutes from "./AdminRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
 const Routes = () => {
+  console.log("in index.js");
+
   return (
     <Switch>
       <Redirect exact from="/" to={config.defaultPath} />
@@ -24,14 +26,11 @@ const Routes = () => {
         {/* Route for login */}
         <LoginRoutes />
 
-        {/* Routes for Company master */}
-        <CompanyRoutes />
-
-        {/* Routes for User Manager */}
-        <UserManagerRoutes />
-
         {/* Routes for main layouts */}
         <MainRoutes />
+
+        {/* Admin Routes */}
+        <AdminRoutes />
       </React.Fragment>
     </Switch>
   );

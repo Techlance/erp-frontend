@@ -4,18 +4,17 @@ import React, { useState } from "react";
 import { Button, Grid, Typography } from "@material-ui/core";
 
 // project imports
-import UserList from "./UserList";
-import MainCard from "../../../../ui-component/cards/MainCard";
+import CompanyTable from "./company-table";
 import { gridSpacing } from "../../../../store/constant";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import AddCompanyDialog from "../../../../components/company/AddCompanyDialog";
+import MainCard from "../../../../ui-component/cards/MainCard";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 
-// assets
-
-//-----------------------|| USER LIST STYLE 1 ||-----------------------//
-
+//-----------------------|| Company List ||-----------------------//
 const CompanyList = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  console.log("in CompanyList.js");
 
   return (
     <MainCard
@@ -27,7 +26,7 @@ const CompanyList = () => {
           spacing={gridSpacing}
         >
           <Grid item>
-            <Typography variant="h3">List</Typography>
+            <Typography variant="h3">Company List</Typography>
           </Grid>
           <Grid item>
             <AnimateButton>
@@ -43,9 +42,9 @@ const CompanyList = () => {
           </Grid>
         </Grid>
       }
-      content={false}
+      content={true}
     >
-      <UserList />
+      <CompanyTable />
       <AddCompanyDialog
         open={showCreateModal}
         handleClose={() => {

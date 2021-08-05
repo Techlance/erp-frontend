@@ -141,7 +141,7 @@ export const CompanyProvider = ({ children }) => {
       });
 
       getUserCompanies();
-      getSelectedCompany(id);
+      getSelectedCompany(data.id);
     }
   };
 
