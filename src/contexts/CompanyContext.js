@@ -127,7 +127,10 @@ export const CompanyProvider = ({ children }) => {
     if (data.id === 0) {
       createCompany(data);
     } else {
-      const response = await instance.put(`/company/edit-company/${data.id}`, form);
+      const response = await instance.put(
+        `/company/edit-company/${data.id}`,
+        form
+      );
 
       sendNotification({
         globalDispatch,

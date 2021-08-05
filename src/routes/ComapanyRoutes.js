@@ -25,7 +25,7 @@ const MainRoutes = () => {
   const location = useLocation();
 
   return (
-    <Route path={["/company-details", "/select-company","/companies"]}>
+    <Route path={["/company-details", "/select-company", "/companies"]}>
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <AuthGuard>

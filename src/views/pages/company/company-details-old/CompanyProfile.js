@@ -73,8 +73,7 @@ const CompanyProfile = ({ values, setValues }) => {
 
   return (
     <Grid container spacing={gridSpacing}>
-      <pre>
-      </pre>
+      <pre></pre>
       <Grid item xs={12}>
         <pre>{JSON.stringify(values, null, 2)}</pre>
         <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
