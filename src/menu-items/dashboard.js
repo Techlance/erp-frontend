@@ -33,16 +33,16 @@ export const dashboard = {
       breadcrumbs: true,
       children: [
         {
-          id: "User Rights",
-          title: <FormattedMessage id="menu.user-rights" />,
-          type: "item",
-          url: "/admin/user-manager/rights",
-        },
-        {
           id: "User Groups ",
           title: <FormattedMessage id="menu.user-groups" />,
           type: "item",
           url: "/admin/user-manager/groups",
+        },
+        {
+          id: "User Rights",
+          title: <FormattedMessage id="menu.user-rights" />,
+          type: "item",
+          url: "/admin/user-manager/rights",
         },
         {
           id: "Users",

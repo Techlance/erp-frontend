@@ -114,6 +114,8 @@ export const JWTProvider = ({ children }) => {
     };
 
     init();
+
+    // eslint-disable-next-line
   }, []);
 
   if (!state.isInitialized) {

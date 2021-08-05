@@ -73,7 +73,6 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
           onChange={handleChange}
         />
         <TextField
-          autoFocus
           margin="dense"
           id="currency"
           label="Currency Code"

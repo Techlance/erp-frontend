@@ -100,7 +100,7 @@ const CompanyTable = () => {
                     color="primary"
                     aria-label="more-details"
                     // onClick={(row) => handleCompanyClick(row.company_id)}
-                    href={`/companies/${row.company_id}`}
+                    href={`/admin/companies/${row.company_id}`}
                     target="_blank"
                   >
                     <Typography align="center">More </Typography>

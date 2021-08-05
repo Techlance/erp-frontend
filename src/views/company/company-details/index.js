@@ -60,11 +60,14 @@ const CompanyDetails = () => {
   const classes = useStyles();
   const { cid } = useParams();
 
-  const { getSelectedCompany } = useCompany();
+  const { current_company, current_company_docs, getSelectedCompany } =
+    useCompany();
+
   useEffect(() => {
     if (!cid) return;
     getSelectedCompany(cid);
-  }, [cid, getSelectedCompany]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cid]);
 
   const [value, setValue] = React.useState(0);
 
@@ -74,6 +77,8 @@ const CompanyDetails = () => {
 
   return (
     <MainCard title="Account">
+      <pre>{JSON.stringify(current_company, null, 2)}</pre>
+
       <div className={classes.root}>
         <Tabs
           value={value}
@@ -95,7 +100,8 @@ const CompanyDetails = () => {
           <CompanyForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <CompanyForm />
+          {/* <CompanyForm /> */}
+          <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
         </TabPanel>
       </div>
     </MainCard>

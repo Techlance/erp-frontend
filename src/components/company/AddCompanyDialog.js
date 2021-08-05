@@ -106,17 +106,17 @@ const AddCompanyDialog = ({ open, handleClose }) => {
     });
   };
 
-  const hadleFileUpload = (event) => {
-    console.log(event.target.files[0]);
-    setValues({
-      ...values,
-      logo: event.target.files[0],
-    });
-  };
+  // const hadleFileUpload = (event) => {
+  //   console.log(event.target.files[0]);
+  //   setValues({
+  //     ...values,
+  //     logo: event.target.files[0],
+  //   });
+  // };
 
-  const handleAddCurrency = () => {
-    addCurrency(values, handleCloseModal);
-  };
+  // const handleAddCurrency = () => {
+  //   addCurrency(values, handleCloseModal);
+  // };
 
   return (
     <Dialog
@@ -130,11 +130,11 @@ const AddCompanyDialog = ({ open, handleClose }) => {
         <Typography variant="h4">Create Company</Typography>
       </DialogTitle>
       <DialogContent>
+        <pre>{JSON.stringify(values, null, 2)}</pre>
         <DialogContentText>
           <Typography variant="body2">Create a new company.</Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth

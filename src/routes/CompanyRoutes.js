@@ -25,7 +25,7 @@ const CompanyRoutes = () => {
         <Switch location={location} key={location.pathname}>
           <AdminGuard>
             <Route path="/admin/companies/:cid" component={CompanyDetails} />
-            <Route path="/admin/companies" component={CompanyList} />
+            <Route exact path="/admin/companies" component={CompanyList} />
           </AdminGuard>
         </Switch>
       </MainLayout>

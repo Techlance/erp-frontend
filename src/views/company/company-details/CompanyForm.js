@@ -42,9 +42,8 @@ const CompanyForm = () => {
   const { current_company, updateCompany } = useCompany();
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [values, setValues] = useState({ ...current_company });
+
   const handleChange = (event) => {
-    console.log(event.target.id);
-    console.log(event.target.value);
     setValues({
       ...values,
       [event.target.id]: event.target.value,
@@ -58,35 +57,39 @@ const CompanyForm = () => {
     });
   };
 
-  const handleFileUpload = (event) => {
-    console.log(event.target.files[0]);
-    setValues({
-      ...values,
-      logo: event.target.files[0],
-    });
-  };
+  // const handleFileUpload = (event) => {
+  //   console.log(event.target.files[0]);
+  //   setValues({
+  //     ...values,
+  //     logo: event.target.files[0],
+  //   });
+  // };
+
   useEffect(() => {
     setValues({ ...current_company });
   }, [current_company]);
 
   return (
-    <Grid container spacing={gridSpacing}>
-      <pre>{JSON.stringify(values, null, 2)}</pre>
+    <Grid container spacing={gridSpacing} justifyContent="center">
       <Grid item sm={6} md={4}>
-        <SubCard title="Profile Picture" contentClass={classes.accountContent}>
+        <SubCard title="Company Logo" contentClass={classes.accountContent}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Avatar alt="User 1" src="" className={classes.accountAvatar} />
+              <Avatar
+                alt={values.company_name}
+                src={values.logo}
+                className={classes.accountAvatar}
+              />
             </Grid>
             <Grid item xs={12}>
               <Typography variant="subtitle2" align="center">
-                Upload/Change Your Profile Image
+                Upload/Change Company Logo
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <AnimateButton>
                 <Button variant="contained" color="primary" size="small">
-                  Upload Avatar
+                  Upload Logo
                 </Button>
               </AnimateButton>
             </Grid>
@@ -181,7 +184,7 @@ const CompanyForm = () => {
                 aria-label="add-currency"
                 onClick={() => setShowAddCurrencyModal(true)}
               >
-                <AddCircleOutlineIcon fontSize="large" />
+                <AddCircleOutlineIcon fontSize="medium" />
               </IconButton>
 
               <AddCurrenyDialog

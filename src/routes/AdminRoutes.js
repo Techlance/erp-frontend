@@ -14,7 +14,7 @@ const AdminRoutes = () => {
   return (
     <Route path={["/admin/*"]}>
       <React.Fragment>
-        <Redirect exact from="/admin" to="/admin/companies" />
+        {/* <Redirect exact from="/admin" to="/admin/companies" /> */}
         {/* Routes for Company master */}
         <CompanyRoutes />
 

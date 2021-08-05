@@ -109,6 +109,8 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const createCompany = async (data) => {
+    data.base_currency = data.base_currency.id;
+
     setLoading(true);
     const response = await createCompanyAsync(instance, data);
     setLoading(false);

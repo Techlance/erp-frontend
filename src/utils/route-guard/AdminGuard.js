@@ -17,6 +17,10 @@ const AdminGuard = ({ children }) => {
 
   console.log("in AdminGuard.js");
 
+  if (!user) {
+    return <Redirect to="/" />;
+  }
+
   if (!user.is_superuser) {
     return <Redirect to={config.defaultPath} />;
   }
