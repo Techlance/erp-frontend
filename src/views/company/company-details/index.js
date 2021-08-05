@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Tab, Tabs } from "@material-ui/core";
-import { useParams } from "react-router-dom";
-import useCompany from "../../../hooks/useCompany";
 
 // project imports
-import CompanyForm from "./CompanyForm";
+import useCompany from "../../../hooks/useCompany";
 import MainCard from "../../../ui-component/cards/MainCard";
+import CompanyForm from "./CompanyForm";
+import CompanyDocumentForm from "./CompanyDocumentForm";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +54,7 @@ function a11yProps(index) {
   };
 }
 
-//-----------------------|| PROFILE 3 ||-----------------------//
+//-----------------------|| Company Details ||-----------------------//
 
 const CompanyDetails = () => {
   const classes = useStyles();
@@ -76,9 +76,7 @@ const CompanyDetails = () => {
   };
 
   return (
-    <MainCard title="Account">
-      <pre>{JSON.stringify(current_company, null, 2)}</pre>
-
+    <MainCard title="Company Details">
       <div className={classes.root}>
         <Tabs
           value={value}
@@ -100,10 +98,11 @@ const CompanyDetails = () => {
           <CompanyForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {/* <CompanyForm /> */}
-          <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
+          <CompanyDocumentForm />
         </TabPanel>
       </div>
+      <pre>{JSON.stringify(current_company, null, 2)}</pre>
+      <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
     </MainCard>
   );
 };

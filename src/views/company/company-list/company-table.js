@@ -34,22 +34,32 @@ const CompanyTable = () => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography align="center">Company Name</Typography>
+              <Typography variant="h4">Company Name</Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center">Country</Typography>
+              <Typography align="center" variant="h4">
+                Country
+              </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center">Created On</Typography>
+              <Typography align="center" variant="h4">
+                Created On
+              </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center">Start Date</Typography>
+              <Typography align="center" variant="h4">
+                Start Date
+              </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center">End Date</Typography>
+              <Typography align="center" variant="h4">
+                End Date
+              </Typography>
             </TableCell>
             <TableCell>
-              <Typography align="center">More Details</Typography>
+              <Typography align="center" variant="h4">
+                More Details
+              </Typography>
             </TableCell>
           </TableRow>
         </TableHead>

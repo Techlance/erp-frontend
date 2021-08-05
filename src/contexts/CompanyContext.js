@@ -214,7 +214,7 @@ export const CompanyProvider = ({ children }) => {
     });
   };
 
-  const deleteCompanyDoc = async (id) => {
+  const deleteCompanyDoc = async (id, cid) => {
     const response = await instance.delete(
       `/company/delete-company-document/${id}`
     );
@@ -224,6 +224,8 @@ export const CompanyProvider = ({ children }) => {
       success: response.data.success,
       message: response.data.message,
     });
+
+    getSelectedCompanyDocs(cid);
   };
 
   useEffect(() => {

@@ -23,6 +23,7 @@ export const dashboard = {
       type: "item",
       url: "/admin/companies",
       icon: icons["IconDashboard"],
+      admin: true,
       breadcrumbs: true,
     },
     {
@@ -30,6 +31,7 @@ export const dashboard = {
       title: <FormattedMessage id="menu.user-management" />,
       type: "collapse",
       icon: icons["IconDeviceAnalytics"],
+      admin: true,
       breadcrumbs: true,
       children: [
         {

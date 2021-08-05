@@ -65,6 +65,7 @@ export const JWTProvider = ({ children }) => {
         },
       });
     }
+
     sendNotification({
       globalDispatch,
       success: response.data.success,

@@ -51,22 +51,22 @@ const useStyles = makeStyles((theme) => ({
     margin: "8px 0 8px 8px !important",
   },
   profileChip: {
-    height: "48px",
-    alignItems: "center",
-    borderRadius: "27px",
-    transition: "all .2s ease-in-out",
-    borderColor:
+    "height": "48px",
+    "alignItems": "center",
+    "borderRadius": "27px",
+    "transition": "all .2s ease-in-out",
+    "borderColor":
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.primary.light,
-    backgroundColor:
+    "backgroundColor":
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.primary.light,
     '&[aria-controls="menu-list-grow"], &:hover': {
-      borderColor: theme.palette.primary.main,
-      background: theme.palette.primary.main + "!important",
-      color: theme.palette.primary.light,
+      "borderColor": theme.palette.primary.main,
+      "background": theme.palette.primary.main + "!important",
+      "color": theme.palette.primary.light,
       "& svg": {
         stroke: theme.palette.primary.light,
       },
@@ -129,6 +129,8 @@ const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
 
+  const { user } = useAuth();
+
   // const [sdm, setSdm] = React.useState(true);
   // const [value, setValue] = React.useState("");
   // const [notification, setNotification] = React.useState(false);
@@ -172,7 +174,6 @@ const ProfileSection = () => {
         className={classes.profileChip}
         icon={
           <Avatar
-            // src={User1}
             className={classes.headerAvatar}
             ref={anchorRef}
             aria-controls={open ? "menu-list-grow" : undefined}
@@ -226,18 +227,13 @@ const ProfileSection = () => {
                   <CardContent className={classes.cardContent}>
                     <Grid container direction="column" spacing={0}>
                       <Grid item className={classes.flex}>
-                        <Typography variant="h4">Good Morning,</Typography>
-                        <Typography
-                          component="span"
-                          variant="h4"
-                          className={classes.name}
-                        >
-                          John
+                        <Typography variant="h3" className={classes.name}>
+                          {user.email}
                         </Typography>
                       </Grid>
                       <Grid item>
                         <Typography variant="subtitle2">
-                          Project Admin
+                          {user.is_superuser ? "Admin" : "User"}
                         </Typography>
                       </Grid>
                     </Grid>

@@ -8,6 +8,7 @@ import { Divider, List, Typography } from "@material-ui/core";
 // project imports
 import NavItem from "./../NavItem";
 import NavCollapse from "./../NavCollapse";
+import useAuth from "../../../../../hooks/useAuth";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -27,9 +28,16 @@ const useStyles = makeStyles((theme) => ({
 
 const NavGroup = ({ item }) => {
   const classes = useStyles();
+  const { user } = useAuth();
+
+  const filteredMenuItems = item.children.filter(
+    (item) => item.admin === user?.is_superuser
+  );
+
+  console.table(filteredMenuItems);
 
   // menu list collapse & items
-  const items = item.children.map((menu) => {
+  const items = filteredMenuItems.map((menu) => {
     switch (menu.type) {
       case "collapse":
         return <NavCollapse key={menu.id} menu={menu} level={1} />;

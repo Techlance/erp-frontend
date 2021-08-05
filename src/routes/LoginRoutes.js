@@ -5,6 +5,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import MinimalLayout from "./../layout/MinimalLayout";
 import NavMotion from "./../layout/NavMotion";
 import Loadable from "../ui-component/Loadable";
+import GuestGuard from "../utils/route-guard/GuestGuard";
 
 // login routing
 const AuthLogin = Loadable(lazy(() => import("../views/authentication/login")));
@@ -19,7 +20,9 @@ const LoginRoutes = () => {
       <MinimalLayout>
         <Switch location={location} key={location.pathname}>
           <NavMotion>
-            <Route path="/login" component={AuthLogin} />
+            <GuestGuard>
+              <Route path="/login" component={AuthLogin} />
+            </GuestGuard>
           </NavMotion>
         </Switch>
       </MinimalLayout>
