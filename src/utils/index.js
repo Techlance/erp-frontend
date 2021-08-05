@@ -1,7 +1,7 @@
 const dataToForm = (data) => {
   const form = new FormData();
   for (let each in data) {
-    form.append([each], data[each]);
+    data[each] && form.append([each], data[each]);
   }
 
   return form;

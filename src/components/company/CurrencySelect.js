@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
 
 // project imports
-import useRequest from "../../hooks/useRequest";
+import useCompany from "../../hooks/useCompany";
 
 //-----------------------|| CURRENCY SELECT ||-----------------------//
 
@@ -15,12 +15,9 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
     return null;
   });
 
-  const errorState = formState === "error" ? true : false;
+  const { currencies, getCurrency } = useCompany();
 
-  const [getCurrency, , , data] = useRequest({
-    url: "/company/get-currency",
-    initialState: [],
-  });
+  const errorState = formState === "error" ? true : false;
 
   useEffect(() => {
     getCurrency();
@@ -37,7 +34,7 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
   }, [selected]);
 
   const handleChange = (event) => {
-    const item = data.find((option) => option.id === event.target.value);
+    const item = currencies.find((option) => option.id === event.target.value);
     onChange("base_currency", item);
   };
 
@@ -53,7 +50,7 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
         variant="outlined"
         InputLabelProps={{ shrink: true }}
       >
-        {data.map((option, index) => (
+        {currencies.map((option, index) => (
           <MenuItem key={index} value={option.id}>
             {option.currency}
           </MenuItem>
@@ -65,13 +62,9 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
 
 CurrencySelect.propTypes = {
   captionLabel: PropTypes.string,
-  currencies: PropTypes.array,
   formState: PropTypes.string,
-  iconPrimary: PropTypes.object,
-  iconSecondary: PropTypes.object,
   selected: PropTypes.string,
-  textPrimary: PropTypes.string,
-  textSecondary: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default CurrencySelect;

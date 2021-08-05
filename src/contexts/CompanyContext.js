@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useReducer, useState } from "react";
 import { useDispatch } from "react-redux";
 
 // reducer - state management
@@ -6,6 +6,7 @@ import {
   COMPANIES_INITIALIZE,
   CREATE_COMPANY,
   DELETE_COMPANY,
+  GET_CURRENCY,
   GET_USER_COMPANIES,
   VIEW_COMPANY,
   VIEW_COMPANY_DOCS,
@@ -18,10 +19,10 @@ import Loader from "../ui-component/Loader";
 import useAuth from "../hooks/useAuth";
 import sendNotification from "../utils/sendNotification";
 import { dataToForm } from "../utils";
+import { createCompanyAsync } from "../api/company";
 
 // constant
 const initialState = {
-  isInitialized: false,
   companies: [],
   current_company: {
     id: 0,
@@ -33,6 +34,7 @@ const initialState = {
     website: "",
     contact_no: "",
     base_currency: { id: 0 },
+    logo: null,
     cr_no: "",
     registration_no: "",
     tax_id_no: "",
@@ -42,6 +44,7 @@ const initialState = {
     created_by: "",
   },
   current_company_docs: [],
+  currencies: [],
 };
 
 export const CompanyContext = createContext({
@@ -50,11 +53,12 @@ export const CompanyContext = createContext({
 
 export const CompanyProvider = ({ children }) => {
   const globalDispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [state, dispatch] = useReducer(companyReducer, initialState);
 
   const { user } = useAuth();
 
-  const init = async () => {
+  const getUserCompanies = async () => {
     try {
       if (user) {
         const response = await instance.get("/company/get-user-company");
@@ -98,8 +102,6 @@ export const CompanyProvider = ({ children }) => {
 
     const response = await instance.get(`/company/view-company/${id}`);
 
-    console.log(response.data.data);
-
     dispatch({
       type: VIEW_COMPANY,
       payload: response.data.data,
@@ -107,17 +109,17 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const createCompany = async (data) => {
-    const response = await instance.post("/company/create-company", data);
-
-    dispatch({
-      type: CREATE_COMPANY,
-    });
+    setLoading(true);
+    const response = await createCompanyAsync(instance, data);
+    setLoading(false);
 
     sendNotification({
       globalDispatch,
-      success: response.data.success,
-      message: response.data.message,
+      success: response.success,
+      message: response.message,
     });
+
+    getUserCompanies();
   };
 
   const updateCompany = async (data) => {
@@ -137,19 +139,24 @@ export const CompanyProvider = ({ children }) => {
         success: response.data.success,
         message: response.data.message,
       });
+
+      getUserCompanies();
+      getSelectedCompany(id);
     }
   };
 
   const deleteCompany = async (id) => {
+    setLoading(true);
     const response = await instance.delete(`/company/delete-company/${id}`);
+    setLoading(false);
 
     if (response.data.success) {
       dispatch({
         type: DELETE_COMPANY,
-        payload: {
-          data: initialState.currentCompany,
-        },
+        payload: initialState.current_company,
       });
+
+      getUserCompanies();
     }
 
     sendNotification({
@@ -159,16 +166,27 @@ export const CompanyProvider = ({ children }) => {
     });
   };
 
-  const addCurrency = async (data, next) => {
+  const addCurrency = async (data) => {
     const response = await instance.post("/company/add-currency", data);
+
+    if (response.data.success) {
+      getCurrency();
+    }
 
     sendNotification({
       globalDispatch,
       success: response.data.success,
       message: response.data.message,
     });
+  };
 
-    next();
+  const getCurrency = async () => {
+    const response = await instance.get("/company/get-currency");
+
+    dispatch({
+      type: GET_CURRENCY,
+      payload: response.data.data,
+    });
   };
 
   const getSelectedCompanyDocs = async (id) => {
@@ -207,11 +225,11 @@ export const CompanyProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    init();
+    getUserCompanies();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  if (!state.isInitialized) {
+  if (loading) {
     return <Loader />;
   }
 
@@ -219,12 +237,13 @@ export const CompanyProvider = ({ children }) => {
     <CompanyContext.Provider
       value={{
         ...state,
-        init,
+        init: getUserCompanies,
         getSelectedCompany,
         createCompany,
         updateCompany,
         deleteCompany,
         addCurrency,
+        getCurrency,
         getSelectedCompanyDocs,
         createCompanyDoc,
         deleteCompanyDoc,
