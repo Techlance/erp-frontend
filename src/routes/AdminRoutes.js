@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 // project imports
 import Loadable from "../ui-component/Loadable";
@@ -14,7 +14,6 @@ const AdminRoutes = () => {
   return (
     <Route path={["/admin/*"]}>
       <React.Fragment>
-        {/* <Redirect exact from="/admin" to="/admin/companies" /> */}
         {/* Routes for Company master */}
         <CompanyRoutes />
 

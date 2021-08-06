@@ -1,7 +1,7 @@
 import React from "react";
 
 // material-ui
-import { Grid, TextField } from "@material-ui/core";
+import { FormControlLabel, Grid, TextField, Switch } from "@material-ui/core";
 import { gridSpacing } from "../../../store/constant";
 import PermissionChecklist from "../../../components/user-management/PermissionChecklist";
 
@@ -14,6 +14,13 @@ const UserProfile = ({ values, setValues }) => {
     setValues({
       ...values,
       [event.target.id]: event.target.value,
+    });
+  };
+
+  const handleChecked = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.checked,
     });
   };
 
@@ -59,7 +66,19 @@ const UserProfile = ({ values, setValues }) => {
       </Grid>
 
       <Grid item xs={12}>
-        <PermissionChecklist values={values} setValues={setValues} />
+        {/* <PermissionChecklist values={values} setValues={setValues} /> */}
+        <FormControlLabel
+          control={
+            <Switch
+              id="is_superuser"
+              checked={values.is_superuser}
+              onChange={handleChecked}
+              name="is_superuser"
+              color="primary"
+            />
+          }
+          label="Super User"
+        />
       </Grid>
     </Grid>
   );

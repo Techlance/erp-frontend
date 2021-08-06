@@ -108,7 +108,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -142,19 +142,8 @@ const UserAccountDetails = () => {
     name: "",
     email: "",
     password: null,
+    is_superuser: false,
     created_by: user.email,
-    can_create_company: true,
-    can_edit_company: true,
-    can_delete_company: true,
-    can_view_user_groups: true,
-    can_view_company: true,
-    can_create_user: true,
-    can_edit_user: true,
-    can_delete_user_groups: true,
-    can_edit_user_groups: true,
-    can_create_user_groups: true,
-    can_view_user: true,
-    can_delete_user: true,
   };
 
   const [values, setValues] = useState(() => {
@@ -165,19 +154,8 @@ const UserAccountDetails = () => {
       name: current_user_account.name,
       email: current_user_account.email,
       password: null,
+      is_superuser: current_user_account.is_superuser,
       created_by: current_user_account.created_by,
-      can_create_company: current_user_account.can_create_company,
-      can_edit_company: current_user_account.can_edit_company,
-      can_delete_company: current_user_account.can_delete_company,
-      can_view_user_groups: current_user_account.can_view_user_groups,
-      can_view_company: current_user_account.can_view_company,
-      can_create_user: current_user_account.can_create_user,
-      can_edit_user: current_user_account.can_edit_user,
-      can_delete_user_groups: current_user_account.can_delete_user_groups,
-      can_edit_user_groups: current_user_account.can_edit_user_groups,
-      can_create_user_groups: current_user_account.can_create_user_groups,
-      can_view_user: current_user_account.can_view_user,
-      can_delete_user: current_user_account.can_delete_user,
     };
   });
 
@@ -189,19 +167,8 @@ const UserAccountDetails = () => {
         name: current_user_account.name,
         email: current_user_account.email,
         password: null,
+        is_superuser: current_user_account.is_superuser,
         created_by: current_user_account.created_by,
-        can_create_company: current_user_account.can_create_company,
-        can_edit_company: current_user_account.can_edit_company,
-        can_delete_company: current_user_account.can_delete_company,
-        can_view_user_groups: current_user_account.can_view_user_groups,
-        can_view_company: current_user_account.can_view_company,
-        can_create_user: current_user_account.can_create_user,
-        can_edit_user: current_user_account.can_edit_user,
-        can_delete_user_groups: current_user_account.can_delete_user_groups,
-        can_edit_user_groups: current_user_account.can_edit_user_groups,
-        can_create_user_groups: current_user_account.can_create_user_groups,
-        can_view_user: current_user_account.can_view_user,
-        can_delete_user: current_user_account.can_delete_user,
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -23,10 +23,12 @@ import useUserPermissions from "../../../hooks/useUserPermissions";
 import { gridSpacing } from "../../../store/constant";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
+import UserGroupsSelect from "../../../components/user-management/UserGroupsSelect";
 
 // assets
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import MainCard from "../../../ui-component/cards/MainCard";
+import TransactionsTable from "./TransactionsTable";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -108,7 +110,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -127,13 +129,16 @@ const CompanyDetails = () => {
     deleteUserRights,
   } = useUserPermissions();
 
-  const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-    getSelectedUserRight(newValue);
+  const handleSelect = (key, value) => {
+    setValue(value.id);
+
+    setValues({
+      ...values,
+      [key]: value,
+    });
   };
 
   // constants
@@ -183,78 +188,19 @@ const CompanyDetails = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <MainCard title="Account Settings" content={false}>
+        <MainCard title="User Rights Settings" content={true}>
+          <pre>{JSON.stringify(values, null, 2)}</pre>
           <Grid container spacing={gridSpacing}>
-            <Grid item xs={12} lg={4}>
-              <CardContent>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  orientation="vertical"
-                  className={classes.profileTab}
-                  variant="scrollable"
-                  sx={{
-                    "& button": {
-                      borderRadius: customization.borderRadius + "px",
-                    },
-                  }}
-                >
-                  <Tab
-                    key={0}
-                    icon={<AddCircleIcon fontSize="large" />}
-                    label={
-                      <Grid container direction="column">
-                        <Typography variant="subtitle1" color="inherit">
-                          <span style={{ margin: "0 10px" }}>CREATE</span>
-                        </Typography>
-                        <Typography
-                          component="div"
-                          variant="caption"
-                          sx={{ textTransform: "capitalize" }}
-                        >
-                          <span style={{ margin: "0 10px" }}>
-                            Add A User Right
-                          </span>
-                        </Typography>
-                      </Grid>
-                    }
-                    {...a11yProps(0)}
-                  />
-                  {user_rights.map((tab) => (
-                    <Tab
-                      key={tab.id}
-                      value={tab.id}
-                      icon={<Avatar />}
-                      label={
-                        <Grid container direction="column">
-                          <Typography variant="subtitle1" color="inherit">
-                            <span style={{ margin: "0 10px" }}>
-                              {tab.user_group_id?.user_group_name}
-                            </span>
-                          </Typography>
-                          <Typography
-                            component="div"
-                            variant="caption"
-                            sx={{ textTransform: "captalize" }}
-                          >
-                            <span style={{ margin: "0 10px" }}>
-                              {tab.transaction_id?.transactions}
-                            </span>
-                          </Typography>
-                        </Grid>
-                      }
-                      {...a11yProps(tab.user_group_id?.id)}
-                    />
-                  ))}
-                </Tabs>
-              </CardContent>
-            </Grid>
-            <Grid item xs={12} lg={8}>
-              <CardContent className={classes.cardPanels}>
-                <TabPanel value={value} index={value}>
-                  <RightsProfile values={values} setValues={setValues} />
-                </TabPanel>
-              </CardContent>
+            <Grid item xs={12}>
+              <UserGroupsSelect
+                captionLabel="User Group Name"
+                selected={values.user_group_id}
+                onChange={handleSelect}
+              />
+
+              <Grid item xs={12}>
+                <TransactionsTable value={value} />
+              </Grid>
             </Grid>
           </Grid>
           <Divider />
@@ -272,20 +218,6 @@ const CompanyDetails = () => {
 
               <Grid item>
                 <Grid container justifyContent="space-between" spacing={10}>
-                  {value !== 0 ? (
-                    <Grid item>
-                      <AnimateButton>
-                        <Button
-                          variant="contained"
-                          size="large"
-                          color="error"
-                          onClick={() => setShowDeleteModal(true)}
-                        >
-                          Delete
-                        </Button>
-                      </AnimateButton>
-                    </Grid>
-                  ) : null}
                   <Grid item>
                     <AnimateButton>
                       <Button
