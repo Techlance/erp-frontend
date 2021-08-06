@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {useHistory} from 'react-router-dom'
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -14,16 +13,16 @@ import {
 
 // assets
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import useCompany from "../../../hooks/useCompany";
 import { gridSpacing } from "../../../store/constant";
 import SubCard from "../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
+
+// project imports
+import useCompany from "../../../hooks/useCompany";
 import CurrencySelect from "../../../components/company/CurrencySelect";
 import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
 import ImageUpdateDialog from "../../../components/company/ImageUpdateDialog";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
-
-// project imports
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -37,17 +36,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//-----------------------|| PROFILE 3 - PROFILE ||-----------------------//
+//-----------------------|| Company Form ||-----------------------//
 
 const CompanyForm = () => {
   const classes = useStyles();
   const { current_company, updateCompany, deleteCompany } = useCompany();
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
-  const [showDeleteModal,setShowDeleteModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [values, setValues] = useState({ ...current_company });
-  
-  const history = useHistory();
 
   const handleChange = (event) => {
     setValues({
@@ -63,13 +60,14 @@ const CompanyForm = () => {
     });
   };
 
-  // const handleFileUpload = (event) => {
-  //   console.log(event.target.files[0]);
-  //   setValues({
-  //     ...values,
-  //     logo: event.target.files[0],
-  //   });
-  // };
+  const handleFileUpload = (event) => {
+    setValues({
+      ...values,
+      logo: event.target.files[0],
+    });
+
+    console.log(values);
+  };
 
   useEffect(() => {
     setValues({ ...current_company });
@@ -82,8 +80,8 @@ const CompanyForm = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Avatar
-                alt={values.company_name}
-                src={values.logo}
+                alt={values?.company_name}
+                src={values?.logo}
                 className={classes.accountAvatar}
               />
             </Grid>
@@ -94,15 +92,22 @@ const CompanyForm = () => {
             </Grid>
             <Grid item xs={12}>
               <AnimateButton>
-                <Button 
-                variant="contained" 
-                color="primary" 
-                size="small"
-                onClick = {()=> setShowImageModal(true)}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={() => setShowImageModal(true)}
                 >
                   Upload Logo
                 </Button>
               </AnimateButton>
+
+              <ImageUpdateDialog
+                open={showImageModal}
+                handleClose={() => setShowImageModal(false)}
+                handleFileUpload={handleFileUpload}
+                values={values}
+              />
             </Grid>
           </Grid>
         </SubCard>
@@ -202,12 +207,6 @@ const CompanyForm = () => {
                 open={showAddCurrencyModal}
                 handleClose={() => setShowAddCurrencyModal(false)}
               />
-
-              <ImageUpdateDialog
-                open={showImageModal}
-                handleClose={() => setShowImageModal(false)}
-              />
-
             </Grid>
 
             <Grid item xs={12} sm={6}>

@@ -10,65 +10,64 @@ import {
   DialogTitle,
   TextField,
   Typography,
-  Grid
+  Grid,
 } from "@material-ui/core";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
 import useCompany from "../../hooks/useCompany";
+
+// assets
 import { gridSpacing } from "../../store/constant";
-const style = {
-  borderRadius:"12px",
-  border:"1px solid "
-}
 
 const AddDocumentDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { current_company, createCompanyDoc } = useCompany();
+
   const [values, setValues] = useState({
     created_by: user.email,
     doc_name: "",
     company_master_id: current_company.id,
-    file:null
+    file: null,
   });
-  console.log(values)
-  useEffect(()=>{
+
+  useEffect(() => {
     setValues({
-        ...values,
-        company_master_id:current_company.id,
-        created_by:user.email
-    })
-  },[current_company,user])
-  
+      ...values,
+      company_master_id: current_company.id,
+      created_by: user.email,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current_company]);
+
   const handleChange = (event) => {
     setValues({
       ...values,
       [event.target.id]: event.target.value,
     });
-    console.log(values)
+    console.log(values);
   };
 
   const handleUpload = (event) => {
     setValues({
       ...values,
-      [event.target.id]: event.target.files[0]
+      [event.target.id]: event.target.files[0],
     });
   };
 
   const handleCloseModal = () => {
     setValues({
-        created_by: "",
-        doc_name: "",
-        company_master_id: "",
-        file:null
+      created_by: "",
+      doc_name: "",
+      company_master_id: "",
+      file: null,
     });
     handleClose();
   };
 
   const handleSubmit = () => {
-    console.log(values)
-    if(!values.file)
-        return
+    console.log(values);
+    if (!values.file) return;
     createCompanyDoc(values);
     handleCloseModal();
   };
@@ -86,26 +85,30 @@ const AddDocumentDialog = ({ open, handleClose }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Upload A {current_company.company_name} related Document.</Typography>
+          <Typography variant="body2">
+            Upload A {current_company.company_name} related Document.
+          </Typography>
         </DialogContentText>
-            <Grid container spacing={gridSpacing}>
-                <Grid item sm={12} xs={12}>
-                    <TextField
-                        fullWidth
-                        id="doc_name"
-                        label="Document Name"
-                        value={values.registration_no}
-                        InputLabelProps={{ shrink: true }}
-                        onChange={handleChange}
-                    />
-                </Grid>
-                <Grid item sm={12} xs={12}>
-                  <div >
-                    <input type="file" id="file" onChange={handleUpload}/>
-                    <Typography>{values.file?values.file.fileName:"Upload Files"}</Typography>
-                  </div>
-                </Grid>
-            </Grid>
+        <Grid container spacing={gridSpacing}>
+          <Grid item sm={12} xs={12}>
+            <TextField
+              fullWidth
+              id="doc_name"
+              label="Document Name"
+              value={values.registration_no}
+              InputLabelProps={{ shrink: true }}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item sm={12} xs={12}>
+            <div>
+              <input type="file" id="file" onChange={handleUpload} />
+              <Typography>
+                {values.file ? values.file.fileName : "Upload Files"}
+              </Typography>
+            </div>
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <Button onClick={handleClose} color="error">

@@ -46,9 +46,8 @@ const useStyles = makeStyles((theme) => ({
 
 const AddCompanyDialog = ({ open, handleClose }) => {
   const classes = useStyles();
-
   const { user } = useAuth();
-  const { createCompany, addCurrency } = useCompany();
+  const { createCompany } = useCompany();
 
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
 
@@ -69,28 +68,6 @@ const AddCompanyDialog = ({ open, handleClose }) => {
     year_end_date: "",
     created_by: user.email,
   });
-
-  const handleCloseModal = () => {
-    setValues({
-      id: 0,
-      company_name: "",
-      base_currency: { id: 0 },
-      address: "",
-      country: "",
-      state: "",
-      email: "",
-      website: "",
-      contact_no: "",
-      cr_no: "",
-      registration_no: "",
-      tax_id_no: "",
-      vat_id_no: "",
-      year_start_date: "",
-      year_end_date: "",
-      created_by: user.email,
-    });
-    handleClose();
-  };
 
   const handleChange = (event) => {
     setValues({

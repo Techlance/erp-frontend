@@ -51,22 +51,22 @@ const useStyles = makeStyles((theme) => ({
     margin: "8px 0 8px 8px !important",
   },
   profileChip: {
-    "height": "48px",
-    "alignItems": "center",
-    "borderRadius": "27px",
-    "transition": "all .2s ease-in-out",
-    "borderColor":
+    height: "48px",
+    alignItems: "center",
+    borderRadius: "27px",
+    transition: "all .2s ease-in-out",
+    borderColor:
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.primary.light,
-    "backgroundColor":
+    backgroundColor:
       theme.palette.mode === "dark"
         ? theme.palette.dark.main
         : theme.palette.primary.light,
     '&[aria-controls="menu-list-grow"], &:hover': {
-      "borderColor": theme.palette.primary.main,
-      "background": theme.palette.primary.main + "!important",
-      "color": theme.palette.primary.light,
+      borderColor: theme.palette.primary.main,
+      background: theme.palette.primary.main + "!important",
+      color: theme.palette.primary.light,
       "& svg": {
         stroke: theme.palette.primary.light,
       },
@@ -342,29 +342,31 @@ const ProfileSection = () => {
                             }
                           />
                         </ListItem>
-                        {user?.is_superuser?<ListItem
-                          className={classes.listItem}
-                          sx={{
-                            borderRadius: customization.borderRadius + "px",
-                          }}
-                          button
-                          selected={selectedIndex === 1}
-                          onClick={(event) => handleListItemClick(event, 1)}
-                          component={React.forwardRef((props, ref) => (
-                            <RouterLink {...props} to="/admin/companies" />
-                          ))}
-                        >
-                          <ListItemIcon>
-                            <BusinessIcon stroke={1.5} size="1.3rem" />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary={
-                              <Typography variant="body2">
-                                Company Details
-                              </Typography>
-                            }
-                          />
-                        </ListItem>:null}
+                        {user?.is_superuser ? (
+                          <ListItem
+                            className={classes.listItem}
+                            sx={{
+                              borderRadius: customization.borderRadius + "px",
+                            }}
+                            button
+                            selected={selectedIndex === 1}
+                            onClick={(event) => handleListItemClick(event, 1)}
+                            component={React.forwardRef((props, ref) => (
+                              <RouterLink {...props} to="/admin/companies" />
+                            ))}
+                          >
+                            <ListItemIcon>
+                              <BusinessIcon stroke={1.5} size="1.3rem" />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={
+                                <Typography variant="body2">
+                                  Company Details
+                                </Typography>
+                              }
+                            />
+                          </ListItem>
+                        ) : null}
                         {/* <ListItem
                           className={classes.listItem}
                           sx={{

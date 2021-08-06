@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 // reducer - state management
 import {
   COMPANIES_INITIALIZE,
-  CREATE_COMPANY,
+  // CREATE_COMPANY,
   DELETE_COMPANY,
   GET_CURRENCY,
   GET_USER_COMPANIES,
@@ -126,6 +126,8 @@ export const CompanyProvider = ({ children }) => {
 
   const updateCompany = async (data) => {
     data.base_currency = data.base_currency.id;
+    console.log(data);
+
     const form = dataToForm(data);
 
     if (data.id === 0) {
@@ -204,7 +206,6 @@ export const CompanyProvider = ({ children }) => {
 
   const createCompanyDoc = async (data) => {
     const form = dataToForm(data);
-
     const response = await instance.post("/company/add-company-document", form);
 
     sendNotification({
@@ -212,7 +213,8 @@ export const CompanyProvider = ({ children }) => {
       success: response.data.success,
       message: response.data.message,
     });
-    getSelectedCompanyDocs(state.current_company.id)
+
+    getSelectedCompanyDocs(state.current_company.id);
   };
 
   const deleteCompanyDoc = async (id, cid) => {

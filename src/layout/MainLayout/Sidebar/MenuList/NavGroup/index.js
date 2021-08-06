@@ -34,8 +34,6 @@ const NavGroup = ({ item }) => {
     (item) => item.admin === user?.is_superuser
   );
 
-  console.table(filteredMenuItems);
-
   // menu list collapse & items
   const items = filteredMenuItems.map((menu) => {
     switch (menu.type) {
