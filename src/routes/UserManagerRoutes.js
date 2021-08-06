@@ -5,6 +5,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Loadable from "../ui-component/Loadable";
 import AdminGuard from "../utils/route-guard/AdminGuard";
+import UserDetails from "../views/user-management/users/user-details";
 
 // company page routing
 const UserGroups = Loadable(
@@ -13,6 +14,11 @@ const UserGroups = Loadable(
 const UserRights = Loadable(
   lazy(() => import("../views/user-management/user-rights"))
 );
+
+const UserList = Loadable(
+  lazy(() => import("../views/user-management/users/user-list"))
+);
+
 const Users = Loadable(lazy(() => import("../views/user-management/users")));
 
 //-----------------------|| MAIN ROUTING ||-----------------------//
@@ -25,6 +31,7 @@ const MainRoutes = () => {
         "/admin/user-manager/groups",
         "/admin/user-manager/rights",
         "/admin/user-manager/users",
+        "/admin/user-manager/users/:uid",
       ]}
     >
       <MainLayout>
@@ -32,7 +39,12 @@ const MainRoutes = () => {
           <AdminGuard>
             <Route path="/admin/user-manager/groups" component={UserGroups} />
             <Route path="/admin/user-manager/rights" component={UserRights} />
-            <Route path="/admin/user-manager/users" component={Users} />
+            <Switch location={location} key={location.pathname}>
+            <AdminGuard>
+              <Route path="/admin/user-manager/users/:uid" component={UserDetails} />
+              <Route exact path="/admin/user-manager/users" component={UserList} />
+            </AdminGuard>
+            </Switch>
           </AdminGuard>
         </Switch>
       </MainLayout>

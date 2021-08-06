@@ -91,12 +91,12 @@ export const UserPermissionProvider = ({ children }) => {
     getUser();
   };
 
-  const updateUser = async (id, data) => {
-    if (id === 0) {
+  const updateUser = async (data) => {
+    if (data.id === 0) {
       delete data.id;
       createUser(data);
     } else {
-      const response = await axios.put(`/user/edit-user/${id}`, data);
+      const response = await axios.put(`/user/edit-user/${data.id}`, data);
 
       sendNotification({
         globalDispatch,
