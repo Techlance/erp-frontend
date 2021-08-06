@@ -3,13 +3,15 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Tab, Tabs } from "@material-ui/core";
+import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 
 // project imports
 import useCompany from "../../../hooks/useCompany";
 import MainCard from "../../../ui-component/cards/MainCard";
 import CompanyForm from "./CompanyForm";
 import CompanyDocumentForm from "./CompanyDocumentForm";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import AddDocumentDialog from '../../../components/company/AddDocumentDialog'
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -60,16 +62,15 @@ const CompanyDetails = () => {
   const classes = useStyles();
   const { cid } = useParams();
 
-  const { current_company, current_company_docs, getSelectedCompany } =
-    useCompany();
+  const { current_company, current_company_docs, getSelectedCompany } = useCompany();
 
   useEffect(() => {
     if (!cid) return;
     getSelectedCompany(cid);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cid]);
 
   const [value, setValue] = React.useState(0);
+  const [showAddModal,setShowAddModal] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -93,6 +94,22 @@ const CompanyDetails = () => {
             {...a11yProps(0)}
           />
           <Tab component={RouterLink} to="#" label="Docs" {...a11yProps(1)} />
+          {value===1? 
+            <div style={{position:'absolute',right:0}}>      
+              <AnimateButton>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  onClick={() => setShowAddModal(true)}
+                >
+                  <Typography>
+                    Upload Document
+                  </Typography>
+                </Button>
+              </AnimateButton>
+            </div>
+          :null}
         </Tabs>
         <TabPanel value={value} index={0}>
           <CompanyForm />
@@ -101,6 +118,10 @@ const CompanyDetails = () => {
           <CompanyDocumentForm />
         </TabPanel>
       </div>
+      <AddDocumentDialog
+        open={showAddModal}
+        handleClose={() => setShowAddModal(false)}
+      />
       <pre>{JSON.stringify(current_company, null, 2)}</pre>
       <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
     </MainCard>

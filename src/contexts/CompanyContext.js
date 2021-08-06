@@ -212,6 +212,7 @@ export const CompanyProvider = ({ children }) => {
       success: response.data.success,
       message: response.data.message,
     });
+    getSelectedCompanyDocs(state.current_company.id)
   };
 
   const deleteCompanyDoc = async (id, cid) => {
