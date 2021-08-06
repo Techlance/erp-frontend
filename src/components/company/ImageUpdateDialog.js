@@ -10,7 +10,8 @@ import {
   DialogTitle,
   TextField,
   Typography,
-  Grid
+  Grid,
+  Avatar
 } from "@material-ui/core";
 
 // project imports
@@ -22,57 +23,39 @@ const style = {
   border:"1px solid "
 }
 
-const AddDocumentDialog = ({ open, handleClose }) => {
+const ImageUpdateDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const { current_company, createCompanyDoc } = useCompany();
-  const [values, setValues] = useState({
-    created_by: user.email,
-    doc_name: "",
-    company_master_id: current_company.id,
-    file:null
-  });
+  const { current_company, updateCompany } = useCompany();
+  const [values, setValues] = useState(null);
+  const [img, setimg] = useState(null);
   console.log(values)
-  useEffect(()=>{
-    setValues({
-        ...values,
-        company_master_id:current_company.id,
-        created_by:user.email
-    })
-  },[current_company,user])
-  
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.id]: event.target.value,
-    });
-    console.log(values)
-  };
 
   const handleUpload = (event) => {
-    setValues({
-      ...values,
-      [event.target.id]: event.target.files[0]
-    });
+    setValues(event.target.files[0]);
+    src(event.target.files[0]);
   };
 
   const handleCloseModal = () => {
-    setValues({
-        created_by: "",
-        doc_name: "",
-        company_master_id: "",
-        file:null
-    });
+    setValues(null);
+    setimg(null);
     handleClose();
   };
 
   const handleSubmit = () => {
     console.log(values)
-    if(!values.file)
-        return
-    createCompanyDoc(values);
+    updateCompany({
+      ...current_company,
+      logo:values
+    })
     handleCloseModal();
   };
-
+  const src = (val)=>{
+      var reader = new FileReader();
+      reader.onload = function (e) {
+          setimg(e.target.result)
+      };
+      reader.readAsDataURL(val);
+  }
   return (
     <Dialog
       open={open}
@@ -82,27 +65,19 @@ const AddDocumentDialog = ({ open, handleClose }) => {
       maxWidth="sm"
     >
       <DialogTitle id="form-dialog-title">
-        <Typography variant="h4">Upload Document</Typography>
+        <Typography variant="h4">Update Logo</Typography>
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Upload A {current_company.company_name} related Document.</Typography>
+          <Typography variant="body2">Upload A Logo for {current_company.company_name}.</Typography>
         </DialogContentText>
             <Grid container spacing={gridSpacing}>
                 <Grid item sm={12} xs={12}>
-                    <TextField
-                        fullWidth
-                        id="doc_name"
-                        label="Document Name"
-                        value={values.registration_no}
-                        InputLabelProps={{ shrink: true }}
-                        onChange={handleChange}
-                    />
+                  <Avatar alt="Company Logo" style={{height:"100px",width:"100px"}} src={img}/>
                 </Grid>
                 <Grid item sm={12} xs={12}>
                   <div >
                     <input type="file" id="file" onChange={handleUpload}/>
-                    <Typography>{values.file?values.file.fileName:"Upload Files"}</Typography>
                   </div>
                 </Grid>
             </Grid>
@@ -124,4 +99,4 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   );
 };
 
-export default AddDocumentDialog;
+export default ImageUpdateDialog;

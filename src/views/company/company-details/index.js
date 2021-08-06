@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { Link as Link, useParams } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,25 +13,41 @@ import CompanyDocumentForm from "./CompanyDocumentForm";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import AddDocumentDialog from '../../../components/company/AddDocumentDialog'
 
+import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
+import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
+
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    "marginBottom": "24px",
-    "& button": {
-      minWidth: "100px",
-    },
-    "& a": {
-      minHeight: "auto",
-      minWidth: "10px",
-      padding: "12px 8px",
-      marginRight: "18px",
-      color: theme.palette.grey[600],
-    },
-    "& a.Mui-selected": {
-      color: theme.palette.primary.main,
-    },
-  },
+      marginBottom: '24px',
+      '& a': {
+          minHeight: 'auto',
+          minWidth: '10px',
+          padding: '12px 8px',
+          marginRight: '18px',
+          color: theme.palette.grey[600]
+      },
+      '& a.Mui-selected': {
+          color: theme.palette.primary.main
+      },
+      '& a > span': {
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center'
+      },
+      '& a > span > svg': {
+          marginBottom: '0px !important',
+          marginRight: '10px'
+      },
+      '& a > span > span + svg': {
+          margin: '0px 0px 0px auto !important',
+          width: '14px',
+          height: '14px'
+      }
+  }
 }));
+
 
 // tabs
 function TabPanel(props) {
@@ -82,18 +98,26 @@ const CompanyDetails = () => {
         <Tabs
           value={value}
           indicatorColor="primary"
+          textColor="primary"
           onChange={handleChange}
           className={classes.accountTab}
           aria-label="simple tabs example"
           variant="scrollable"
         >
           <Tab
-            component={RouterLink}
+            component={Link}
             to="#"
             label="Profile"
+            icon ={<AccountCircleTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
             {...a11yProps(0)}
           />
-          <Tab component={RouterLink} to="#" label="Docs" {...a11yProps(1)} />
+          <Tab 
+          component={Link} 
+          to="#" 
+          label="Docs"
+          icon={<DescriptionTwoToneIcon sx={{ fontSize: '1.3rem' }} />} 
+          {...a11yProps(1)} 
+          />
           {value===1? 
             <div style={{position:'absolute',right:0}}>      
               <AnimateButton>

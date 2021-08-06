@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import {useHistory} from 'react-router-dom'
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -20,6 +20,8 @@ import SubCard from "../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import CurrencySelect from "../../../components/company/CurrencySelect";
 import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
+import ImageUpdateDialog from "../../../components/company/ImageUpdateDialog";
+import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 
 // project imports
 
@@ -39,9 +41,13 @@ const useStyles = makeStyles((theme) => ({
 
 const CompanyForm = () => {
   const classes = useStyles();
-  const { current_company, updateCompany } = useCompany();
+  const { current_company, updateCompany, deleteCompany } = useCompany();
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [showDeleteModal,setShowDeleteModal] = useState(false);
   const [values, setValues] = useState({ ...current_company });
+  
+  const history = useHistory();
 
   const handleChange = (event) => {
     setValues({
@@ -88,7 +94,12 @@ const CompanyForm = () => {
             </Grid>
             <Grid item xs={12}>
               <AnimateButton>
-                <Button variant="contained" color="primary" size="small">
+                <Button 
+                variant="contained" 
+                color="primary" 
+                size="small"
+                onClick = {()=> setShowImageModal(true)}
+                >
                   Upload Logo
                 </Button>
               </AnimateButton>
@@ -191,6 +202,12 @@ const CompanyForm = () => {
                 open={showAddCurrencyModal}
                 handleClose={() => setShowAddCurrencyModal(false)}
               />
+
+              <ImageUpdateDialog
+                open={showImageModal}
+                handleClose={() => setShowImageModal(false)}
+              />
+
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -259,22 +276,47 @@ const CompanyForm = () => {
 
             <Grid item xs={12}>
               <Stack direction="row">
-                <AnimateButton>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(e) => {
-                      updateCompany(values);
-                    }}
-                  >
-                    Change Details
-                  </Button>
-                </AnimateButton>
+                <Grid container spacing={3}>
+                  <Grid item>
+                    <AnimateButton>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={(e) => {
+                          updateCompany(values);
+                        }}
+                      >
+                        Change Details
+                      </Button>
+                    </AnimateButton>
+                  </Grid>
+                  <Grid item>
+                    <AnimateButton>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => setShowDeleteModal(true)}
+                      >
+                        Delete
+                      </Button>
+                    </AnimateButton>
+                  </Grid>
+                </Grid>
               </Stack>
             </Grid>
           </Grid>
         </SubCard>
       </Grid>
+      <ConfirmDeleteDialog
+        open={showDeleteModal}
+        handleAgree={() => {
+          deleteCompany(values.id);
+          // history.replace('/admin/companies')
+        }}
+        handleClose={() => setShowDeleteModal(false)}
+        title="Are you sure?"
+        body="Are you sure you want to delete this Company records? Once deleted the data can not be retrived!"
+      />
     </Grid>
   );
 };

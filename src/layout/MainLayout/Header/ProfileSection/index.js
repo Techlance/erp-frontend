@@ -228,12 +228,12 @@ const ProfileSection = () => {
                     <Grid container direction="column" spacing={0}>
                       <Grid item className={classes.flex}>
                         <Typography variant="h3" className={classes.name}>
-                          {user.email}
+                          {user?.email}
                         </Typography>
                       </Grid>
                       <Grid item>
                         <Typography variant="subtitle2">
-                          {user.is_superuser ? "Admin" : "User"}
+                          {user?.is_superuser ? "Admin" : "User"}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -342,7 +342,7 @@ const ProfileSection = () => {
                             }
                           />
                         </ListItem>
-                        <ListItem
+                        {user?.is_superuser?<ListItem
                           className={classes.listItem}
                           sx={{
                             borderRadius: customization.borderRadius + "px",
@@ -351,7 +351,7 @@ const ProfileSection = () => {
                           selected={selectedIndex === 1}
                           onClick={(event) => handleListItemClick(event, 1)}
                           component={React.forwardRef((props, ref) => (
-                            <RouterLink {...props} to="/company-details" />
+                            <RouterLink {...props} to="/admin/companies" />
                           ))}
                         >
                           <ListItemIcon>
@@ -364,7 +364,7 @@ const ProfileSection = () => {
                               </Typography>
                             }
                           />
-                        </ListItem>
+                        </ListItem>:null}
                         {/* <ListItem
                           className={classes.listItem}
                           sx={{
