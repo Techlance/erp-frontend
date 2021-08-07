@@ -11,6 +11,8 @@ import {
   IconButton,
 } from "@material-ui/core";
 
+import { useHistory } from "react-router";
+
 // assets
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { gridSpacing } from "../../../store/constant";
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CompanyForm = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { current_company, updateCompany, deleteCompany } = useCompany();
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
@@ -310,7 +313,8 @@ const CompanyForm = () => {
         open={showDeleteModal}
         handleAgree={() => {
           deleteCompany(values.id);
-          // history.replace('/admin/companies')
+          console.log('test')
+          history.replace('/admin/companies')
         }}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"
