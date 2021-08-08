@@ -14,6 +14,7 @@ import {
   VIEW_USER_RIGHTS,
   VIEW_USER_GROUP_BY_ID,
   VIEW_USER_RIGHTS_BY_ID,
+  VIEW_USER_COMPANY_GROUP
 } from "../store/actions";
 import userManagementReducer from "../store/userManagementReducer";
 
@@ -31,6 +32,7 @@ const initialState = {
   current_user_group: { id: 0 },
   user_rights: [],
   current_user_right: { id: 0 },
+  user_company_group: [],
 };
 
 const UserPermissionContext = createContext({
@@ -164,6 +166,30 @@ export const UserPermissionProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  const getUserCompanyGroup = async (id) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/user/get-user-company-group/${id}`);
+
+      dispatch({
+        type: VIEW_USER_COMPANY_GROUP,
+        payload: response.data.data,
+      });
+      setLoading(false);
+
+      if (!response.data.success) {
+        sendNotification({
+          globalDispatch,
+          success: response.data.success,
+          message: response.data.message,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  }
 
   const createUserGroup = async (data) => {
     const response = await axios.post("/user/add-user-group", data);
@@ -342,6 +368,7 @@ export const UserPermissionProvider = ({ children }) => {
         updateUserRights,
         deleteUserRights,
         getSelectedUserRight,
+        getUserCompanyGroup
       }}
     >
       {children}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // material-ui
-import { Button, CardActions, Divider, Grid } from "@material-ui/core";
+import { Button, CardActions, Divider, Grid, Pagination, Menu, MenuItem } from "@material-ui/core";
 
 // project imports
 import useAuth from "../../../hooks/useAuth";
@@ -15,6 +15,8 @@ import UserGroupsSelect from "../../../components/user-management/UserGroupsSele
 // assets
 import MainCard from "../../../ui-component/cards/MainCard";
 import TransactionsTable from "./TransactionsTable";
+
+import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
 // tabs
 function TabPanel(props) {
@@ -64,6 +66,15 @@ const CompanyDetails = () => {
     setValue(value);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+      setAnchorEl(null);
+  };
+
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
@@ -93,25 +104,6 @@ const CompanyDetails = () => {
                     </Button>
                   </AnimateButton>
                 )}
-              </Grid>
-
-              <Grid item>
-                <Grid container justifyContent="space-between" spacing={10}>
-                  <Grid item>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        size="large"
-                        color="primary"
-                        onClick={(e) => {
-                          // updateUserRights(value, values);
-                        }}
-                      >
-                        {value === 0 ? "Create" : "Update"}
-                      </Button>
-                    </AnimateButton>
-                  </Grid>
-                </Grid>
               </Grid>
             </Grid>
           </CardActions>

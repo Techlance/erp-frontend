@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button, Grid, Typography } from "@material-ui/core";
 
 // project imports
-import UserTable from "./user-table";
+import UserTable from "./UserTable";
 import MainCard from "../../../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../../../store/constant";
 import AddUserDialog from "../../../../../components/user-management/AddUserDialog";

@@ -38,6 +38,7 @@ export const EDIT_USER = "EDIT_USER";
 export const VIEW_USER = "VIEW_USER";
 export const DELETE_USER = "DELETE_USER";
 export const VIEW_USER_BY_ID = "VIEW_USER_BY_ID";
+export const VIEW_USER_COMPANY_GROUP = "VIEW_USER_COMPANY_GROUP";
 
 // action - user management - user group reducer
 export const CREATE_USER_GROUP = "CREATE_USER_GROUP";
