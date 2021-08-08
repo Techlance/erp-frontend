@@ -168,27 +168,41 @@ export const UserPermissionProvider = ({ children }) => {
   };
 
   const getUserCompanyGroup = async (id) => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`/user/get-user-company-group/${id}`);
-
-      dispatch({
-        type: VIEW_USER_COMPANY_GROUP,
-        payload: response.data.data,
-      });
-      setLoading(false);
-
-      if (!response.data.success) {
-        sendNotification({
-          globalDispatch,
-          success: response.data.success,
-          message: response.data.message,
-        });
-      }
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
+    if (!id) {
+      return;
     }
+    const response = await axios.get(`/company/get-user-company-group/${id}`);
+
+    dispatch({
+      type: VIEW_USER_COMPANY_GROUP,
+      payload: response.data.data
+    });
+  }
+
+  const updateUserCompanyGroup = async (data, id) => {
+    const response = await axios.post(`/company/edit-user-company/${id}`,data);
+
+    sendNotification({
+      globalDispatch,
+      success: response.data.success,
+      message: response.data.message,
+    });
+
+  }
+
+  getUserCompanyGroup(state.current_user_account.id)
+  
+  const addUserCompanyGroup = async (data) => {
+    const response = await axios.post("/company/add-user-company",data);
+
+    sendNotification({
+      globalDispatch,
+      success: response.data.success,
+      message: response.data.message,
+    });
+  
+  getUserCompanyGroup(state.current_user_account.id)
+
   }
 
   const createUserGroup = async (data) => {
@@ -368,7 +382,9 @@ export const UserPermissionProvider = ({ children }) => {
         updateUserRights,
         deleteUserRights,
         getSelectedUserRight,
-        getUserCompanyGroup
+        getUserCompanyGroup,
+        updateUserCompanyGroup,
+        addUserCompanyGroup
       }}
     >
       {children}

@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 // material-ui
 import { Button, Grid, Typography } from "@material-ui/core";
+
+import {useParams} from 'react-router-dom'
 
 // project imports
 import UserTable from "./UserTable";
 import MainCard from "../../../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../../../store/constant";
-import AddUserDialog from "../../../../../components/user-management/AddUserDialog";
+import AddUserCompanyGroup from "../../../../../components/user-management/AddUserCompanyGroup";
 import useUserPermissions from "../../../../../hooks/useUserPermissions";
+import AnimateButton from "../../../../../ui-component/extended/AnimateButton";
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
   const { current_user_account } = useUserPermissions();
+
+  const [showAddModal, setShowAddModal] = useState(false);
 
   console.log("in SelectGroup.js");
 
@@ -30,11 +35,27 @@ const SelectGroup = () => {
               {"'s User Groups"}
             </Typography>
           </Grid>
+          <Grid item>
+          <AnimateButton>
+              <Button
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={() => setShowAddModal(true)}
+              >
+                Add Company Group
+              </Button>
+            </AnimateButton>
+          </Grid>
         </Grid>
       }
       content={true}
     >
       <UserTable />
+      <AddUserCompanyGroup
+      open={showAddModal}
+      handleClose={()=>{setShowAddModal(false)}}
+      />
     </MainCard>
   );
 };

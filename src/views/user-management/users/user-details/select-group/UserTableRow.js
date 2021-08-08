@@ -6,11 +6,12 @@ import { Button, IconButton, TableCell, Typography } from "@material-ui/core";
 // assets
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
+import UserGroupsSelect from "../../../../../components/user-management/UserGroupsSelect";
 
 // project imports
-import useAuth from "../../../hooks/useAuth";
 
-const TransactionTabRow = ({ data, transaction_id }) => {
+
+const TransactionTabRow = ({ data }) => {
 
   const [modified, setModified] = useState(false);
 
@@ -27,12 +28,13 @@ const TransactionTabRow = ({ data, transaction_id }) => {
         return data;
       }
       return null;
-    });
+    },[data]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleSelect = (key, value) => {
+      setModified(true)
     setValues({
       ...values,
       [key]: value,
@@ -48,19 +50,19 @@ const TransactionTabRow = ({ data, transaction_id }) => {
     <>
       <TableCell>
         <Typography variant="h4">
-          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-          {values.company_master_id}
+          <pre>{JSON.stringify(values, null, 2)}</pre>
+          {values.company_master_id.company_name}
         </Typography>
       </TableCell>
       <TableCell>
         <UserGroupsSelect
           captionLabel="User Group Name"
-          selected={values.user_group_id}
+          selected={values.user_group_id.id?values.user_group_id.id:{id:values.user_group_id}}
           onChange={handleSelect}
         />
       </TableCell>
-      <TableCell>
-        {modified && (
+      <TableCell align="center">
+        {modified?(
           <Button
             onClick={handleUpdateButton}
             color="primary"
@@ -68,7 +70,15 @@ const TransactionTabRow = ({ data, transaction_id }) => {
           >
             Update
           </Button>
-        )}
+        ):<div style={{opacity:0}}>
+            <Button
+            onClick={()=>{}}
+            color="primary"
+            variant="contained"
+            >
+                Update
+            </Button>
+        </div>}
       </TableCell>
     </>
   );

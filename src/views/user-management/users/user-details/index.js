@@ -77,11 +77,12 @@ const UserDetails = () => {
   const classes = useStyles();
   const { uid } = useParams();
 
-  const { getSelectedUserAccount } = useUserPermissions();
+  const { getSelectedUserAccount,getUserCompanyGroup } = useUserPermissions();
 
   useEffect(() => {
     if (!uid) return;
     getSelectedUserAccount(uid);
+    getUserCompanyGroup(uid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
 

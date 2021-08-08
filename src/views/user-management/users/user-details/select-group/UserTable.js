@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 
 // assets
+import UserTableRow from './UserTableRow'
 import AnimateButton from "../../../../../ui-component/extended/AnimateButton";
 import useUserPermissions from "../../../../../hooks/useUserPermissions";
 
@@ -25,11 +26,11 @@ import useUserPermissions from "../../../../../hooks/useUserPermissions";
 //-----------------------|| Company List ||-----------------------//
 
 const UserTable = () => {
-  const { user_accounts } = useUserPermissions();
+  const { user_company_group } = useUserPermissions();
 
   return (
     <div>
-      <pre>{JSON.stringify(user_accounts, null, 2)}</pre>
+      <pre>{JSON.stringify(user_company_group, null, 2)}</pre>
       <Table>
         <TableHead>
           <TableRow>
@@ -43,41 +44,15 @@ const UserTable = () => {
             </TableCell>
             <TableCell>
               <Typography align="center" variant="h4">
-                Update
+                <span style={{opacity:0}}>Update</span>
               </Typography>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {user_accounts.map((row, index) => (
+          {user_company_group.map((row, index) => (
             <TableRow hover key={index}>
-              <TableCell>
-                <Typography align="left" variant="subtitle1" component="div">
-                  {row.name}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                {/* <Typography align="center">{row.email}</Typography> */}
-              </TableCell>
-              <TableCell align="center">
-                <Stack
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Typography align="center">{row.email}</Typography>
-                  <AnimateButton>
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        return null;
-                      }}
-                    >
-                      Update
-                    </Button>
-                  </AnimateButton>
-                </Stack>
-              </TableCell>
+              <UserTableRow data = {row} />
             </TableRow>
           ))}
         </TableBody>
