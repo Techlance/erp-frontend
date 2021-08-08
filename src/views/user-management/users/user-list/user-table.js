@@ -1,12 +1,11 @@
 import React from "react";
 
 // material-ui
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 import {
   Button,
-  Grid,
   Stack,
   Table,
   TableBody,
@@ -17,13 +16,8 @@ import {
 } from "@material-ui/core";
 
 // assets
-import Avatar from "../../../../ui-component/extended/Avatar";
 import { IconArrowRight } from "@tabler/icons";
 import useUserPermissions from "../../../../hooks/useUserPermissions";
-import config from "../../../../config";
-import formatDate from "../../../../utils/format-date";
-
-// project imports
 
 //-----------------------|| Company List ||-----------------------//
 
@@ -60,20 +54,20 @@ const UserTable = () => {
           {user_accounts.map((row, index) => (
             <TableRow hover key={index}>
               <TableCell>
-                    <Typography
-                      align="left"
-                      variant="subtitle1"
-                      component="div"
-                    >
-                      {row.name}
-                    </Typography>
+                <Typography align="left" variant="subtitle1" component="div">
+                  {row.name}
+                </Typography>
               </TableCell>
               <TableCell>
                 <Typography align="center">{row.email}</Typography>
               </TableCell>
               <TableCell>
                 <Typography align="center">
-                  {row.is_superuser ? <CheckCircleIcon sx={{ color: 'success.dark' }}/> : <CancelIcon color='error'/>} 
+                  {row.is_superuser ? (
+                    <CheckCircleIcon sx={{ color: "success.dark" }} />
+                  ) : (
+                    <CancelIcon color="error" />
+                  )}
                 </Typography>
               </TableCell>
               <TableCell align="center">

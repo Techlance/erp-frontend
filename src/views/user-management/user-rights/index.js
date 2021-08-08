@@ -1,23 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 
 // material-ui
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  CardActions,
-  CardContent,
-  Divider,
-  Grid,
-  Tab,
-  Tabs,
-  Typography,
-  Avatar,
-} from "@material-ui/core";
+import { Button, CardActions, Divider, Grid } from "@material-ui/core";
 
 // project imports
-import RightsProfile from "./RightsProfile";
 import useAuth from "../../../hooks/useAuth";
 import useUserPermissions from "../../../hooks/useUserPermissions";
 import { gridSpacing } from "../../../store/constant";
@@ -26,64 +13,8 @@ import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import UserGroupsSelect from "../../../components/user-management/UserGroupsSelect";
 
 // assets
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 import MainCard from "../../../ui-component/cards/MainCard";
 import TransactionsTable from "./TransactionsTable";
-
-// style constant
-const useStyles = makeStyles((theme) => ({
-  profileTab: {
-    "& .MuiTabs-flexContainer": {
-      borderBottom: "none",
-    },
-    "& button": {
-      color:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[600]
-          : theme.palette.grey[600],
-      minHeight: "auto",
-      minWidth: "100%",
-      padding: "12px 16px",
-    },
-    "& button.Mui-selected": {
-      color: theme.palette.primary.main,
-      background:
-        theme.palette.mode === "dark"
-          ? theme.palette.dark.main
-          : theme.palette.grey[50],
-    },
-    "& button > span": {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "flex-start",
-      textAlign: "left",
-      justifyContent: "flex-start",
-    },
-    "& button > span > svg": {
-      marginBottom: "0px !important",
-      marginRight: "10px",
-      marginTop: "10px",
-      height: "20px",
-      width: "20px",
-    },
-    "& button > span > div > span": {
-      display: "block",
-    },
-    "& button > span > span + svg": {
-      margin: "0px 0px 0px auto !important",
-      width: "14px",
-      height: "14px",
-    },
-    "& > div > span": {
-      display: "none",
-    },
-  },
-  cardPanels: {
-    borderLeft: "1px solid",
-    borderLeftColor: theme.palette.mode === "dark" ? "#333d5e" : "#eeeeee",
-    height: "100%",
-  },
-}));
 
 // tabs
 function TabPanel(props) {
@@ -108,26 +39,13 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    "id": `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 //-----------------------|| USER MANAGEMENT - USER RIGHTS ||-----------------------//
 
 const CompanyDetails = () => {
-  const classes = useStyles();
   const { user } = useAuth();
 
-  const {
-    user_rights,
-    current_user_right,
-    getSelectedUserRight,
-    updateUserRights,
-    deleteUserRights,
-  } = useUserPermissions();
+  const { current_user_right, updateUserRights, deleteUserRights } =
+    useUserPermissions();
 
   const [value, setValue] = useState(0);
   const [showDeleteModal, setShowDeleteModal] = useState(false);

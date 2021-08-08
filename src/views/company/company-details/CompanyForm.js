@@ -25,6 +25,7 @@ import CurrencySelect from "../../../components/company/CurrencySelect";
 import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
 import ImageUpdateDialog from "../../../components/company/ImageUpdateDialog";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
+import { useSelector } from "react-redux";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -43,10 +44,14 @@ const useStyles = makeStyles((theme) => ({
 const CompanyForm = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { current_company, updateCompany, deleteCompany } = useCompany();
+
+  const { current_company } = useSelector((state) => state.company);
+  const { updateCompany, deleteCompany } = useCompany();
+
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const [values, setValues] = useState({ ...current_company });
 
   const handleChange = (event) => {
@@ -115,6 +120,7 @@ const CompanyForm = () => {
           </Grid>
         </SubCard>
       </Grid>
+
       <Grid item sm={6} md={8}>
         <SubCard title="Edit Account Details">
           <Grid container spacing={gridSpacing}>
@@ -313,8 +319,8 @@ const CompanyForm = () => {
         open={showDeleteModal}
         handleAgree={() => {
           deleteCompany(values.id);
-          console.log('test')
-          history.replace('/admin/companies')
+          console.log("test");
+          history.replace("/admin/companies");
         }}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"

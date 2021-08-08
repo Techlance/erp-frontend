@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 // material-ui
 import {
@@ -16,7 +17,6 @@ import {
 // assets
 import Avatar from "../../../ui-component/extended/Avatar";
 import { IconArrowRight } from "@tabler/icons";
-import useCompany from "../../../hooks/useCompany";
 import config from "../../../config";
 import formatDate from "../../../utils/format-date";
 
@@ -25,7 +25,9 @@ import formatDate from "../../../utils/format-date";
 //-----------------------|| Company List ||-----------------------//
 
 const CompanyTable = () => {
-  const { companies } = useCompany();
+  const company = useSelector((state) => state.company);
+
+  const { companies } = company;
 
   return (
     <div>

@@ -1,5 +1,5 @@
-import React, { createContext, useEffect, useReducer, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { createContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // reducer - state management
 import {
@@ -11,7 +11,6 @@ import {
   VIEW_COMPANY,
   VIEW_COMPANY_DOCS,
 } from "../store/actions";
-import companyReducer from "../store/companyReducer";
 
 // project imports
 import instance from "../utils/axios";
@@ -52,9 +51,9 @@ export const CompanyContext = createContext({
 });
 
 export const CompanyProvider = ({ children }) => {
-  const globalDispatch = useDispatch();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.company);
   const [loading, setLoading] = useState(false);
-  const [state, dispatch] = useReducer(companyReducer, initialState);
 
   const { user } = useAuth();
 
@@ -73,7 +72,7 @@ export const CompanyProvider = ({ children }) => {
 
         if (!response.data.success) {
           sendNotification({
-            globalDispatch,
+            globalDispatch: dispatch,
             success: response.data.success,
             message: response.data.message,
           });
@@ -116,7 +115,7 @@ export const CompanyProvider = ({ children }) => {
     setLoading(false);
 
     sendNotification({
-      globalDispatch,
+      globalDispatch: dispatch,
       success: response.success,
       message: response.message,
     });
@@ -139,7 +138,7 @@ export const CompanyProvider = ({ children }) => {
       );
 
       sendNotification({
-        globalDispatch,
+        globalDispatch: dispatch,
         success: response.data.success,
         message: response.data.message,
       });
@@ -164,7 +163,7 @@ export const CompanyProvider = ({ children }) => {
     }
 
     sendNotification({
-      globalDispatch,
+      globalDispatch: dispatch,
       success: response.data.success,
       message: response.data.message,
     });
@@ -178,7 +177,7 @@ export const CompanyProvider = ({ children }) => {
     }
 
     sendNotification({
-      globalDispatch,
+      globalDispatch: dispatch,
       success: response.data.success,
       message: response.data.message,
     });
@@ -209,7 +208,7 @@ export const CompanyProvider = ({ children }) => {
     const response = await instance.post("/company/add-company-document", form);
 
     sendNotification({
-      globalDispatch,
+      globalDispatch: dispatch,
       success: response.data.success,
       message: response.data.message,
     });
@@ -223,7 +222,7 @@ export const CompanyProvider = ({ children }) => {
     );
 
     sendNotification({
-      globalDispatch,
+      globalDispatch: dispatch,
       success: response.data.success,
       message: response.data.message,
     });
@@ -243,7 +242,7 @@ export const CompanyProvider = ({ children }) => {
   return (
     <CompanyContext.Provider
       value={{
-        ...state,
+        ...initialState,
         init: getUserCompanies,
         getSelectedCompany,
         createCompany,
