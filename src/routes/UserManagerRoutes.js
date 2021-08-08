@@ -40,10 +40,17 @@ const MainRoutes = () => {
             <Route path="/admin/user-manager/groups" component={UserGroups} />
             <Route path="/admin/user-manager/rights" component={UserRights} />
             <Switch location={location} key={location.pathname}>
-            <AdminGuard>
-              <Route path="/admin/user-manager/users/:uid" component={UserDetails} />
-              <Route exact path="/admin/user-manager/users" component={UserList} />
-            </AdminGuard>
+              <AdminGuard>
+                <Route
+                  path="/admin/user-manager/users/:uid"
+                  component={UserDetails}
+                />
+                <Route
+                  exact
+                  path="/admin/user-manager/users"
+                  component={UserList}
+                />
+              </AdminGuard>
             </Switch>
           </AdminGuard>
         </Switch>

@@ -23,14 +23,16 @@ import { IconFileDownload } from "@tabler/icons";
 import useCompany from "../../../hooks/useCompany";
 import formatDate from "../../../utils/format-date";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
+import { useSelector } from "react-redux";
 
 const CompanyDocumentForm = () => {
   const { cid } = useParams();
+
+  const { current_company_docs } = useSelector((state) => state.company);
+  const { getSelectedCompanyDocs, deleteCompanyDoc } = useCompany();
+
   const [showDeleteModal, setShowDeleteModal] = useState(null);
   const [currentDocID, setCurrentDocID] = useState(0);
-
-  const { current_company_docs, getSelectedCompanyDocs, deleteCompanyDoc } =
-    useCompany();
 
   const onDownload = (row) => {
     const link = document.createElement("a");

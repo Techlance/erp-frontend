@@ -77,8 +77,7 @@ const UserDetails = () => {
   const classes = useStyles();
   const { uid } = useParams();
 
-  const { getSelectedUserAccount } =
-    useUserPermissions();
+  const { getSelectedUserAccount } = useUserPermissions();
 
   useEffect(() => {
     if (!uid) return;
