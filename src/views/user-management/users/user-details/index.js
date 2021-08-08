@@ -9,6 +9,7 @@ import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import UserForm from "./UserForm";
+import SelectGroup from './select-group'
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import AddDocumentDialog from "../../../../components/company/AddDocumentDialog";
 
@@ -118,26 +119,12 @@ const UserDetails = () => {
             icon={<DescriptionTwoToneIcon sx={{ fontSize: "1.3rem" }} />}
             {...a11yProps(1)}
           />
-          {value === 1 ? (
-            <div style={{ position: "absolute", right: 0 }}>
-              <AnimateButton>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  onClick={() => setShowAddModal(true)}
-                >
-                  <Typography>Assign a Company/Group record</Typography>
-                </Button>
-              </AnimateButton>
-            </div>
-          ) : null}
         </Tabs>
         <TabPanel value={value} index={0}>
           <UserForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <UserForm />
+          <SelectGroup />
         </TabPanel>
       </div>
       <AddDocumentDialog
