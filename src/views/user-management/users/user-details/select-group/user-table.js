@@ -1,8 +1,8 @@
 import React from "react";
 
 // material-ui
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 import {
   Button,
@@ -52,13 +52,9 @@ const UserTable = () => {
           {user_accounts.map((row, index) => (
             <TableRow hover key={index}>
               <TableCell>
-                    <Typography
-                      align="left"
-                      variant="subtitle1"
-                      component="div"
-                    >
-                      {row.name}
-                    </Typography>
+                <Typography align="left" variant="subtitle1" component="div">
+                  {row.name}
+                </Typography>
               </TableCell>
               <TableCell>
                 {/* <Typography align="center">{row.email}</Typography> */}
@@ -69,15 +65,17 @@ const UserTable = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                   <Typography align="center">{row.email}</Typography>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        onClick={() =>{return null}}
-                      >
-                        Update
-                      </Button>
-                    </AnimateButton>
+                  <Typography align="center">{row.email}</Typography>
+                  <AnimateButton>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        return null;
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </AnimateButton>
                 </Stack>
               </TableCell>
             </TableRow>

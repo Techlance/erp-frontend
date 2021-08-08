@@ -9,7 +9,7 @@ import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import UserForm from "./UserForm";
-import SelectGroup from './select-group'
+import SelectGroup from "./select-group";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import AddDocumentDialog from "../../../../components/company/AddDocumentDialog";
 
