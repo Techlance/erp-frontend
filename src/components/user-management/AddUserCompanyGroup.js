@@ -16,6 +16,7 @@ import {
 import useAuth from "../../hooks/useAuth";
 import useUserPermissions from "../../hooks/useUserPermissions";
 import UserGroupsSelect from "./UserGroupsSelect";
+import UserCompanySelect from "./UserComapnySelect";
 import { gridSpacing } from "../../store/constant";
 
 const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
@@ -68,10 +69,10 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
-            <UserGroupsSelect onChange={handleSelect} />
+            <UserCompanySelect onChange={handleSelect} captionLabel="Select Company"/>
           </Grid>
           <Grid item xs={12}>
-            <UserGroupsSelect onChange={handleSelect} />
+            <UserGroupsSelect onChange={handleSelect} captionLabel="Select User Group"/>
           </Grid>
         </Grid>
       </DialogContent>
