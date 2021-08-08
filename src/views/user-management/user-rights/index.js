@@ -47,76 +47,37 @@ const CompanyDetails = () => {
   const { current_user_right, updateUserRights, deleteUserRights } =
     useUserPermissions();
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(() => {
+    if (current_user_right && current_user_right.user_group_id) {
+      return {
+        ...current_user_right.user_group_id,
+      };
+    }
+    return {
+      id: 0,
+      user_group_name: "",
+    };
+  });
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleSelect = (key, value) => {
-    setValue(value.id);
-
-    setValues({
-      ...values,
-      [key]: value,
-    });
+    setValue(value);
   };
-
-  // constants
-  const INIT_STATE = {
-    user_group_id: null,
-    transaction_id: null,
-    can_create: true,
-    can_alter: true,
-    can_delete: true,
-    can_view: true,
-    created_by: user.email,
-  };
-
-  const [values, setValues] = useState(() => {
-    if (value === 0) {
-      return INIT_STATE;
-    }
-
-    return {
-      user_group_id: current_user_right.user_group_id,
-      transaction_id: current_user_right.transaction_id,
-      can_create: current_user_right.can_create,
-      can_alter: current_user_right.can_alter,
-      can_delete: current_user_right.can_delete,
-      can_view: current_user_right.can_view,
-      created_by: current_user_right.created_by,
-    };
-  });
-
-  useEffect(() => {
-    setValues(() => {
-      if (value === 0) return INIT_STATE;
-
-      return {
-        user_group_id: current_user_right.user_group_id,
-        transaction_id: current_user_right.transaction_id,
-        can_create: current_user_right.can_create,
-        can_alter: current_user_right.can_alter,
-        can_delete: current_user_right.can_delete,
-        can_view: current_user_right.can_view,
-        created_by: current_user_right.created_by,
-      };
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current_user_right, value]);
 
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <MainCard title="User Rights Settings" content={true}>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(value, null, 2)}</pre> */}
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
               <UserGroupsSelect
                 captionLabel="User Group Name"
-                selected={values.user_group_id}
+                selected={value}
                 onChange={handleSelect}
               />
 
-              <Grid item xs={12}>
+              <Grid item xs={12} spacing={gridSpacing}>
                 <TransactionsTable value={value} />
               </Grid>
             </Grid>
@@ -143,7 +104,7 @@ const CompanyDetails = () => {
                         size="large"
                         color="primary"
                         onClick={(e) => {
-                          updateUserRights(value, values);
+                          // updateUserRights(value, values);
                         }}
                       >
                         {value === 0 ? "Create" : "Update"}
