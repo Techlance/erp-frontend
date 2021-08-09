@@ -37,7 +37,6 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   });
 
   useEffect(() => {
-    console.log(current_company);
     setValues({
       ...values,
       company_master_id: current_company.id,
@@ -51,7 +50,6 @@ const AddDocumentDialog = ({ open, handleClose }) => {
       ...values,
       [event.target.id]: event.target.value,
     });
-    console.log(values);
   };
 
   const handleUpload = (event) => {

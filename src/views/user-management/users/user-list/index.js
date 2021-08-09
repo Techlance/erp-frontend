@@ -14,8 +14,6 @@ import AddUserDialog from "../../../../components/user-management/AddUserDialog"
 const UserList = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  console.log("in UserList.js");
-
   return (
     <MainCard
       title={

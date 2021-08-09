@@ -125,7 +125,6 @@ export const CompanyProvider = ({ children }) => {
 
   const updateCompany = async (data) => {
     data.base_currency = data.base_currency.id;
-    console.log(data);
 
     const form = dataToForm(data);
 

@@ -12,8 +12,6 @@ import config from "./../config";
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
 const Routes = () => {
-  console.log("in index.js");
-
   return (
     <Switch>
       <Redirect exact from="/" to={config.defaultPath} />

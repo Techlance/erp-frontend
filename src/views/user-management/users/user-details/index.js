@@ -83,7 +83,6 @@ const UserDetails = () => {
     if (!uid) return;
     getSelectedUserAccount(uid);
     getUserCompanyGroup(uid);
-    console.log("test");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);

@@ -64,7 +64,7 @@ const CompanyDetails = () => {
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <MainCard title="User Rights Settings" content={true}>
-          {/* <pre>{JSON.stringify(value, null, 2)}</pre> */}
+          <pre>{JSON.stringify(value, null, 2)}</pre>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
               <UserGroupsSelect

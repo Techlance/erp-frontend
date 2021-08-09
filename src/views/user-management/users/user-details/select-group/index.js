@@ -18,8 +18,6 @@ const SelectGroup = () => {
 
   const [showAddModal, setShowAddModal] = useState(false);
 
-  console.log("in SelectGroup.js");
-
   return (
     <MainCard
       title={
@@ -31,8 +29,7 @@ const SelectGroup = () => {
         >
           <Grid item>
             <Typography variant="h3">
-              {current_user_account.name}
-              {"'s User Groups"}
+              {`${current_user_account.name}'s User Groups`}
             </Typography>
           </Grid>
           <Grid item>
@@ -57,6 +54,7 @@ const SelectGroup = () => {
         handleClose={() => {
           setShowAddModal(false);
         }}
+        user_id={current_user_account.id}
       />
     </MainCard>
   );

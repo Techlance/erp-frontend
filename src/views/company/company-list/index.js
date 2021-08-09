@@ -14,8 +14,6 @@ import AddCompanyDialog from "../../../components/company/AddCompanyDialog";
 const CompanyList = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  console.log("in CompanyList.js");
-
   return (
     <MainCard
       title={

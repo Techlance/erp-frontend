@@ -15,8 +15,6 @@ import config from "../../config";
 const AdminGuard = ({ children }) => {
   const { user } = useAuth();
 
-  console.log("in AdminGuard.js");
-
   if (!user) {
     return <Redirect to="/" />;
   }

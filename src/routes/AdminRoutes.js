@@ -9,8 +9,6 @@ const CompanyRoutes = Loadable(lazy(() => import("./CompanyRoutes")));
 const UserManagerRoutes = Loadable(lazy(() => import("./UserManagerRoutes")));
 
 const AdminRoutes = () => {
-  console.log("in AdminRoutes.js");
-
   return (
     <Route path={["/admin/*"]}>
       <React.Fragment>

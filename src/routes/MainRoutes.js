@@ -17,8 +17,6 @@ const SamplePage = Loadable(lazy(() => import("../views/sample-page")));
 const MainRoutes = () => {
   const location = useLocation();
 
-  console.log("in MainRoutes.js");
-
   return (
     <Route path={["/sample-page", "/select-company"]}>
       <MainLayout>

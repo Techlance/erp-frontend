@@ -121,7 +121,6 @@ const UserForm = () => {
                         variant="contained"
                         color="primary"
                         onClick={(e) => {
-                          console.log(values);
                           updateUser(values);
                           // history.replace('/admin/user-manager/users')
                         }}

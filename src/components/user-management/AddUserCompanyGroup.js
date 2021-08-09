@@ -27,8 +27,14 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
   const [values, setValues] = useState({
     created_by: user.email,
     user: user_id,
-    user_group_id: null,
-    company_master_id: null,
+    user_group_id: {
+      id: 0,
+      user_group_name: "",
+    },
+    company_master_id: {
+      company_id: 0,
+      company_name: "",
+    },
   });
 
   const handleSelect = (key, value) => {
@@ -45,11 +51,16 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
       user_group_id: null,
       company_master_id: null,
     });
+
     handleClose();
   };
 
   const handleAddCompany = () => {
-    addUserCompanyGroup(values);
+    let data = { ...values };
+    data.company_master_id = data.company_master_id.company_id;
+    data.user_group_id = data.user_group_id.id;
+
+    addUserCompanyGroup(data);
     handleCloseModal();
   };
 
@@ -60,25 +71,31 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
       aria-labelledby="create-currency"
       fullWidth
       maxWidth="sm"
+      keepMounted
     >
       <DialogTitle id="form-dialog-title">
         <Typography variant="h4">Add To Company</Typography>
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Add User To New Company.</Typography>
+          <Typography variant="h5">Add User To New Company.</Typography>
         </DialogContentText>
+
+        <pre>{JSON.stringify({ values }, null, 2)}</pre>
+
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <UserCompanySelect
-              onChange={handleSelect}
               captionLabel="Select Company"
+              selected={values.company_master_id}
+              onChange={handleSelect}
             />
           </Grid>
           <Grid item xs={12}>
             <UserGroupsSelect
-              onChange={handleSelect}
               captionLabel="Select User Group"
+              selected={values.user_group_id}
+              onChange={handleSelect}
             />
           </Grid>
         </Grid>

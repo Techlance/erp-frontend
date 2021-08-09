@@ -48,7 +48,7 @@ export const UserPermissionProvider = ({ children }) => {
   useEffect(() => {
     getUser();
     getUserGroups();
-    getUserRights();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -172,7 +172,6 @@ export const UserPermissionProvider = ({ children }) => {
       return;
     }
 
-    console.log("error");
     const response = await axios.get(`/company/get-user-company-group/${id}`);
 
     dispatch({
@@ -181,8 +180,11 @@ export const UserPermissionProvider = ({ children }) => {
     });
   };
 
-  const updateUserCompanyGroup = async (data, id) => {
-    const response = await axios.post(`/company/edit-user-company/${id}`, data);
+  const updateUserCompanyGroup = async (data) => {
+    const response = await axios.put(
+      `/company/edit-user-company/${data.id}`,
+      data
+    );
 
     sendNotification({
       globalDispatch,

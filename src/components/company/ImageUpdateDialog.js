@@ -20,7 +20,6 @@ const ImageUpdateDialog = ({ open, handleClose, handleFileUpload, values }) => {
   const { updateCompany } = useCompany();
 
   const [img, setimg] = useState(null);
-  console.log();
 
   const handleUpload = (event) => {
     handleFileUpload(event);

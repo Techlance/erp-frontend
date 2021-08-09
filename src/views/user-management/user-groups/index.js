@@ -110,7 +110,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -134,7 +134,6 @@ const CompanyDetails = () => {
   } = useUserPermissions();
 
   const handleTabChange = (event, newValue) => {
-    console.log(newValue);
     setValue(newValue);
     getSelectedUserGroup(newValue);
   };

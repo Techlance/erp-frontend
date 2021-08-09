@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 // material ui
 import { Button, TableCell, Typography } from "@material-ui/core";
 
+// project imports
+import useUserPermissions from "../../../../../hooks/useUserPermissions";
+
 // assets
 import UserGroupsSelect from "../../../../../components/user-management/UserGroupsSelect";
 
@@ -10,6 +13,8 @@ import UserGroupsSelect from "../../../../../components/user-management/UserGrou
 
 const TransactionTabRow = ({ data }) => {
   const [modified, setModified] = useState(false);
+
+  const { updateUserCompanyGroup } = useUserPermissions();
 
   const [values, setValues] = useState(() => {
     if (data) {
@@ -23,7 +28,17 @@ const TransactionTabRow = ({ data }) => {
       if (data) {
         return data;
       }
-      return null;
+
+      return {
+        company_master_id: {
+          id: 0,
+          company_name: "",
+        },
+        user_group_id: {
+          id: 0,
+          user_group_name: "",
+        },
+      };
     }, [data]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,6 +46,7 @@ const TransactionTabRow = ({ data }) => {
 
   const handleSelect = (key, value) => {
     setModified(true);
+
     setValues({
       ...values,
       [key]: value,
@@ -39,30 +55,31 @@ const TransactionTabRow = ({ data }) => {
 
   const handleUpdateButton = () => {
     setModified(false);
-    // API call
+
+    let data = { ...values };
+    data.user_group_id = data.user_group_id.id;
+    data.company_master_id = data.company_master_id.id;
+
+    updateUserCompanyGroup(data);
   };
 
   return (
     <>
       <TableCell>
         <Typography variant="h4">
-          <pre>{JSON.stringify(values, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
           {values.company_master_id.company_name}
         </Typography>
       </TableCell>
       <TableCell>
         <UserGroupsSelect
           captionLabel="User Group Name"
-          selected={
-            values.user_group_id.id
-              ? values.user_group_id.id
-              : { id: values.user_group_id }
-          }
+          selected={values.user_group_id}
           onChange={handleSelect}
         />
       </TableCell>
       <TableCell align="center">
-        {modified ? (
+        {modified && (
           <Button
             onClick={handleUpdateButton}
             color="primary"
@@ -70,12 +87,6 @@ const TransactionTabRow = ({ data }) => {
           >
             Update
           </Button>
-        ) : (
-          <div style={{ opacity: 0 }}>
-            <Button onClick={() => {}} color="primary" variant="contained">
-              Update
-            </Button>
-          </div>
         )}
       </TableCell>
     </>

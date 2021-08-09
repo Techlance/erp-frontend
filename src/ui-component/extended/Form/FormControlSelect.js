@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React from "react";
 
 // material-ui
 import {
@@ -38,12 +38,6 @@ const FormControlSelect = ({
   const handleChange = (event) => {
     onChange({ base_currency: event.target.value });
   };
-
-  useEffect(() => {
-    console.log(selected);
-    // onChange({ base_currency: selected });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected]);
 
   return (
     <FormControl fullWidth variant="outlined" error={errorState}>

@@ -73,8 +73,6 @@ const CompanyForm = () => {
       ...values,
       logo: event.target.files[0],
     });
-
-    console.log(values);
   };
 
   useEffect(() => {
@@ -319,7 +317,6 @@ const CompanyForm = () => {
         open={showDeleteModal}
         handleAgree={() => {
           deleteCompany(values.id);
-          console.log("test");
           history.replace("/admin/companies");
         }}
         handleClose={() => setShowDeleteModal(false)}

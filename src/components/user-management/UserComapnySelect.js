@@ -9,7 +9,7 @@ import useRequest from "../../hooks/useRequest";
 
 const UserSelectCompany = ({ captionLabel, formState, selected, onChange }) => {
   const [current, setCurrent] = useState(() => {
-    if (selected) return selected.id;
+    if (selected) return selected.company_id;
     return null;
   });
 
@@ -27,7 +27,7 @@ const UserSelectCompany = ({ captionLabel, formState, selected, onChange }) => {
 
   useEffect(() => {
     setCurrent(() => {
-      if (selected) return selected.id;
+      if (selected) return selected.company_id;
       return null;
     });
 
@@ -36,8 +36,9 @@ const UserSelectCompany = ({ captionLabel, formState, selected, onChange }) => {
 
   const handleChange = (event) => {
     const item = data.companies.find(
-      (option) => option.id === event.target.value
+      (option) => option.company_id === event.target.value
     );
+
     onChange("company_master_id", item);
   };
 
@@ -53,13 +54,11 @@ const UserSelectCompany = ({ captionLabel, formState, selected, onChange }) => {
         variant="outlined"
         InputLabelProps={{ shrink: true }}
       >
-        {console.log(data.companies)}
-        {data.companies &&
-          data.companies.map((option, index) => (
-            <MenuItem key={index} value={option.id}>
-              {`${option.company_name}`.toUpperCase()}
-            </MenuItem>
-          ))}
+        {data.companies?.map((option, index) => (
+          <MenuItem key={index} value={option.company_id}>
+            {`${option.company_name}`.toUpperCase()}
+          </MenuItem>
+        ))}
       </TextField>
     </FormControl>
   );
