@@ -10,7 +10,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 // project imports
 import useAuth from "../../../hooks/useAuth";
 
-const TransactionTabRow = ({ data, transaction_id }) => {
+const TransactionTabRow = ({ data, transaction_id, user_group_id }) => {
   const { user } = useAuth();
 
   const [modified, setModified] = useState(false);
@@ -19,7 +19,9 @@ const TransactionTabRow = ({ data, transaction_id }) => {
     if (data) {
       return data;
     }
+
     return {
+      user_group_id,
       transaction_id,
       can_create: false,
       can_alter: false,
@@ -34,7 +36,9 @@ const TransactionTabRow = ({ data, transaction_id }) => {
       if (data) {
         return data;
       }
+
       return {
+        user_group_id,
         transaction_id,
         can_create: false,
         can_alter: false,
@@ -57,14 +61,19 @@ const TransactionTabRow = ({ data, transaction_id }) => {
 
   const handleUpdateButton = () => {
     setModified(false);
+
+    let data = { ...values };
+    data.transaction_id = data.transaction_id.id;
+
     // API call
+    console.log(values);
   };
 
   return (
     <>
       <TableCell>
         <Typography variant="h4">
-          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+          <pre>{JSON.stringify(values, null, 2)}</pre>
           {values.transaction_id.transactions}
         </Typography>
       </TableCell>

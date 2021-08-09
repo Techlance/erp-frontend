@@ -6,7 +6,6 @@ import { CardContent, Grid, Typography } from "@material-ui/core";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
-import useCompany from "../../hooks/useCompany";
 import { gridSpacing } from "./../../store/constant";
 import config from "../../config";
 
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectCompany = ({ title }) => {
   const classes = useStyles();
-  const company = useSelector((state)=>state.company)
+  const company = useSelector((state) => state.company);
   const { companies } = company;
   const { user } = useAuth();
 

@@ -49,11 +49,13 @@ const CompanyDetails = () => {
         ...current_user_right.user_group_id,
       };
     }
+
     return {
       id: 0,
       user_group_name: "",
     };
   });
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleSelect = (key, value) => {
