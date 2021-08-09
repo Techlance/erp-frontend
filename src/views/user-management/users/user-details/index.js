@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 // material-ui
@@ -13,7 +13,7 @@ import SelectGroup from "./select-group";
 
 // assets
 import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
-import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
+import VerifiedUserTwoToneIcon from "@material-ui/icons/VerifiedUserTwoTone";
 import AddDocumentDialog from "../../../../components/company/AddDocumentDialog";
 
 // style constant
@@ -83,11 +83,13 @@ const UserDetails = () => {
     if (!uid) return;
     getSelectedUserAccount(uid);
     getUserCompanyGroup(uid);
+    console.log("test");
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
 
-  const [value, setValue] = React.useState(0);
-  const [showAddModal, setShowAddModal] = React.useState(false);
+  const [value, setValue] = useState(0);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -116,7 +118,7 @@ const UserDetails = () => {
             component={Link}
             to="#"
             label="Permissions"
-            icon={<DescriptionTwoToneIcon sx={{ fontSize: "1.3rem" }} />}
+            icon={<VerifiedUserTwoToneIcon sx={{ fontSize: "1.3rem" }} />}
             {...a11yProps(1)}
           />
         </Tabs>

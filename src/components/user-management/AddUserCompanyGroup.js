@@ -21,6 +21,7 @@ import { gridSpacing } from "../../store/constant";
 
 const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
   const { user } = useAuth();
+
   const { addUserCompanyGroup } = useUserPermissions();
 
   const [values, setValues] = useState({

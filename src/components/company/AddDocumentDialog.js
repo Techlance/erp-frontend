@@ -72,7 +72,6 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   };
 
   const handleSubmit = () => {
-    console.log(values);
     if (!values.file) return;
     createCompanyDoc(values);
     handleCloseModal();

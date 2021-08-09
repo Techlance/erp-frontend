@@ -5,7 +5,6 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Loadable from "../ui-component/Loadable";
 import AdminGuard from "../utils/route-guard/AdminGuard";
-import UserDetails from "../views/user-management/users/user-details";
 
 // company page routing
 const UserGroups = Loadable(
@@ -17,6 +16,9 @@ const UserRights = Loadable(
 
 const UserList = Loadable(
   lazy(() => import("../views/user-management/users/user-list"))
+);
+const UserDetails = Loadable(
+  lazy(() => import("../views/user-management/users/user-details"))
 );
 
 //-----------------------|| MAIN ROUTING ||-----------------------//

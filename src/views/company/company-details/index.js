@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 // material-ui
@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -67,7 +67,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -86,11 +86,12 @@ const CompanyDetails = () => {
   useEffect(() => {
     if (!cid) return;
     getSelectedCompany(cid);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cid]);
 
-  const [value, setValue] = React.useState(0);
-  const [showAddModal, setShowAddModal] = React.useState(false);
+  const [value, setValue] = useState(0);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

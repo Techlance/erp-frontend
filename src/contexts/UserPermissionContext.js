@@ -171,6 +171,8 @@ export const UserPermissionProvider = ({ children }) => {
     if (!id) {
       return;
     }
+
+    console.log("error");
     const response = await axios.get(`/company/get-user-company-group/${id}`);
 
     dispatch({
@@ -187,9 +189,9 @@ export const UserPermissionProvider = ({ children }) => {
       success: response.data.success,
       message: response.data.message,
     });
-  };
 
-  getUserCompanyGroup(state.current_user_account.id);
+    getUserCompanyGroup(state.current_user_account.id);
+  };
 
   const addUserCompanyGroup = async (data) => {
     const response = await axios.post("/company/add-user-company", data);
