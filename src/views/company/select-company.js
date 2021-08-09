@@ -14,6 +14,7 @@ import config from "../../config";
 import BusinessCenter from "@material-ui/icons/BusinessCenter";
 import Avatar from "./../../ui-component/extended/Avatar";
 import MainCard from "./../../ui-component/cards/MainCard";
+import { useSelector } from "react-redux";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectCompany = ({ title }) => {
   const classes = useStyles();
-  const { companies } = useCompany();
+  const company = useSelector((state)=>state.company)
+  const { companies } = company;
   const { user } = useAuth();
 
   return (
