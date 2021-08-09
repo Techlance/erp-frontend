@@ -6,6 +6,7 @@ import { FormControl, MenuItem, TextField } from "@material-ui/core";
 
 // project imports
 import useCompany from "../../hooks/useCompany";
+import { useSelector } from "react-redux";
 
 //-----------------------|| CURRENCY SELECT ||-----------------------//
 
@@ -15,8 +16,10 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
     return null;
   });
 
-  const { currencies, getCurrency } = useCompany();
-
+  // const { currencies, getCurrency } = useCompany();
+  const { getCurrency } = useCompany();
+  const company = useSelector((state)=>state.company)
+  const { currencies } = company;
   const errorState = formState === "error" ? true : false;
 
   useEffect(() => {

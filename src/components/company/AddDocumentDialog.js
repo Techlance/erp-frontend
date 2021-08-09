@@ -19,10 +19,15 @@ import useCompany from "../../hooks/useCompany";
 
 // assets
 import { gridSpacing } from "../../store/constant";
+import { useSelector } from "react-redux";
 
 const AddDocumentDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const { current_company, createCompanyDoc } = useCompany();
+  
+  const company = useSelector((state)=> state.company)
+  const { current_company } = company;
+
+  const { createCompanyDoc } = useCompany();
 
   const [values, setValues] = useState({
     created_by: user.email,
@@ -32,6 +37,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   });
 
   useEffect(() => {
+    console.log(current_company)
     setValues({
       ...values,
       company_master_id: current_company.id,
