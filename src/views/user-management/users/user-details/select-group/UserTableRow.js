@@ -12,9 +12,10 @@ import UserGroupsSelect from "../../../../../components/user-management/UserGrou
 // project imports
 
 const TransactionTabRow = ({ data }) => {
-  const [modified, setModified] = useState(false);
-
   const { updateUserCompanyGroup } = useUserPermissions();
+
+  const [modified, setModified] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [values, setValues] = useState(() => {
     if (data) {
@@ -53,14 +54,15 @@ const TransactionTabRow = ({ data }) => {
     });
   };
 
-  const handleUpdateButton = () => {
-    setModified(false);
-
+  const handleUpdateButton = async () => {
     let data = { ...values };
     data.user_group_id = data.user_group_id.id;
     data.company_master_id = data.company_master_id.id;
 
-    updateUserCompanyGroup(data);
+    setLoading(true);
+    await updateUserCompanyGroup(data);
+    setModified(false);
+    setLoading(false);
   };
 
   return (
@@ -84,6 +86,7 @@ const TransactionTabRow = ({ data }) => {
             onClick={handleUpdateButton}
             color="primary"
             variant="contained"
+            disabled={loading}
           >
             Update
           </Button>

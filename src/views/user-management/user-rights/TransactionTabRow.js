@@ -9,11 +9,14 @@ import CancelIcon from "@material-ui/icons/Cancel";
 
 // project imports
 import useAuth from "../../../hooks/useAuth";
+import useUserPermissions from "../../../hooks/useUserPermissions";
 
 const TransactionTabRow = ({ data, transaction_id, user_group_id }) => {
   const { user } = useAuth();
+  const { updateUserRights } = useUserPermissions();
 
   const [modified, setModified] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [values, setValues] = useState(() => {
     if (data) {
@@ -59,14 +62,16 @@ const TransactionTabRow = ({ data, transaction_id, user_group_id }) => {
     });
   };
 
-  const handleUpdateButton = () => {
-    setModified(false);
-
+  const handleUpdateButton = async () => {
     let data = { ...values };
     data.transaction_id = data.transaction_id.id;
+    data.user_group_id = user_group_id;
 
     // API call
-    console.log(values);
+    setLoading(true);
+    await updateUserRights(data);
+    setModified(false);
+    setLoading(false);
   };
 
   return (
@@ -112,6 +117,7 @@ const TransactionTabRow = ({ data, transaction_id, user_group_id }) => {
             onClick={handleUpdateButton}
             color="primary"
             variant="contained"
+            disabled={loading}
           >
             Update
           </Button>

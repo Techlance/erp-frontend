@@ -312,22 +312,23 @@ export const UserPermissionProvider = ({ children }) => {
     getUserRights();
   };
 
-  const updateUserRights = async (id, data) => {
-    data.user_group_id = data.user_group_id.id;
-    data.transaction_id = data.transaction_id.id;
-
-    if (id === 0) {
+  const updateUserRights = async (data) => {
+    if (data.id === 0) {
       createUserRights(data);
     } else {
-      delete data.id;
-      const response = await axios.put(`/user/edit-user-right/${id}`, data);
+      // const form = dataToForm(data)
+      const response = await axios.put(
+        `/user/edit-user-right/${data.id}`,
+        data
+      );
 
       sendNotification({
         globalDispatch,
         success: response.data.success,
         message: response.data.message,
       });
-      getUserRights();
+
+      // getUserRights();
     }
   };
 
