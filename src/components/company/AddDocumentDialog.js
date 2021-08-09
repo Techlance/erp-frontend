@@ -61,17 +61,18 @@ const AddDocumentDialog = ({ open, handleClose }) => {
 
   const handleCloseModal = () => {
     setValues({
-      created_by: "",
       doc_name: "",
-      company_master_id: "",
+      company_master_id: current_company.id,
+      created_by: user.email,
       file: null,
     });
+
     handleClose();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!values.file) return;
-    createCompanyDoc(values);
+    await createCompanyDoc(values);
     handleCloseModal();
   };
 
