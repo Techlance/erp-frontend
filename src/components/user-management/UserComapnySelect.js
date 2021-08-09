@@ -35,7 +35,9 @@ const UserSelectCompany = ({ captionLabel, formState, selected, onChange }) => {
   }, [selected]);
 
   const handleChange = (event) => {
-    const item = data.companies.find((option) => option.id === event.target.value);
+    const item = data.companies.find(
+      (option) => option.id === event.target.value
+    );
     onChange("company_master_id", item);
   };
 
@@ -52,11 +54,12 @@ const UserSelectCompany = ({ captionLabel, formState, selected, onChange }) => {
         InputLabelProps={{ shrink: true }}
       >
         {console.log(data.companies)}
-        {data.companies &&(data.companies.map((option, index) => (
-          <MenuItem key={index} value={option.id}>
-            {`${option.company_name}`.toUpperCase()}
-          </MenuItem>
-        )))}
+        {data.companies &&
+          data.companies.map((option, index) => (
+            <MenuItem key={index} value={option.id}>
+              {`${option.company_name}`.toUpperCase()}
+            </MenuItem>
+          ))}
       </TextField>
     </FormControl>
   );

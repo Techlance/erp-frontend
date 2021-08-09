@@ -23,8 +23,8 @@ import { useSelector } from "react-redux";
 
 const AddDocumentDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  
-  const company = useSelector((state)=> state.company)
+
+  const company = useSelector((state) => state.company);
   const { current_company } = company;
 
   const { createCompanyDoc } = useCompany();
@@ -37,7 +37,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   });
 
   useEffect(() => {
-    console.log(current_company)
+    console.log(current_company);
     setValues({
       ...values,
       company_master_id: current_company.id,

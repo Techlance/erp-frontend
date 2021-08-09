@@ -1,9 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // material-ui
 import { Button, Grid, Typography } from "@material-ui/core";
 
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 
 // project imports
 import UserTable from "./UserTable";
@@ -36,7 +36,7 @@ const SelectGroup = () => {
             </Typography>
           </Grid>
           <Grid item>
-          <AnimateButton>
+            <AnimateButton>
               <Button
                 variant="contained"
                 size="large"
@@ -53,8 +53,10 @@ const SelectGroup = () => {
     >
       <UserTable />
       <AddUserCompanyGroup
-      open={showAddModal}
-      handleClose={()=>{setShowAddModal(false)}}
+        open={showAddModal}
+        handleClose={() => {
+          setShowAddModal(false);
+        }}
       />
     </MainCard>
   );

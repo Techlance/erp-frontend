@@ -18,7 +18,7 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
 
   // const { currencies, getCurrency } = useCompany();
   const { getCurrency } = useCompany();
-  const company = useSelector((state)=>state.company)
+  const company = useSelector((state) => state.company);
   const { currencies } = company;
   const errorState = formState === "error" ? true : false;
 

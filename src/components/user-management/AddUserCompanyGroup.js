@@ -9,7 +9,7 @@ import {
   DialogContentText,
   DialogTitle,
   Typography,
-  Grid
+  Grid,
 } from "@material-ui/core";
 
 // project imports
@@ -25,24 +25,24 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
 
   const [values, setValues] = useState({
     created_by: user.email,
-    user:user_id,
-    user_group_id:null,
-    company_master_id:null
+    user: user_id,
+    user_group_id: null,
+    company_master_id: null,
   });
 
   const handleSelect = (key, value) => {
-  setValues({
-    ...values,
-    [key]: value,
-  });
-};
+    setValues({
+      ...values,
+      [key]: value,
+    });
+  };
 
   const handleCloseModal = () => {
     setValues({
       created_by: user.email,
-      user:user_id,
-      user_group_id:null,
-      company_master_id:null
+      user: user_id,
+      user_group_id: null,
+      company_master_id: null,
     });
     handleClose();
   };
@@ -50,7 +50,7 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
   const handleAddCompany = () => {
     addUserCompanyGroup(values);
     handleCloseModal();
-  }
+  };
 
   return (
     <Dialog
@@ -69,10 +69,16 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
-            <UserCompanySelect onChange={handleSelect} captionLabel="Select Company"/>
+            <UserCompanySelect
+              onChange={handleSelect}
+              captionLabel="Select Company"
+            />
           </Grid>
           <Grid item xs={12}>
-            <UserGroupsSelect onChange={handleSelect} captionLabel="Select User Group"/>
+            <UserGroupsSelect
+              onChange={handleSelect}
+              captionLabel="Select User Group"
+            />
           </Grid>
         </Grid>
       </DialogContent>

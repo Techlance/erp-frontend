@@ -14,7 +14,7 @@ import {
   VIEW_USER_RIGHTS,
   VIEW_USER_GROUP_BY_ID,
   VIEW_USER_RIGHTS_BY_ID,
-  VIEW_USER_COMPANY_GROUP
+  VIEW_USER_COMPANY_GROUP,
 } from "../store/actions";
 import userManagementReducer from "../store/userManagementReducer";
 
@@ -175,35 +175,33 @@ export const UserPermissionProvider = ({ children }) => {
 
     dispatch({
       type: VIEW_USER_COMPANY_GROUP,
-      payload: response.data.data
+      payload: response.data.data,
     });
-  }
+  };
 
   const updateUserCompanyGroup = async (data, id) => {
-    const response = await axios.post(`/company/edit-user-company/${id}`,data);
+    const response = await axios.post(`/company/edit-user-company/${id}`, data);
 
     sendNotification({
       globalDispatch,
       success: response.data.success,
       message: response.data.message,
     });
+  };
 
-  }
+  getUserCompanyGroup(state.current_user_account.id);
 
-  getUserCompanyGroup(state.current_user_account.id)
-  
   const addUserCompanyGroup = async (data) => {
-    const response = await axios.post("/company/add-user-company",data);
+    const response = await axios.post("/company/add-user-company", data);
 
     sendNotification({
       globalDispatch,
       success: response.data.success,
       message: response.data.message,
     });
-  
-  getUserCompanyGroup(state.current_user_account.id)
 
-  }
+    getUserCompanyGroup(state.current_user_account.id);
+  };
 
   const createUserGroup = async (data) => {
     const response = await axios.post("/user/add-user-group", data);
@@ -384,7 +382,7 @@ export const UserPermissionProvider = ({ children }) => {
         getSelectedUserRight,
         getUserCompanyGroup,
         updateUserCompanyGroup,
-        addUserCompanyGroup
+        addUserCompanyGroup,
       }}
     >
       {children}

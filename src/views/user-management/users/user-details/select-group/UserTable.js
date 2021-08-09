@@ -17,7 +17,7 @@ import {
 } from "@material-ui/core";
 
 // assets
-import UserTableRow from './UserTableRow'
+import UserTableRow from "./UserTableRow";
 import AnimateButton from "../../../../../ui-component/extended/AnimateButton";
 import useUserPermissions from "../../../../../hooks/useUserPermissions";
 
@@ -44,7 +44,7 @@ const UserTable = () => {
             </TableCell>
             <TableCell>
               <Typography align="center" variant="h4">
-                <span style={{opacity:0}}>Update</span>
+                <span style={{ opacity: 0 }}>Update</span>
               </Typography>
             </TableCell>
           </TableRow>
@@ -52,7 +52,7 @@ const UserTable = () => {
         <TableBody>
           {user_company_group.map((row, index) => (
             <TableRow hover key={index}>
-              <UserTableRow data = {row} />
+              <UserTableRow data={row} />
             </TableRow>
           ))}
         </TableBody>

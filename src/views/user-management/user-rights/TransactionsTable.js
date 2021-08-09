@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 // material ui
 import {
   Grid,
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Pagination
+  Pagination,
 } from "@material-ui/core";
 
 // project imports
@@ -20,7 +20,7 @@ import TransactionTabRow from "./TransactionTabRow";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       marginBottom: theme.spacing(2),
     },
   },
@@ -99,28 +99,34 @@ const TransactionsTable = ({ value }) => {
 
             <TableBody>
               {transactions?.length &&
-                transactions.map((transaction,i) => {
-                  return (i>=((page-1)*rows) && i<(((page-1)*rows)+rows))?
-                  (
-                  <TableRow hover key={transaction.id}>
-                    <TransactionTabRow
-                      data={data.find(
-                        (item) => item.transaction_id.id === transaction.id
-                      )}
-                      transaction_id={transaction}
-                    />
-                  </TableRow>
-                ):null})}
+                transactions.map((transaction, i) => {
+                  return i >= (page - 1) * rows &&
+                    i < (page - 1) * rows + rows ? (
+                    <TableRow hover key={transaction.id}>
+                      <TransactionTabRow
+                        data={data.find(
+                          (item) => item.transaction_id.id === transaction.id
+                        )}
+                        transaction_id={transaction}
+                      />
+                    </TableRow>
+                  ) : null;
+                })}
             </TableBody>
           </Table>
         ) : null}
       </Grid>
       <Grid item xs={10}>
-      {transactions?.length && value.id !== 0 ? (
-        <div className={classes.root}>
-          <Pagination count={Math.ceil(transactions.length/rows)} color="primary" page={page} onChange={handleChange} />
-        </div>
-         ) : null}
+        {transactions?.length && value.id !== 0 ? (
+          <div className={classes.root}>
+            <Pagination
+              count={Math.ceil(transactions.length / rows)}
+              color="primary"
+              page={page}
+              onChange={handleChange}
+            />
+          </div>
+        ) : null}
       </Grid>
     </Grid>
   );

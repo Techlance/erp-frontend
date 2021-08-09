@@ -15,7 +15,7 @@ import {
   VIEW_USER_GROUP,
   VIEW_USER_RIGHTS,
   VIEW_USER_RIGHTS_BY_ID,
-  VIEW_USER_COMPANY_GROUP
+  VIEW_USER_COMPANY_GROUP,
 } from "./actions";
 
 //-----------------------|| USER MANAGEMENT REDUCER ||-----------------------//
@@ -104,12 +104,12 @@ const userManagementReducer = (state, action) => {
       };
     }
     case VIEW_USER_COMPANY_GROUP: {
-      return{
+      return {
         ...state,
         user_company_group: action.payload,
-      }
+      };
     }
-    
+
     default: {
       return {
         ...state,

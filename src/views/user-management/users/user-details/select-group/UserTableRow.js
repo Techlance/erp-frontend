@@ -10,9 +10,7 @@ import UserGroupsSelect from "../../../../../components/user-management/UserGrou
 
 // project imports
 
-
 const TransactionTabRow = ({ data }) => {
-
   const [modified, setModified] = useState(false);
 
   const [values, setValues] = useState(() => {
@@ -28,19 +26,19 @@ const TransactionTabRow = ({ data }) => {
         return data;
       }
       return null;
-    },[data]);
+    }, [data]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleSelect = (key, value) => {
-      setModified(true)
+    setModified(true);
     setValues({
       ...values,
       [key]: value,
     });
   };
-  
+
   const handleUpdateButton = () => {
     setModified(false);
     // API call
@@ -57,12 +55,16 @@ const TransactionTabRow = ({ data }) => {
       <TableCell>
         <UserGroupsSelect
           captionLabel="User Group Name"
-          selected={values.user_group_id.id?values.user_group_id.id:{id:values.user_group_id}}
+          selected={
+            values.user_group_id.id
+              ? values.user_group_id.id
+              : { id: values.user_group_id }
+          }
           onChange={handleSelect}
         />
       </TableCell>
       <TableCell align="center">
-        {modified?(
+        {modified ? (
           <Button
             onClick={handleUpdateButton}
             color="primary"
@@ -70,15 +72,13 @@ const TransactionTabRow = ({ data }) => {
           >
             Update
           </Button>
-        ):<div style={{opacity:0}}>
-            <Button
-            onClick={()=>{}}
-            color="primary"
-            variant="contained"
-            >
-                Update
+        ) : (
+          <div style={{ opacity: 0 }}>
+            <Button onClick={() => {}} color="primary" variant="contained">
+              Update
             </Button>
-        </div>}
+          </div>
+        )}
       </TableCell>
     </>
   );

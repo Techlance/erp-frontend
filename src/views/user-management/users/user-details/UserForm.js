@@ -26,7 +26,10 @@ const UserForm = () => {
   const history = useHistory();
   const { current_user_account, updateUser, deleteUser } = useUserPermissions();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [values, setValues] = useState({ ...current_user_account,password:null });
+  const [values, setValues] = useState({
+    ...current_user_account,
+    password: null,
+  });
 
   const handleChange = (event) => {
     setValues({
@@ -50,12 +53,12 @@ const UserForm = () => {
   // };
 
   useEffect(() => {
-    setValues({ ...current_user_account,password:null });
+    setValues({ ...current_user_account, password: null });
   }, [current_user_account]);
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      <pre>{JSON.stringify(values,null,2)}</pre>
+      <pre>{JSON.stringify(values, null, 2)}</pre>
       <Grid item sm={12} md={12}>
         <SubCard title="Edit User Details">
           <Grid container spacing={gridSpacing}>
@@ -118,7 +121,7 @@ const UserForm = () => {
                         variant="contained"
                         color="primary"
                         onClick={(e) => {
-                          console.log(values)
+                          console.log(values);
                           updateUser(values);
                           // history.replace('/admin/user-manager/users')
                         }}

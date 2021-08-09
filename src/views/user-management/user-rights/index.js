@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // material-ui
-import { Button, CardActions, Divider, Grid, Pagination, Menu, MenuItem } from "@material-ui/core";
+import {
+  Button,
+  CardActions,
+  Divider,
+  Grid,
+  Pagination,
+  Menu,
+  MenuItem,
+} from "@material-ui/core";
 
 // project imports
 import useAuth from "../../../hooks/useAuth";
@@ -16,7 +24,7 @@ import UserGroupsSelect from "../../../components/user-management/UserGroupsSele
 import MainCard from "../../../ui-component/cards/MainCard";
 import TransactionsTable from "./TransactionsTable";
 
-import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
+import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
 // tabs
 function TabPanel(props) {
@@ -68,11 +76,11 @@ const CompanyDetails = () => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-      setAnchorEl(null);
+    setAnchorEl(null);
   };
 
   return (
