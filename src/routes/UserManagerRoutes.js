@@ -19,8 +19,6 @@ const UserList = Loadable(
   lazy(() => import("../views/user-management/users/user-list"))
 );
 
-const Users = Loadable(lazy(() => import("../views/user-management/users")));
-
 //-----------------------|| MAIN ROUTING ||-----------------------//
 const MainRoutes = () => {
   const location = useLocation();

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // material-ui
 import { Button, Grid, Typography } from "@material-ui/core";
-
-import { useParams } from "react-router-dom";
 
 // project imports
 import UserTable from "./UserTable";
@@ -11,7 +9,9 @@ import MainCard from "../../../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../../../store/constant";
 import AddUserCompanyGroup from "../../../../../components/user-management/AddUserCompanyGroup";
 import useUserPermissions from "../../../../../hooks/useUserPermissions";
+
 import AnimateButton from "../../../../../ui-component/extended/AnimateButton";
+
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
   const { current_user_account } = useUserPermissions();

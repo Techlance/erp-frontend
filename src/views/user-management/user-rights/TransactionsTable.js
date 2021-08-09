@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+
 // material ui
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       marginBottom: theme.spacing(2),
     },
+    "display": "flex",
+    "justifyContent": "center",
   },
 }));
 
@@ -116,6 +118,7 @@ const TransactionsTable = ({ value }) => {
           </Table>
         ) : null}
       </Grid>
+
       <Grid item xs={10}>
         {transactions?.length && value.id !== 0 ? (
           <div className={classes.root}>

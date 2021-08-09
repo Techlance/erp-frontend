@@ -1,13 +1,7 @@
 import React from "react";
 
 // material-ui
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import CancelIcon from "@material-ui/icons/Cancel";
-
 import {
-  Button,
-  Grid,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -16,12 +10,9 @@ import {
   Typography,
 } from "@material-ui/core";
 
-// assets
-import UserTableRow from "./UserTableRow";
-import AnimateButton from "../../../../../ui-component/extended/AnimateButton";
-import useUserPermissions from "../../../../../hooks/useUserPermissions";
-
 // project imports
+import UserTableRow from "./UserTableRow";
+import useUserPermissions from "../../../../../hooks/useUserPermissions";
 
 //-----------------------|| Company List ||-----------------------//
 

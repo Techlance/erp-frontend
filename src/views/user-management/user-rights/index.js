@@ -1,30 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // material-ui
-import {
-  Button,
-  CardActions,
-  Divider,
-  Grid,
-  Pagination,
-  Menu,
-  MenuItem,
-} from "@material-ui/core";
+import { Button, CardActions, Divider, Grid } from "@material-ui/core";
 
 // project imports
-import useAuth from "../../../hooks/useAuth";
 import useUserPermissions from "../../../hooks/useUserPermissions";
 import { gridSpacing } from "../../../store/constant";
-import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import UserGroupsSelect from "../../../components/user-management/UserGroupsSelect";
 
 // assets
 import MainCard from "../../../ui-component/cards/MainCard";
 import TransactionsTable from "./TransactionsTable";
-
-import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
 
 // tabs
 function TabPanel(props) {
@@ -52,10 +41,7 @@ TabPanel.propTypes = {
 //-----------------------|| USER MANAGEMENT - USER RIGHTS ||-----------------------//
 
 const CompanyDetails = () => {
-  const { user } = useAuth();
-
-  const { current_user_right, updateUserRights, deleteUserRights } =
-    useUserPermissions();
+  const { current_user_right, deleteUserRights } = useUserPermissions();
 
   const [value, setValue] = useState(() => {
     if (current_user_right && current_user_right.user_group_id) {
@@ -72,15 +58,6 @@ const CompanyDetails = () => {
 
   const handleSelect = (key, value) => {
     setValue(value);
-  };
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   return (

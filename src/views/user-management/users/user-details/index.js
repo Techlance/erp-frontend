@@ -3,23 +3,23 @@ import { Link, useParams } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
+import { Box, Tab, Tabs } from "@material-ui/core";
 
 // project imports
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import UserForm from "./UserForm";
 import SelectGroup from "./select-group";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import AddDocumentDialog from "../../../../components/company/AddDocumentDialog";
 
+// assets
 import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
 import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
+import AddDocumentDialog from "../../../../components/company/AddDocumentDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -66,7 +66,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -115,7 +115,7 @@ const UserDetails = () => {
           <Tab
             component={Link}
             to="#"
-            label="Extra"
+            label="Permissions"
             icon={<DescriptionTwoToneIcon sx={{ fontSize: "1.3rem" }} />}
             {...a11yProps(1)}
           />

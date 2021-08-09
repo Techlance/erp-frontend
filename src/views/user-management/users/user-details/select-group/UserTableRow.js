@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 // material ui
-import { Button, IconButton, TableCell, Typography } from "@material-ui/core";
+import { Button, TableCell, Typography } from "@material-ui/core";
 
 // assets
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import CancelIcon from "@material-ui/icons/Cancel";
 import UserGroupsSelect from "../../../../../components/user-management/UserGroupsSelect";
 
 // project imports
