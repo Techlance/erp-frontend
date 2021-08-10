@@ -30,9 +30,13 @@ const NavGroup = ({ item }) => {
   const classes = useStyles();
   const { user } = useAuth();
 
-  const filteredMenuItems = item.children.filter(
-    (item) => item.admin === user?.is_superuser
-  );
+  const filteredMenuItems = item.children.filter((item) => {
+    if (item.admin && user?.is_superuser) {
+      return true;
+    } else if (!item.admin) {
+      return true;
+    }
+  });
 
   // menu list collapse & items
   const items = filteredMenuItems.map((menu) => {
