@@ -2,23 +2,23 @@ import React, { createContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // reducer - state management
-import {
-  COMPANIES_INITIALIZE,
-  // CREATE_COMPANY,
-  DELETE_COMPANY,
-  GET_CURRENCY,
-  GET_USER_COMPANIES,
-  VIEW_COMPANY,
-  VIEW_COMPANY_DOCS,
-} from "../store/actions";
+import { COMPANIES_INITIALIZE } from "../store/actions";
 
 // project imports
-import instance from "../utils/axios";
 import Loader from "../ui-component/Loader";
 import useAuth from "../hooks/useAuth";
-import sendNotification from "../utils/sendNotification";
-import { dataToForm } from "../utils";
-import { createCompanyAsync } from "../api/company";
+
+import {
+  createCompanyAsync,
+  createCompanyDocAsync,
+  deleteCompanyAsync,
+  deleteCompanyDocAsync,
+  getSelectedCompanyAsync,
+  getSelectedCompanyDocsAsync,
+  getUserCompaniesAsync,
+  updateCompanyAsync,
+} from "../api/company";
+import { addCurrencyAsync, getCurrencyAsync } from "../api";
 
 // constant
 const initialState = {
@@ -53,30 +53,14 @@ export const CompanyContext = createContext({
 export const CompanyProvider = ({ children }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.company);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const { user } = useAuth();
 
   const getUserCompanies = async () => {
     try {
       if (user) {
-        const response = await instance.get("/company/get-user-company");
-
-        dispatch({
-          type: GET_USER_COMPANIES,
-          payload: {
-            isInitialized: true,
-            companies: response.data.data.companies,
-          },
-        });
-
-        if (!response.data.success) {
-          sendNotification({
-            globalDispatch: dispatch,
-            success: response.data.success,
-            message: response.data.message,
-          });
-        }
+        await getUserCompaniesAsync();
       } else {
         dispatch({
           type: COMPANIES_INITIALIZE,
@@ -97,136 +81,51 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const getSelectedCompany = async (id) => {
-    if (!id) return;
-
-    const response = await instance.get(`/company/view-company/${id}`);
-
-    dispatch({
-      type: VIEW_COMPANY,
-      payload: response.data.data,
-    });
+    await getSelectedCompanyAsync(id);
   };
 
   const createCompany = async (data) => {
-    data.base_currency = data.base_currency.id;
-
-    setLoading(true);
-    const response = await createCompanyAsync(instance, data);
-    setLoading(false);
-
-    sendNotification({
-      globalDispatch: dispatch,
-      success: response.success,
-      message: response.message,
-    });
-
-    getUserCompanies();
+    await createCompanyAsync(data, dispatch);
+    await getUserCompaniesAsync();
   };
 
   const updateCompany = async (data) => {
-    data.base_currency = data.base_currency.id;
-
-    const form = dataToForm(data);
-
     if (data.id === 0) {
-      createCompany(data);
+      await createCompanyAsync(data, dispatch);
     } else {
-      const response = await instance.put(
-        `/company/edit-company/${data.id}`,
-        form
-      );
-
-      sendNotification({
-        globalDispatch: dispatch,
-        success: response.data.success,
-        message: response.data.message,
-      });
-
-      getUserCompanies();
-      getSelectedCompany(data.id);
+      await updateCompanyAsync(data, dispatch);
     }
+
+    await getUserCompaniesAsync();
+    await getSelectedCompanyAsync(data.id);
   };
 
   const deleteCompany = async (id) => {
-    setLoading(true);
-    const response = await instance.delete(`/company/delete-company/${id}`);
-    setLoading(false);
-
-    if (response.data.success) {
-      dispatch({
-        type: DELETE_COMPANY,
-        payload: initialState.current_company,
-      });
-
-      getUserCompanies();
-    }
-
-    sendNotification({
-      globalDispatch: dispatch,
-      success: response.data.success,
-      message: response.data.message,
-    });
-  };
-
-  const addCurrency = async (data) => {
-    const response = await instance.post("/company/add-currency", data);
-
-    if (response.data.success) {
-      getCurrency();
-    }
-
-    sendNotification({
-      globalDispatch: dispatch,
-      success: response.data.success,
-      message: response.data.message,
-    });
+    await deleteCompanyAsync(id, dispatch, initialState.current_company);
   };
 
   const getCurrency = async () => {
-    const response = await instance.get("/company/get-currency");
+    await getCurrencyAsync(dispatch);
+  };
 
-    dispatch({
-      type: GET_CURRENCY,
-      payload: response.data.data,
-    });
+  const addCurrency = async (data) => {
+    await addCurrencyAsync(data, dispatch, getCurrency);
   };
 
   const getSelectedCompanyDocs = async (id) => {
-    const response = await instance.get(`/company/get-company-document/${id}`);
-
-    if (response.data.success) {
-      dispatch({
-        type: VIEW_COMPANY_DOCS,
-        payload: response.data.data,
-      });
-    }
+    await getSelectedCompanyDocsAsync(id, dispatch);
   };
 
   const createCompanyDoc = async (data) => {
-    const form = dataToForm(data);
-    const response = await instance.post("/company/add-company-document", form);
+    await createCompanyDocAsync(data, dispatch);
 
-    sendNotification({
-      globalDispatch: dispatch,
-      success: response.data.success,
-      message: response.data.message,
-    });
-
-    getSelectedCompanyDocs(state.current_company.id);
+    await getSelectedCompanyDocsAsync(state.current_company.id, dispatch);
   };
 
   const deleteCompanyDoc = async (id, cid) => {
-    const response = await instance.delete(
-      `/company/delete-company-document/${id}`
-    );
+    await deleteCompanyDocAsync(id, dispatch);
 
-    sendNotification({
-      globalDispatch: dispatch,
-      success: response.data.success,
-      message: response.data.message,
-    });
-
-    getSelectedCompanyDocs(cid);
+    await getSelectedCompanyDocsAsync(cid, dispatch);
   };
 
   useEffect(() => {

@@ -1,8 +1,10 @@
 import { SNACKBAR_OPEN } from "../store/actions";
 
-const sendNotification = ({ globalDispatch, success, message }) => {
+const sendNotification = ({ dispatch, response }) => {
+  const { success, message } = response;
+
   if (success) {
-    globalDispatch({
+    dispatch({
       type: SNACKBAR_OPEN,
       open: true,
       message: message,
@@ -11,7 +13,7 @@ const sendNotification = ({ globalDispatch, success, message }) => {
       close: true,
     });
   } else {
-    globalDispatch({
+    dispatch({
       type: SNACKBAR_OPEN,
       open: true,
       message: message,
