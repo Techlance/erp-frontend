@@ -20,7 +20,18 @@ import {
 
 //-----------------------|| USER MANAGEMENT REDUCER ||-----------------------//
 
-const userManagementReducer = (state, action) => {
+// constant
+const initialState = {
+  user_accounts: [],
+  current_user_account: { id: 0 },
+  user_groups: [],
+  current_user_group: { id: 0 },
+  user_rights: [],
+  current_user_right: { id: 0 },
+  user_company_group: [],
+};
+
+const userManagementReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_USER: {
       return {

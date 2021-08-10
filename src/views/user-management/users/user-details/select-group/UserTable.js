@@ -21,7 +21,6 @@ const UserTable = () => {
 
   return (
     <div>
-      <pre>{JSON.stringify(user_company_group, null, 2)}</pre>
       <Table>
         <TableHead>
           <TableRow>

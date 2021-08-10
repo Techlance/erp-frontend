@@ -5,11 +5,7 @@ import { Button, TableCell, Typography } from "@material-ui/core";
 
 // project imports
 import useUserPermissions from "../../../../../hooks/useUserPermissions";
-
-// assets
 import UserGroupsSelect from "../../../../../components/user-management/UserGroupsSelect";
-
-// project imports
 
 const TransactionTabRow = ({ data }) => {
   const { updateUserCompanyGroup } = useUserPermissions();
@@ -69,7 +65,6 @@ const TransactionTabRow = ({ data }) => {
     <>
       <TableCell>
         <Typography variant="h4">
-          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
           {values.company_master_id.company_name}
         </Typography>
       </TableCell>

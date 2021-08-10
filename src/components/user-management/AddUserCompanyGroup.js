@@ -81,8 +81,6 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
           <Typography variant="h5">Add User To New Company.</Typography>
         </DialogContentText>
 
-        <pre>{JSON.stringify({ values }, null, 2)}</pre>
-
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <UserCompanySelect

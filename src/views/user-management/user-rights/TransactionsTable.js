@@ -64,10 +64,6 @@ const TransactionsTable = ({ value }) => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center" mt={4}>
-      <Grid>
-        <pre>{JSON.stringify({ transactions, data }, null, 2)}</pre>
-      </Grid>
-
       <Grid item xs={10}>
         {transactions?.length && value.id !== 0 ? (
           <Table>
@@ -138,13 +134,3 @@ const TransactionsTable = ({ value }) => {
 };
 
 export default TransactionsTable;
-
-// <pre>
-//  {JSON.stringify(
-//    data.find(
-//      (item) => item.transaction_id.id === transaction.id
-//    ),
-//    null,
-//    2
-//  )}
-// </pre>

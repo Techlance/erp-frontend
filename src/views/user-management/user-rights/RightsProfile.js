@@ -27,10 +27,6 @@ const RightsProfile = ({ values, setValues }) => {
 
   return (
     <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
-      </Grid>
-
       <Grid item xs={12} sm={6}>
         <UserGroupsSelect
           captionLabel="User Group Name"

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 // material-ui
 import { Button, CardActions, Divider, Grid } from "@material-ui/core";
@@ -41,7 +42,9 @@ TabPanel.propTypes = {
 //-----------------------|| USER MANAGEMENT - USER RIGHTS ||-----------------------//
 
 const CompanyDetails = () => {
-  const { current_user_right, deleteUserRights } = useUserPermissions();
+  const { current_user_right } = useSelector((state) => state.userPermissions);
+
+  const { deleteUserRights } = useUserPermissions();
 
   const [value, setValue] = useState(() => {
     if (current_user_right && current_user_right.user_group_id) {
@@ -66,7 +69,6 @@ const CompanyDetails = () => {
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <MainCard title="User Rights Settings" content={true}>
-          <pre>{JSON.stringify(value, null, 2)}</pre>
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
               <UserGroupsSelect

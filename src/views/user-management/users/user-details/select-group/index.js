@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 // material-ui
 import { Button, Grid, Typography } from "@material-ui/core";
@@ -8,13 +9,15 @@ import UserTable from "./UserTable";
 import MainCard from "../../../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../../../store/constant";
 import AddUserCompanyGroup from "../../../../../components/user-management/AddUserCompanyGroup";
-import useUserPermissions from "../../../../../hooks/useUserPermissions";
 
+// assets
 import AnimateButton from "../../../../../ui-component/extended/AnimateButton";
 
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
-  const { current_user_account } = useUserPermissions();
+  const { current_user_account } = useSelector(
+    (state) => state.userPermissions
+  );
 
   const [showAddModal, setShowAddModal] = useState(false);
 

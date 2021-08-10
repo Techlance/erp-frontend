@@ -119,10 +119,6 @@ const CompanyForm = () => {
         </SubCard>
       </Grid>
 
-      <Grid>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
-      </Grid>
-
       <Grid item sm={6} md={8}>
         <SubCard title="Edit Account Details">
           <Grid container spacing={gridSpacing}>

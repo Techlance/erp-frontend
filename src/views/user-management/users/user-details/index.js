@@ -132,7 +132,6 @@ const UserDetails = () => {
         open={showAddModal}
         handleClose={() => setShowAddModal(false)}
       />
-      {/* <pre>{JSON.stringify(current_user_account, null, 2)}</pre> */}
     </MainCard>
   );
 };

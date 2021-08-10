@@ -58,7 +58,6 @@ const AddUserDialog = ({ open, handleClose }) => {
         <Typography variant="h4">Create User</Typography>
       </DialogTitle>
       <DialogContent>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
         <DialogContentText>
           <Typography variant="body2">Create a new user.</Typography>
         </DialogContentText>

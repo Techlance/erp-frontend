@@ -15,7 +15,6 @@ import AddDocumentDialog from "../../../components/company/AddDocumentDialog";
 
 import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
 import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
-import { useSelector } from "react-redux";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -78,9 +77,6 @@ const CompanyDetails = () => {
   const classes = useStyles();
   const { cid } = useParams();
 
-  const company = useSelector((state) => state.company);
-
-  const { current_company, current_company_docs } = company;
   const { getSelectedCompany } = useCompany();
 
   useEffect(() => {
@@ -149,9 +145,6 @@ const CompanyDetails = () => {
         open={showAddModal}
         handleClose={() => setShowAddModal(false)}
       />
-
-      <pre>{JSON.stringify(current_company, null, 2)}</pre>
-      <pre>{JSON.stringify(current_company_docs, null, 2)}</pre>
     </MainCard>
   );
 };

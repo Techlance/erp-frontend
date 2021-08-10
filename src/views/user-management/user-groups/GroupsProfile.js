@@ -18,10 +18,6 @@ const GroupsProfile = ({ values, setValues }) => {
 
   return (
     <Grid container spacing={gridSpacing}>
-      <Grid>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
-      </Grid>
-
       <Grid item xs={12} sm={12}>
         <TextField
           fullWidth

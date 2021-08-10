@@ -125,13 +125,12 @@ const CompanyDetails = () => {
   const [value, setValue] = useState(0);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const {
-    user_groups,
-    current_user_group,
-    getSelectedUserGroup,
-    updateUserGroup,
-    deleteUserGroup,
-  } = useUserPermissions();
+  const { user_groups, current_user_group } = useSelector(
+    (state) => state.userPermissions
+  );
+
+  const { getSelectedUserGroup, updateUserGroup, deleteUserGroup } =
+    useUserPermissions();
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);

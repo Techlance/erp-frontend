@@ -1,7 +1,7 @@
 import { SNACKBAR_OPEN } from "../store/actions";
 
 const sendNotification = ({ dispatch, response }) => {
-  const { success, message } = response;
+  const { success, message } = response.data;
 
   if (success) {
     dispatch({

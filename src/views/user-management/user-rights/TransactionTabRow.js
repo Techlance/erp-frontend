@@ -78,7 +78,6 @@ const TransactionTabRow = ({ data, transaction_id, user_group_id }) => {
     <>
       <TableCell>
         <Typography variant="h4">
-          <pre>{JSON.stringify(values, null, 2)}</pre>
           {values.transaction_id.transactions}
         </Typography>
       </TableCell>

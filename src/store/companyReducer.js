@@ -38,8 +38,7 @@ const companyReducer = (state = initialState, action) => {
 
     case actionTypes.COMPANIES_INITIALIZE: {
       return {
-        ...state,
-        ...action.payload,
+        ...initialState,
       };
     }
 

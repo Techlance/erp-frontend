@@ -19,12 +19,17 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
 //-----------------------|| User Form ||-----------------------//
 
 const UserForm = () => {
   const history = useHistory();
-  const { current_user_account, updateUser, deleteUser } = useUserPermissions();
+  const { current_user_account } = useSelector(
+    (state) => state.userPermissions
+  );
+
+  const { updateUser, deleteUser } = useUserPermissions();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [values, setValues] = useState({
     ...current_user_account,
@@ -45,20 +50,12 @@ const UserForm = () => {
     });
   };
 
-  // const handleSelect = (key, value) => {
-  //   setValues({
-  //     ...values,
-  //     [key]: value,
-  //   });
-  // };
-
   useEffect(() => {
     setValues({ ...current_user_account, password: null });
   }, [current_user_account]);
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      <pre>{JSON.stringify(values, null, 2)}</pre>
       <Grid item sm={12} md={12}>
         <SubCard title="Edit User Details">
           <Grid container spacing={gridSpacing}>

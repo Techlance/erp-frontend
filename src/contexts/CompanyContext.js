@@ -46,9 +46,7 @@ const initialState = {
   currencies: [],
 };
 
-export const CompanyContext = createContext({
-  ...initialState,
-});
+export const CompanyContext = createContext();
 
 export const CompanyProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -60,7 +58,7 @@ export const CompanyProvider = ({ children }) => {
   const getUserCompanies = async () => {
     try {
       if (user) {
-        await getUserCompaniesAsync();
+        await getUserCompaniesAsync(dispatch);
       } else {
         dispatch({
           type: COMPANIES_INITIALIZE,
@@ -75,18 +73,18 @@ export const CompanyProvider = ({ children }) => {
       console.error(err);
       dispatch({
         type: COMPANIES_INITIALIZE,
-        payload: { ...initialState },
       });
     }
   };
 
   const getSelectedCompany = async (id) => {
-    await getSelectedCompanyAsync(id);
+    await getSelectedCompanyAsync(id, dispatch);
   };
 
   const createCompany = async (data) => {
     await createCompanyAsync(data, dispatch);
-    await getUserCompaniesAsync();
+
+    await getUserCompaniesAsync(dispatch);
   };
 
   const updateCompany = async (data) => {
@@ -96,8 +94,8 @@ export const CompanyProvider = ({ children }) => {
       await updateCompanyAsync(data, dispatch);
     }
 
-    await getUserCompaniesAsync();
-    await getSelectedCompanyAsync(data.id);
+    await getUserCompaniesAsync(dispatch);
+    await getSelectedCompanyAsync(data.id, dispatch);
   };
 
   const deleteCompany = async (id) => {
@@ -140,8 +138,8 @@ export const CompanyProvider = ({ children }) => {
   return (
     <CompanyContext.Provider
       value={{
-        ...initialState,
-        init: getUserCompanies,
+        ...state,
+        getUserCompanies,
         getSelectedCompany,
         createCompany,
         updateCompany,

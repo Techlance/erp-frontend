@@ -17,7 +17,6 @@ const CompanyList = Loadable(
 //-----------------------|| Companies Routing ||-----------------------//
 const CompanyRoutes = () => {
   const location = useLocation();
-  console.log("in CompanyRoutes.js");
 
   return (
     <Route path={["/admin/companies/:cid", "/admin/companies"]}>

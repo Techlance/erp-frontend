@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CardContent, Grid, Typography } from "@material-ui/core";
 
 // project imports
-import useAuth from "../../hooks/useAuth";
 import { gridSpacing } from "./../../store/constant";
 import config from "../../config";
 
@@ -28,7 +27,6 @@ const SelectCompany = ({ title }) => {
   const classes = useStyles();
   const company = useSelector((state) => state.company);
   const { companies } = company;
-  const { user } = useAuth();
 
   return (
     <Grid container justifyContent="center">
@@ -37,7 +35,7 @@ const SelectCompany = ({ title }) => {
           <Grid item xs={6}>
             <CardContent>
               <Grid container spacing={gridSpacing}>
-                {companies.map((company) => (
+                {companies?.map((company) => (
                   <Grid item xs={12} key={company.company_id}>
                     <Grid
                       container
@@ -65,7 +63,6 @@ const SelectCompany = ({ title }) => {
                   </Grid>
                 ))}
               </Grid>
-              <pre>{JSON.stringify({ user, companies }, null, 2)}</pre>
             </CardContent>
           </Grid>
         </MainCard>
