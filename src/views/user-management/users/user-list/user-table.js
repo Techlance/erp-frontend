@@ -51,7 +51,7 @@ const UserTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {user_accounts.map((row, index) => (
+          {user_accounts?.map((row, index) => (
             <TableRow hover key={index}>
               <TableCell>
                 <Typography align="left" variant="subtitle1" component="div">

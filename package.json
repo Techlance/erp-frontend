@@ -1,6 +1,6 @@
 {
     "name": "erm-frontend",
-    "version": "1.2.5",
+    "version": "2.0.0",
     "private": true,
     "homepage": "",
     "dependencies": {
@@ -95,6 +95,7 @@
         ]
     },
     "devDependencies": {
-        "sass": "^1.32.11"
+        "sass": "^1.32.11",
+        "unimported": "^1.19.0"
     }
 }

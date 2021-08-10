@@ -43,6 +43,7 @@ const TransactionsTable = ({ value }) => {
 
   const [page, setPage] = useState(1);
 
+  // eslint-disable-next-line no-unused-vars
   const [rows, setRows] = useState(5);
 
   const handleChange = (event, value) => {
@@ -51,11 +52,13 @@ const TransactionsTable = ({ value }) => {
 
   useEffect(() => {
     getTransactions();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     getTransactionsByID();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
