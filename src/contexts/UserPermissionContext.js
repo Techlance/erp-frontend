@@ -96,7 +96,7 @@ export const UserPermissionProvider = ({ children }) => {
   const updateUserCompanyGroup = async (data) => {
     await updateUserCompanyGroupAsync(data, dispatch);
 
-    await getUserCompanyGroupByID(state.current_user_account.id, dispatch);
+    // await getUserCompanyGroupByID(state.current_user_account.id, dispatch);
   };
 
   const addUserCompanyGroup = async (data) => {
@@ -155,7 +155,7 @@ export const UserPermissionProvider = ({ children }) => {
       await updateUserRightsAsync(data, dispatch);
     }
 
-    await getUserRightsAsync(dispatch);
+    // await getUserRightsAsync(dispatch);
   };
 
   const deleteUserRights = async (id) => {

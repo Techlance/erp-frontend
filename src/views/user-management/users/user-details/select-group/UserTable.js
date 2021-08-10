@@ -12,12 +12,12 @@ import {
 
 // project imports
 import UserTableRow from "./UserTableRow";
-import useUserPermissions from "../../../../../hooks/useUserPermissions";
+import { useSelector } from "react-redux";
 
 //-----------------------|| Company List ||-----------------------//
 
 const UserTable = () => {
-  const { user_company_group } = useUserPermissions();
+  const { user_company_group } = useSelector((state) => state.userPermissions);
 
   return (
     <div>
@@ -40,11 +40,12 @@ const UserTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {user_company_group.map((row, index) => (
-            <TableRow hover key={index}>
-              <UserTableRow data={row} />
-            </TableRow>
-          ))}
+          {user_company_group &&
+            user_company_group.map((row, index) => (
+              <TableRow hover key={index}>
+                <UserTableRow data={row} />
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>
