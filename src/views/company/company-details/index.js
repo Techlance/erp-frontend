@@ -13,6 +13,8 @@ import CompanyDocumentForm from "./CompanyDocumentForm";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import AddDocumentDialog from "../../../components/company/AddDocumentDialog";
 
+// assets
+import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
 import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
 import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
 
@@ -127,6 +129,7 @@ const CompanyDetails = () => {
                   size="large"
                   color="primary"
                   onClick={() => setShowAddModal(true)}
+                  startIcon={<CloudUploadIcon />}
                 >
                   <Typography>Upload Document</Typography>
                 </Button>

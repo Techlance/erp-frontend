@@ -32,6 +32,8 @@ const AddUserDialog = ({ open, handleClose }) => {
     created_by: user.email,
   });
 
+  const [clicked, setClicked] = useState(false);
+
   const handleChange = (event) => {
     setValues({
       ...values,
@@ -44,6 +46,12 @@ const AddUserDialog = ({ open, handleClose }) => {
       ...values,
       [event.target.name]: event.target.checked,
     });
+  };
+
+  const handleCreateUser = async () => {
+    setClicked(true);
+    await createUser(values);
+    setClicked(false);
   };
 
   return (
@@ -113,16 +121,20 @@ const AddUserDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="error">
+        <Button
+          color="error"
+          variant="contained"
+          size="small"
+          onClick={handleClose}
+        >
           Cancel
         </Button>
         <Button
+          color="primary"
           variant="contained"
           size="small"
-          onClick={() => {
-            createUser(values);
-          }}
-          color="primary"
+          onClick={handleCreateUser}
+          disabled={clicked}
         >
           Add
         </Button>

@@ -78,7 +78,6 @@ const UserTable = () => {
                   variant="text"
                   color="primary"
                   aria-label="more-details"
-                  // onClick={(row) => handleCompanyClick(row.company_id)}
                   href={`/admin/user-manager/users/${row.id}`}
                   target="_blank"
                 >

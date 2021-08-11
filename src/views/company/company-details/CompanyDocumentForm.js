@@ -15,8 +15,8 @@ import {
   Typography,
 } from "@material-ui/core";
 
+// assets
 import DeleteTwoToneIcon from "@material-ui/icons/DeleteTwoTone";
-
 import { IconFileDownload } from "@tabler/icons";
 
 // project imports

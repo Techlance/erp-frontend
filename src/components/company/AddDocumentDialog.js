@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // material-ui
 import {
@@ -19,15 +20,13 @@ import useCompany from "../../hooks/useCompany";
 
 // assets
 import { gridSpacing } from "../../store/constant";
-import { useSelector } from "react-redux";
 
 const AddDocumentDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
+  const { createCompanyDoc } = useCompany();
 
   const company = useSelector((state) => state.company);
   const { current_company } = company;
-
-  const { createCompanyDoc } = useCompany();
 
   const [values, setValues] = useState({
     created_by: user.email,
@@ -35,6 +34,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
     company_master_id: current_company.id,
     file: null,
   });
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     setValues({
@@ -72,6 +72,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
 
   const handleSubmit = async () => {
     if (!values.file) return;
+    setClicked(true);
     await createCompanyDoc(values);
     handleCloseModal();
   };
@@ -115,14 +116,20 @@ const AddDocumentDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="error">
+        <Button
+          onClick={handleClose}
+          color="error"
+          variant="contained"
+          size="small"
+        >
           Cancel
         </Button>
         <Button
+          color="primary"
           variant="contained"
           size="small"
           onClick={handleSubmit}
-          color="primary"
+          disabled={clicked}
         >
           Add
         </Button>
