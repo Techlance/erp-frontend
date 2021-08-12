@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // reducer - state management
-import { COMPANIES_INITIALIZE } from "../store/actions";
+import { COMPANIES_INITIALIZE, EXIT_COMPANY, SELECT_COMPANY } from "../store/actions";
 
 // project imports
 import Loader from "../ui-component/Loader";
@@ -77,6 +77,21 @@ export const CompanyProvider = ({ children }) => {
     }
   };
 
+  const selectMasterCompany = (index)=>{
+    if(state.companies[index]){
+      dispatch({
+        type:SELECT_COMPANY,
+        payload:state.companies[index]
+      })
+    }
+  }
+
+  const exitMasterCompany = ()=>{
+    dispatch({
+      type:EXIT_COMPANY
+    })
+  }
+
   const getSelectedCompany = async (id) => {
     await getSelectedCompanyAsync(id, dispatch);
   };
@@ -149,6 +164,8 @@ export const CompanyProvider = ({ children }) => {
         getSelectedCompanyDocs,
         createCompanyDoc,
         deleteCompanyDoc,
+        selectMasterCompany,
+        exitMasterCompany
       }}
     >
       {children}

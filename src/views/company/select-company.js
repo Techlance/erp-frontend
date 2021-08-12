@@ -13,6 +13,7 @@ import BusinessCenter from "@material-ui/icons/BusinessCenter";
 import Avatar from "./../../ui-component/extended/Avatar";
 import MainCard from "./../../ui-component/cards/MainCard";
 import { useSelector } from "react-redux";
+import useCompany from "../../hooks/useCompany";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
 const SelectCompany = ({ title }) => {
   const classes = useStyles();
   const company = useSelector((state) => state.company);
-  const { companies } = company;
+  const { selectMasterCompany } = useCompany();
+  const { companies, master_company } = company;
 
   return (
     <Grid container justifyContent="center">
@@ -35,8 +37,8 @@ const SelectCompany = ({ title }) => {
           <Grid item xs={6}>
             <CardContent>
               <Grid container spacing={gridSpacing}>
-                {companies?.map((company) => (
-                  <Grid item xs={12} key={company.company_id}>
+                {companies?.map((company,index) => (
+                  <Grid item xs={12} key={company.company_id} onClick={()=> selectMasterCompany(index)}>
                     <Grid
                       container
                       spacing={2}
