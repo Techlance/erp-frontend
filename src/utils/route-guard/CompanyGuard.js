@@ -14,34 +14,48 @@ import Loader from "../../ui-component/Loader";
  * Authorization `company` guard for routes
  * @param {PropTypes.node} children children element/node
  */
+
 const CompanyGuard = ({ children }) => {
+  const { mid } = useParams();
   const { setMasterCompany } = useComapanyMaster();
 
-  const { mid } = useParams();
+  console.log("in CompanyGuard");
 
-  console.log("Inside Company Guard")
+  const [getCompanies, loading, , { companies }] = useRequest({
+    url: "/company/get-user-company",
+    method: "GET",
+    initialState: {
+      companies: [],
+    },
+  });
 
-  const [getCompanies, loading, , companies] = useRequest({
-    url:'/company/get-user-company',
-    method:'GET',
-    initialState:[]
-  })
+  useEffect(() => {
+    console.log("func call...");
 
-  useEffect(()=>{
-    getCompanies();
-  },[])
+    const f = async () => {
+      await getCompanies();
+    };
 
-  if(loading){
-    return <Loader />
+    f();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(companies, loading);
+
+  if (loading) {
+    return <Loader />;
+  } else {
+    const company = companies.find((company) => company.company_id === mid);
+
+    if (company) {
+      setMasterCompany(company);
+      return children;
+    }
+
+    return children;
+
+    // return <Redirect to={config.defaultPath} />;
   }
-  console.log(companies)
-  // const company = companies.companies.find(company=>company.company_id===mid)
-  // if(company){
-  //   setMasterCompany(company);
-  //   return children;
-  // }
-  return children
-  return <Redirect to={config.defaultPath} />
 };
 
 CompanyGuard.propTypes = {
