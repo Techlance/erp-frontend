@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Redirect, useParams } from "react-router-dom";
 
 // project imports
 import config from "../../config";
-// import useComapanyMaster from "../../hooks/useCompanyMaster";
+import useComapanyMaster from "../../hooks/useCompanyMaster";
+import useRequest from "../../hooks/useRequest";
+import Loader from "../../ui-component/Loader";
 
 //-----------------------|| Company Guard ||-----------------------//
 
@@ -13,18 +15,33 @@ import config from "../../config";
  * @param {PropTypes.node} children children element/node
  */
 const CompanyGuard = ({ children }) => {
-  // const { company } = useComapanyMaster();
+  const { setMasterCompany } = useComapanyMaster();
 
   const { mid } = useParams();
 
-  console.log("in CompanyGuard.js", !mid);
+  console.log("Inside Company Guard")
 
-  if (!mid) {
-    console.log("Redirecting...");
-    return <Redirect to={config.defaultPath} />;
+  const [getCompanies, loading, , companies] = useRequest({
+    url:'/company/get-user-company',
+    method:'GET',
+    initialState:[]
+  })
+
+  useEffect(()=>{
+    getCompanies();
+  },[])
+
+  if(loading){
+    return <Loader />
   }
-
-  return children;
+  console.log(companies)
+  // const company = companies.companies.find(company=>company.company_id===mid)
+  // if(company){
+  //   setMasterCompany(company);
+  //   return children;
+  // }
+  return children
+  return <Redirect to={config.defaultPath} />
 };
 
 CompanyGuard.propTypes = {
