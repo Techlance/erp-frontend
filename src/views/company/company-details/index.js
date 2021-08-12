@@ -21,7 +21,7 @@ import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    "marginBottom": "24px",
+    marginBottom: "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -68,7 +68,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    "id": `simple-tab-${index}`,
+    id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }

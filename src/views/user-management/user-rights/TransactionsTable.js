@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       marginBottom: theme.spacing(2),
     },
-    "display": "flex",
-    "justifyContent": "center",
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 

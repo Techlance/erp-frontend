@@ -8,16 +8,16 @@ import Loader from "../../ui-component/Loader";
 import useAuth from "../../hooks/useAuth";
 
 import {
-    // Company Account Head
-    getCompanyAccountHeadsAsync,
-    addCompanyAccountHeadAsync,
-    updateCompanyAccountHeadAsync,
-    deleteCompanyAccountHeadAsync,
+  // Company Account Head
+  getCompanyAccountHeadsAsync,
+  addCompanyAccountHeadAsync,
+  updateCompanyAccountHeadAsync,
+  deleteCompanyAccountHeadAsync,
 } from "../../api";
 
 // constant
 const initialState = {
-  company_account_heads:[]
+  company_account_heads: [],
 };
 
 export const LedgerMaster = createContext();
@@ -30,13 +30,13 @@ export const LedgerMasterProvider = ({ children }) => {
   const { user } = useAuth();
 
   const getCompanyAccountHeads = async (id) => {
-    await getCompanyAccountHeadsAsync(id,dispatch);
+    await getCompanyAccountHeadsAsync(id, dispatch);
   };
 
   const addCompanyAccountHead = async (data) => {
     await addCompanyAccountHeadAsync(data, dispatch);
 
-    await getCompanyAccountHeadsAsync(data.id,dispatch);
+    await getCompanyAccountHeadsAsync(data.id, dispatch);
   };
 
   const updateCompanyAccountHead = async (data) => {
@@ -49,13 +49,13 @@ export const LedgerMasterProvider = ({ children }) => {
   const deleteCompanyAccountHead = async (id) => {
     await deleteCompanyAccountHeadAsync(id, dispatch);
 
-    await getCompanyAccountHeadsAsync(id,dispatch);
+    await getCompanyAccountHeadsAsync(id, dispatch);
   };
 
-//   useEffect(() => {
-    // getUserCompanies();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [user]);
+  //   useEffect(() => {
+  // getUserCompanies();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, [user]);
 
   if (loading) {
     return <Loader />;
@@ -68,7 +68,7 @@ export const LedgerMasterProvider = ({ children }) => {
         getCompanyAccountHeads,
         addCompanyAccountHead,
         updateCompanyAccountHead,
-        deleteCompanyAccountHead
+        deleteCompanyAccountHead,
       }}
     >
       {children}

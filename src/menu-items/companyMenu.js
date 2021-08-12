@@ -47,7 +47,7 @@ export const company_menu = {
               id: "head",
               title: <FormattedMessage id="menu.head" />,
               type: "item",
-                url: "/master/ledger-master/head",
+              url: "/master/ledger-master/head",
             },
             {
               id: "group",

@@ -14,7 +14,7 @@ const reducer = combineReducers({
   snackbar: snackbarReducer,
   company: companyReducer,
   userPermissions: userPermissionsReducer,
-  ledgerMaster: ledgerMasterReducer
+  ledgerMaster: ledgerMasterReducer,
 });
 
 export default reducer;

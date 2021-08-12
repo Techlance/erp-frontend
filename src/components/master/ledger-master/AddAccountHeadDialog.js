@@ -24,25 +24,25 @@ import { useSelector } from "react-redux";
 
 const AddUserDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const company = useSelector()
+  const company = useSelector();
   const { addCompanyAccountHead } = useLedgerMaster();
 
   const [values, setValues] = useState({
-    'schedule_no':null,
-    'acc_head_name':"",
-    "title":"ASSETS",
-    "bs":true,
-    "company_id":0,
-    "created_by":user.email
+    schedule_no: null,
+    acc_head_name: "",
+    title: "ASSETS",
+    bs: true,
+    company_id: 0,
+    created_by: user.email,
   });
 
-  useEffect(()=>{
-      setValues({
-          ...values,
-          company_id:0,
-          created_by:user.email
-      })
-  },[user])
+  useEffect(() => {
+    setValues({
+      ...values,
+      company_id: 0,
+      created_by: user.email,
+    });
+  }, [user]);
 
   const [clicked, setClicked] = useState(false);
 

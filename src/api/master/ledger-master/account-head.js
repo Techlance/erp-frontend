@@ -13,7 +13,7 @@ export const getCompanyAccountHeadsAsync = async (id, dispatch) => {
 
   dispatch({
     type: GET_COMPANY_ACCOUNT_HEADS,
-    payload:response.data.data,
+    payload: response.data.data,
   });
 };
 
@@ -28,7 +28,10 @@ export const addCompanyAccountHeadAsync = async (data, dispatch) => {
 };
 
 export const updateCompanyAccountHeadAsync = async (data, dispatch) => {
-  const response = await instance.put(`/company/edit-account-head/${data.id}`, data);
+  const response = await instance.put(
+    `/company/edit-account-head/${data.id}`,
+    data
+  );
 
   sendNotification({
     dispatch,

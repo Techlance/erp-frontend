@@ -28,7 +28,6 @@ const Routes = () => {
 
         {/* Route for Master */}
         <MasterRoutes />
-
       </React.Fragment>
     </Switch>
   );

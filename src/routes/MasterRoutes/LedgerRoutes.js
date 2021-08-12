@@ -12,22 +12,27 @@ const AccountHead = Loadable(
 );
 
 //-----------------------|| Companies Routing ||-----------------------//
-const CompanyRoutes = ({match}) => {
+const CompanyRoutes = ({ match }) => {
   const location = useLocation();
 
   let routes = [
-      {
-          url:'/head',
-          component:AccountHead
-      }
-  ]
+    {
+      url: "/head",
+      component: AccountHead,
+    },
+  ];
   return (
-    <Route path={routes.map(route=>`${match.path}${route.url}`)}>
+    <Route path={routes.map((route) => `${match.path}${route.url}`)}>
       <MainLayout>
         <Switch location={location} key={location.pathname}>
-            <AuthGuard>
-                {routes.map(route => <Route path={`${match.path}${route.url}`} component={route.component} />)}
-            </AuthGuard>
+          <AuthGuard>
+            {routes.map((route) => (
+              <Route
+                path={`${match.path}${route.url}`}
+                component={route.component}
+              />
+            ))}
+          </AuthGuard>
         </Switch>
       </MainLayout>
     </Route>

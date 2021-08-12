@@ -24,7 +24,7 @@ const initialState = {
   },
   current_company_docs: [],
   currencies: [],
-  master_company:null
+  master_company: null,
 };
 
 const companyReducer = (state = initialState, action) => {
@@ -70,17 +70,17 @@ const companyReducer = (state = initialState, action) => {
         current_company_docs: action.payload,
       };
     }
-    case actionTypes.SELECT_COMPANY:{
+    case actionTypes.SELECT_COMPANY: {
       return {
         ...state,
-        master_company:action.payload
-      }
+        master_company: action.payload,
+      };
     }
-    case actionTypes.EXIT_COMPANY:{
+    case actionTypes.EXIT_COMPANY: {
       return {
         ...state,
-        master_company:null
-      }
+        master_company: null,
+      };
     }
     default: {
       return state;

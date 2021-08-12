@@ -10,9 +10,7 @@ const AppContextProvider = ({ children }) => {
     <JWTProvider>
       <CompanyProvider>
         <UserPermissionProvider>
-          <LedgerMasterProvider>
-            {children}
-          </LedgerMasterProvider>
+          <LedgerMasterProvider>{children}</LedgerMasterProvider>
         </UserPermissionProvider>
       </CompanyProvider>
     </JWTProvider>

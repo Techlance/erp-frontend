@@ -37,8 +37,13 @@ const SelectCompany = ({ title }) => {
           <Grid item xs={6}>
             <CardContent>
               <Grid container spacing={gridSpacing}>
-                {companies?.map((company,index) => (
-                  <Grid item xs={12} key={company.company_id} onClick={()=> selectMasterCompany(index)}>
+                {companies?.map((company, index) => (
+                  <Grid
+                    item
+                    xs={12}
+                    key={company.company_id}
+                    onClick={() => selectMasterCompany(index)}
+                  >
                     <Grid
                       container
                       spacing={2}
