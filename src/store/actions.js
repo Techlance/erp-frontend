@@ -31,8 +31,8 @@ export const CREATE_COMPANY_DOCS = "CREATE_COMPANY_DOCS";
 export const DELETE_COMPANY_DOCS = "DELETE_COMPANY_DOCS";
 export const GET_CURRENCY = "GET_CURRENCY";
 export const ADD_CURRENCY = "ADD_CURRENCY";
-export const SELECT_COMPANY = "SELECT_COMPANY"
-export const EXIT_COMPANY = "EXIT_COMPANY"
+export const SELECT_COMPANY = "SELECT_COMPANY";
+export const EXIT_COMPANY = "EXIT_COMPANY";
 
 // action - user management - user reducer
 export const CREATE_USER = "CREATE_USER";
@@ -56,8 +56,16 @@ export const VIEW_USER_RIGHTS = "VIEW_USER_RIGHTS";
 export const DELETE_USER_RIGHTS = "DELETE_USER_RIGHTS";
 export const VIEW_USER_RIGHTS_BY_ID = "VIEW_USER_RIGHTS_BY_ID";
 
-//action - master - ledger master - account head
-export const GET_COMPANY_ACCOUNT_HEADS = "GET_COMPANY_ACCOUNT_HEADS"
-export const CREATE_COMPANY_ACCOUNT_HEAD = "CREATE_COMPANY_ACCOUNT_HEAD"
-export const UPDATE_COMPANY_ACCOUNT_HEAD = "UPDATE_COMPANY_ACCOUNT_HEAD"
-export const DELETE_COMPANY_ACCOUNT_HEAD = "DELETE_COMPANY_ACCOUNT_HEAD"
+// action - master - ledger master - account head
+export const GET_COMPANY_ACCOUNT_HEADS = "GET_COMPANY_ACCOUNT_HEADS";
+export const CREATE_COMPANY_ACCOUNT_HEAD = "CREATE_COMPANY_ACCOUNT_HEAD";
+export const UPDATE_COMPANY_ACCOUNT_HEAD = "UPDATE_COMPANY_ACCOUNT_HEAD";
+export const DELETE_COMPANY_ACCOUNT_HEAD = "DELETE_COMPANY_ACCOUNT_HEAD";
+
+// action - master - cost center - cost category
+export const GET_COST_CATEGORY = "GET_COST_CATEGORY";
+export const CREATE_COST_CATEGORY = "CREATE_COST_CATEGORY";
+export const UPDATE_COST_CATEGORY = "UPDATE_COST_CATEGORY";
+export const DELETE_COST_CATEGORY = "DELETE_COST_CATEGORY";
+
+// action - master - cost center - cost center

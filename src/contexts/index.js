@@ -4,6 +4,7 @@ import { JWTProvider } from "./JWTContext";
 import { CompanyProvider } from "./CompanyContext";
 import { UserPermissionProvider } from "./UserPermissionContext";
 import { LedgerMasterProvider } from "./master/LedgerMasterContext";
+import { CostCenterProvider } from "./master/CostCenterContext";
 
 const AppContextProvider = ({ children }) => {
   return (
@@ -11,7 +12,7 @@ const AppContextProvider = ({ children }) => {
       <CompanyProvider>
         <UserPermissionProvider>
           <LedgerMasterProvider>
-            {children}
+            <CostCenterProvider>{children}</CostCenterProvider>
           </LedgerMasterProvider>
         </UserPermissionProvider>
       </CompanyProvider>

@@ -13,22 +13,23 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import AddCostCategoryDialog from "../../../../components/CostCenter/AddCostCategoryDialog";
+import useCostCenter from "../../../../hooks/useCostCenter";
 
 //-----------------------|| User List ||-----------------------//
 
 const SelectGroup = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const [company, ledgerMaster] = useSelector((state) => [
+  const [company, costCenter] = useSelector((state) => [
     state.company,
-    state.ledgerMaster,
+    state.costCenter,
   ]);
 
   const { master_company } = company;
 
-  // const { company_account_heads } = ledgerMaster;
+  const { cost_category } = costCenter;
 
-  // const { getCompanyAccountHeads } = useLedgerMaster();
+  const { getCostCategory } = useCostCenter();
 
   const [loading, setLoading] = useState(true);
 
@@ -58,7 +59,7 @@ const SelectGroup = () => {
         ),
     },
     {
-      field: "acc_head_namecost_category_name",
+      field: "name",
       headerName: "Cost Category Name",
       flex: 0.5,
     },
@@ -76,16 +77,16 @@ const SelectGroup = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   getCompanyAccountHeads(master_company?.company_id);
-  // }, [master_company]);
+  useEffect(() => {
+    setLoading(true);
+    getCostCategory(master_company?.company_id);
+  }, [master_company]);
 
-  // useEffect(() => {
-  //   console.log(company_account_heads);
-  //   if (company_account_heads) setLoading(false);
-  //   else setLoading(true);
-  // }, [company_account_heads]);
+  useEffect(() => {
+    // console.log(company_account_heads);
+    if (cost_category) setLoading(false);
+    else setLoading(true);
+  }, [cost_category]);
 
   return (
     <MainCard
@@ -119,7 +120,7 @@ const SelectGroup = () => {
     >
       <CustomDataGrid
         columns={columns}
-        // rows={company_account_heads}
+        rows={cost_category}
         loading={loading}
       />
       <AddCostCategoryDialog

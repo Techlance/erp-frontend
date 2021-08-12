@@ -6,6 +6,7 @@ import snackbarReducer from "./snackbarReducer";
 import companyReducer from "./companyReducer";
 import userPermissionsReducer from "./userManagementReducer";
 import ledgerMasterReducer from "./master/ledgerMasterReducer";
+import costCenterReducer from "./cost-center/costCenterReducer";
 
 //-----------------------|| COMBINE REDUCER ||-----------------------//
 
@@ -14,7 +15,8 @@ const reducer = combineReducers({
   snackbar: snackbarReducer,
   company: companyReducer,
   userPermissions: userPermissionsReducer,
-  ledgerMaster: ledgerMasterReducer
+  ledgerMaster: ledgerMasterReducer,
+  costCenter: costCenterReducer,
 });
 
 export default reducer;

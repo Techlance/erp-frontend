@@ -11,7 +11,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
   Typography,
@@ -19,14 +18,17 @@ import {
 
 // project imports
 import useAuth from "../../hooks/useAuth";
-// import useUserPermissions from "../../hooks/useUserPermissions";
+import useCostCenter from "../../hooks/useCostCenter";
+import { useSelector } from "react-redux";
 
 const AddCostCategoryDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  //   const { createUser } = useUserPermissions();
+  const { addCostCategory } = useCostCenter();
+  const { master_company } = useSelector((state) => state.company);
 
   const [values, setValues] = useState({
-    cost_category: "",
+    company_master_id: master_company.company_id,
+    name: "",
     created_by: user.email,
   });
 
@@ -36,13 +38,6 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
       [event.target.id]: event.target.value,
     });
   };
-
-  //   const handleChecked = (event) => {
-  //     setValues({
-  //       ...values,
-  //       [event.target.name]: event.target.checked,
-  //     });
-  //   };
 
   return (
     <Dialog
@@ -57,13 +52,13 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
       </DialogTitle>
       <DialogContent>
         {/* <DialogContentText>
-          <Typography variant="body2">Create a new user.</Typography>
+          <Typography variant="body2">Create a new cost category.</Typography>
         </DialogContentText> */}
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              id="cost_category_name"
+              id="name"
               label="Cost Category Name"
               value={values.name}
               InputLabelProps={{ shrink: true }}
@@ -80,7 +75,7 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
           variant="contained"
           size="small"
           onClick={() => {
-            // createUser(values);
+            addCostCategory(values);
           }}
           color="primary"
         >
