@@ -8,10 +8,13 @@ import LedgerRoutes from "./LedgerRoutes";
 
 const MasterRoutes = () => {
   return (
-    <Route path={["/master/*"]}>
+    <Route path={["/company/:mid/master/*"]}>
       <React.Fragment>
         {/* Routes for Master Ledger */}
-        <Route path="/master/ledger-master" component={LedgerRoutes} />
+        <Route
+          path="/company/:mid/master/ledger-master"
+          component={LedgerRoutes}
+        />
       </React.Fragment>
     </Route>
   );
