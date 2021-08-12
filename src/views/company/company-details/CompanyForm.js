@@ -29,6 +29,7 @@ import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
 import ImageUpdateDialog from "../../../components/company/ImageUpdateDialog";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import { useSelector } from "react-redux";
+import LoadingButton from "../../../ui-component/LoadingButton";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -308,17 +309,15 @@ const CompanyForm = () => {
                     </AnimateButton>
                   </Grid>
                   <Grid item>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleUpdateDetails}
-                        startIcon={<SaveIcon />}
-                        disabled={clicked}
-                      >
-                        Save Details
-                      </Button>
-                    </AnimateButton>
+                    <LoadingButton
+                      variant="contained"
+                      color="primary"
+                      onClick={handleUpdateDetails}
+                      startIcon={<SaveIcon />}
+                      loading={clicked}
+                    >
+                      Save Details
+                    </LoadingButton>
                   </Grid>
                 </Grid>
               </Stack>
