@@ -10,11 +10,7 @@ import { gridSpacing } from "../../../../store/constant";
 
 // assets
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import AccountHeadGrid from "./AccountHeadGrid";
-import AccountHeadGridTrial from "./AccountHeadGridTrial";
-import formatDate from "../../../../utils/format-date";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
-import CompanyTable from "../../../company/company-list/company-table";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from '../../../../ui-component/CustomDataGrid'
 
@@ -130,7 +126,6 @@ const SelectGroup = () => {
       content={true}
     >
       <CustomDataGrid columns={columns} rows={company_account_heads} loading={loading}/>
-      {/* <AccountHeadGridTrial /> */}
       {/* <AddUserCompanyGroup
         open={showAddModal}
         handleClose={() => {
