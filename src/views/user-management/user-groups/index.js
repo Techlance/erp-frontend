@@ -124,6 +124,7 @@ const CompanyDetails = () => {
   const customization = useSelector((state) => state.customization);
   const [value, setValue] = useState(0);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const { user_groups, current_user_group } = useSelector(
     (state) => state.userPermissions
@@ -167,6 +168,12 @@ const CompanyDetails = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current_user_group, value]);
+
+  const handleUpdateUserGroup = async () => {
+    setClicked(true);
+    await updateUserGroup(value, values);
+    setClicked(false);
+  };
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -244,49 +251,49 @@ const CompanyDetails = () => {
             </Grid>
           </Grid>
           <Divider />
-          <CardActions>
-            <Grid container justifyContent="space-between" spacing={0}>
-              <Grid item>
-                {value >= -1 && (
-                  <AnimateButton>
-                    <Button variant="outlined" size="large" color="primary">
-                      Back
-                    </Button>
-                  </AnimateButton>
-                )}
-              </Grid>
 
-              <Grid item>
-                <Grid container justifyContent="space-between" spacing={10}>
-                  {value !== 0 ? (
-                    <Grid item>
-                      <AnimateButton>
-                        <Button
-                          variant="contained"
-                          size="large"
-                          color="error"
-                          onClick={() => setShowDeleteModal(true)}
-                        >
-                          Delete
-                        </Button>
-                      </AnimateButton>
-                    </Grid>
-                  ) : null}
+          <CardActions>
+            <Grid
+              container
+              flex
+              justifyContent="space-between"
+              flexDirection="row"
+            >
+              <Grid item xs={12} lg={4}></Grid>
+              <Grid
+                item
+                xs={12}
+                lg={8}
+                flex
+                justifyContent="space-between"
+                flexDirection="row"
+              >
+                {value !== 0 ? (
                   <Grid item>
                     <AnimateButton>
                       <Button
                         variant="contained"
                         size="large"
-                        color="primary"
-                        // onClick={(e) => handleChange(e, 1 + parseInt(value))}
-                        onClick={(e) => {
-                          updateUserGroup(value, values);
-                        }}
+                        color="error"
+                        onClick={() => setShowDeleteModal(true)}
                       >
-                        {value === 0 ? "Create" : "Update"}
+                        Delete
                       </Button>
                     </AnimateButton>
                   </Grid>
+                ) : null}
+                <Grid item>
+                  <AnimateButton>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                      onClick={handleUpdateUserGroup}
+                      disabled={clicked}
+                    >
+                      {value === 0 ? "Create" : "Update"}
+                    </Button>
+                  </AnimateButton>
                 </Grid>
               </Grid>
             </Grid>

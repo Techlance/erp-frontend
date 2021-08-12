@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { IconButton, Grid } from "@material-ui/core";
+import { IconButton, Grid, Stack } from "@material-ui/core";
 
 // assets
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -11,7 +11,6 @@ import AddCurrenyDialog from "./AddCurrencyDialog";
 import CurrencySelect from "../../components/company/CurrencySelect";
 
 // material-ui
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Dialog,
@@ -27,29 +26,12 @@ import {
 import useAuth from "../../hooks/useAuth";
 import useCompany from "../../hooks/useCompany";
 
-const useStyles = makeStyles((theme) => ({
-  alertIcon: {
-    height: "16px",
-    width: "16px",
-    marginRight: "8px",
-    verticalAlign: "text-bottom",
-  },
-  userAvatar: {
-    height: "80px",
-    width: "80px",
-  },
-  addButtonGrid: {
-    paddingTop: "1 !important",
-    paddingLeft: "0 !important",
-  },
-}));
-
 const AddCompanyDialog = ({ open, handleClose }) => {
-  const classes = useStyles();
   const { user } = useAuth();
   const { createCompany } = useCompany();
 
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState({
     company_name: "",
@@ -83,17 +65,12 @@ const AddCompanyDialog = ({ open, handleClose }) => {
     });
   };
 
-  // const hadleFileUpload = (event) => {
-  //   console.log(event.target.files[0]);
-  //   setValues({
-  //     ...values,
-  //     logo: event.target.files[0],
-  //   });
-  // };
-
-  // const handleAddCurrency = () => {
-  //   addCurrency(values, handleCloseModal);
-  // };
+  const handleCreateCompany = async () => {
+    setClicked(true);
+    await createCompany(values);
+    setClicked(false);
+    handleClose();
+  };
 
   return (
     <Dialog
@@ -183,26 +160,27 @@ const AddCompanyDialog = ({ open, handleClose }) => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} sm={5}>
-            <CurrencySelect
-              captionLabel="Base Currency"
-              InputLabelProps={{ shrink: true }}
-              selected={values.base_currency}
-              onChange={handleSelect}
-            />
-          </Grid>
-          <Grid item xs={12} sm={1} className={classes.addButtonGrid}>
-            <IconButton
-              aria-label="add-currency"
-              onClick={() => setShowAddCurrencyModal(true)}
-            >
-              <AddCircleOutlineIcon fontSize="large" />
-            </IconButton>
+          <Grid item xs={12} sm={6}>
+            <Stack direction="row">
+              <CurrencySelect
+                captionLabel="Base Currency"
+                InputLabelProps={{ shrink: true }}
+                selected={values.base_currency}
+                onChange={handleSelect}
+              />
 
-            <AddCurrenyDialog
-              open={showAddCurrencyModal}
-              handleClose={() => setShowAddCurrencyModal(false)}
-            />
+              <IconButton
+                aria-label="add-currency"
+                onClick={() => setShowAddCurrencyModal(true)}
+              >
+                <AddCircleOutlineIcon fontSize="medium" />
+              </IconButton>
+
+              <AddCurrenyDialog
+                open={showAddCurrencyModal}
+                handleClose={() => setShowAddCurrencyModal(false)}
+              />
+            </Stack>
           </Grid>
 
           <Grid item xs={12} sm={6}>
@@ -271,16 +249,20 @@ const AddCompanyDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="error">
+        <Button
+          onClick={handleClose}
+          color="error"
+          size="small"
+          variant="contained"
+        >
           Cancel
         </Button>
         <Button
-          variant="contained"
-          size="small"
-          onClick={() => {
-            createCompany(values);
-          }}
           color="primary"
+          size="small"
+          variant="contained"
+          disabled={clicked}
+          onClick={handleCreateCompany}
         >
           Add
         </Button>

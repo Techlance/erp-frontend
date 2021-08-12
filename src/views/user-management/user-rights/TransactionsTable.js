@@ -16,7 +16,7 @@ import {
 // project imports
 import useRequest from "../../../hooks/useRequest";
 import { gridSpacing } from "../../../store/constant";
-import TransactionTabRow from "./TransactionTabRow";
+import TransactionTabRow from "./TransactionTableRow";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +46,7 @@ const TransactionsTable = ({ value }) => {
   // eslint-disable-next-line no-unused-vars
   const [rows, setRows] = useState(5);
 
-  const handleChange = (event, value) => {
+  const handlePagination = (event, value) => {
     setPage(value);
   };
 
@@ -124,7 +124,7 @@ const TransactionsTable = ({ value }) => {
               count={Math.ceil(transactions.length / rows)}
               color="primary"
               page={page}
-              onChange={handleChange}
+              onChange={handlePagination}
             />
           </div>
         ) : null}

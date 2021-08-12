@@ -36,6 +36,7 @@ const NavGroup = ({ item }) => {
     } else if (!item.admin) {
       return true;
     }
+    return false;
   });
 
   // menu list collapse & items

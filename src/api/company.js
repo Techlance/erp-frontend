@@ -12,50 +12,88 @@ import instance from "../utils/axios";
 import sendNotification from "../utils/sendNotification";
 
 const getUserCompaniesAsync = async (dispatch) => {
-  const response = await instance.get("/company/get-user-company");
+  try {
+    const response = await instance.get("/company/get-user-company");
 
-  dispatch({
-    type: GET_USER_COMPANIES,
-    payload: {
-      isInitialized: true,
-      companies: response.data.data.companies,
-    },
-  });
+    dispatch({
+      type: GET_USER_COMPANIES,
+      payload: {
+        isInitialized: true,
+        companies: response.data.data.companies,
+      },
+    });
+  } catch (error) {
+    console.log(`Error in Getting User Company: ${error}`);
+  }
 };
 
 const createCompanyAsync = async (data, dispatch) => {
-  data.base_currency = data.base_currency.id;
-  const form = dataToForm(data);
+  try {
+    data.base_currency = data.base_currency.id;
+    const form = dataToForm(data);
+    const response = await instance.post("/company/create-company", form);
 
-  const response = await instance.post("/company/create-company", form);
+    sendNotification({
+      dispatch,
+      response,
+    });
+  } catch (error) {
+    console.log(`Error in Creating Company: ${error}`);
 
-  sendNotification({
-    dispatch,
-    response,
-  });
+    sendNotification({
+      dispatch,
+      response: {
+        data: {
+          success: false,
+          message: "Error in Creating Company.",
+        },
+      },
+    });
+  }
 };
 
 const updateCompanyAsync = async (data, dispatch) => {
-  data.base_currency = data.base_currency.id;
-  const form = dataToForm(data);
+  try {
+    data.base_currency = data.base_currency.id;
+    const form = dataToForm(data);
 
-  const response = await instance.put(`/company/edit-company/${data.id}`, form);
+    const response = await instance.put(
+      `/company/edit-company/${data.id}`,
+      form
+    );
 
-  sendNotification({
-    dispatch,
-    response,
-  });
+    sendNotification({
+      dispatch,
+      response,
+    });
+  } catch (error) {
+    console.log(`Error in Updating Company: ${error}`);
+
+    sendNotification({
+      dispatch,
+      response: {
+        data: {
+          success: false,
+          message: "Error in Updating Company.",
+        },
+      },
+    });
+  }
 };
 
 const getSelectedCompanyAsync = async (id, dispatch) => {
-  if (!id) return;
+  try {
+    if (!id) return;
 
-  const response = await instance.get(`/company/view-company/${id}`);
+    const response = await instance.get(`/company/view-company/${id}`);
 
-  dispatch({
-    type: VIEW_COMPANY,
-    payload: response.data.data,
-  });
+    dispatch({
+      type: VIEW_COMPANY,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log(`Error in Getting Selected Company: ${error}.`);
+  }
 };
 
 const deleteCompanyAsync = async (id, dispatch, current_company) => {

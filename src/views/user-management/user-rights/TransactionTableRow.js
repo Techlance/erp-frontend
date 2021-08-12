@@ -6,6 +6,7 @@ import { Button, IconButton, TableCell, Typography } from "@material-ui/core";
 // assets
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
+import SaveIcon from "@material-ui/icons/SaveRounded";
 
 // project imports
 import useAuth from "../../../hooks/useAuth";
@@ -16,7 +17,7 @@ const TransactionTabRow = ({ data, transaction_id, user_group_id }) => {
   const { updateUserRights } = useUserPermissions();
 
   const [modified, setModified] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState(() => {
     if (data) {
@@ -68,10 +69,10 @@ const TransactionTabRow = ({ data, transaction_id, user_group_id }) => {
     data.user_group_id = user_group_id;
 
     // API call
-    setLoading(true);
+    setClicked(true);
     await updateUserRights(data);
     setModified(false);
-    setLoading(false);
+    setClicked(false);
   };
 
   return (
@@ -113,12 +114,13 @@ const TransactionTabRow = ({ data, transaction_id, user_group_id }) => {
       <TableCell>
         {modified && (
           <Button
-            onClick={handleUpdateButton}
             color="primary"
             variant="contained"
-            disabled={loading}
+            disabled={clicked}
+            onClick={handleUpdateButton}
+            startIcon={<SaveIcon />}
           >
-            Update
+            Save
           </Button>
         )}
       </TableCell>
