@@ -1,4 +1,4 @@
-import * as actionTypes from "./actions";
+import * as actionTypes from "../actions";
 
 // constant
 const initialState = {
@@ -88,4 +88,4 @@ const companyReducer = (state = initialState, action) => {
   }
 };
 
-export default companyReducer;
+export { companyReducer };

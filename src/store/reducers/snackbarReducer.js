@@ -1,5 +1,5 @@
 // action - state management
-import * as actionTypes from "./actions";
+import * as actionTypes from "../actions";
 
 const initialState = {
   action: false,
@@ -46,4 +46,4 @@ const snackbarReducer = (state = initialState, action) => {
   }
 };
 
-export default snackbarReducer;
+export { snackbarReducer };

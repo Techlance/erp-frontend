@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 // project imports
 import Loader from "../../ui-component/Loader";
-import useAuth from "../../hooks/useAuth";
 
 import {
   // Company Account Head
@@ -14,20 +13,15 @@ import {
   updateCompanyAccountHeadAsync,
   deleteCompanyAccountHeadAsync,
 } from "../../api";
-
-// constant
-const initialState = {
-  company_account_heads: [],
-};
+import useComapanyMaster from "../../hooks/useCompanyMaster";
 
 export const LedgerMaster = createContext();
 
 export const LedgerMasterProvider = ({ children }) => {
   const dispatch = useDispatch();
+  const { company } = useComapanyMaster();
   const state = useSelector((state) => state.ledgerMaster);
   const [loading] = useState(false);
-
-  const { user } = useAuth();
 
   const getCompanyAccountHeads = async (id) => {
     await getCompanyAccountHeadsAsync(id, dispatch);
@@ -52,10 +46,11 @@ export const LedgerMasterProvider = ({ children }) => {
     await getCompanyAccountHeadsAsync(id, dispatch);
   };
 
-  //   useEffect(() => {
-  // getUserCompanies();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [user]);
+  useEffect(() => {
+    getCompanyAccountHeads(company?.company_id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company]);
 
   if (loading) {
     return <Loader />;

@@ -1,10 +1,5 @@
 // action - state management
-import {
-  GET_COMPANY_ACCOUNT_HEADS,
-  UPDATE_COMPANY_ACCOUNT_HEAD,
-  CREATE_COMPANY_ACCOUNT_HEAD,
-  DELETE_COMPANY_ACCOUNT_HEAD,
-} from "../actions";
+import * as actionTypes from "../../actions";
 //-----------------------|| USER MANAGEMENT REDUCER ||-----------------------//
 
 // constant
@@ -14,23 +9,23 @@ const initialState = {
 
 const ledgerMasterReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_COMPANY_ACCOUNT_HEADS: {
+    case actionTypes.GET_COMPANY_ACCOUNT_HEADS: {
       return {
         ...state,
         company_account_heads: action.payload,
       };
     }
-    case UPDATE_COMPANY_ACCOUNT_HEAD: {
+    case actionTypes.UPDATE_COMPANY_ACCOUNT_HEAD: {
       return {
         ...state,
       };
     }
-    case CREATE_COMPANY_ACCOUNT_HEAD: {
+    case actionTypes.CREATE_COMPANY_ACCOUNT_HEAD: {
       return {
         ...state,
       };
     }
-    case DELETE_COMPANY_ACCOUNT_HEAD: {
+    case actionTypes.DELETE_COMPANY_ACCOUNT_HEAD: {
       return {
         ...state,
       };
@@ -43,4 +38,4 @@ const ledgerMasterReducer = (state = initialState, action) => {
   }
 };
 
-export default ledgerMasterReducer;
+export { ledgerMasterReducer };

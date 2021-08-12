@@ -6,9 +6,8 @@ import instance from "../../../utils/axios";
 import sendNotification from "../../../utils/sendNotification";
 
 export const getCompanyAccountHeadsAsync = async (id, dispatch) => {
-  if (!id) {
-    return;
-  }
+  if (!id) return;
+
   const response = await instance.get(`/company/get-account-head/${id}`);
 
   dispatch({

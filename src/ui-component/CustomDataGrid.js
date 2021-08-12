@@ -62,16 +62,18 @@ const CustomDataGrid = ({ columns, rows, loading }) => {
   const theme = useTheme();
 
   let disp_rows = rows ? rows : [];
+
   useEffect(() => {
     disp_rows = rows ? rows : [];
   }, [rows]);
+
   return (
     <Box
-      height={400}
+      height={500}
       width="100%"
       sx={{
         "& .MuiDataGrid-root": {
-          border: "none",
+          "border": "none",
           "& .MuiDataGrid-cell": {
             borderColor:
               theme.palette.mode === "dark"
@@ -92,6 +94,7 @@ const CustomDataGrid = ({ columns, rows, loading }) => {
                 : "grey.200",
           },
           "& .MuiDataGrid-footerContainer": {
+            marginTop: "16px",
             justifyContent: "left",
           },
           // '& .MuiDataGrid-toolbarContainer':{

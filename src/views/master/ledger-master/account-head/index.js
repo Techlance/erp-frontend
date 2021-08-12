@@ -13,17 +13,15 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
+import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const [company, ledgerMaster] = useSelector((state) => [
-    state.company,
-    state.ledgerMaster,
-  ]);
+  const ledgerMaster = useSelector((state) => state.ledgerMaster);
 
-  const { master_company } = company;
+  const { company } = useCompanyMaster();
 
   const { company_account_heads } = ledgerMaster;
 
@@ -85,15 +83,15 @@ const SelectGroup = () => {
   ];
 
   useEffect(() => {
-    setLoading(true);
-    getCompanyAccountHeads(master_company?.company_id);
-  }, [master_company]);
+    getCompanyAccountHeads(company.company_id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company]);
 
   useEffect(() => {
-    console.log(company_account_heads);
     if (company_account_heads) setLoading(false);
     else setLoading(true);
-  }, [company_account_heads]);
+  }, [company_account_heads, company]);
 
   return (
     <MainCard
@@ -106,7 +104,7 @@ const SelectGroup = () => {
         >
           <Grid item>
             <Typography variant="h3">
-              {`${master_company.company_name}'s Account Heads`}
+              {`${company?.company_name}'s Account Heads`}
             </Typography>
           </Grid>
           <Grid item>
@@ -125,6 +123,7 @@ const SelectGroup = () => {
       }
       content={true}
     >
+      {/* <pre>{JSON.stringify(company, null, 2)}</pre> */}
       <CustomDataGrid
         columns={columns}
         rows={company_account_heads}

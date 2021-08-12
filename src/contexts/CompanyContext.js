@@ -81,14 +81,14 @@ export const CompanyProvider = ({ children }) => {
     }
   };
 
-  const selectMasterCompany = (index) => {
-    if (state.companies[index]) {
-      dispatch({
-        type: SELECT_COMPANY,
-        payload: state.companies[index],
-      });
-    }
-  };
+  // const selectMasterCompany = (index) => {
+  //   if (state.companies[index]) {
+  //     dispatch({
+  //       type: SELECT_COMPANY,
+  //       payload: state.companies[index],
+  //     });
+  //   }
+  // };
 
   const exitMasterCompany = () => {
     dispatch({
@@ -168,7 +168,7 @@ export const CompanyProvider = ({ children }) => {
         getSelectedCompanyDocs,
         createCompanyDoc,
         deleteCompanyDoc,
-        selectMasterCompany,
+        // selectMasterCompany,
         exitMasterCompany,
       }}
     >

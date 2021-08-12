@@ -3,9 +3,9 @@ import React from "react";
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import { CardContent, Grid, Typography } from "@material-ui/core";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 // project imports
-import { gridSpacing } from "./../../store/constant";
 import config from "../../config";
 
 // assets
@@ -13,12 +13,21 @@ import BusinessCenter from "@material-ui/icons/BusinessCenter";
 import Avatar from "./../../ui-component/extended/Avatar";
 import MainCard from "./../../ui-component/cards/MainCard";
 import { useSelector } from "react-redux";
-import useCompany from "../../hooks/useCompany";
+import useComapanyMaster from "../../hooks/useCompanyMaster";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
   userCoverMain: {
     position: "relative",
+  },
+  gridContainer: {
+    "padding": theme.spacing(1),
+    "marginTop": theme.spacing(2),
+    "borderColor": theme.palette.primary.main,
+    "borderRadius": theme.spacing(1),
+    "&:hover": {
+      backgroundColor: theme.palette.primary.light,
+    },
   },
 }));
 
@@ -27,49 +36,54 @@ const useStyles = makeStyles((theme) => ({
 const SelectCompany = ({ title }) => {
   const classes = useStyles();
   const company = useSelector((state) => state.company);
-  const { selectMasterCompany } = useCompany();
-  const { companies, master_company } = company;
+  const { setMasterCompany } = useComapanyMaster();
+  const { companies } = company;
+
+  // useEffect(() => {
+  //   setMasterCompany(master_company);
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [master_company]);
+
+  const handleSelectCompanyMaster = (index) => {
+    setMasterCompany(companies[index]);
+  };
 
   return (
     <Grid container justifyContent="center">
-      <Grid item xs={6}>
-        <MainCard title="Select a Company">
-          <Grid item xs={6}>
+      <Grid item xs={8}>
+        <MainCard title="Select a Company" content={false}>
+          <Grid item xs={12}>
             <CardContent>
-              <Grid container spacing={gridSpacing}>
-                {companies?.map((company, index) => (
-                  <Grid
-                    item
-                    xs={12}
-                    key={company.company_id}
-                    onClick={() => selectMasterCompany(index)}
-                  >
-                    <Grid
-                      container
-                      spacing={2}
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Grid item>
-                        <div className={classes.userCoverMain}>
-                          <Avatar src={`${config.media_uri}${company.logo}`}>
-                            <BusinessCenter />
-                          </Avatar>
-                        </div>
-                      </Grid>
-                      <Grid item xs zeroMinWidth>
-                        <Grid container spacing={1}>
-                          <Grid item xs zeroMinWidth>
-                            <Typography align="left" variant="body2">
-                              {company.company_name}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
+              {companies?.map((company, index) => (
+                <Grid
+                  key={company.company_id}
+                  container
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  className={classes.gridContainer}
+                  onClick={() => handleSelectCompanyMaster(index)}
+                >
+                  <Grid item xs={2} zeroMinWidth>
+                    <div className={classes.userCoverMain}>
+                      <Avatar src={`${config.media_uri}${company.logo}`}>
+                        <BusinessCenter />
+                      </Avatar>
+                    </div>
                   </Grid>
-                ))}
-              </Grid>
+
+                  <Grid item xs={8} zeroMinWidth>
+                    <Typography align="left" variant="h4">
+                      {company.company_name}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={2} zeroMinWidth flexGrow>
+                    <ArrowForwardIcon color="primary" />
+                  </Grid>
+                </Grid>
+              ))}
             </CardContent>
           </Grid>
         </MainCard>

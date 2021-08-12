@@ -3,8 +3,6 @@ import { Redirect, Switch, Route } from "react-router-dom";
 
 // routes
 import LedgerRoutes from "./LedgerRoutes";
-// project imports
-import config from "../../config";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 

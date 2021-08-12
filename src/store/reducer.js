@@ -1,20 +1,16 @@
 import { combineReducers } from "redux";
 
-// reducer import
-import customizationReducer from "./customizationReducer";
-import snackbarReducer from "./snackbarReducer";
-import companyReducer from "./companyReducer";
-import userPermissionsReducer from "./userManagementReducer";
-import ledgerMasterReducer from "./master/ledgerMasterReducer";
+import * as reducers from "./reducers";
 
-//-----------------------|| COMBINE REDUCER ||-----------------------//
+//-----------------------|| COMBINE REDUCERS ||-----------------------//
 
 const reducer = combineReducers({
-  customization: customizationReducer,
-  snackbar: snackbarReducer,
-  company: companyReducer,
-  userPermissions: userPermissionsReducer,
-  ledgerMaster: ledgerMasterReducer,
+  customization: reducers.customizationReducer,
+  snackbar: reducers.snackbarReducer,
+  company: reducers.companyReducer,
+  companyMaster: reducers.companyMasterReducer,
+  userPermissions: reducers.userPermissionsReducer,
+  ledgerMaster: reducers.ledgerMasterReducer,
 });
 
 export default reducer;

@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
 import React from "react";
+import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 // project imports
 import config from "../../config";
-import { useSelector } from "react-redux";
+import useComapanyMaster from "../../hooks/useCompanyMaster";
 
 //-----------------------|| Company Guard ||-----------------------//
 
@@ -13,10 +13,13 @@ import { useSelector } from "react-redux";
  * @param {PropTypes.node} children children element/node
  */
 const CompanyGuard = ({ children }) => {
-  const { master_company } = useSelector((state) => state.company);
+  const { company } = useComapanyMaster();
 
-  if (!master_company) {
-    <Redirect to={config.defaultPath} />;
+  console.log("in CompanyGuard.js", !company);
+
+  if (!company) {
+    console.log("Redirecting...");
+    return <Redirect to={config.defaultPath} />;
   }
 
   return children;
