@@ -13,13 +13,15 @@ import CompanyDocumentForm from "./CompanyDocumentForm";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import AddDocumentDialog from "../../../components/company/AddDocumentDialog";
 
+// assets
+import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
 import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
 import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    "marginBottom": "24px",
+    marginBottom: "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -66,7 +68,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    "id": `simple-tab-${index}`,
+    id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -127,6 +129,7 @@ const CompanyDetails = () => {
                   size="large"
                   color="primary"
                   onClick={() => setShowAddModal(true)}
+                  startIcon={<CloudUploadIcon />}
                 >
                   <Typography>Upload Document</Typography>
                 </Button>

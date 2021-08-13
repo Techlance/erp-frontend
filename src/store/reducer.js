@@ -7,8 +7,9 @@ import companyReducer from "./companyReducer";
 import userPermissionsReducer from "./userManagementReducer";
 import ledgerMasterReducer from "./master/ledgerMasterReducer";
 import costCenterReducer from "./cost-center/costCenterReducer";
+import * as reducers from "./reducers";
 
-//-----------------------|| COMBINE REDUCER ||-----------------------//
+//-----------------------|| COMBINE REDUCERS ||-----------------------//
 
 const reducer = combineReducers({
   customization: customizationReducer,

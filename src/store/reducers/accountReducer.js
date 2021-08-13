@@ -1,11 +1,10 @@
 // action - state management
-import { ACCOUNT_INITIALIZE, LOGIN, LOGOUT } from "./actions";
-
+import * as actionTypes from "../actions";
 //-----------------------|| ACCOUNT REDUCER ||-----------------------//
 
 const accountReducer = (state, action) => {
   switch (action.type) {
-    case ACCOUNT_INITIALIZE: {
+    case actionTypes.ACCOUNT_INITIALIZE: {
       const { isLoggedIn, user } = action.payload;
       return {
         ...state,
@@ -14,7 +13,7 @@ const accountReducer = (state, action) => {
         user,
       };
     }
-    case LOGIN: {
+    case actionTypes.LOGIN: {
       const { user } = action.payload;
       return {
         ...state,
@@ -22,7 +21,7 @@ const accountReducer = (state, action) => {
         user,
       };
     }
-    case LOGOUT: {
+    case actionTypes.LOGOUT: {
       return {
         ...state,
         isLoggedIn: false,
@@ -35,4 +34,4 @@ const accountReducer = (state, action) => {
   }
 };
 
-export default accountReducer;
+export { accountReducer };

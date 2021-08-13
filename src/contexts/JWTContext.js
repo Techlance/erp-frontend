@@ -5,13 +5,13 @@ import jwtDecode from "jwt-decode";
 
 // reducer - state management
 import { ACCOUNT_INITIALIZE, LOGIN, LOGOUT } from "../store/actions";
-import accountReducer from "../store/accountReducer";
 
 // project imports
 import axios from "../utils/axios";
 import Loader from "../ui-component/Loader";
 import sendNotification from "../utils/sendNotification";
 import { useDispatch } from "react-redux";
+import { accountReducer } from "../store/reducers";
 
 // constant
 const initialState = {

@@ -7,11 +7,14 @@ import { Button, TableCell, Typography } from "@material-ui/core";
 import useUserPermissions from "../../../../../hooks/useUserPermissions";
 import UserGroupsSelect from "../../../../../components/user-management/UserGroupsSelect";
 
+// assets
+import SaveIcon from "@material-ui/icons/SaveRounded";
+
 const TransactionTabRow = ({ data }) => {
   const { updateUserCompanyGroup } = useUserPermissions();
 
   const [modified, setModified] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState(() => {
     if (data) {
@@ -55,10 +58,10 @@ const TransactionTabRow = ({ data }) => {
     data.user_group_id = data.user_group_id.id;
     data.company_master_id = data.company_master_id.id;
 
-    setLoading(true);
+    setClicked(true);
     await updateUserCompanyGroup(data);
     setModified(false);
-    setLoading(false);
+    setClicked(false);
   };
 
   return (
@@ -81,9 +84,10 @@ const TransactionTabRow = ({ data }) => {
             onClick={handleUpdateButton}
             color="primary"
             variant="contained"
-            disabled={loading}
+            disabled={clicked}
+            startIcon={<SaveIcon />}
           >
-            Update
+            Save
           </Button>
         )}
       </TableCell>

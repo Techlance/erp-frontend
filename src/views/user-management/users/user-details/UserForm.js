@@ -10,16 +10,18 @@ import {
   Switch,
 } from "@material-ui/core";
 
-// assets
-import { gridSpacing } from "../../../../store/constant";
-import SubCard from "../../../../ui-component/cards/SubCard";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-
 // project imports
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
+
+// assets
+import { gridSpacing } from "../../../../store/constant";
+import SubCard from "../../../../ui-component/cards/SubCard";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
+import SaveIcon from "@material-ui/icons/SaveRounded";
 
 //-----------------------|| User Form ||-----------------------//
 
@@ -31,10 +33,13 @@ const UserForm = () => {
 
   const { updateUser, deleteUser } = useUserPermissions();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const [values, setValues] = useState({
     ...current_user_account,
     password: null,
   });
+
+  const [clicked, setClicked] = useState(false);
 
   const handleChange = (event) => {
     setValues({
@@ -54,9 +59,15 @@ const UserForm = () => {
     setValues({ ...current_user_account, password: null });
   }, [current_user_account]);
 
+  const handleUpdateUser = async () => {
+    setClicked(true);
+    await updateUser(values);
+    setClicked(false);
+  };
+
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      <Grid item sm={12} md={12}>
+      <Grid item sm={12} md={8}>
         <SubCard title="Edit User Details">
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} sm={6}>
@@ -94,7 +105,6 @@ const UserForm = () => {
             </Grid>
 
             <Grid item xs={12}>
-              {/* <PermissionChecklist values={values} setValues={setValues} /> */}
               <FormControlLabel
                 control={
                   <Switch
@@ -111,18 +121,16 @@ const UserForm = () => {
 
             <Grid item xs={12}>
               <Stack direction="row">
-                <Grid container spacing={3}>
+                <Grid container justifyContent="space-between">
                   <Grid item>
                     <AnimateButton>
                       <Button
                         variant="contained"
-                        color="primary"
-                        onClick={(e) => {
-                          updateUser(values);
-                          // history.replace('/admin/user-manager/users')
-                        }}
+                        color="error"
+                        onClick={() => setShowDeleteModal(true)}
+                        startIcon={<DeleteIcon />}
                       >
-                        Change Details
+                        Delete
                       </Button>
                     </AnimateButton>
                   </Grid>
@@ -130,10 +138,12 @@ const UserForm = () => {
                     <AnimateButton>
                       <Button
                         variant="contained"
-                        color="error"
-                        onClick={() => setShowDeleteModal(true)}
+                        color="primary"
+                        onClick={handleUpdateUser}
+                        startIcon={<SaveIcon />}
+                        disabled={clicked}
                       >
-                        Delete
+                        Save Details
                       </Button>
                     </AnimateButton>
                   </Grid>

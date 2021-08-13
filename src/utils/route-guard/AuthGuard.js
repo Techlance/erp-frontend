@@ -12,6 +12,7 @@ import useAuth from "../../hooks/useAuth";
  * @param {PropTypes.node} children children element/node
  */
 const AuthGuard = ({ children }) => {
+  console.log("In auth guard")
   const { isLoggedIn } = useAuth();
 
   if (!isLoggedIn) {

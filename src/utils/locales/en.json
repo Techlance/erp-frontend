@@ -137,7 +137,7 @@
     "menu.cost-center": "Cost Center",
     "menu.cost-category": "Cost Category",
     "menu.budget": "Budget",
-    "menu.pl-budget" : "Profit & Loss Budget (P&L)",
+    "menu.pl-budget" : "Profit & Loss Budget",
     "menu.cash-flow-budget": "Cash Flow Budget",
     "menu.voucher-types": "Voucher Types",
     "menu.currency": "Currency",
@@ -177,7 +177,16 @@
     "menu.prepayments-lc": "Pre-Payments LC",
 
     "menu.reports": "Reports",
-    "menu.dashboard": "Dashboard"
+    "menu.dashboard": "Dashboard",
 
+    "menu.receivable": "Receivable",
+    "menu.payable": "Payable",
+    "menu.gl": "GL",
+    "menu.pl":"PL",
+    "menu.cash-flow": "Cash Flow",
 
+    "menu.tools": "Tools",
+    "menu.close-ac-year": "Close Account Year",
+    "menu.startyear": "Start Year",
+    "menu.activity-log": "Activity Log"
 }

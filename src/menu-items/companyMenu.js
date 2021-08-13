@@ -8,7 +8,7 @@ import {
   IconFiles,
   IconFileReport,
   IconBusinessplan,
-  IconReportMoney,
+  IconTools,
 } from "@tabler/icons";
 
 // constant
@@ -17,8 +17,8 @@ const icons = {
   IconDeviceAnalytics,
   IconFiles,
   IconFileReport,
-  IconReportMoney,
   IconBusinessplan,
+  IconTools,
 };
 
 //-----------------------|| COMPANY MENU ITEMS ||-----------------------//
@@ -310,6 +310,70 @@ export const company_menu = {
         {
           id: "dashboard",
           title: <FormattedMessage id="menu.dashboard" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+        {
+          id: "receivable",
+          title: <FormattedMessage id="menu.receivable" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+        {
+          id: "payable",
+          title: <FormattedMessage id="menu.payable" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+        {
+          id: "gl",
+          title: <FormattedMessage id="menu.gl" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+        {
+          id: "pl",
+          title: <FormattedMessage id="menu.pl" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+        {
+          id: "cash-flow",
+          title: <FormattedMessage id="menu.cash-flow" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+        {
+          id: "budget",
+          title: <FormattedMessage id="menu.budget" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+      ],
+    },
+    {
+      id: "tools",
+      title: <FormattedMessage id="menu.tools" />,
+      type: "collapse",
+      icon: icons["IconTools"],
+      admin: false,
+      breadcrumbs: true,
+      children: [
+        {
+          id: "close-ac-year",
+          title: <FormattedMessage id="menu.close-ac-year" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+        {
+          id: "start-year",
+          title: <FormattedMessage id="menu.startyear" />,
+          type: "item",
+          //   url: "/admin/user-manager/groups",
+        },
+        {
+          id: "activity-log",
+          title: <FormattedMessage id="menu.activity-log" />,
           type: "item",
           //   url: "/admin/user-manager/groups",
         },

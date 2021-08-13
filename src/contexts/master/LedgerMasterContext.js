@@ -5,38 +5,32 @@ import { useDispatch, useSelector } from "react-redux";
 
 // project imports
 import Loader from "../../ui-component/Loader";
-import useAuth from "../../hooks/useAuth";
 
 import {
-    // Company Account Head
-    getCompanyAccountHeadsAsync,
-    addCompanyAccountHeadAsync,
-    updateCompanyAccountHeadAsync,
-    deleteCompanyAccountHeadAsync,
+  // Company Account Head
+  getCompanyAccountHeadsAsync,
+  addCompanyAccountHeadAsync,
+  updateCompanyAccountHeadAsync,
+  deleteCompanyAccountHeadAsync,
 } from "../../api";
-
-// constant
-const initialState = {
-  company_account_heads:[]
-};
+import useComapanyMaster from "../../hooks/useCompanyMaster";
 
 export const LedgerMaster = createContext();
 
 export const LedgerMasterProvider = ({ children }) => {
   const dispatch = useDispatch();
+  const { company } = useComapanyMaster();
   const state = useSelector((state) => state.ledgerMaster);
   const [loading] = useState(false);
 
-  const { user } = useAuth();
-
   const getCompanyAccountHeads = async (id) => {
-    await getCompanyAccountHeadsAsync(id,dispatch);
+    await getCompanyAccountHeadsAsync(id, dispatch);
   };
 
   const addCompanyAccountHead = async (data) => {
     await addCompanyAccountHeadAsync(data, dispatch);
 
-    await getCompanyAccountHeadsAsync(data.id,dispatch);
+    await getCompanyAccountHeadsAsync(data.id, dispatch);
   };
 
   const updateCompanyAccountHead = async (data) => {
@@ -49,13 +43,14 @@ export const LedgerMasterProvider = ({ children }) => {
   const deleteCompanyAccountHead = async (id) => {
     await deleteCompanyAccountHeadAsync(id, dispatch);
 
-    await getCompanyAccountHeadsAsync(id,dispatch);
+    await getCompanyAccountHeadsAsync(id, dispatch);
   };
 
-//   useEffect(() => {
-    // getUserCompanies();
+  useEffect(() => {
+    getCompanyAccountHeads(company?.company_id);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [user]);
+  }, [company]);
 
   if (loading) {
     return <Loader />;
@@ -68,7 +63,7 @@ export const LedgerMasterProvider = ({ children }) => {
         getCompanyAccountHeads,
         addCompanyAccountHead,
         updateCompanyAccountHead,
-        deleteCompanyAccountHead
+        deleteCompanyAccountHead,
       }}
     >
       {children}

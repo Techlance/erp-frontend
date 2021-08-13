@@ -17,16 +17,15 @@ import {
 // assets
 import Avatar from "../../../ui-component/extended/Avatar";
 import { IconArrowRight } from "@tabler/icons";
-import config from "../../../config";
-import formatDate from "../../../utils/format-date";
 
 // project imports
+import config from "../../../config";
+import formatDate from "../../../utils/format-date";
 
 //-----------------------|| Company List ||-----------------------//
 
 const CompanyTable = () => {
   const company = useSelector((state) => state.company);
-
   const { companies } = company;
 
   return (
@@ -105,7 +104,6 @@ const CompanyTable = () => {
                   variant="text"
                   color="primary"
                   aria-label="more-details"
-                  // onClick={(row) => handleCompanyClick(row.company_id)}
                   href={`/admin/companies/${row.company_id}`}
                   target="_blank"
                 >

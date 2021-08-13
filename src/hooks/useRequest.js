@@ -40,10 +40,10 @@ const useRequest = ({
         setData(response.data.data);
       } else {
         if (nextError) {
-          nextError(response.data.error);
+          nextError(response.data.message);
         }
         setLoading(false);
-        setError(response.data.error);
+        setError(response.data.message);
       }
     } catch (err) {
       setLoading(false);

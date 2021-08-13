@@ -18,6 +18,9 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { gridSpacing } from "../../../store/constant";
 import SubCard from "../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
+import SaveIcon from "@material-ui/icons/SaveRounded";
+import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
 
 // project imports
 import useCompany from "../../../hooks/useCompany";
@@ -26,6 +29,7 @@ import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
 import ImageUpdateDialog from "../../../components/company/ImageUpdateDialog";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import { useSelector } from "react-redux";
+import LoadingButton from "../../../ui-component/LoadingButton";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +55,7 @@ const CompanyForm = () => {
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState({ ...current_company });
 
@@ -79,6 +84,12 @@ const CompanyForm = () => {
     setValues({ ...current_company });
   }, [current_company]);
 
+  const handleUpdateDetails = async () => {
+    setClicked(true);
+    await updateCompany(values);
+    setClicked(false);
+  };
+
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
       <Grid item sm={6} md={4}>
@@ -103,6 +114,7 @@ const CompanyForm = () => {
                   color="primary"
                   size="small"
                   onClick={() => setShowImageModal(true)}
+                  startIcon={<CloudUploadIcon />}
                 >
                   Upload Logo
                 </Button>
@@ -194,26 +206,27 @@ const CompanyForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={5}>
-              <CurrencySelect
-                captionLabel="Base Currency"
-                InputLabelProps={{ shrink: true }}
-                selected={values.base_currency}
-                onChange={handleSelect}
-              />
-            </Grid>
-            <Grid item xs={12} sm={1} className={classes.addButtonGrid}>
-              <IconButton
-                aria-label="add-currency"
-                onClick={() => setShowAddCurrencyModal(true)}
-              >
-                <AddCircleOutlineIcon fontSize="medium" />
-              </IconButton>
+            <Grid item xs={12} sm={6}>
+              <Stack direction="row">
+                <CurrencySelect
+                  captionLabel="Base Currency"
+                  InputLabelProps={{ shrink: true }}
+                  selected={values.base_currency}
+                  onChange={handleSelect}
+                />
 
-              <AddCurrenyDialog
-                open={showAddCurrencyModal}
-                handleClose={() => setShowAddCurrencyModal(false)}
-              />
+                <IconButton
+                  aria-label="add-currency"
+                  onClick={() => setShowAddCurrencyModal(true)}
+                >
+                  <AddCircleOutlineIcon fontSize="medium" />
+                </IconButton>
+
+                <AddCurrenyDialog
+                  open={showAddCurrencyModal}
+                  handleClose={() => setShowAddCurrencyModal(false)}
+                />
+              </Stack>
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -279,33 +292,32 @@ const CompanyForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-
             <Grid item xs={12}>
               <Stack direction="row">
-                <Grid container spacing={3}>
-                  <Grid item>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={(e) => {
-                          updateCompany(values);
-                        }}
-                      >
-                        Change Details
-                      </Button>
-                    </AnimateButton>
-                  </Grid>
+                <Grid container justifyContent="space-between">
                   <Grid item>
                     <AnimateButton>
                       <Button
                         variant="contained"
                         color="error"
                         onClick={() => setShowDeleteModal(true)}
+                        disabled={clicked}
+                        startIcon={<DeleteIcon />}
                       >
                         Delete
                       </Button>
                     </AnimateButton>
+                  </Grid>
+                  <Grid item>
+                    <LoadingButton
+                      variant="contained"
+                      color="primary"
+                      onClick={handleUpdateDetails}
+                      startIcon={<SaveIcon />}
+                      loading={clicked}
+                    >
+                      Save Details
+                    </LoadingButton>
                   </Grid>
                 </Grid>
               </Stack>
