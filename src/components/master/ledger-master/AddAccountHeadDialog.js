@@ -41,7 +41,7 @@ const AddUserDialog = ({ open, handleClose }) => {
     acc_head_name: "",
     title: "ASSETS",
     bs: true,
-    company_id: parseInt(mid),
+    company_master_id: parseInt(mid),
     created_by: user.email,
     is_fixed:false
   });
@@ -104,6 +104,7 @@ const AddUserDialog = ({ open, handleClose }) => {
     console.log(form)
     await addCompanyAccountHead(form);
     setClicked(false);
+    handleClose();
   };
 
   return (
@@ -136,6 +137,14 @@ const AddUserDialog = ({ open, handleClose }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
+            <HeadTitleSelect
+                captionLabel="Title"
+                InputLabelProps={{ shrink: true }}
+                selected={values.title}
+                onChange={handleSelect}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
             <TextField
               fullWidth
               id="acc_head_name"
@@ -145,14 +154,6 @@ const AddUserDialog = ({ open, handleClose }) => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <HeadTitleSelect
-                captionLabel="Title"
-                InputLabelProps={{ shrink: true }}
-                selected={values.title}
-                onChange={handleSelect}
-            />
-          </Grid>
           <Grid item xs={12}>
             <FormControlLabel
               control={
@@ -160,7 +161,7 @@ const AddUserDialog = ({ open, handleClose }) => {
                   id="bs"
                   checked={values.bs}
                   onChange={handleChecked}
-                  name="Balance Sheet"
+                  name="bs"
                   color="primary"
                 />
               }
@@ -170,16 +171,16 @@ const AddUserDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <LoadingButton
+        <Button
           color="error"
           variant="contained"
           size="small"
           onClick={handleClose}
-          loading={clicked}
+          disabled={clicked}
           startIcon={<CancelIcon />}
         >
           Cancel
-        </LoadingButton>
+        </Button>
         <LoadingButton
           color="primary"
           variant="contained"

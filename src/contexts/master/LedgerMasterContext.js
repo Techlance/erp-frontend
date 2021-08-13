@@ -30,13 +30,13 @@ export const LedgerMasterProvider = ({ children }) => {
   const addCompanyAccountHead = async (data) => {
     await addCompanyAccountHeadAsync(data, dispatch);
 
-    await getCompanyAccountHeadsAsync(data.id, dispatch);
+    await getCompanyAccountHeadsAsync(data.company_master_id, dispatch);
   };
 
   const updateCompanyAccountHead = async (data) => {
     await updateCompanyAccountHeadAsync(data, dispatch);
 
-    // await getCompanyAccountHeadsAsync(id,dispatch);
+    await getCompanyAccountHeadsAsync(data.company_master_id,dispatch);
     // await getSelectedCompanyAsync(data.id, dispatch);
   };
 

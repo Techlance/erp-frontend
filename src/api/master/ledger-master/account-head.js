@@ -30,7 +30,7 @@ export const addCompanyAccountHeadAsync = async (data, dispatch) => {
 export const updateCompanyAccountHeadAsync = async (data, dispatch) => {
   const response = await instance.put(
     `/company/edit-account-head/${data.id}`,
-    data
+    dataToForm(data)
   );
 
   sendNotification({

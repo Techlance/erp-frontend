@@ -10,8 +10,16 @@ import CompanyGuard from "../../utils/route-guard/CompanyGuard";
 const AccountHead = Loadable(
   lazy(() => import("../../views/master/ledger-master/account-head"))
 );
+const AccountHeadDetails = Loadable(
+  lazy(() => import("../../views/master/ledger-master/account-head/AccountHeadDetails"))
+);
+
 
 const routes = [
+  {
+    url:"/head/:aid",
+    component: AccountHeadDetails
+  },
   {
     url: "/head",
     component: AccountHead,
@@ -27,9 +35,11 @@ const CompanyRoutes = ({ match }) => {
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <CompanyGuard>
-            {routes.map(({ url, component }) => (
-              <Route path={`${match.path}${url}`} component={component} />
-            ))}
+            <Switch location={location} key={location.pathname}>
+              {routes.map(({ url, component }) => (
+                <Route path={`${match.path}${url}`} component={component} />
+              ))}
+            </Switch>
           </CompanyGuard>
         </Switch>
       </MainLayout>

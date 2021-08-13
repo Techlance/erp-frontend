@@ -16,20 +16,23 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 import formatDate from '../../../../utils/format-date'
 import AddAccountHeadDialog from '../../../../components/master/ledger-master/AddAccountHeadDialog'
+import {useLocation} from 'react-router-dom'
 
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const ledgerMaster = useSelector((state) => state.ledgerMaster);
+  const { company_account_heads } = useSelector((state) => state.ledgerMaster);
 
   const { company } = useCompanyMaster();
-
-  const { company_account_heads } = ledgerMaster;
 
   const { getCompanyAccountHeads } = useLedgerMaster();
 
   const [loading, setLoading] = useState(true);
+
+  const { pathname } = useLocation();
+
+  console.log(company_account_heads)
 
   const columns = [
     {
@@ -39,15 +42,15 @@ const SelectGroup = () => {
       type: "number",
       headerAlign: "left",
       align: "left",
+      sortable: false,
       renderCell: (params) =>
-        params.row["is_fixed"] ? (
+        !params.row["is_fixed"] ? (
           <Button
             variant="text"
             color="primary"
             aria-label="more-details"
-            // onClick={(row) => handleCompanyClick(row.company_id)}
-            href={`/admin/user-manager/users/${params.value}`}
-            target="_blank"
+            href={`${pathname}/${params.value}`}
+            // target="_blank"
           >
             <Typography align="center">More </Typography>
             <IconArrowRight sx={{ fontSize: "1.1rem" }} />
