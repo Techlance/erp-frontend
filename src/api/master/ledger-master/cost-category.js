@@ -31,9 +31,11 @@ export const addCostCategoryAsync = async (data, dispatch) => {
 };
 
 export const updateCostCategoryAsync = async (data, dispatch) => {
+  const form = dataToForm(data);
+
   const response = await instance.put(
     `company/edit-cost-category/${data.id}`,
-    data
+    form
   );
 
   sendNotification({

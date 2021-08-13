@@ -22,16 +22,16 @@ const CostCenterRoutes = ({ match }) => {
 
   let routes = [
     {
+      url: "/cost-category/:cat_id",
+      component: CostCategoryDetails,
+    },
+    {
       url: "/cost-category",
       component: CostCenter,
     },
     {
       url: "/center",
       component: Center,
-    },
-    {
-      url: "/:cat_id",
-      component: CostCategoryDetails,
     },
   ];
   return (

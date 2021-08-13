@@ -60,6 +60,10 @@ const CostCategoryForm = () => {
   useEffect(() => {
     if (cost_category) {
       let category = cost_category.find((cat) => cat.id === parseInt(cat_id));
+      console.log(category);
+      console.log(cost_category);
+      console.log(cat_id);
+
       if (category) {
         setValues(category);
       } else {
@@ -95,9 +99,9 @@ const CostCategoryForm = () => {
                       <Button
                         variant="contained"
                         color="primary"
-                        // onClick={(e) => {
-                        //   updateCostCategory(values);
-                        // }}
+                        onClick={(e) => {
+                          updateCostCategory(values);
+                        }}
                       >
                         Update Details
                       </Button>
@@ -122,10 +126,10 @@ const CostCategoryForm = () => {
       </Grid>
       <ConfirmDeleteDialog
         open={showDeleteModal}
-        // handleAgree={() => {
-        //   deleteCostCenter(values.id);
-        //   history.replace("master/cost-center/cost-category");
-        // }}
+        handleAgree={() => {
+          deleteCostCategory(values.id);
+          history.replace(`/company/${mid}/master/cost-center/cost-category`);
+        }}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"
         body="Are you sure you want to delete this Cost Category records? Once deleted the data can not be retrived!"

@@ -36,13 +36,13 @@ export const CostCenterProvider = ({ children }) => {
   const addCostCategory = async (data) => {
     await addCostCategoryAsync(data, dispatch);
 
-    await getCostCategoryAsync(data.id, dispatch);
+    await getCostCategoryAsync(data.company_master_id, dispatch);
   };
 
   const updateCostCategory = async (data) => {
     await updateCostCategoryAsync(data, dispatch);
 
-    await getCostCategoryAsync(data.id, dispatch);
+    await getCostCategoryAsync(data.company_master_id, dispatch);
     // await getSelectedCompanyAsync(data.id, dispatch);
   };
 

@@ -77,6 +77,7 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
           size="small"
           onClick={() => {
             addCostCategory(values);
+            handleClose();
           }}
           color="primary"
         >

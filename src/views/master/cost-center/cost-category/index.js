@@ -15,6 +15,7 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import AddCostCategoryDialog from "../../../../components/CostCenter/AddCostCategoryDialog";
 import useCostCenter from "../../../../hooks/useCostCenter";
 import useComapanyMaster from "../../../../hooks/useCompanyMaster";
+import { useLocation } from "react-router";
 
 //-----------------------|| User List ||-----------------------//
 
@@ -33,6 +34,8 @@ const SelectGroup = () => {
 
   const [loading, setLoading] = useState(true);
 
+  const { pathname } = useLocation();
+
   const columns = [
     {
       field: "id",
@@ -47,8 +50,7 @@ const SelectGroup = () => {
           color="primary"
           aria-label="more-details"
           // onClick={(row) => handleCompanyClick(row.company_id)}
-          href={`master/cost-center/cost-category/${params.value}`}
-          target="_blank"
+          href={`${pathname}/${params.value}`}
         >
           <Typography align="center">More </Typography>
           <IconArrowRight sx={{ fontSize: "1.1rem" }} />

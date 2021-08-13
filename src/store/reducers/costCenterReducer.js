@@ -4,6 +4,10 @@ import {
   UPDATE_COST_CATEGORY,
   CREATE_COST_CATEGORY,
   DELETE_COST_CATEGORY,
+  GET_COST_CENTER,
+  UPDATE_COST_CENTER,
+  CREATE_COST_CENTER,
+  DELETE_COST_CENTER,
 } from "../actions";
 //-----------------------|| COST CENTER REDUCER ||-----------------------//
 
@@ -31,6 +35,27 @@ const costCenterReducer = (state = initialState, action) => {
       };
     }
     case DELETE_COST_CATEGORY: {
+      return {
+        ...state,
+      };
+    }
+    case GET_COST_CENTER: {
+      return {
+        ...state,
+        cost_center: action.payload,
+      };
+    }
+    case UPDATE_COST_CENTER: {
+      return {
+        ...state,
+      };
+    }
+    case CREATE_COST_CENTER: {
+      return {
+        ...state,
+      };
+    }
+    case DELETE_COST_CENTER: {
       return {
         ...state,
       };

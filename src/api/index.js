@@ -26,3 +26,6 @@ export * from "./master/ledger-master/account-head";
 /* Cost Center */
 // 1. Cost Category
 export * from "./master/ledger-master/cost-category";
+
+// 2. Cost Center
+export * from "./master/ledger-master/cost-center/cost-center";
