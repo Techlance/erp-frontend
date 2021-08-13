@@ -9,11 +9,14 @@ import { useHistory, useParams } from "react-router";
 import { gridSpacing } from "../../../../store/constant";
 import SubCard from "../../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
+import SaveIcon from "@material-ui/icons/SaveRounded";
 
 // project imports
 import useCostCenter from "../../../../hooks/useCostCenter";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useSelector } from "react-redux";
+import config from "../../../../config";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +44,10 @@ const CostCategoryForm = () => {
 
   const [values, setValues] = useState({ ...cost_category });
 
+  const [clicked, setClicked] = useState(false);
+
+  const [error, setError] = useState(false);
+
   const handleChange = (event) => {
     setValues({
       ...values,
@@ -48,32 +55,34 @@ const CostCategoryForm = () => {
     });
   };
 
-  //   const handleFileUpload = (event) => {
-  //     setValues({
-  //       ...values,
-  //       logo: event.target.files[0],
-  //     });
-  //   };
+  const handleChecked = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.checked,
+    });
+  };
 
   const { cat_id, mid } = useParams();
 
   useEffect(() => {
     if (cost_category) {
       let category = cost_category.find((cat) => cat.id === parseInt(cat_id));
-      console.log(category);
-      console.log(cost_category);
-      console.log(cat_id);
 
       if (category) {
         setValues(category);
       } else {
-        // history.replace(config.defaultPath);
-        console.log("obj");
+        history.replace(config.defaultPath);
       }
     } else {
       getCostCategory(mid);
     }
   }, [cost_category]);
+
+  const handleUpdateCostCategory = async () => {
+    setClicked(true);
+    await updateCostCategory(values);
+    setClicked(false);
+  };
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
@@ -102,6 +111,7 @@ const CostCategoryForm = () => {
                         onClick={(e) => {
                           updateCostCategory(values);
                         }}
+                        startIcon={<SaveIcon />}
                       >
                         Update Details
                       </Button>
@@ -113,6 +123,7 @@ const CostCategoryForm = () => {
                         variant="contained"
                         color="error"
                         onClick={() => setShowDeleteModal(true)}
+                        startIcon={<DeleteIcon />}
                       >
                         Delete
                       </Button>
