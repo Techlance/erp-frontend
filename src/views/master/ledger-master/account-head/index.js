@@ -14,8 +14,8 @@ import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import useCompanyMaster from "../../../../hooks/useCompanyMaster";
-import formatDate from '../../../../utils/format-date'
-import AddAccountHeadDialog from '../../../../components/master/ledger-master/AddAccountHeadDialog'
+import formatDate from "../../../../utils/format-date";
+import AddAccountHeadDialog from "../../../../components/master/ledger-master/AddAccountHeadDialog";
 
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
@@ -83,19 +83,19 @@ const SelectGroup = () => {
       align: "center",
     },
     {
-      field:"created_on",
-      headerName:"Created On",
-      type:"date",
+      field: "created_on",
+      headerName: "Created On",
+      type: "date",
       flex: 0.3,
       valueFormatter: (params) => {
         return formatDate(params.value);
-      }
+      },
     },
     {
-      field:"created_by",
-      headerName:"created By",
-      flex: 0.3
-    }
+      field: "created_by",
+      headerName: "created By",
+      flex: 0.3,
+    },
   ];
 
   useEffect(() => {

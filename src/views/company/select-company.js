@@ -2,7 +2,7 @@ import React from "react";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { CardContent, Grid, Typography, Link } from "@material-ui/core";
+import { CardContent, Grid, Typography } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 // project imports
@@ -13,7 +13,7 @@ import BusinessCenter from "@material-ui/icons/BusinessCenter";
 import Avatar from "./../../ui-component/extended/Avatar";
 import MainCard from "./../../ui-component/cards/MainCard";
 import { useSelector } from "react-redux";
-import useComapanyMaster from "../../hooks/useCompanyMaster";
+// import useComapanyMaster from "../../hooks/useCompanyMaster";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   gridContainer: {
-    "padding": theme.spacing(1),
-    "marginTop": theme.spacing(2),
-    "borderColor": theme.palette.primary.main,
-    "borderRadius": theme.spacing(1),
+    padding: theme.spacing(1),
+    marginTop: theme.spacing(2),
+    borderColor: theme.palette.primary.main,
+    borderRadius: theme.spacing(1),
     "&:hover": {
       backgroundColor: theme.palette.primary.light,
     },
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const SelectCompany = ({ title }) => {
   const classes = useStyles();
   const company = useSelector((state) => state.company);
-  const { setMasterCompany } = useComapanyMaster();
+  // const { setMasterCompany } = useComapanyMaster();
   const { companies } = company;
 
   // useEffect(() => {
@@ -49,9 +49,13 @@ const SelectCompany = ({ title }) => {
   //   setMasterCompany(companies[index]);
   // };
   const handleSelectCompanyMaster = (index) => {
-    const newWindow = window.open(`/company/${companies[index].company_id}/master/ledger-master/head`, '_blank', 'noopener,noreferrer')
-    if (newWindow) newWindow.opener = null
-  }
+    const newWindow = window.open(
+      `/company/${companies[index].company_id}/master/ledger-master/head`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    if (newWindow) newWindow.opener = null;
+  };
 
   return (
     <Grid container justifyContent="center">

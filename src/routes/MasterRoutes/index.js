@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Switch, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 // routes
 import LedgerRoutes from "./LedgerRoutes";
