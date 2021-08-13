@@ -41,22 +41,19 @@ const SelectGroup = () => {
       type: "number",
       headerAlign: "left",
       align: "left",
-      renderCell: (params) =>
-        params.row["is_fixed"] ? (
-          <Button
-            variant="text"
-            color="primary"
-            aria-label="more-details"
-            // onClick={(row) => handleCompanyClick(row.company_id)}
-            href={`/admin/user-manager/users/${params.value}`}
-            target="_blank"
-          >
-            <Typography align="center">More </Typography>
-            <IconArrowRight sx={{ fontSize: "1.1rem" }} />
-          </Button>
-        ) : (
-          <Button disabled>Not Editable</Button>
-        ),
+      renderCell: (params) => (
+        <Button
+          variant="text"
+          color="primary"
+          aria-label="more-details"
+          // onClick={(row) => handleCompanyClick(row.company_id)}
+          href={`master/cost-center/cost-category/${params.value}`}
+          target="_blank"
+        >
+          <Typography align="center">More </Typography>
+          <IconArrowRight sx={{ fontSize: "1.1rem" }} />
+        </Button>
+      ),
     },
     {
       field: "name",

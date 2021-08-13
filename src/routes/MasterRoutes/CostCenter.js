@@ -5,6 +5,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import MainLayout from "../../layout/MainLayout";
 import Loadable from "../../ui-component/Loadable";
 import AuthGuard from "../../utils/route-guard/AuthGuard";
+import CostCategoryDetails from "../../views/master/cost-center/cost-category-details";
 
 // company page routing
 const CostCenter = Loadable(
@@ -27,18 +28,24 @@ const CostCenterRoutes = ({ match }) => {
       url: "/center",
       component: Center,
     },
+    {
+      url: "/:cat_id",
+      component: CostCategoryDetails,
+    },
   ];
   return (
     <Route path={routes.map((route) => `${match.path}${route.url}`)}>
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <AuthGuard>
-            {routes.map((route) => (
-              <Route
-                path={`${match.path}${route.url}`}
-                component={route.component}
-              />
-            ))}
+            <Switch location={location} key={location.pathname}>
+              {routes.map((route) => (
+                <Route
+                  path={`${match.path}${route.url}`}
+                  component={route.component}
+                />
+              ))}
+            </Switch>
           </AuthGuard>
         </Switch>
       </MainLayout>
