@@ -2,7 +2,7 @@ import React from "react";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { CardContent, Grid, Typography } from "@material-ui/core";
+import { CardContent, Grid, Typography, Link } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 // project imports
@@ -45,9 +45,13 @@ const SelectCompany = ({ title }) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [master_company]);
 
+  // const handleSelectCompanyMaster = (index) => {
+  //   setMasterCompany(companies[index]);
+  // };
   const handleSelectCompanyMaster = (index) => {
-    setMasterCompany(companies[index]);
-  };
+    const newWindow = window.open(`/company/${companies[index].company_id}/master/ledger-master/head`, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
 
   return (
     <Grid container justifyContent="center">

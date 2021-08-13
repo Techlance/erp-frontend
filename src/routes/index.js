@@ -13,6 +13,7 @@ import config from "./../config";
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
 const Routes = () => {
+  console.log("In Routes")
   return (
     <Switch>
       <Redirect exact from="/" to={config.defaultPath} />

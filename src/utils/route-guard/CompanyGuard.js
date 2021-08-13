@@ -31,7 +31,7 @@ const CompanyGuard = ({ children }) => {
     },
   });
 
-  useEffect(() => {
+  // useEffect(() => {
     console.log("func call...");
     const f = async () => {
       await getCompanies();
@@ -41,7 +41,7 @@ const CompanyGuard = ({ children }) => {
     f();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // }, []);
 
   console.log(loading || loadingCompanies);
 
@@ -49,15 +49,14 @@ const CompanyGuard = ({ children }) => {
     return <Loader />;
   } else {
     function isPresent({ company_id }) {
-      // eslint-disable-next-line eqeqeq
-      return company_id == mid;
+      return company_id === parseInt(mid);
     }
 
     const company = companies.find(isPresent);
 
     if (company) {
       console.log("yay");
-      // setMasterCompany(company);
+      setMasterCompany(company);
       return children;
     }
 
