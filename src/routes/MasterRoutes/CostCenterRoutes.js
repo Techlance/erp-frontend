@@ -6,6 +6,7 @@ import MainLayout from "../../layout/MainLayout";
 import Loadable from "../../ui-component/Loadable";
 import AuthGuard from "../../utils/route-guard/AuthGuard";
 import CostCategoryDetails from "../../views/master/cost-center/cost-category-details";
+import CompanyGuard from "../../utils/route-guard/CompanyGuard";
 
 // company page routing
 const CostCenter = Loadable(
@@ -39,12 +40,14 @@ const CostCenterRoutes = ({ match }) => {
         <Switch location={location} key={location.pathname}>
           <AuthGuard>
             <Switch location={location} key={location.pathname}>
-              {routes.map((route) => (
-                <Route
-                  path={`${match.path}${route.url}`}
-                  component={route.component}
-                />
-              ))}
+              <CompanyGuard>
+                {routes.map((route) => (
+                  <Route
+                    path={`${match.path}${route.url}`}
+                    component={route.component}
+                  />
+                ))}
+              </CompanyGuard>
             </Switch>
           </AuthGuard>
         </Switch>

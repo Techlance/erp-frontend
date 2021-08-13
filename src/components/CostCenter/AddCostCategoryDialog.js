@@ -20,14 +20,15 @@ import {
 import useAuth from "../../hooks/useAuth";
 import useCostCenter from "../../hooks/useCostCenter";
 import { useSelector } from "react-redux";
+import useComapanyMaster from "../../hooks/useCompanyMaster";
 
 const AddCostCategoryDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { addCostCategory } = useCostCenter();
-  const { master_company } = useSelector((state) => state.company);
+  const { company } = useComapanyMaster();
 
   const [values, setValues] = useState({
-    company_master_id: master_company.company_id,
+    company_master_id: company.company_id,
     name: "",
     created_by: user.email,
   });

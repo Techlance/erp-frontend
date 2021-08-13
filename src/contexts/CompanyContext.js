@@ -23,6 +23,7 @@ import {
   updateCompanyAsync,
 } from "../api/company";
 import { addCurrencyAsync, getCurrencyAsync } from "../api";
+import { dataToForm } from "../utils";
 
 // constant
 const initialState = {
@@ -126,7 +127,9 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const addCurrency = async (data) => {
-    await addCurrencyAsync(data, dispatch, getCurrency);
+    const form = dataToForm(data);
+
+    await addCurrencyAsync(form, dispatch, getCurrency);
   };
 
   const getSelectedCompanyDocs = async (id) => {

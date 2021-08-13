@@ -14,18 +14,18 @@ import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import AddCostCategoryDialog from "../../../../components/CostCenter/AddCostCategoryDialog";
 import useCostCenter from "../../../../hooks/useCostCenter";
+import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 
 //-----------------------|| User List ||-----------------------//
 
 const SelectGroup = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const [company, costCenter] = useSelector((state) => [
-    state.company,
-    state.costCenter,
-  ]);
+  const [costCenter] = useSelector((state) => [state.costCenter]);
 
-  const { master_company } = company;
+  const { company } = useComapanyMaster();
+
+  // const { company } = company;
 
   const { cost_category } = costCenter;
 
@@ -76,8 +76,8 @@ const SelectGroup = () => {
 
   useEffect(() => {
     setLoading(true);
-    getCostCategory(master_company?.company_id);
-  }, [master_company]);
+    getCostCategory(company?.company_id);
+  }, [company]);
 
   useEffect(() => {
     // console.log(company_account_heads);
@@ -96,7 +96,7 @@ const SelectGroup = () => {
         >
           <Grid item>
             <Typography variant="h3">
-              {`${master_company.company_name}'s Cost Category`}
+              {`${company.company_name}'s Cost Category`}
             </Typography>
           </Grid>
           <Grid item>
