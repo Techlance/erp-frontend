@@ -86,7 +86,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
             <TextField
               fullWidth
               id="cost_center_name"
-              label="Cost Category Name"
+              label="Cost Center Name"
               value={values.cost_center_name}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
@@ -95,7 +95,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              id="chil_of"
+              id="child_of"
               label="Child Of"
               value={values.child_of}
               InputLabelProps={{ shrink: true }}

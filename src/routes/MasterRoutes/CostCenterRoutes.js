@@ -8,7 +8,7 @@ import AuthGuard from "../../utils/route-guard/AuthGuard";
 import CostCategoryDetails from "../../views/master/cost-center/cost-category-details";
 import CompanyGuard from "../../utils/route-guard/CompanyGuard";
 
-// company page routing
+// cost category page routing
 const CostCenter = Loadable(
   lazy(() => import("../../views/master/cost-center/cost-category"))
 );
@@ -39,16 +39,16 @@ const CostCenterRoutes = ({ match }) => {
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <AuthGuard>
-            <Switch location={location} key={location.pathname}>
-              <CompanyGuard>
+            <CompanyGuard>
+              <Switch location={location} key={location.pathname}>
                 {routes.map((route) => (
                   <Route
                     path={`${match.path}${route.url}`}
                     component={route.component}
                   />
                 ))}
-              </CompanyGuard>
-            </Switch>
+              </Switch>
+            </CompanyGuard>
           </AuthGuard>
         </Switch>
       </MainLayout>

@@ -69,3 +69,7 @@ export const UPDATE_COST_CATEGORY = "UPDATE_COST_CATEGORY";
 export const DELETE_COST_CATEGORY = "DELETE_COST_CATEGORY";
 
 // action - master - cost center - cost center
+export const GET_COST_CENTER = "GET_COST_CENTER";
+export const CREATE_COST_CENTER = "CREATE_COST_CENTER";
+export const UPDATE_COST_CENTER = "UPDATE_COST_CENTER";
+export const DELETE_COST_CENTER = "DELETE_COST_CENTER";

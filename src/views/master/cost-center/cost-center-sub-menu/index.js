@@ -14,20 +14,20 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import AddCostCenterDialog from "../../../../components/CostCenter/AddCostCenterDialog";
+import useComapanyMaster from "../../../../hooks/useCompanyMaster";
+import useCostCenter from "../../../../hooks/useCostCenter";
+
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const [company, ledgerMaster] = useSelector((state) => [
-    state.company,
-    state.ledgerMaster,
-  ]);
+  const [costCenter] = useSelector((state) => [state.costCenter]);
 
-  const { master_company } = company;
+  const { company } = useComapanyMaster;
 
-  //   const { company_account_heads } = ledgerMaster;
+  const { cost_center } = costCenter;
 
-  //   const { getCompanyAccountHeads } = useLedgerMaster();
+  const { getCostCategory } = useCostCenter();
 
   const [loading, setLoading] = useState(true);
 
@@ -39,22 +39,19 @@ const SelectGroup = () => {
       type: "number",
       headerAlign: "left",
       align: "left",
-      renderCell: (params) =>
-        params.row["is_fixed"] ? (
-          <Button
-            variant="text"
-            color="primary"
-            aria-label="more-details"
-            // onClick={(row) => handleCompanyClick(row.company_id)}
-            href={`/admin/user-manager/users/${params.value}`}
-            target="_blank"
-          >
-            <Typography align="center">More </Typography>
-            <IconArrowRight sx={{ fontSize: "1.1rem" }} />
-          </Button>
-        ) : (
-          <Button disabled>Not Editable</Button>
-        ),
+      renderCell: (params) => (
+        <Button
+          variant="text"
+          color="primary"
+          aria-label="more-details"
+          // onClick={(row) => handleCompanyClick(row.company_id)}
+          href={`/master/cost-center/center/${params.value}`}
+          target="_blank"
+        >
+          <Typography align="center">More </Typography>
+          <IconArrowRight sx={{ fontSize: "1.1rem" }} />
+        </Button>
+      ),
     },
     {
       field: "cost_center_name",
@@ -62,7 +59,7 @@ const SelectGroup = () => {
       flex: 0.4,
     },
     {
-      field: "acc_head_namecost_category_name",
+      field: "cost_category_id",
       headerName: "Cost Category",
       flex: 0.5,
     },
@@ -76,25 +73,24 @@ const SelectGroup = () => {
       headerName: "Created By",
       flex: 0.4,
     },
-    {
-      field: "created_on",
-      headerName: "Created On",
-      flex: 0.3,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   field: "created_on",
+    //   headerName: "Created On",
+    //   flex: 0.3,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
   ];
 
-  //   useEffect(() => {
-  //     setLoading(true);
-  //     getCompanyAccountHeads(master_company?.company_id);
-  //   }, [master_company]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   getCostCenter(company?.company_id);
+  // }, [company]);
 
-  //   useEffect(() => {
-  //     console.log(company_account_heads);
-  //     if (company_account_heads) setLoading(false);
-  //     else setLoading(true);
-  //   }, [company_account_heads]);
+  // useEffect(() => {
+  //   if (cost_center) setLoading(false);
+  //   else setLoading(true);
+  // }, [cost_center]);
 
   return (
     <MainCard
@@ -107,7 +103,7 @@ const SelectGroup = () => {
         >
           <Grid item>
             <Typography variant="h3">
-              {`${master_company.company_name}'s Cost Center`}
+              {/* {`${company.company_name}'s Cost Center`} */}
             </Typography>
           </Grid>
           <Grid item>
@@ -126,11 +122,7 @@ const SelectGroup = () => {
       }
       content={true}
     >
-      <CustomDataGrid
-        columns={columns}
-        // rows={company_account_heads}
-        loading={loading}
-      />
+      <CustomDataGrid columns={columns} rows={cost_center} loading={loading} />
       <AddCostCenterDialog
         open={showAddModal}
         handleClose={() => {

@@ -8,7 +8,7 @@ import Loader from "../../ui-component/Loader";
 import useAuth from "../../hooks/useAuth";
 
 import {
-  // Company Account Head
+  // Company Cost Category
   getCostCategoryAsync,
   addCostCategoryAsync,
   updateCostCategoryAsync,
