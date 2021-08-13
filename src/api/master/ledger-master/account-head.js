@@ -1,5 +1,6 @@
 // Async// actions
 import { GET_COMPANY_ACCOUNT_HEADS } from "../../../store/actions";
+import { dataToForm } from "../../../utils";
 
 // project imports
 import instance from "../../../utils/axios";
@@ -18,7 +19,7 @@ export const getCompanyAccountHeadsAsync = async (id, dispatch) => {
 
 export const addCompanyAccountHeadAsync = async (data, dispatch) => {
   delete data.id;
-  const response = await instance.post("/company/add-account-head", data);
+  const response = await instance.post("/company/add-account-head", dataToForm(data));
 
   sendNotification({
     dispatch,

@@ -21,6 +21,8 @@ const CompanyGuard = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
 
+  const [forward,setForward] = useState(0);
+
   console.log("in CompanyGuard");
 
   const [getCompanies, loadingCompanies, , { companies }] = useRequest({
@@ -31,7 +33,7 @@ const CompanyGuard = ({ children }) => {
     },
   });
 
-  // useEffect(() => {
+  useEffect(() => {
     console.log("func call...");
     const f = async () => {
       await getCompanies();
@@ -41,29 +43,64 @@ const CompanyGuard = ({ children }) => {
     f();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
-  console.log(loading || loadingCompanies);
-
-  if (loading || loadingCompanies) {
-    return <Loader />;
-  } else {
-    function isPresent({ company_id }) {
-      return company_id === parseInt(mid);
+    if (loading || loadingCompanies) {
+      // return <Loader />;
+      setForward(0)
+    } else {
+      function isPresent({ company_id }) {
+        return company_id === parseInt(mid);
+      }
+  
+      const company = companies.find(isPresent);
+  
+      if (company) {
+        console.log("yay");
+        setMasterCompany(company);
+        // return children;
+        setForward(1)
+      }
+      else{
+        setForward(2)
+      }
+  
+      // return children;
+  
+      // return <Redirect to={config.defaultPath} />;
     }
 
-    const company = companies.find(isPresent);
+  }, [loading]);
 
-    if (company) {
-      console.log("yay");
-      setMasterCompany(company);
-      return children;
-    }
-
-    // return children;
-
-    return <Redirect to={config.defaultPath} />;
+  if(forward===1){
+    return children
   }
+  else if(forward===2){
+    return <Redirect to={config.defaultPath} />
+  }
+  else{
+    return <Loader />
+  }
+  // console.log(loading || loadingCompanies);
+
+  // if (loading || loadingCompanies) {
+  //   return <Loader />;
+  // } else {
+  //   function isPresent({ company_id }) {
+  //     return company_id === parseInt(mid);
+  //   }
+
+  //   const company = companies.find(isPresent);
+
+  //   if (company) {
+  //     console.log("yay");
+  //     setMasterCompany(company);
+  //     return children;
+  //   }
+
+  //   // return children;
+
+  //   return <Redirect to={config.defaultPath} />;
+  // }
 };
 
 CompanyGuard.propTypes = {
