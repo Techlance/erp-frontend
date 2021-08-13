@@ -3,7 +3,7 @@ import { EXIT_COMPANY, SELECT_COMPANY } from "../../store/actions";
 
 // project imports
 import { companyMasterReducer } from "../../store/reducers";
-import Loader from "../../ui-component/Loader";
+// import Loader from "../../ui-component/Loader";
 
 // constant
 const initialState = {
@@ -14,7 +14,6 @@ const initialState = {
 export const MasterCompanyContext = createContext({
   ...initialState,
 });
-
 
 export const MasterCompanyProvider = ({ children }) => {
   const [state, dispatch] = useReducer(companyMasterReducer, initialState);

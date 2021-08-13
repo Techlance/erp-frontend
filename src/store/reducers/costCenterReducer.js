@@ -43,4 +43,4 @@ const costCenterReducer = (state = initialState, action) => {
   }
 };
 
-export default costCenterReducer;
+export { costCenterReducer };
