@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Grid, Stack, TextField } from "@material-ui/core";
 
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 // assets
 import { gridSpacing } from "../../../../store/constant";
@@ -33,24 +33,18 @@ const CostCategoryForm = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { current_company } = useSelector((state) => state.company);
-  const { updateCostCategory, deleteCostCategory } = useCostCenter();
+  const { cost_category } = useSelector((state) => state.costCenter);
+  const { getCostCategory, updateCostCategory, deleteCostCategory } =
+    useCostCenter();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const [values, setValues] = useState({ ...current_company });
+  const [values, setValues] = useState({ ...cost_category });
 
   const handleChange = (event) => {
     setValues({
       ...values,
       [event.target.id]: event.target.value,
-    });
-  };
-
-  const handleSelect = (key, value) => {
-    setValues({
-      ...values,
-      [key]: value,
     });
   };
 
@@ -61,9 +55,21 @@ const CostCategoryForm = () => {
   //     });
   //   };
 
+  const { cat_id, mid } = useParams();
+
   useEffect(() => {
-    setValues({ ...current_company });
-  }, [current_company]);
+    if (cost_category) {
+      let category = cost_category.find((cat) => cat.id === parseInt(cat_id));
+      if (category) {
+        setValues(category);
+      } else {
+        // history.replace(config.defaultPath);
+        console.log("obj");
+      }
+    } else {
+      getCostCategory(mid);
+    }
+  }, [cost_category]);
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
@@ -90,7 +96,7 @@ const CostCategoryForm = () => {
                         variant="contained"
                         color="primary"
                         // onClick={(e) => {
-                        //   updateCompany(values);
+                        //   updateCostCategory(values);
                         // }}
                       >
                         Update Details
@@ -117,7 +123,7 @@ const CostCategoryForm = () => {
       <ConfirmDeleteDialog
         open={showDeleteModal}
         // handleAgree={() => {
-        //   deleteCompany(values.id);
+        //   deleteCostCenter(values.id);
         //   history.replace("master/cost-center/cost-category");
         // }}
         handleClose={() => setShowDeleteModal(false)}
