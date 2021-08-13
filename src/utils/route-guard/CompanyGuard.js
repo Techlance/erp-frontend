@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Redirect, useParams } from "react-router-dom";
 
@@ -19,9 +19,11 @@ const CompanyGuard = ({ children }) => {
   const { mid } = useParams();
   const { setMasterCompany } = useComapanyMaster();
 
+  const [loading, setLoading] = useState(true);
+
   console.log("in CompanyGuard");
 
-  const [getCompanies, loading, , { companies }] = useRequest({
+  const [getCompanies, loadingCompanies, , { companies }] = useRequest({
     url: "/company/get-user-company",
     method: "GET",
     initialState: {
@@ -31,30 +33,37 @@ const CompanyGuard = ({ children }) => {
 
   useEffect(() => {
     console.log("func call...");
-
     const f = async () => {
       await getCompanies();
+      setLoading(false);
     };
 
     f();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(companies, loading);
+  console.log(loading || loadingCompanies);
 
-  if (loading) {
+  if (loading || loadingCompanies) {
     return <Loader />;
   } else {
-    const company = companies.find((company) => company.company_id === mid);
+    function isPresent({ company_id }) {
+      // eslint-disable-next-line eqeqeq
+      return company_id == mid;
+    }
+
+    const company = companies.find(isPresent);
 
     if (company) {
-      setMasterCompany(company);
+      console.log("yay");
+      // setMasterCompany(company);
       return children;
     }
 
-    return children;
+    // return children;
 
-    // return <Redirect to={config.defaultPath} />;
+    return <Redirect to={config.defaultPath} />;
   }
 };
 
