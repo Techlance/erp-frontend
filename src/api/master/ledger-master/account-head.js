@@ -19,7 +19,10 @@ export const getCompanyAccountHeadsAsync = async (id, dispatch) => {
 
 export const addCompanyAccountHeadAsync = async (data, dispatch) => {
   delete data.id;
-  const response = await instance.post("/company/add-account-head", dataToForm(data));
+  const response = await instance.post(
+    "/company/add-account-head",
+    dataToForm(data)
+  );
 
   sendNotification({
     dispatch,

@@ -1,9 +1,12 @@
-import React, { createContext, useEffect, useReducer } from "react";
-import { EXIT_COMPANY, SELECT_COMPANY } from "../../store/actions";
+import React, { createContext, useReducer } from "react";
+import {
+  // EXIT_COMPANY,
+  SELECT_COMPANY,
+} from "../../store/actions";
 
 // project imports
 import { companyMasterReducer } from "../../store/reducers";
-import Loader from "../../ui-component/Loader";
+// import Loader from "../../ui-component/Loader";
 
 // constant
 const initialState = {
@@ -15,12 +18,10 @@ export const MasterCompanyContext = createContext({
   ...initialState,
 });
 
-
 export const MasterCompanyProvider = ({ children }) => {
   const [state, dispatch] = useReducer(companyMasterReducer, initialState);
 
   const setMasterCompany = (item) => {
-    console.log(item);
     if (item === null) return;
 
     // setCompanySession(item);

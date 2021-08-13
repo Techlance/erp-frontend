@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   COMPANIES_INITIALIZE,
   EXIT_COMPANY,
-  SELECT_COMPANY,
+  // SELECT_COMPANY,
 } from "../store/actions";
 
 // project imports

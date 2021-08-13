@@ -1,36 +1,35 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, Switch, FormControlLabel } from "@material-ui/core";
+import { Grid, Switch, FormControlLabel, Stack } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../store/constant";
-import LoadingButton from '../../../ui-component/LoadingButton'
-
+import LoadingButton from "../../../ui-component/LoadingButton";
 
 // material-ui
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   TextField,
+  Button,
   Typography,
 } from "@material-ui/core";
 
 import SaveIcon from "@material-ui/icons/SaveRounded";
-import CancelIcon from '@material-ui/icons/Cancel';
+import CancelIcon from "@material-ui/icons/Cancel";
 
 // project imports
 import useAuth from "../../../hooks/useAuth";
 import useLedgerMaster from "../../../hooks/useLedgerMaster";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 import HeadTitleSelect from "./HeadTitleSelect";
 
 const AddUserDialog = ({ open, handleClose }) => {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const { addCompanyAccountHead } = useLedgerMaster();
   const { mid } = useParams();
 
@@ -43,37 +42,46 @@ const AddUserDialog = ({ open, handleClose }) => {
     bs: true,
     company_master_id: parseInt(mid),
     created_by: user.email,
-    is_fixed:false
+    is_fixed: false,
   });
 
-  useEffect(()=>{
-      if(company_account_heads?.find(acc=>acc.schedule_no===values.schedule_no)){
-        setError(true)
-      }
-      else{
-        setError(false)
-      }
-  },[company_account_heads])
+  useEffect(() => {
+    if (
+      company_account_heads?.find(
+        (acc) => acc.schedule_no === values.schedule_no
+      )
+    ) {
+      setError(true);
+    } else {
+      setError(false);
+    }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company_account_heads]);
 
   useEffect(() => {
     setValues({
       ...values,
       created_by: user.email,
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const [clicked, setClicked] = useState(false);
-  const [error,setError] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleChange = (event) => {
-    if(event.target.id==="schedule_no"){
-      console.log(event.target.value)
-      if(company_account_heads.find(acc=>acc.schedule_no===parseInt(event.target.value))){
-        setError(true)
-      }
-      else{
-        setError(false)
+    if (event.target.id === "schedule_no") {
+      console.log(event.target.value);
+      if (
+        company_account_heads.find(
+          (acc) => acc.schedule_no === parseInt(event.target.value)
+        )
+      ) {
+        setError(true);
+      } else {
+        setError(false);
       }
     }
     setValues({
@@ -96,12 +104,11 @@ const AddUserDialog = ({ open, handleClose }) => {
     });
   };
 
-
   const handleSubmit = async () => {
     setClicked(true);
-    let form = {...values}
-    form.schedule_no = parseInt(values.schedule_no) 
-    console.log(form)
+    let form = { ...values };
+    form.schedule_no = parseInt(values.schedule_no);
+    console.log(form);
     await addCompanyAccountHead(form);
     setClicked(false);
     handleClose();
@@ -152,6 +159,14 @@ const AddUserDialog = ({ open, handleClose }) => {
               value={values.acc_head_name}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <HeadTitleSelect
+              captionLabel="Title"
+              InputLabelProps={{ shrink: true }}
+              selected={values.title}
+              onChange={handleSelect}
             />
           </Grid>
           <Grid item xs={12}>
