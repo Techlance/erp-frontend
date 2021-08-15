@@ -14,6 +14,8 @@ import AddCurrenyDialog from "../../../../components/company/AddCurrencyDialog";
 const CurrencyList = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
+  // USE SIMPLE DATA TABLE
+
   return (
     <MainCard
       title={

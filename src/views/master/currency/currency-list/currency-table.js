@@ -2,17 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // material-ui
-import {
-  Button,
-  IconButton,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { IconButton, Stack } from "@material-ui/core";
 
 // assets
 import EditIcon from "@material-ui/icons/EditTwoTone";
@@ -23,6 +13,7 @@ import useCompany from "../../../../hooks/useCompany";
 import formatDate from "../../../../utils/format-date";
 import EditCurrenyDialog from "../EditCurrencyDialog";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
+import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 
 //-----------------------|| Company List ||-----------------------//
 
@@ -35,6 +26,8 @@ const CurrencyTable = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const [value, setValue] = useState({
     id: 0,
     created_by: "",
@@ -43,7 +36,13 @@ const CurrencyTable = () => {
   });
 
   useEffect(() => {
-    getCurrency();
+    const f = async () => {
+      setLoading(true);
+      await getCurrency();
+      setLoading(false);
+    };
+
+    f();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -54,73 +53,70 @@ const CurrencyTable = () => {
     await deleteCurrency(value.id);
   };
 
+  const columns = [
+    {
+      field: "currency_name",
+      headerName: "Currency Name",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "currency",
+      flex: 1,
+      headerName: "Currency Code",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "created_on",
+      headerName: "Created On",
+      flex: 1,
+      headerAlign: "left",
+      align: "left",
+      renderCell: (params) => {
+        return <>{formatDate(params.value)}</>;
+      },
+    },
+    {
+      field: "",
+      headerName: "Action",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <Stack direction="row" justifyContent="center" alignItems="center">
+            <IconButton
+              onClick={() => {
+                setValue(params.row);
+                setShowEditModal(true);
+              }}
+            >
+              <EditIcon color="primary" />
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                setValue(params);
+                setShowDeleteModal(true);
+              }}
+            >
+              <DeleteIcon color="error" />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+  ];
+
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>
-            <Typography variant="h4">Currency Name</Typography>
-          </TableCell>
-          <TableCell>
-            <Typography align="center" variant="h4">
-              Currency Code
-            </Typography>
-          </TableCell>
-          <TableCell>
-            <Typography align="center" variant="h4">
-              Created On
-            </Typography>
-          </TableCell>
-          <TableCell>
-            <Typography align="center" variant="h4">
-              Edit
-            </Typography>
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {currencies.map((row, index) => (
-          <TableRow hover key={row.id}>
-            <TableCell>
-              <Typography align="left" variant="subtitle1" component="div">
-                {row.currency_name}
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography align="center">{row.currency}</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography align="center">
-                {formatDate(row.created_on)}
-              </Typography>
-            </TableCell>
-            <TableCell align="center">
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <IconButton
-                  onClick={() => {
-                    setValue(row);
-                    setShowEditModal(true);
-                  }}
-                >
-                  <EditIcon color="primary" />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    setValue(row);
-                    setShowDeleteModal(true);
-                  }}
-                >
-                  <DeleteIcon color="error" />
-                </IconButton>
-              </Stack>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
+    <>
+      <CustomDataGrid
+        columns={columns}
+        rows={currencies}
+        loading={loading}
+        disableColumnMenu
+      />
       <EditCurrenyDialog
         open={showEditModal}
         handleClose={() => setShowEditModal(false)}
@@ -134,7 +130,7 @@ const CurrencyTable = () => {
         body="Something"
         handleAgree={handleDeleteCurrency}
       />
-    </Table>
+    </>
   );
 };
 

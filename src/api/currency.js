@@ -8,7 +8,8 @@ import sendNotification from "../utils/sendNotification";
 
 const addCurrencyAsync = async (data, dispatch, onSuccess) => {
   try {
-    const response = await instance.post("/company/add-currency", data);
+    const form = dataToForm(data);
+    const response = await instance.post("/company/add-currency", form);
 
     if (response.data.success) {
       onSuccess();
