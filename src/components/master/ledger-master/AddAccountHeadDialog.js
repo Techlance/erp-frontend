@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, Switch, FormControlLabel, Stack } from "@material-ui/core";
-
-// project imports
-import { gridSpacing } from "../../../store/constant";
-import LoadingButton from "../../../ui-component/LoadingButton";
-
 // material-ui
 import {
   Dialog,
@@ -13,6 +7,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Grid,
   TextField,
   Button,
   Typography,
@@ -22,10 +17,12 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import CancelIcon from "@material-ui/icons/Cancel";
 
 // project imports
+import { gridSpacing } from "../../../store/constant";
+import LoadingButton from "../../../ui-component/LoadingButton";
 import useAuth from "../../../hooks/useAuth";
 import useLedgerMaster from "../../../hooks/useLedgerMaster";
 import { useSelector } from "react-redux";
-import { useParams, useLocation } from "react-router";
+import { useParams } from "react-router";
 import HeadTitleSelect from "./HeadTitleSelect";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 

@@ -16,7 +16,6 @@ import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import config from "../../../../config";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
-import HeadTitleSelect from "../../../../components/master/ledger-master/HeadTitleSelect";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AccountHeadSelect from "../../../../components/master/ledger-master/AccountHeadSelect";
 
@@ -24,7 +23,7 @@ import AccountHeadSelect from "../../../../components/master/ledger-master/Accou
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -137,6 +136,8 @@ const UserForm = () => {
     } else {
       getCompanyAccountGroups(mid);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company_account_groups]);
 
   const handleUpdateAccountGroup = async () => {

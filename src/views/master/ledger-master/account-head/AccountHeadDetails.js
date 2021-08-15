@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // material-ui
-import {
-  Button,
-  Grid,
-  Stack,
-  TextField,
-  FormControlLabel,
-  Switch,
-  makeStyles,
-} from "@material-ui/core";
+import { Button, Grid, Stack, TextField, makeStyles } from "@material-ui/core";
 
 // project imports
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
@@ -31,7 +23,7 @@ import MainCard from "../../../../ui-component/cards/MainCard";
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -128,6 +120,7 @@ const UserForm = () => {
     } else {
       getCompanyAccountHeads(mid);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company_account_heads]);
 
   const handleUpdateAccountHead = async () => {

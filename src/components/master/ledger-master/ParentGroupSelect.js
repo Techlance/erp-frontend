@@ -28,6 +28,8 @@ const ParentGroupSelect = ({
 
   useEffect(() => {
     getUserAccountHeads();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [head_id]);
 
   //   useEffect(() => {
