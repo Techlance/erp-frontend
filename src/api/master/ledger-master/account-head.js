@@ -19,7 +19,7 @@ export const getCompanyAccountHeadsAsync = async (id, dispatch) => {
 
 export const addCompanyAccountHeadAsync = async (data, dispatch) => {
   delete data.id;
-  console.log(data)
+  console.log(data);
   const response = await instance.post(
     "/company/add-account-head",
     dataToForm(data)

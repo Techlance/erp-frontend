@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, Switch, FormControlLabel, Stack } from "@material-ui/core";
-
-// project imports
-import { gridSpacing } from "../../../store/constant";
-import LoadingButton from "../../../ui-component/LoadingButton";
-
 // material-ui
 import {
   Dialog,
@@ -13,6 +7,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Grid,
   TextField,
   Button,
   Typography,
@@ -22,10 +17,12 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import CancelIcon from "@material-ui/icons/Cancel";
 
 // project imports
+import { gridSpacing } from "../../../store/constant";
+import LoadingButton from "../../../ui-component/LoadingButton";
 import useAuth from "../../../hooks/useAuth";
 import useLedgerMaster from "../../../hooks/useLedgerMaster";
 import { useSelector } from "react-redux";
-import { useParams, useLocation } from "react-router";
+import { useParams } from "react-router";
 import HeadTitleSelect from "./HeadTitleSelect";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 
@@ -103,7 +100,7 @@ const AddUserDialog = ({ open, handleClose }) => {
     let form = { ...values };
     form.schedule_no = parseInt(values.schedule_no);
     console.log(form);
-    form.bs = (form.title==="ASSETS" || form.title==="EQUITY AND LIABLITIES")
+    form.bs = form.title === "ASSETS" || form.title === "EQUITY AND LIABLITIES";
     await addCompanyAccountHead(form);
     setClicked(false);
     handleClose();
@@ -140,10 +137,10 @@ const AddUserDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <HeadTitleSelect
-                captionLabel="Title"
-                InputLabelProps={{ shrink: true }}
-                selected={values.title}
-                onChange={handleSelect}
+              captionLabel="Title"
+              InputLabelProps={{ shrink: true }}
+              selected={values.title}
+              onChange={handleSelect}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -160,16 +157,16 @@ const AddUserDialog = ({ open, handleClose }) => {
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <AnimateButton>
-        <Button
-          color="error"
-          variant="contained"
-          size="small"
-          onClick={handleClose}
-          disabled={clicked}
-          startIcon={<CancelIcon />}
-        >
-          Cancel
-        </Button>
+          <Button
+            color="error"
+            variant="contained"
+            size="small"
+            onClick={handleClose}
+            disabled={clicked}
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
         </AnimateButton>
         <LoadingButton
           color="primary"

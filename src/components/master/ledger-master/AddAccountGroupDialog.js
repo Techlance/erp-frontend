@@ -26,7 +26,6 @@ import useAuth from "../../../hooks/useAuth";
 import useLedgerMaster from "../../../hooks/useLedgerMaster";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import HeadTitleSelect from "./HeadTitleSelect";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import AccountHeadSelect from "./AccountHeadSelect";
 import ParentGroupSelect from "./ParentGroupSelect";
@@ -43,10 +42,10 @@ const AddUserDialog = ({ open, handleClose }) => {
   const [nameError, setNameError] = useState(false);
 
   const [values, setValues] = useState({
-    group_name:"",
-    acc_head_id:null,
-    group_code:"",
-    child_of:null,
+    group_name: "",
+    acc_head_id: null,
+    group_code: "",
+    child_of: null,
     is_fixed: false,
     company_master_id: parseInt(mid),
     created_by: user.email,
@@ -97,7 +96,7 @@ const AddUserDialog = ({ open, handleClose }) => {
       } else {
         setError(false);
       }
-      if(event.target.value.length>4) return null
+      if (event.target.value.length > 4) return null;
     }
     if (event.target.id === "group_name") {
       console.log(event.target.value);
@@ -118,14 +117,13 @@ const AddUserDialog = ({ open, handleClose }) => {
   };
 
   const handleSelect = (key, value) => {
-    if(key==="acc_head_id"){
+    if (key === "acc_head_id") {
       setValues({
         ...values,
         child_of: null,
-        [key]: value
+        [key]: value,
       });
-    }
-    else{
+    } else {
       setValues({
         ...values,
         [key]: value,
@@ -142,14 +140,14 @@ const AddUserDialog = ({ open, handleClose }) => {
     await addCompanyAccountGroup(form);
     setClicked(false);
     setValues({
-      group_name:"",
-      acc_head_id:null,
-      group_code:"",
-      child_of:null,
+      group_name: "",
+      acc_head_id: null,
+      group_code: "",
+      child_of: null,
       is_fixed: false,
       company_master_id: parseInt(mid),
       created_by: user.email,
-    })
+    });
     handleClose();
   };
 
@@ -195,47 +193,47 @@ const AddUserDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <AccountHeadSelect
-                captionLabel="Account Head"
-                InputLabelProps={{ shrink: true }}
-                selected={values.acc_head_id}
-                onChange={handleSelect}
+              captionLabel="Account Head"
+              InputLabelProps={{ shrink: true }}
+              selected={values.acc_head_id}
+              onChange={handleSelect}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <ParentGroupSelect
-                captionLabel="Parent Group"
-                InputLabelProps={{ shrink: true }}
-                selected={values.child_of}
-                onChange={handleSelect}
-                disabled={values.acc_head_id===null}
-                head_id = {values.acc_head_id?.id}
+              captionLabel="Parent Group"
+              InputLabelProps={{ shrink: true }}
+              selected={values.child_of}
+              onChange={handleSelect}
+              disabled={values.acc_head_id === null}
+              head_id={values.acc_head_id?.id}
             />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <AnimateButton>
-        <Button
-          color="error"
-          variant="contained"
-          size="small"
-          onClick={()=>{
-            setValues({
-              group_name:"",
-              acc_head_id:null,
-              group_code:"",
-              child_of:null,
-              is_fixed: false,
-              company_master_id: parseInt(mid),
-              created_by: user.email,
-            })
-            handleClose()
-          }}
-          disabled={clicked}
-          startIcon={<CancelIcon />}
-        >
-          Cancel
-        </Button>
+          <Button
+            color="error"
+            variant="contained"
+            size="small"
+            onClick={() => {
+              setValues({
+                group_name: "",
+                acc_head_id: null,
+                group_code: "",
+                child_of: null,
+                is_fixed: false,
+                company_master_id: parseInt(mid),
+                created_by: user.email,
+              });
+              handleClose();
+            }}
+            disabled={clicked}
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
         </AnimateButton>
         <LoadingButton
           color="primary"

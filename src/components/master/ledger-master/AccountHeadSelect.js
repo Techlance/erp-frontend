@@ -8,7 +8,13 @@ import { useParams } from "react-router";
 
 //-----------------------|| USRT GROUPS SELECT ||-----------------------//
 
-const AccountHeadSelect = ({ captionLabel, formState, selected, onChange, disabled }) => {
+const AccountHeadSelect = ({
+  captionLabel,
+  formState,
+  selected,
+  onChange,
+  disabled,
+}) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
     return null;
@@ -36,9 +42,7 @@ const AccountHeadSelect = ({ captionLabel, formState, selected, onChange, disabl
   }, [selected]);
 
   const handleChange = (event) => {
-    const item = data.find(
-      (option) => option.id === event.target.value
-    );
+    const item = data.find((option) => option.id === event.target.value);
 
     onChange("acc_head_id", item);
   };
@@ -53,8 +57,8 @@ const AccountHeadSelect = ({ captionLabel, formState, selected, onChange, disabl
         value={current}
         onChange={handleChange}
         variant="outlined"
-        InputLabelProps={{ shrink: true, }}
-        InputProps={{ readOnly:disabled, }}
+        InputLabelProps={{ shrink: true }}
+        InputProps={{ readOnly: disabled }}
       >
         {data?.map((option, index) => (
           <MenuItem key={index} value={option.id}>
@@ -75,7 +79,7 @@ AccountHeadSelect.propTypes = {
   selected: PropTypes.string,
   textPrimary: PropTypes.string,
   textSecondary: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 export default AccountHeadSelect;

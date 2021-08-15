@@ -1,6 +1,8 @@
+import React from "react";
+
 // third-party
 import { FormattedMessage } from "react-intl";
-import React from "react";
+
 // assets
 import {
   IconDashboard,
@@ -10,7 +12,6 @@ import {
   IconBusinessplan,
   IconTools,
 } from "@tabler/icons";
-import { useParams } from "react-router";
 
 // constant
 const icons = {
@@ -122,7 +123,8 @@ export const company_menu = {
           id: "currency",
           title: <FormattedMessage id="menu.currency" />,
           type: "item",
-          //   url: "/admin/companies",
+          url: "/company/2/master/currency",
+          breadcrumbs: true,
         },
         {
           id: "lc",

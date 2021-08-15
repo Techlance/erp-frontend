@@ -24,4 +24,4 @@ export * from "./user-management/user-company-group";
 export * from "./master/ledger-master/account-head";
 
 // 2. Account Group
-export * from './master/ledger-master/account-group'
+export * from "./master/ledger-master/account-group";

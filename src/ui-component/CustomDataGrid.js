@@ -58,7 +58,8 @@ function CustomPagination() {
   );
 }
 
-const CustomDataGrid = ({ columns, rows, loading }) => {
+const CustomDataGrid = (props) => {
+  const { columns, rows, loading } = props;
   const theme = useTheme();
 
   let disp_rows = rows ? rows : [];
@@ -73,7 +74,7 @@ const CustomDataGrid = ({ columns, rows, loading }) => {
       width="100%"
       sx={{
         "& .MuiDataGrid-root": {
-          border: "none",
+          "border": "none",
           "& .MuiDataGrid-cell": {
             borderColor:
               theme.palette.mode === "dark"
@@ -104,6 +105,7 @@ const CustomDataGrid = ({ columns, rows, loading }) => {
       }}
     >
       <DataGrid
+        {...props}
         rows={disp_rows}
         columns={columns}
         pageSize={5}

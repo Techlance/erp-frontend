@@ -5,10 +5,16 @@ import React, { useEffect, useState } from "react";
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
 import useRequest from "../../../hooks/useRequest";
 
-
 //-----------------------|| USRT GROUPS SELECT ||-----------------------//
 
-const ParentGroupSelect = ({ captionLabel, formState, selected, onChange, disabled, head_id }) => {
+const ParentGroupSelect = ({
+  captionLabel,
+  formState,
+  selected,
+  onChange,
+  disabled,
+  head_id,
+}) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
     return null;
@@ -20,14 +26,16 @@ const ParentGroupSelect = ({ captionLabel, formState, selected, onChange, disabl
     initialState: [],
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     getUserAccountHeads();
-  },[head_id])
 
-//   useEffect(() => {
-    
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [head_id]);
+
+  //   useEffect(() => {
+
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, []);
 
   useEffect(() => {
     setCurrent(() => {
@@ -39,9 +47,7 @@ const ParentGroupSelect = ({ captionLabel, formState, selected, onChange, disabl
   }, [selected]);
 
   const handleChange = (event) => {
-    const item = data.find(
-      (option) => option.id === event.target.value
-    );
+    const item = data.find((option) => option.id === event.target.value);
 
     onChange("child_of", item);
   };
@@ -56,8 +62,8 @@ const ParentGroupSelect = ({ captionLabel, formState, selected, onChange, disabl
         value={current}
         onChange={handleChange}
         variant="outlined"
-        InputLabelProps={{ shrink: true, }}
-        InputProps={{ readOnly:disabled||loading, }}
+        InputLabelProps={{ shrink: true }}
+        InputProps={{ readOnly: disabled || loading }}
         helperText={loading && "Loading Data"}
       >
         {data?.map((option, index) => (
@@ -80,7 +86,7 @@ ParentGroupSelect.propTypes = {
   textPrimary: PropTypes.string,
   textSecondary: PropTypes.string,
   disabled: PropTypes.bool,
-  head_id: PropTypes.number
+  head_id: PropTypes.number,
 };
 
 export default ParentGroupSelect;

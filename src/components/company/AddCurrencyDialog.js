@@ -8,13 +8,20 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Grid,
+  Stack,
   TextField,
   Typography,
 } from "@material-ui/core";
 
+// assets
+import AddCircleIcon from "@material-ui/icons/AddCircleTwoTone";
+import CancelIcon from "@material-ui/icons/CancelTwoTone";
+
 // project imports
 import useAuth from "../../hooks/useAuth";
 import useCompany from "../../hooks/useCompany";
+import LoadingButton from "../../ui-component/LoadingButton";
 
 const AddCurrenyDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -25,6 +32,8 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
     currency_name: "",
     currency: "",
   });
+
+  const [clicked, setClicked] = useState(false);
 
   const handleChange = (event) => {
     setValues({
@@ -42,9 +51,11 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
     handleClose();
   };
 
-  const handleAddCurrency = () => {
-    addCurrency(values);
+  const handleAddCurrency = async () => {
+    setClicked(true);
+    await addCurrency(values);
     handleCloseModal();
+    setClicked(false);
   };
 
   return (
@@ -85,17 +96,31 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
         />
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="error">
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          size="small"
-          onClick={handleAddCurrency}
-          color="primary"
-        >
-          Add
-        </Button>
+        <Stack direction="row">
+          <Grid container justifyContent="space-between" spacing={2}>
+            <Grid item>
+              <Button
+                onClick={handleClose}
+                variant="contained"
+                color="error"
+                startIcon={<CancelIcon />}
+              >
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <LoadingButton
+                loading={clicked}
+                onClick={handleAddCurrency}
+                variant="contained"
+                color="primary"
+                startIcon={<AddCircleIcon />}
+              >
+                Add
+              </LoadingButton>
+            </Grid>
+          </Grid>
+        </Stack>
       </DialogActions>
     </Dialog>
   );

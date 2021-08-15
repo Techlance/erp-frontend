@@ -16,7 +16,7 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 import formatDate from "../../../../utils/format-date";
 import AddAccountHeadDialog from "../../../../components/master/ledger-master/AddAccountHeadDialog";
-import {useLocation} from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
@@ -32,7 +32,7 @@ const SelectGroup = () => {
 
   const { pathname } = useLocation();
 
-  console.log(company_account_heads)
+  console.log(company_account_heads);
 
   const columns = [
     {

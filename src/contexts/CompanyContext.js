@@ -22,7 +22,12 @@ import {
   getUserCompaniesAsync,
   updateCompanyAsync,
 } from "../api/company";
-import { addCurrencyAsync, getCurrencyAsync } from "../api";
+import {
+  addCurrencyAsync,
+  deleteCurrencyAsync,
+  getCurrencyAsync,
+  updateCurrencyAsync,
+} from "../api";
 
 // constant
 const initialState = {
@@ -129,6 +134,16 @@ export const CompanyProvider = ({ children }) => {
     await addCurrencyAsync(data, dispatch, getCurrency);
   };
 
+  const updateCurrency = async (data) => {
+    await updateCurrencyAsync(data, dispatch);
+  };
+
+  const deleteCurrency = async (id) => {
+    await deleteCurrencyAsync(id, dispatch);
+
+    await getCurrencyAsync(dispatch);
+  };
+
   const getSelectedCompanyDocs = async (id) => {
     await getSelectedCompanyDocsAsync(id, dispatch);
   };
@@ -164,6 +179,8 @@ export const CompanyProvider = ({ children }) => {
         updateCompany,
         deleteCompany,
         addCurrency,
+        updateCurrency,
+        deleteCurrency,
         getCurrency,
         getSelectedCompanyDocs,
         createCompanyDoc,

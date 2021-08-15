@@ -5,7 +5,7 @@ import * as actionTypes from "../../actions";
 // constant
 const initialState = {
   company_account_heads: null,
-  company_account_groups:null
+  company_account_groups: null,
 };
 
 const ledgerMasterReducer = (state = initialState, action) => {
