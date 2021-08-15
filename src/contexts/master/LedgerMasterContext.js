@@ -12,7 +12,7 @@ import {
   addCompanyAccountHeadAsync,
   updateCompanyAccountHeadAsync,
   deleteCompanyAccountHeadAsync,
-  
+
   //Company Account Group
   getCompanyAccountGroupsAsync,
   addCompanyAccountGroupAsync,
@@ -42,7 +42,7 @@ export const LedgerMasterProvider = ({ children }) => {
   const updateCompanyAccountHead = async (data) => {
     await updateCompanyAccountHeadAsync(data, dispatch);
 
-    await getCompanyAccountHeadsAsync(data.company_master_id,dispatch);
+    await getCompanyAccountHeadsAsync(data.company_master_id, dispatch);
     // await getSelectedCompanyAsync(data.id, dispatch);
   };
 
@@ -65,7 +65,7 @@ export const LedgerMasterProvider = ({ children }) => {
   const updateCompanyAccountGroup = async (data) => {
     await updateCompanyAccountGroupAsync(data, dispatch);
 
-    await getCompanyAccountGroupsAsync(data.company_master_id,dispatch);
+    await getCompanyAccountGroupsAsync(data.company_master_id, dispatch);
     // await getSelectedCompanyAsync(data.id, dispatch);
   };
 

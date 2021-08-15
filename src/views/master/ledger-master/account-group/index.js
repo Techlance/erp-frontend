@@ -16,7 +16,7 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 import formatDate from "../../../../utils/format-date";
 import AddAccountGroupDialog from "../../../../components/master/ledger-master/AddAccountGroupDialog";
-import {useLocation} from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
 //-----------------------|| User List ||-----------------------//
 const AccountGroup = () => {
@@ -32,7 +32,7 @@ const AccountGroup = () => {
 
   const { pathname } = useLocation();
 
-  console.log(company_account_groups)
+  console.log(company_account_groups);
 
   const columns = [
     {
@@ -63,30 +63,30 @@ const AccountGroup = () => {
       field: "group_code",
       headerName: "Group Code",
       flex: 0.2,
-      minWidth:150,
-      align:'center',
-      headerAlign:'center'
+      minWidth: 150,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "group_name",
       headerName: "Group Name",
       flex: 0.5,
-      minWidth:300
+      minWidth: 300,
     },
     {
       field: "child_of",
       headerName: "Parent Group",
       flex: 0.5,
-      minWidth:300
+      minWidth: 300,
     },
     {
       field: "acc_head_id",
       headerName: "Account Head",
       flex: 0.5,
-      minWidth:300,
+      minWidth: 300,
       valueFormatter: (params) => {
         return params.value.acc_head_name;
-      }
+      },
     },
     {
       field: "created_on",
