@@ -51,7 +51,7 @@ export const company_menu = {
               id: "head",
               title: <FormattedMessage id="menu.head" />,
               type: "item",
-              url: `company/2/master/ledger-master/head`,
+              url: `company/:mid/master/ledger-master/head`,
             },
             {
               id: "group",
@@ -123,7 +123,7 @@ export const company_menu = {
           id: "currency",
           title: <FormattedMessage id="menu.currency" />,
           type: "item",
-          url: "/company/2/master/currency",
+          url: "/company/:mid/master/currency",
           breadcrumbs: true,
         },
         {
