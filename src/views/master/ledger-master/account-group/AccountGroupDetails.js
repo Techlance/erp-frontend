@@ -25,6 +25,10 @@ import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import HeadTitleSelect from "../../../../components/master/ledger-master/HeadTitleSelect";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AccountHeadSelect from "../../../../components/master/ledger-master/AccountHeadSelect";
+import LoadingButton from "../../../../ui-component/LoadingButton";
+import ParentGroupSelect from "../../../../components/master/ledger-master/ParentGroupSelect";
+import PreventDeleteDialog from "../../../../components/PreventDeleteDialog";
+import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 
 //-----------------------|| User Form ||-----------------------//
 
@@ -72,11 +76,10 @@ const UserForm = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [values, setValues] = useState(null);
-
   const [clicked, setClicked] = useState(false);
-
   const [error,setError] = useState(false);
   const [nameError, setNameError] = useState(false);
+  const [checkList,setCheckList] = useState({});
 
   const handleChange = (event) => {
     if (event.target.id === "group_code") {
@@ -129,8 +132,12 @@ const UserForm = () => {
       if(company_account_groups){
           let account_group = company_account_groups.find(acc=>acc.id === parseInt(gid) )
           console.log(account_group)
-        //   if(account_group && account_group?.is_fixed===false){
-          if(account_group){
+          if(account_group && account_group?.is_fixed===false){
+              setCheckList({
+                "Ledgers":account_group.ledger_master,
+                "Account Groups":account_group.acc_group
+              })
+
               setValues(account_group)
           }
           else{
@@ -145,17 +152,27 @@ const UserForm = () => {
   const handleUpdateAccountGroup = async () => {
     setClicked(true);
     let form = {...values}
+    form.acc_head_id = parseInt(form.acc_head_id.id)
+    form.child_of = parseInt(form.child_of.id)
     await updateCompanyAccountGroup(form);
     setClicked(false);
   };
 
+  const handleAgree = () => {
+    deleteCompanyAccountGroup(values.id);
+    history.replace(`/company/${mid}/master/ledger-master/head/`);
+  }
+
+
+
   return (
-    values && <MainCard title="User Details">
+    values && <MainCard title="Account Group Details">
     <div className={classes.root}>
     <Grid container spacing={gridSpacing} justifyContent="center">
       <Grid item sm={12} md={8}>
-        <SubCard title="Edit User Details">
+        <SubCard title="Edit Account Group">
           <Grid container spacing={gridSpacing}>
+          {/* <pre>{JSON.stringify(values,null,2)}</pre> */}
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
@@ -189,17 +206,18 @@ const UserForm = () => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <AccountHeadSelect
-                captionLabel="Title"
+            <ParentGroupSelect
+                captionLabel="Parent Group"
                 InputLabelProps={{ shrink: true }}
-                selected={values.title}
+                selected={values.child_of}
                 onChange={handleSelect}
                 disabled={values.acc_head_id===null}
+                head_id = {values.acc_head_id?.id}
             />
           </Grid>
             <Grid item xs={12}>
               <Stack direction="row">
-                <Grid container justifyContent="space-between">
+                <Grid container justifyContent="flex-end" spacing={gridSpacing}>
                   <Grid item>
                     <AnimateButton>
                       <Button
@@ -213,17 +231,15 @@ const UserForm = () => {
                     </AnimateButton>
                   </Grid>
                   <Grid item>
-                    <AnimateButton>
-                      <Button
+                    <LoadingButton
                         variant="contained"
                         color="primary"
                         onClick={handleUpdateAccountGroup}
                         startIcon={<SaveIcon />}
-                        disabled={clicked}
+                        loading={clicked}
                       >
                         Save Details
-                      </Button>
-                    </AnimateButton>
+                    </LoadingButton>
                   </Grid>
                 </Grid>
               </Stack>
@@ -231,15 +247,13 @@ const UserForm = () => {
           </Grid>
         </SubCard>
       </Grid>
-      <ConfirmDeleteDialog
-        open={showDeleteModal}
-        handleAgree={() => {
-          deleteCompanyAccountGroup(values.id);
-          history.replace(`/company/${mid}/master/ledger-master/head/`);
-        }}
-        handleClose={() => setShowDeleteModal(false)}
-        title="Are you sure?"
-        body="Are you sure you want to delete this Account Head? Once deleted the data can not be retrived!"
+      <ProtectedDeleteDialog
+      checkList={{"ABC":[1,2,3],"DEF":["a","b","c"]}}
+      showDeleteModal={showDeleteModal}
+      handleAgree={handleAgree}
+      handleClose={() => setShowDeleteModal(false)}
+      title="Are you sure?"
+      body="Are you sure you want to delete this Account Head? Once deleted the data can not be retrived!"
       />
     </Grid>
     </div>

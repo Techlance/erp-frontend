@@ -44,7 +44,7 @@ const AccountGroup = () => {
       align: "left",
       sortable: false,
       renderCell: (params) =>
-        !params.row["is_fixed"] ? (
+        (
           <Button
             variant="text"
             color="primary"
@@ -52,12 +52,10 @@ const AccountGroup = () => {
             href={`${pathname}/${params.value}`}
             // target="_blank"
           >
-            <Typography align="center">More </Typography>
+            <Typography align="center">Edit </Typography>
             <IconArrowRight sx={{ fontSize: "1.1rem" }} />
           </Button>
-        ) : (
-          <Button disabled>Not Editable</Button>
-        ),
+        )
     },
     {
       field: "group_code",

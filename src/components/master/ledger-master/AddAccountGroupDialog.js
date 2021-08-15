@@ -136,6 +136,8 @@ const AddUserDialog = ({ open, handleClose }) => {
   const handleSubmit = async () => {
     setClicked(true);
     let form = { ...values };
+    form.acc_head_id = parseInt(form.acc_head_id.id)
+    form.child_of = parseInt(form.child_of.id)
     console.log(form);
     await addCompanyAccountGroup(form);
     setClicked(false);
