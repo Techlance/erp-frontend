@@ -26,7 +26,7 @@ import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog"
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    "marginBottom": "24px",
+    marginBottom: "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -132,7 +132,7 @@ const UserForm = () => {
       console.log(account_group);
       if (account_group && account_group?.is_fixed === false) {
         setCheckList({
-          "Ledgers": account_group.ledger_master,
+          Ledgers: account_group.ledger_master,
           "Account Groups": account_group.acc_group,
         });
 

@@ -43,19 +43,18 @@ const AccountGroup = () => {
       headerAlign: "left",
       align: "left",
       sortable: false,
-      renderCell: (params) =>
-        (
-          <Button
-            variant="text"
-            color="primary"
-            aria-label="more-details"
-            href={`${pathname}/${params.value}`}
-            // target="_blank"
-          >
-            <Typography align="center">Edit </Typography>
-            <IconArrowRight sx={{ fontSize: "1.1rem" }} />
-          </Button>
-        )
+      renderCell: (params) => (
+        <Button
+          variant="text"
+          color="primary"
+          aria-label="more-details"
+          href={`${pathname}/${params.value}`}
+          // target="_blank"
+        >
+          <Typography align="center">Edit </Typography>
+          <IconArrowRight sx={{ fontSize: "1.1rem" }} />
+        </Button>
+      ),
     },
     {
       field: "group_code",
