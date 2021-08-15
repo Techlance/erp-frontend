@@ -29,6 +29,7 @@ import { useParams } from "react-router";
 import HeadTitleSelect from "./HeadTitleSelect";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import AccountHeadSelect from "./AccountHeadSelect";
+import ParentGroupSelect from "./ParentGroupSelect";
 
 const AddUserDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -117,10 +118,19 @@ const AddUserDialog = ({ open, handleClose }) => {
   };
 
   const handleSelect = (key, value) => {
-    setValues({
-      ...values,
-      [key]: value,
-    });
+    if(key==="acc_head_id"){
+      setValues({
+        ...values,
+        child_of: null,
+        [key]: value
+      });
+    }
+    else{
+      setValues({
+        ...values,
+        [key]: value,
+      });
+    }
   };
 
   const handleSubmit = async () => {
@@ -190,12 +200,13 @@ const AddUserDialog = ({ open, handleClose }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <AccountHeadSelect
-                captionLabel="Title"
+            <ParentGroupSelect
+                captionLabel="Parent Group"
                 InputLabelProps={{ shrink: true }}
-                selected={values.title}
+                selected={values.child_of}
                 onChange={handleSelect}
                 disabled={values.acc_head_id===null}
+                head_id = {values.acc_head_id?.id}
             />
           </Grid>
         </Grid>
