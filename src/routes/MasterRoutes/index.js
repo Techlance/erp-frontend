@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 
 // routes
 import LedgerRoutes from "./LedgerRoutes";
+import CurrencyRoutes from "./CurrencyRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -14,6 +15,12 @@ const MasterRoutes = () => {
         <Route
           path="/company/:mid/master/ledger-master"
           component={LedgerRoutes}
+        />
+
+        {/* Routes for Currency */}
+        <Route
+          path="/company/:mid/master/currency"
+          component={CurrencyRoutes}
         />
       </React.Fragment>
     </Route>

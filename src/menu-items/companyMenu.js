@@ -123,7 +123,8 @@ export const company_menu = {
           id: "currency",
           title: <FormattedMessage id="menu.currency" />,
           type: "item",
-          //   url: "/admin/companies",
+          url: "/company/2/master/currency",
+          breadcrumbs: true,
         },
         {
           id: "lc",
