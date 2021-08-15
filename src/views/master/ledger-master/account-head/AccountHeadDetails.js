@@ -12,20 +12,20 @@ import {
 } from "@material-ui/core";
 
 // project imports
-import ConfirmDeleteDialog from "../../../../../components/ConfirmDeleteDialog";
+import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 // assets
-import { gridSpacing } from "../../../../../store/constant";
-import SubCard from "../../../../../ui-component/cards/SubCard";
-import AnimateButton from "../../../../../ui-component/extended/AnimateButton";
+import { gridSpacing } from "../../../../store/constant";
+import SubCard from "../../../../ui-component/cards/SubCard";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
-import config from "../../../../../config";
-import useLedgerMaster from "../../../../../hooks/useLedgerMaster";
-import HeadTitleSelect from "../../../../../components/master/ledger-master/HeadTitleSelect";
-import MainCard from "../../../../../ui-component/cards/MainCard";
+import config from "../../../../config";
+import useLedgerMaster from "../../../../hooks/useLedgerMaster";
+import HeadTitleSelect from "../../../../components/master/ledger-master/HeadTitleSelect";
+import MainCard from "../../../../ui-component/cards/MainCard";
 
 //-----------------------|| User Form ||-----------------------//
 
@@ -94,12 +94,12 @@ const UserForm = () => {
     });
   };
 
-  const handleChecked = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.checked,
-    });
-  };
+  // const handleChecked = (event) => {
+  //   setValues({
+  //     ...values,
+  //     [event.target.name]: event.target.checked,
+  //   });
+  // };
 
   const handleSelect = (key, value) => {
     setValues({
@@ -125,7 +125,10 @@ const UserForm = () => {
 
   const handleUpdateAccountHead = async () => {
     setClicked(true);
-    await updateCompanyAccountHead(values);
+    let form = {...values}
+    form.schedule_no = parseInt(values.schedule_no);
+    form.bs = (form.title==="ASSETS" || form.title==="EQUITY AND LIABLITIES")
+    await updateCompanyAccountHead(form);
     setClicked(false);
   };
 
@@ -165,20 +168,6 @@ const UserForm = () => {
               value={values.acc_head_name}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Switch
-                  id="bs"
-                  checked={values.bs}
-                  onChange={handleChecked}
-                  name="bs"
-                  color="primary"
-                />
-              }
-              label="Balance Sheet"
             />
           </Grid>
             <Grid item xs={12}>

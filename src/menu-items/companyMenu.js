@@ -10,6 +10,7 @@ import {
   IconBusinessplan,
   IconTools,
 } from "@tabler/icons";
+import { useParams } from "react-router";
 
 // constant
 const icons = {
@@ -22,6 +23,8 @@ const icons = {
 };
 
 //-----------------------|| COMPANY MENU ITEMS ||-----------------------//
+
+// const {mid} = useParams();
 
 export const company_menu = {
   id: "company-menu",
@@ -47,7 +50,7 @@ export const company_menu = {
               id: "head",
               title: <FormattedMessage id="menu.head" />,
               type: "item",
-              url: "/master/ledger-master/head",
+              url: `company/2/master/ledger-master/head`,
             },
             {
               id: "group",

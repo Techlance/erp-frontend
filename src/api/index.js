@@ -22,3 +22,6 @@ export * from "./user-management/user-company-group";
 /* Ledger Master */
 // 1. Account Head
 export * from "./master/ledger-master/account-head";
+
+// 2. Account Group
+export * from './master/ledger-master/account-group'

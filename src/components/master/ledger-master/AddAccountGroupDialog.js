@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, Switch, FormControlLabel, Stack } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../store/constant";
@@ -25,31 +25,36 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import useAuth from "../../../hooks/useAuth";
 import useLedgerMaster from "../../../hooks/useLedgerMaster";
 import { useSelector } from "react-redux";
-import { useParams, useLocation } from "react-router";
+import { useParams } from "react-router";
 import HeadTitleSelect from "./HeadTitleSelect";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import AccountHeadSelect from "./AccountHeadSelect";
 
 const AddUserDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const { addCompanyAccountHead } = useLedgerMaster();
+  const { addCompanyAccountGroup } = useLedgerMaster();
   const { mid } = useParams();
 
-  const { company_account_heads } = useSelector((state) => state.ledgerMaster);
+  const { company_account_groups } = useSelector((state) => state.ledgerMaster);
+
+  const [clicked, setClicked] = useState(false);
+  const [error, setError] = useState(false);
+  const [nameError, setNameError] = useState(false);
 
   const [values, setValues] = useState({
-    schedule_no: null,
-    acc_head_name: "",
-    title: "ASSETS",
-    bs: true,
+    group_name:"",
+    acc_head_id:null,
+    group_code:"",
+    child_of:null,
+    is_fixed: false,
     company_master_id: parseInt(mid),
     created_by: user.email,
-    is_fixed: false,
   });
 
   useEffect(() => {
     if (
-      company_account_heads?.find(
-        (acc) => acc.schedule_no === values.schedule_no
+      company_account_groups?.find(
+        (acc) => acc.group_code === values.group_code
       )
     ) {
       setError(true);
@@ -57,8 +62,18 @@ const AddUserDialog = ({ open, handleClose }) => {
       setError(false);
     }
 
+    if (
+      company_account_groups?.find(
+        (acc) => acc.group_name === values.group_name
+      )
+    ) {
+      setNameError(true);
+    } else {
+      setNameError(false);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [company_account_heads]);
+  }, [company_account_groups]);
 
   useEffect(() => {
     setValues({
@@ -69,20 +84,30 @@ const AddUserDialog = ({ open, handleClose }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const [clicked, setClicked] = useState(false);
-  const [error, setError] = useState(false);
-
   const handleChange = (event) => {
-    if (event.target.id === "schedule_no") {
+    if (event.target.id === "group_code") {
       console.log(event.target.value);
       if (
-        company_account_heads.find(
-          (acc) => acc.schedule_no === parseInt(event.target.value)
+        company_account_groups.find(
+          (acc) => acc.group_code === event.target.value
         )
       ) {
         setError(true);
       } else {
         setError(false);
+      }
+      if(event.target.value.length>4) return null
+    }
+    if (event.target.id === "group_name") {
+      console.log(event.target.value);
+      if (
+        company_account_groups.find(
+          (acc) => acc.group_name === event.target.value
+        )
+      ) {
+        setNameError(true);
+      } else {
+        setNameError(false);
       }
     }
     setValues({
@@ -101,11 +126,18 @@ const AddUserDialog = ({ open, handleClose }) => {
   const handleSubmit = async () => {
     setClicked(true);
     let form = { ...values };
-    form.schedule_no = parseInt(values.schedule_no);
     console.log(form);
-    form.bs = (form.title==="ASSETS" || form.title==="EQUITY AND LIABLITIES")
-    await addCompanyAccountHead(form);
+    await addCompanyAccountGroup(form);
     setClicked(false);
+    setValues({
+      group_name:"",
+      acc_head_id:null,
+      group_code:"",
+      child_of:null,
+      is_fixed: false,
+      company_master_id: parseInt(mid),
+      created_by: user.email,
+    })
     handleClose();
   };
 
@@ -128,32 +160,42 @@ const AddUserDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              id="schedule_no"
-              label="Schedule Number"
-              value={values.schedule_no}
+              id="group_name"
+              label="Group Name"
+              value={values.group_name}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
-              type="number"
-              error={error}
-              helperText={error && "This Schedule No. Already Exists."}
+              error={nameError}
+              helperText={nameError && "This Group Name Already Exists."}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <HeadTitleSelect
+            <TextField
+              fullWidth
+              id="group_code"
+              label="Group Code"
+              value={values.group_code}
+              InputLabelProps={{ shrink: true }}
+              onChange={handleChange}
+              error={error}
+              helperText={error && "This Group Code Already Exists."}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <AccountHeadSelect
+                captionLabel="Account Head"
+                InputLabelProps={{ shrink: true }}
+                selected={values.acc_head_id}
+                onChange={handleSelect}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <AccountHeadSelect
                 captionLabel="Title"
                 InputLabelProps={{ shrink: true }}
                 selected={values.title}
                 onChange={handleSelect}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <TextField
-              fullWidth
-              id="acc_head_name"
-              label="Accound Head Name"
-              value={values.acc_head_name}
-              InputLabelProps={{ shrink: true }}
-              onChange={handleChange}
+                disabled={values.acc_head_id===null}
             />
           </Grid>
         </Grid>
@@ -164,7 +206,18 @@ const AddUserDialog = ({ open, handleClose }) => {
           color="error"
           variant="contained"
           size="small"
-          onClick={handleClose}
+          onClick={()=>{
+            setValues({
+              group_name:"",
+              acc_head_id:null,
+              group_code:"",
+              child_of:null,
+              is_fixed: false,
+              company_master_id: parseInt(mid),
+              created_by: user.email,
+            })
+            handleClose()
+          }}
           disabled={clicked}
           startIcon={<CancelIcon />}
         >
