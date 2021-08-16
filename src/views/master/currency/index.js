@@ -1,10 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 
-// assets
-import CurrencyList from "./currency-list";
+// material-ui
+import { Button, Grid, Typography } from "@material-ui/core";
 
-const CurrencyMaster = () => {
-  return <CurrencyList />;
+// project imports
+import CurrencyTable from "./CurrencyTable";
+import MainCard from "../../../ui-component/cards/MainCard";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import { gridSpacing } from "../../../store/constant";
+import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
+
+//-----------------------|| Company List ||-----------------------//
+const CurrencyList = () => {
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // USE SIMPLE DATA TABLE
+
+  return (
+    <MainCard
+      title={
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={gridSpacing}
+        >
+          <Grid item>
+            <Typography variant="h3">Currency List</Typography>
+          </Grid>
+          <Grid item>
+            <AnimateButton>
+              <Button
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={() => setShowCreateModal(true)}
+              >
+                Create Currency
+              </Button>
+            </AnimateButton>
+          </Grid>
+        </Grid>
+      }
+      content={true}
+    >
+      <CurrencyTable />
+      <AddCurrenyDialog
+        open={showCreateModal}
+        handleClose={() => setShowCreateModal(false)}
+      />
+    </MainCard>
+  );
 };
 
-export default CurrencyMaster;
+export default CurrencyList;

@@ -9,11 +9,11 @@ import EditIcon from "@material-ui/icons/EditTwoTone";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 
 // project imports
-import useCompany from "../../../../hooks/useCompany";
-import formatDate from "../../../../utils/format-date";
-import EditCurrenyDialog from "../EditCurrencyDialog";
-import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
-import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
+import EditCurrenyDialog from "./EditCurrencyDialog";
+import useCompany from "../../../hooks/useCompany";
+import { formatDate } from "../../../utils/index";
+import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
+import CustomDataGrid from "../../../ui-component/CustomDataGrid";
 
 //-----------------------|| Company List ||-----------------------//
 
