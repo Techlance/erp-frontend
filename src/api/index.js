@@ -25,3 +25,6 @@ export * from "./master/ledger-master/account-head";
 
 // 2. Account Group
 export * from "./master/ledger-master/account-group";
+
+// 3. Ledger
+export * from "./master/ledger-master/ledger";

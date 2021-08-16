@@ -59,10 +59,11 @@ const UserForm = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const { company_account_groups } = useSelector((state) => state.ledgerMaster);
+  const { company_account_group_details, company_account_groups } = useSelector((state) => state.ledgerMaster);
 
   const {
     getCompanyAccountGroups,
+    getCompanyAccountGroupDetails,
     updateCompanyAccountGroup,
     deleteCompanyAccountGroup,
   } = useLedgerMaster();
@@ -82,8 +83,8 @@ const UserForm = () => {
     if (event.target.id === "group_code") {
       console.log(event.target.value);
       if (
-        company_account_groups.find(
-          (acc) => acc.group_code === event.target.value
+        company_account_groups?.find(
+          (acc) => (acc.group_code === event.target.value) && (company_account_group_details.group_code !== event.target.value)
         )
       ) {
         setError(true);
@@ -95,8 +96,8 @@ const UserForm = () => {
     if (event.target.id === "group_name") {
       console.log(event.target.value);
       if (
-        company_account_groups.find(
-          (acc) => acc.group_name === event.target.value
+        company_account_groups?.find(
+          (acc) => (acc.group_name === event.target.value) && (company_account_group_details.group_name !== event.target.value) 
         )
       ) {
         setNameError(true);
@@ -125,27 +126,21 @@ const UserForm = () => {
   };
 
   useEffect(() => {
-    if (company_account_groups) {
-      let account_group = company_account_groups.find(
-        (acc) => acc.id === parseInt(gid)
-      );
-      console.log(account_group);
-      if (account_group && account_group?.is_fixed === false) {
-        setCheckList({
-          Ledgers: account_group.ledger_master,
-          "Account Groups": account_group.acc_group,
-        });
-
-        setValues(account_group);
-      } else {
-        history.replace(config.defaultPath);
-      }
-    } else {
-      getCompanyAccountGroups(mid);
+    if(company_account_group_details)
+    {
+      setCheckList({
+        "Ledgers":company_account_group_details.ledger_master
+      })
+      setValues({...company_account_group_details})
     }
+    else
+      getCompanyAccountGroupDetails(gid);
+  }, [company_account_group_details]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [company_account_groups]);
+  useEffect(()=>{
+    if(!company_account_groups)
+      getCompanyAccountGroups(mid);
+  })
 
   const handleUpdateAccountGroup = async () => {
     setClicked(true);
@@ -158,7 +153,7 @@ const UserForm = () => {
 
   const handleAgree = () => {
     deleteCompanyAccountGroup(values.id);
-    history.replace(`/company/${mid}/master/ledger-master/head/`);
+    history.replace(`/company/${mid}/master/ledger-master/group/`);
   };
 
   return (
@@ -182,6 +177,9 @@ const UserForm = () => {
                       helperText={
                         nameError && "This Group Name Already Exists."
                       }
+                      InputProps={{
+                        readOnly:values?.is_fixed
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -202,6 +200,7 @@ const UserForm = () => {
                       InputLabelProps={{ shrink: true }}
                       selected={values.acc_head_id}
                       onChange={handleSelect}
+                      disabled={values?.is_fixed}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -210,7 +209,7 @@ const UserForm = () => {
                       InputLabelProps={{ shrink: true }}
                       selected={values.child_of}
                       onChange={handleSelect}
-                      disabled={values.acc_head_id === null}
+                      disabled={(values?.acc_head_id === null) || (values?.is_fixed)}
                       head_id={values.acc_head_id?.id}
                     />
                   </Grid>
@@ -228,6 +227,7 @@ const UserForm = () => {
                               color="error"
                               onClick={() => setShowDeleteModal(true)}
                               startIcon={<DeleteIcon />}
+                              disabled = {values.is_fixed}
                             >
                               Delete
                             </Button>
@@ -247,23 +247,11 @@ const UserForm = () => {
                       </Grid>
                     </Stack>
                   </Grid>
-                  <ConfirmDeleteDialog
-                    open={showDeleteModal}
-                    handleAgree={() => {
-                      deleteCompanyAccountGroup(values.id);
-                      history.replace(
-                        `/company/${mid}/master/ledger-master/head/`
-                      );
-                    }}
-                    handleClose={() => setShowDeleteModal(false)}
-                    title="Are you sure?"
-                    body="Are you sure you want to delete this Account Head? Once deleted the data can not be retrived!"
-                  />
                 </Grid>
               </SubCard>
             </Grid>
             <ProtectedDeleteDialog
-              checkList={{ ABC: [1, 2, 3], DEF: ["a", "b", "c"] }}
+              checkList={checkList}
               showDeleteModal={showDeleteModal}
               handleAgree={handleAgree}
               handleClose={() => setShowDeleteModal(false)}

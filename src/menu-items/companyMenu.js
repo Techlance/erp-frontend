@@ -51,13 +51,13 @@ export const company_menu = {
               id: "head",
               title: <FormattedMessage id="menu.head" />,
               type: "item",
-              url: `company/:mid/master/ledger-master/head`,
+              url: `/company/:mid/master/ledger-master/head`,
             },
             {
               id: "group",
               title: <FormattedMessage id="menu.group" />,
               type: "item",
-              //   url: "/admin/companies",
+              url: "/company/:mid/master/ledger-master/group",
             },
             {
               id: "ledger",

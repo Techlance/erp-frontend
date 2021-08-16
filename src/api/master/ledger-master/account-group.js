@@ -1,5 +1,5 @@
 // Async// actions
-import { GET_COMPANY_ACCOUNT_GROUPS } from "../../../store/actions";
+import { GET_COMPANY_ACCOUNT_GROUPS, GET_COMPANY_ACCOUNT_GROUP_DETAILS } from "../../../store/actions";
 import { dataToForm } from "../../../utils";
 
 // project imports
@@ -13,6 +13,17 @@ export const getCompanyAccountGroupsAsync = async (id, dispatch) => {
 
   dispatch({
     type: GET_COMPANY_ACCOUNT_GROUPS,
+    payload: response.data.data,
+  });
+};
+
+export const getCompanyAccountGroupDetailsAsync = async (id, dispatch) => {
+  if (!id) return;
+
+  const response = await instance.get(`/company/get-detail-account-group/${id}`);
+
+  dispatch({
+    type: GET_COMPANY_ACCOUNT_GROUP_DETAILS,
     payload: response.data.data,
   });
 };

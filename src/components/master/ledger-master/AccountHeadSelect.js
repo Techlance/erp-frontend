@@ -22,7 +22,7 @@ const AccountHeadSelect = ({
   const { mid } = useParams();
   const errorState = formState === "error" ? true : false;
 
-  const [getUserAccountHeads, , , data] = useRequest({
+  const [getUserAccountHeads, loading, , data] = useRequest({
     url: `/company/get-account-head/${mid}`,
     initialState: [],
   });
@@ -58,7 +58,8 @@ const AccountHeadSelect = ({
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
-        InputProps={{ readOnly: disabled }}
+        InputProps={{ readOnly: disabled || loading }}
+        helperText={loading && "Loading Data"}
       >
         {data?.map((option, index) => (
           <MenuItem key={index} value={option.id}>

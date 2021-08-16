@@ -75,15 +75,18 @@ const AccountGroup = () => {
       headerName: "Parent Group",
       flex: 0.5,
       minWidth: 300,
+      valueFormatter: (params) => {
+        return params.value || '-'
+      }
     },
     {
       field: "acc_head_id",
       headerName: "Account Head",
       flex: 0.5,
       minWidth: 300,
-      valueFormatter: (params) => {
-        return params.value.acc_head_name;
-      },
+      // valueFormatter: (params) => {
+      //   return params.value.acc_head_name;
+      // },
     },
     {
       field: "created_on",
