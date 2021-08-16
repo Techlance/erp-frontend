@@ -16,6 +16,7 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import AddCostCenterDialog from "../../../../components/CostCenter/AddCostCenterDialog";
 import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import useCostCenter from "../../../../hooks/useCostCenter";
+import { useLocation } from "react-router";
 
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
@@ -23,13 +24,15 @@ const SelectGroup = () => {
 
   const [costCenter] = useSelector((state) => [state.costCenter]);
 
-  const { company } = useComapanyMaster;
+  const { company } = useComapanyMaster();
 
   const { cost_center } = costCenter;
 
-  const { getCostCategory } = useCostCenter();
+  const { getCostCenter } = useCostCenter();
 
   const [loading, setLoading] = useState(true);
+
+  const { pathname } = useLocation();
 
   const columns = [
     {
@@ -45,8 +48,7 @@ const SelectGroup = () => {
           color="primary"
           aria-label="more-details"
           // onClick={(row) => handleCompanyClick(row.company_id)}
-          href={`/master/cost-center/center/${params.value}`}
-          target="_blank"
+          href={`${pathname}/${params.value}`}
         >
           <Typography align="center">More </Typography>
           <IconArrowRight sx={{ fontSize: "1.1rem" }} />
@@ -79,18 +81,21 @@ const SelectGroup = () => {
     //   flex: 0.3,
     //   headerAlign: "center",
     //   align: "center",
+    // valueFormatter: (params) => {
+    //     return formatDate(params.value);
+    //   },
     // },
   ];
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   getCostCenter(company?.company_id);
-  // }, [company]);
+  useEffect(() => {
+    setLoading(true);
+    getCostCenter(company?.company_id);
+  }, [company]);
 
-  // useEffect(() => {
-  //   if (cost_center) setLoading(false);
-  //   else setLoading(true);
-  // }, [cost_center]);
+  useEffect(() => {
+    if (cost_center) setLoading(false);
+    else setLoading(true);
+  }, [cost_center]);
 
   return (
     <MainCard
@@ -103,7 +108,7 @@ const SelectGroup = () => {
         >
           <Grid item>
             <Typography variant="h3">
-              {/* {`${company.company_name}'s Cost Center`} */}
+              {`${company.company_name}'s Cost Center`}
             </Typography>
           </Grid>
           <Grid item>

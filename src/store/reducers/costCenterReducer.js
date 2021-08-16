@@ -5,6 +5,7 @@ import {
   CREATE_COST_CATEGORY,
   DELETE_COST_CATEGORY,
   GET_COST_CENTER,
+  GET_COST_CENTER_DETAILS,
   UPDATE_COST_CENTER,
   CREATE_COST_CENTER,
   DELETE_COST_CENTER,
@@ -14,6 +15,8 @@ import {
 // constant
 const initialState = {
   cost_category: null,
+  cost_center: null,
+  cost_center_details: null,
 };
 
 const costCenterReducer = (state = initialState, action) => {
@@ -43,6 +46,12 @@ const costCenterReducer = (state = initialState, action) => {
       return {
         ...state,
         cost_center: action.payload,
+      };
+    }
+    case GET_COST_CENTER_DETAILS: {
+      return {
+        ...state,
+        cost_center_details: action.payload,
       };
     }
     case UPDATE_COST_CENTER: {

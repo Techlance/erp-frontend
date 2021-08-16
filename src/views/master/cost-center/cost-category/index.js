@@ -16,6 +16,7 @@ import AddCostCategoryDialog from "../../../../components/CostCenter/AddCostCate
 import useCostCenter from "../../../../hooks/useCostCenter";
 import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import { useLocation } from "react-router";
+import formatDate from "../../../../utils/format-date";
 
 //-----------------------|| User List ||-----------------------//
 
@@ -73,6 +74,9 @@ const SelectGroup = () => {
       flex: 0.3,
       headerAlign: "center",
       align: "center",
+      valueFormatter: (params) => {
+        return formatDate(params.value);
+      },
     },
   ];
 

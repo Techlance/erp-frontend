@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Grid, Switch, FormControlLabel } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../store/constant";
@@ -19,19 +19,33 @@ import {
 // project imports
 import useAuth from "../../hooks/useAuth";
 import useCostCenter from "../../hooks/useCostCenter";
-import { useSelector } from "react-redux";
 import useComapanyMaster from "../../hooks/useCompanyMaster";
+import { create } from "@material-ui/core/styles/createTransitions";
 
 const AddCostCategoryDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { addCostCategory } = useCostCenter();
   const { company } = useComapanyMaster();
+  const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState({
     company_master_id: company.company_id,
     name: "",
     created_by: user.email,
   });
+
+  const createCostCategory = async () => {
+    setClicked(true);
+    let form = { ...values };
+    await addCostCategory(form);
+    setClicked(false);
+    setValues({
+      company_master_id: company.company_id,
+      name: "",
+      created_by: user.email,
+    });
+    handleClose();
+  };
 
   const handleChange = (event) => {
     setValues({
@@ -76,7 +90,7 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
           variant="contained"
           size="small"
           onClick={() => {
-            addCostCategory(values);
+            createCostCategory();
             handleClose();
           }}
           color="primary"

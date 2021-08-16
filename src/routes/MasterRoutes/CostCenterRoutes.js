@@ -7,6 +7,7 @@ import Loadable from "../../ui-component/Loadable";
 import AuthGuard from "../../utils/route-guard/AuthGuard";
 import CostCategoryDetails from "../../views/master/cost-center/cost-category-details";
 import CompanyGuard from "../../utils/route-guard/CompanyGuard";
+import CostCenterDetails from "../../views/master/cost-center/cost-center-details";
 
 // cost category page routing
 const CostCenter = Loadable(
@@ -22,9 +23,14 @@ const CostCenterRoutes = ({ match }) => {
 
   let routes = [
     {
+      url: "/center/:cen_id",
+      component: CostCenterDetails,
+    },
+    {
       url: "/cost-category/:cat_id",
       component: CostCategoryDetails,
     },
+
     {
       url: "/cost-category",
       component: CostCenter,

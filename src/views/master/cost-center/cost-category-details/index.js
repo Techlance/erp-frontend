@@ -114,39 +114,11 @@ const CostCategoryDetails = () => {
             icon={<AccountCircleTwoToneIcon sx={{ fontSize: "1.3rem" }} />}
             {...a11yProps(0)}
           />
-          {/* <Tab
-            component={Link}
-            to="#"
-            label="Docs"
-            icon={<DescriptionTwoToneIcon sx={{ fontSize: "1.3rem" }} />}
-            {...a11yProps(1)}
-          />
-          {value === 1 ? (
-            <div style={{ position: "absolute", right: 0 }}>
-              <AnimateButton>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  onClick={() => setShowAddModal(true)}
-                >
-                  <Typography>Upload Document</Typography>
-                </Button>
-              </AnimateButton>
-            </div>
-          ) : null} */}
         </Tabs>
         <TabPanel value={value} index={0}>
           <CostCategoryForm />
         </TabPanel>
-        {/* <TabPanel value={value} index={1}>
-          <CompanyDocumentForm />
-        </TabPanel> */}
       </div>
-      {/* <AddDocumentDialog
-        open={showAddModal}
-        handleClose={() => setShowAddModal(false)}
-      /> */}
     </MainCard>
   );
 };

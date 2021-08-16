@@ -13,6 +13,11 @@ import {
   addCostCategoryAsync,
   updateCostCategoryAsync,
   deleteCostCategoryAsync,
+  getCostCenterAsync,
+  getCostCenterDetailsAsync,
+  addCostCenterAsync,
+  updateCostCenterAsync,
+  deleteCostCenterAsync,
 } from "../../api";
 
 // constant
@@ -49,13 +54,35 @@ export const CostCenterProvider = ({ children }) => {
   const deleteCostCategory = async (id) => {
     await deleteCostCategoryAsync(id, dispatch);
 
-    await getCostCategoryAsync(id, dispatch);
+    // await getCostCategoryAsync(id, dispatch);
   };
 
-  //   useEffect(() => {
-  // getUserCompanies();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [user]);
+  const getCostCenter = async (id) => {
+    await getCostCenterAsync(id, dispatch);
+  };
+
+  const getCostCenterDetails = async (id) => {
+    await getCostCenterDetailsAsync(id, dispatch);
+  };
+
+  const addCostCenter = async (data) => {
+    await addCostCenterAsync(data, dispatch);
+
+    await getCostCenterAsync(data.company_master_id, dispatch);
+  };
+
+  const updateCostCenter = async (data) => {
+    await updateCostCenterAsync(data, dispatch);
+
+    await getCostCenterAsync(data.company_master_id, dispatch);
+    // await getSelectedCompanyAsync(data.id, dispatch);
+  };
+
+  const deleteCostCenter = async (id) => {
+    await deleteCostCenterAsync(id, dispatch);
+
+    await getCostCenterAsync(id, dispatch);
+  };
 
   if (loading) {
     return <Loader />;
@@ -69,6 +96,11 @@ export const CostCenterProvider = ({ children }) => {
         addCostCategory,
         updateCostCategory,
         deleteCostCategory,
+        getCostCenter,
+        getCostCenterDetails,
+        addCostCenter,
+        updateCostCenter,
+        deleteCostCenter,
       }}
     >
       {children}

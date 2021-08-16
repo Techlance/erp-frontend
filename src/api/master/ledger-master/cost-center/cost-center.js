@@ -1,5 +1,8 @@
 // Async// actions
-import { GET_COST_CENTER } from "../../../../store/actions";
+import {
+  GET_COST_CENTER,
+  GET_COST_CENTER_DETAILS,
+} from "../../../../store/actions";
 import { dataToForm } from "../../../../utils";
 
 // project imports
@@ -19,6 +22,19 @@ export const getCostCenterAsync = async (id, dispatch) => {
   });
 };
 
+export const getCostCenterDetailsAsync = async (id, dispatch) => {
+  if (!id) {
+    return;
+  }
+  const response = await instance.get(`/company/get-detail-cost-center/${id}`);
+
+  console.log(response.data.data);
+  dispatch({
+    type: GET_COST_CENTER_DETAILS,
+    payload: response.data.data,
+  });
+};
+
 export const addCostCenterAsync = async (data, dispatch) => {
   delete data.id;
   const form = dataToForm(data);
@@ -31,9 +47,10 @@ export const addCostCenterAsync = async (data, dispatch) => {
 };
 
 export const updateCostCenterAsync = async (data, dispatch) => {
+  const form = dataToForm(data);
   const response = await instance.put(
     `company/edit-cost-center/${data.id}`,
-    data
+    form
   );
 
   sendNotification({

@@ -4,7 +4,8 @@ import { IconButton, Grid } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../store/constant";
-import CurrencySelect from "../../components/company/CurrencySelect";
+import CategorySelect from "../../components/CostCenter/CategorySelect";
+import LoadingButton from "../../ui-component/LoadingButton";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,9 +20,15 @@ import {
   Typography,
 } from "@material-ui/core";
 
+import SaveIcon from "@material-ui/icons/SaveRounded";
+import CancelIcon from "@material-ui/icons/Cancel";
+
 // project imports
 import useAuth from "../../hooks/useAuth";
 import useCompany from "../../hooks/useCompany";
+import ParentGroupSelect from "./ParentGroupSelect";
+import { useParams } from "react-router";
+import useCostCenter from "../../hooks/useCostCenter";
 
 const useStyles = makeStyles((theme) => ({
   alertIcon: {
@@ -45,10 +52,15 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   //   const { createCompany } = useCompany();
 
+  const { mid } = useParams();
+
+  const { addCostCenter } = useCostCenter();
+
   const [values, setValues] = useState({
     cost_center_name: "",
-    cost_category: { id: 0 },
-    child_of: "Primary",
+    cost_category_id: null,
+    child_of: null,
+    company_master_id: mid,
     created_by: user.email,
   });
 
@@ -60,10 +72,38 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
   };
 
   const handleSelect = (key, value) => {
+    if (key === "cost_category_id") {
+      setValues({
+        ...values,
+        child_of: null,
+        [key]: value,
+      });
+    } else {
+      setValues({
+        ...values,
+        [key]: value,
+      });
+    }
+  };
+
+  const [clicked, setClicked] = useState(false);
+
+  const createCostCenter = async () => {
+    setClicked(true);
+    let form = { ...values };
+    form.child_of = parseInt(form.child_of?.id);
+    form.cost_category_id = parseInt(form.cost_category_id.id);
+    console.log(form);
+    await addCostCenter(form);
+    setClicked(false);
     setValues({
-      ...values,
-      [key]: value,
+      cost_center_name: "",
+      cost_category_id: null,
+      child_of: null,
+      company_master_id: mid,
+      created_by: user.email,
     });
+    handleClose();
   };
 
   return (
@@ -82,7 +122,28 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
           <Typography variant="body2">Create a new cost center.</Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
+          <pre>{JSON.stringify(values, null, 2)}</pre>
           <Grid item xs={12} sm={6}>
+            <CategorySelect
+              captionLabel="Cost Category"
+              InputLabelProps={{ shrink: true }}
+              selected={values.cost_category_id}
+              onChange={handleSelect}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <ParentGroupSelect
+              fullWidth
+              id="child_of"
+              captionLabel="Child Of"
+              selected={values.child_of}
+              InputLabelProps={{ shrink: true }}
+              onChange={handleSelect}
+              disabled={values.cost_category_id === null}
+              cat_id={values.cost_category_id?.id}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
             <TextField
               fullWidth
               id="cost_center_name"
@@ -92,40 +153,22 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              id="child_of"
-              label="Child Of"
-              value={values.child_of}
-              InputLabelProps={{ shrink: true }}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <CurrencySelect
-              captionLabel="Cost Category"
-              InputLabelProps={{ shrink: true }}
-              selected={values.cost_category}
-              onChange={handleSelect}
-            />
-          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <Button onClick={handleClose} color="error">
           Cancel
         </Button>
-        <Button
+        <LoadingButton
+          color="primary"
           variant="contained"
           size="small"
-          onClick={() => {
-            // createCompany(values);
-          }}
-          color="primary"
+          onClick={createCostCenter}
+          loading={clicked}
+          startIcon={<SaveIcon />}
         >
           Add
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );
