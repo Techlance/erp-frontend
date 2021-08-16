@@ -59,7 +59,9 @@ const UserForm = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const { company_account_group_details, company_account_groups } = useSelector((state) => state.ledgerMaster);
+  const { company_account_group_details, company_account_groups } = useSelector(
+    (state) => state.ledgerMaster
+  );
 
   const {
     getCompanyAccountGroups,
@@ -84,7 +86,9 @@ const UserForm = () => {
       console.log(event.target.value);
       if (
         company_account_groups?.find(
-          (acc) => (acc.group_code === event.target.value) && (company_account_group_details.group_code !== event.target.value)
+          (acc) =>
+            acc.group_code === event.target.value &&
+            company_account_group_details.group_code !== event.target.value
         )
       ) {
         setError(true);
@@ -97,7 +101,9 @@ const UserForm = () => {
       console.log(event.target.value);
       if (
         company_account_groups?.find(
-          (acc) => (acc.group_name === event.target.value) && (company_account_group_details.group_name !== event.target.value) 
+          (acc) =>
+            acc.group_name === event.target.value &&
+            company_account_group_details.group_name !== event.target.value
         )
       ) {
         setNameError(true);
@@ -126,21 +132,17 @@ const UserForm = () => {
   };
 
   useEffect(() => {
-    if(company_account_group_details)
-    {
+    if (company_account_group_details) {
       setCheckList({
-        "Ledgers":company_account_group_details.ledger_master
-      })
-      setValues({...company_account_group_details})
-    }
-    else
-      getCompanyAccountGroupDetails(gid);
+        Ledgers: company_account_group_details.ledger_master,
+      });
+      setValues({ ...company_account_group_details });
+    } else getCompanyAccountGroupDetails(gid);
   }, [company_account_group_details]);
 
-  useEffect(()=>{
-    if(!company_account_groups)
-      getCompanyAccountGroups(mid);
-  })
+  useEffect(() => {
+    if (!company_account_groups) getCompanyAccountGroups(mid);
+  });
 
   const handleUpdateAccountGroup = async () => {
     setClicked(true);
@@ -178,7 +180,7 @@ const UserForm = () => {
                         nameError && "This Group Name Already Exists."
                       }
                       InputProps={{
-                        readOnly:values?.is_fixed
+                        readOnly: values?.is_fixed,
                       }}
                     />
                   </Grid>
@@ -209,7 +211,9 @@ const UserForm = () => {
                       InputLabelProps={{ shrink: true }}
                       selected={values.child_of}
                       onChange={handleSelect}
-                      disabled={(values?.acc_head_id === null) || (values?.is_fixed)}
+                      disabled={
+                        values?.acc_head_id === null || values?.is_fixed
+                      }
                       head_id={values.acc_head_id?.id}
                     />
                   </Grid>
@@ -227,7 +231,7 @@ const UserForm = () => {
                               color="error"
                               onClick={() => setShowDeleteModal(true)}
                               startIcon={<DeleteIcon />}
-                              disabled = {values.is_fixed}
+                              disabled={values.is_fixed}
                             >
                               Delete
                             </Button>

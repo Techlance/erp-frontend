@@ -7,7 +7,7 @@ const initialState = {
   company_account_heads: null,
   company_account_groups: null,
   company_account_group_details: null,
-  company_ledgers: null
+  company_ledgers: null,
 };
 
 const ledgerMasterReducer = (state = initialState, action) => {

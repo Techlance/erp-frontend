@@ -76,8 +76,8 @@ const AccountGroup = () => {
       flex: 0.5,
       minWidth: 300,
       valueFormatter: (params) => {
-        return params.value || '-'
-      }
+        return params.value || "-";
+      },
     },
     {
       field: "acc_head_id",

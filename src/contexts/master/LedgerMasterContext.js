@@ -138,7 +138,6 @@ export const LedgerMasterProvider = ({ children }) => {
         addCompanyLedger,
         updateCompanyLedger,
         deleteCompanyLedger,
-
       }}
     >
       {children}
