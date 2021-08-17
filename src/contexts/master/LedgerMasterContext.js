@@ -12,6 +12,19 @@ import {
   addCompanyAccountHeadAsync,
   updateCompanyAccountHeadAsync,
   deleteCompanyAccountHeadAsync,
+
+  //Company Account Group
+  getCompanyAccountGroupsAsync,
+  getCompanyAccountGroupDetailsAsync,
+  addCompanyAccountGroupAsync,
+  updateCompanyAccountGroupAsync,
+  deleteCompanyAccountGroupAsync,
+
+  //Compny Ledger
+  getCompanyLedgersAsync,
+  addCompanyLedgerAsync,
+  updateCompanyLedgerAsync,
+  deleteCompanyLedgerAsync,
 } from "../../api";
 import useComapanyMaster from "../../hooks/useCompanyMaster";
 
@@ -30,13 +43,13 @@ export const LedgerMasterProvider = ({ children }) => {
   const addCompanyAccountHead = async (data) => {
     await addCompanyAccountHeadAsync(data, dispatch);
 
-    await getCompanyAccountHeadsAsync(data.id, dispatch);
+    await getCompanyAccountHeadsAsync(data.company_master_id, dispatch);
   };
 
   const updateCompanyAccountHead = async (data) => {
     await updateCompanyAccountHeadAsync(data, dispatch);
 
-    // await getCompanyAccountHeadsAsync(id,dispatch);
+    await getCompanyAccountHeadsAsync(data.company_master_id, dispatch);
     // await getSelectedCompanyAsync(data.id, dispatch);
   };
 
@@ -46,8 +59,60 @@ export const LedgerMasterProvider = ({ children }) => {
     await getCompanyAccountHeadsAsync(id, dispatch);
   };
 
+  const getCompanyAccountGroups = async (id) => {
+    await getCompanyAccountGroupsAsync(id, dispatch);
+  };
+
+  const getCompanyAccountGroupDetails = async (id) => {
+    await getCompanyAccountGroupDetailsAsync(id, dispatch);
+  };
+
+  const addCompanyAccountGroup = async (data) => {
+    await addCompanyAccountGroupAsync(data, dispatch);
+
+    await getCompanyAccountGroupsAsync(data.company_master_id, dispatch);
+  };
+
+  const updateCompanyAccountGroup = async (data) => {
+    await updateCompanyAccountGroupAsync(data, dispatch);
+
+    await getCompanyAccountGroupsAsync(data.company_master_id, dispatch);
+    // await getSelectedCompanyAsync(data.id, dispatch);
+  };
+
+  const deleteCompanyAccountGroup = async (id) => {
+    await deleteCompanyAccountGroupAsync(id, dispatch);
+
+    await getCompanyAccountGroupsAsync(id, dispatch);
+  };
+
+  const getCompanyLedgers = async (id) => {
+    await getCompanyLedgersAsync(id, dispatch);
+  };
+
+  const addCompanyLedger = async (data) => {
+    await addCompanyLedgerAsync(data, dispatch);
+
+    await getCompanyLedgersAsync(data.company_master_id, dispatch);
+  };
+
+  const updateCompanyLedger = async (data) => {
+    await updateCompanyLedgerAsync(data, dispatch);
+
+    await getCompanyLedgersAsync(data.company_master_id, dispatch);
+    // await getSelectedCompanyAsync(data.id, dispatch);
+  };
+
+  const deleteCompanyLedger = async (id) => {
+    await deleteCompanyLedgerAsync(id, dispatch);
+
+    await getCompanyLedgersAsync(id, dispatch);
+  };
+
   useEffect(() => {
     getCompanyAccountHeads(company?.company_id);
+    getCompanyAccountGroups(company?.company_id);
+    getCompanyLedgers(company?.company_id);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company]);
@@ -64,6 +129,15 @@ export const LedgerMasterProvider = ({ children }) => {
         addCompanyAccountHead,
         updateCompanyAccountHead,
         deleteCompanyAccountHead,
+        getCompanyAccountGroups,
+        getCompanyAccountGroupDetails,
+        addCompanyAccountGroup,
+        updateCompanyAccountGroup,
+        deleteCompanyAccountGroup,
+        getCompanyLedgers,
+        addCompanyLedger,
+        updateCompanyLedger,
+        deleteCompanyLedger,
       }}
     >
       {children}

@@ -15,24 +15,24 @@ import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 import formatDate from "../../../../utils/format-date";
-import AddAccountHeadDialog from "../../../../components/master/ledger-master/AddAccountHeadDialog";
+import AddAccountGroupDialog from "../../../../components/master/ledger-master/AddAccountGroupDialog";
 import { useLocation } from "react-router-dom";
 
 //-----------------------|| User List ||-----------------------//
-const SelectGroup = () => {
+const AccountGroup = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const { company_account_heads } = useSelector((state) => state.ledgerMaster);
+  const { company_account_groups } = useSelector((state) => state.ledgerMaster);
 
   const { company } = useCompanyMaster();
 
-  const { getCompanyAccountHeads } = useLedgerMaster();
+  const { getCompanyAccountGroups } = useLedgerMaster();
 
   const [loading, setLoading] = useState(true);
 
   const { pathname } = useLocation();
 
-  console.log(company_account_heads);
+  console.log(company_account_groups);
 
   const columns = [
     {
@@ -43,47 +43,50 @@ const SelectGroup = () => {
       headerAlign: "left",
       align: "left",
       sortable: false,
-      renderCell: (params) =>
-        !params.row["is_fixed"] ? (
-          <Button
-            variant="text"
-            color="primary"
-            aria-label="more-details"
-            href={`${pathname}/${params.value}`}
-            // target="_blank"
-          >
-            <Typography align="center">More </Typography>
-            <IconArrowRight sx={{ fontSize: "1.1rem" }} />
-          </Button>
-        ) : (
-          <Button disabled>Not Editable</Button>
-        ),
+      renderCell: (params) => (
+        <Button
+          variant="text"
+          color="primary"
+          aria-label="more-details"
+          href={`${pathname}/${params.value}`}
+          // target="_blank"
+        >
+          <Typography align="center">Edit </Typography>
+          <IconArrowRight sx={{ fontSize: "1.1rem" }} />
+        </Button>
+      ),
     },
     {
-      field: "schedule_no",
-      headerName: "Schedule No.",
-      flex: 0.3,
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "acc_head_name",
-      headerName: "Account Head Name",
-      flex: 0.5,
-    },
-    {
-      field: "title",
-      headerName: "Title",
-      flex: 0.4,
-    },
-    {
-      field: "bs",
-      headerName: "BS",
-      type: "boolean",
-      flex: 0.3,
-      headerAlign: "center",
+      field: "group_code",
+      headerName: "Group Code",
+      flex: 0.2,
+      minWidth: 150,
       align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "group_name",
+      headerName: "Group Name",
+      flex: 0.5,
+      minWidth: 300,
+    },
+    {
+      field: "child_of",
+      headerName: "Parent Group",
+      flex: 0.5,
+      minWidth: 300,
+      valueFormatter: (params) => {
+        return params.value || "-";
+      },
+    },
+    {
+      field: "acc_head_id",
+      headerName: "Account Head",
+      flex: 0.5,
+      minWidth: 300,
+      // valueFormatter: (params) => {
+      //   return params.value.acc_head_name;
+      // },
     },
     {
       field: "created_on",
@@ -102,15 +105,15 @@ const SelectGroup = () => {
   ];
 
   useEffect(() => {
-    getCompanyAccountHeads(company.company_id);
+    getCompanyAccountGroups(company.company_id);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company]);
 
   useEffect(() => {
-    if (company_account_heads) setLoading(false);
+    if (company_account_groups) setLoading(false);
     else setLoading(true);
-  }, [company_account_heads, company]);
+  }, [company_account_groups, company]);
 
   return (
     <MainCard
@@ -123,7 +126,7 @@ const SelectGroup = () => {
         >
           <Grid item>
             <Typography variant="h3">
-              {`${company?.company_name}'s Account Heads`}
+              {`${company?.company_name}'s Account Groups`}
             </Typography>
           </Grid>
           <Grid item>
@@ -134,7 +137,7 @@ const SelectGroup = () => {
                 color="primary"
                 onClick={() => setShowAddModal(true)}
               >
-                Add Account Head
+                Add Account Group
               </Button>
             </AnimateButton>
           </Grid>
@@ -145,10 +148,10 @@ const SelectGroup = () => {
       {/* <pre>{JSON.stringify(company, null, 2)}</pre> */}
       <CustomDataGrid
         columns={columns}
-        rows={company_account_heads}
+        rows={company_account_groups}
         loading={loading}
       />
-      <AddAccountHeadDialog
+      <AddAccountGroupDialog
         open={showAddModal}
         handleClose={() => {
           setShowAddModal(false);
@@ -158,4 +161,4 @@ const SelectGroup = () => {
   );
 };
 
-export default SelectGroup;
+export default AccountGroup;

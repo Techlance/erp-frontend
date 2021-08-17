@@ -23,8 +23,6 @@ const CompanyGuard = ({ children }) => {
 
   const [forward, setForward] = useState(0);
 
-  console.log("in CompanyGuard");
-
   const [getCompanies, loadingCompanies, , { companies }] = useRequest({
     url: "/company/get-user-company",
     method: "GET",
@@ -34,7 +32,6 @@ const CompanyGuard = ({ children }) => {
   });
 
   useEffect(() => {
-    console.log("func call...");
     const f = async () => {
       await getCompanies();
       setLoading(false);
@@ -42,10 +39,7 @@ const CompanyGuard = ({ children }) => {
 
     f();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
     if (loading || loadingCompanies) {
-      // return <Loader />;
       setForward(0);
     } else {
       function isPresent({ company_id }) {
@@ -55,18 +49,15 @@ const CompanyGuard = ({ children }) => {
       const company = companies.find(isPresent);
 
       if (company) {
-        console.log("yay");
         setMasterCompany(company);
         // return children;
         setForward(1);
       } else {
         setForward(2);
       }
-
-      // return children;
-
-      // return <Redirect to={config.defaultPath} />;
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   if (forward === 1) {

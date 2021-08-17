@@ -23,7 +23,7 @@ import AppContextProvider from "./contexts";
 
 const App = () => {
   const customization = useSelector((state) => state.customization);
-  console.log("in App.js")
+
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme(customization)}>

@@ -1,6 +1,8 @@
+import React from "react";
+
 // third-party
 import { FormattedMessage } from "react-intl";
-import React from "react";
+
 // assets
 import {
   IconDashboard,
@@ -22,6 +24,8 @@ const icons = {
 };
 
 //-----------------------|| COMPANY MENU ITEMS ||-----------------------//
+
+// const {mid} = useParams();
 
 export const company_menu = {
   id: "company-menu",
@@ -47,13 +51,13 @@ export const company_menu = {
               id: "head",
               title: <FormattedMessage id="menu.head" />,
               type: "item",
-              url: "/master/ledger-master/head",
+              url: `/company/:mid/master/ledger-master/head`,
             },
             {
               id: "group",
               title: <FormattedMessage id="menu.group" />,
               type: "item",
-              //   url: "/admin/companies",
+              url: "/company/:mid/master/ledger-master/group",
             },
             {
               id: "ledger",
@@ -119,7 +123,8 @@ export const company_menu = {
           id: "currency",
           title: <FormattedMessage id="menu.currency" />,
           type: "item",
-          //   url: "/admin/companies",
+          url: "/company/:mid/master/currency",
+          breadcrumbs: true,
         },
         {
           id: "lc",

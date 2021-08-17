@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   COMPANIES_INITIALIZE,
   EXIT_COMPANY,
-  SELECT_COMPANY,
+  // SELECT_COMPANY,
 } from "../store/actions";
 
 // project imports
@@ -22,8 +22,14 @@ import {
   getUserCompaniesAsync,
   updateCompanyAsync,
 } from "../api/company";
-import { addCurrencyAsync, getCurrencyAsync } from "../api";
+
 import { dataToForm } from "../utils";
+import {
+  addCurrencyAsync,
+  deleteCurrencyAsync,
+  getCurrencyAsync,
+  updateCurrencyAsync,
+} from "../api";
 
 // constant
 const initialState = {
@@ -132,6 +138,16 @@ export const CompanyProvider = ({ children }) => {
     await addCurrencyAsync(form, dispatch, getCurrency);
   };
 
+  const updateCurrency = async (data) => {
+    await updateCurrencyAsync(data, dispatch);
+  };
+
+  const deleteCurrency = async (id) => {
+    await deleteCurrencyAsync(id, dispatch);
+
+    await getCurrencyAsync(dispatch);
+  };
+
   const getSelectedCompanyDocs = async (id) => {
     await getSelectedCompanyDocsAsync(id, dispatch);
   };
@@ -167,6 +183,8 @@ export const CompanyProvider = ({ children }) => {
         updateCompany,
         deleteCompany,
         addCurrency,
+        updateCurrency,
+        deleteCurrency,
         getCurrency,
         getSelectedCompanyDocs,
         createCompanyDoc,

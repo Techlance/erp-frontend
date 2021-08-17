@@ -15,7 +15,7 @@ const HeadTitleSelect = ({ captionLabel, formState, selected, onChange }) => {
   // const { currencies, getCurrency } = useCompany();
   const errorState = formState === "error" ? true : false;
 
-  const options = ["ASSETS","EQUITY AND LIABLITIES","INCOME","EXPENSES"]
+  const options = ["ASSETS", "EQUITY AND LIABLITIES", "INCOME", "EXPENSES"];
 
   useEffect(() => {
     setCurrent(() => {

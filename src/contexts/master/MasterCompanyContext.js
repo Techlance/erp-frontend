@@ -1,5 +1,8 @@
-import React, { createContext, useEffect, useReducer } from "react";
-import { EXIT_COMPANY, SELECT_COMPANY } from "../../store/actions";
+import React, { createContext, useReducer } from "react";
+import {
+  // EXIT_COMPANY,
+  SELECT_COMPANY,
+} from "../../store/actions";
 
 // project imports
 import { companyMasterReducer } from "../../store/reducers";
@@ -19,7 +22,6 @@ export const MasterCompanyProvider = ({ children }) => {
   const [state, dispatch] = useReducer(companyMasterReducer, initialState);
 
   const setMasterCompany = (item) => {
-    console.log(item);
     if (item === null) return;
 
     // setCompanySession(item);

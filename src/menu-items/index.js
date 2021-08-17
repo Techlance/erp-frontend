@@ -8,4 +8,5 @@ const menuItems = {
   items: [dashboard, company_menu],
 };
 
+export { dashboard, company_menu };
 export default menuItems;

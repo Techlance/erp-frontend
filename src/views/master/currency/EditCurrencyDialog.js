@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // material-ui
 import {
@@ -15,25 +15,33 @@ import {
 } from "@material-ui/core";
 
 // assets
-import AddCircleIcon from "@material-ui/icons/AddCircleTwoTone";
+import SaveIcon from "@material-ui/icons/SaveTwoTone";
 import CancelIcon from "@material-ui/icons/CancelTwoTone";
 
 // project imports
-import useAuth from "../../hooks/useAuth";
-import useCompany from "../../hooks/useCompany";
-import LoadingButton from "../../ui-component/LoadingButton";
+import useCompany from "../../../hooks/useCompany";
+import LoadingButton from "../../../ui-component/LoadingButton";
 
-const AddCurrenyDialog = ({ open, handleClose }) => {
-  const { user } = useAuth();
-  const { addCurrency } = useCompany();
-
-  const [values, setValues] = useState({
-    created_by: user.email,
-    currency_name: "",
-    currency: "",
-  });
+const EditCurrenyDialog = ({ open, handleClose, data }) => {
+  const { updateCurrency } = useCompany();
 
   const [clicked, setClicked] = useState(false);
+
+  const [values, setValues] = useState({
+    id: data.id,
+    created_by: data.created_by,
+    currency_name: data.currency_name,
+    currency: data.currency,
+  });
+
+  useEffect(() => {
+    setValues({
+      id: data.id,
+      created_by: data.created_by,
+      currency_name: data.currency_name,
+      currency: data.currency,
+    });
+  }, [data]);
 
   const handleChange = (event) => {
     setValues({
@@ -43,17 +51,12 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
   };
 
   const handleCloseModal = () => {
-    setValues({
-      created_by: user.email,
-      currency_name: "",
-      currency: "",
-    });
     handleClose();
   };
 
-  const handleAddCurrency = async () => {
+  const handleUpdateCurrency = async () => {
     setClicked(true);
-    await addCurrency(values);
+    await updateCurrency(values);
     handleCloseModal();
     setClicked(false);
   };
@@ -67,11 +70,11 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
       maxWidth="sm"
     >
       <DialogTitle id="form-dialog-title">
-        <Typography variant="h4">Create Curreny</Typography>
+        <Typography variant="h4">Update Curreny</Typography>
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Create a new base currency.</Typography>
+          <Typography variant="body2">Update base currency.</Typography>
         </DialogContentText>
 
         <TextField
@@ -111,12 +114,12 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
             <Grid item>
               <LoadingButton
                 loading={clicked}
-                onClick={handleAddCurrency}
+                onClick={handleUpdateCurrency}
                 variant="contained"
                 color="primary"
-                startIcon={<AddCircleIcon />}
+                startIcon={<SaveIcon />}
               >
-                Add
+                Save
               </LoadingButton>
             </Grid>
           </Grid>
@@ -126,4 +129,4 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
   );
 };
 
-export default AddCurrenyDialog;
+export default EditCurrenyDialog;

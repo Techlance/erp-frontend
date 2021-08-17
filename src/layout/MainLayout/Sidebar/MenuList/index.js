@@ -5,12 +5,24 @@ import { Typography } from "@material-ui/core";
 
 // project imports
 import NavGroup from "./NavGroup";
-import menuItem from "./../../../../menu-items";
+import { company_menu, dashboard } from "./../../../../menu-items";
+import { useLocation } from "react-router";
 
 //-----------------------|| SIDEBAR MENU LIST ||-----------------------//
 
 const MenuList = () => {
-  const navItems = menuItem.items.map((item) => {
+  const { pathname } = useLocation();
+
+  console.log(pathname.startsWith("/company"));
+
+  let items;
+  if (pathname.startsWith("/company")) {
+    items = [company_menu];
+  } else {
+    items = [dashboard];
+  }
+
+  const navItems = items.map((item) => {
     switch (item.type) {
       case "group":
         return <NavGroup key={item.id} item={item} />;

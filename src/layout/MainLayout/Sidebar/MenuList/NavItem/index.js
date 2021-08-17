@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // material-ui
@@ -57,8 +57,12 @@ const useStyles = makeStyles((theme) => ({
 const NavItem = ({ item, level }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { mid } = useParams();
   const customization = useSelector((state) => state.customization);
   const matchesSM = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
+  // By th3c0d3br34ker :)
+  item.url = item.url?.replace(":mid", mid);
 
   const Icon = item.icon;
   const itemIcon = item.icon ? (

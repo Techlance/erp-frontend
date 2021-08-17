@@ -1,11 +1,9 @@
 import React from "react";
-import { Redirect, Switch, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 // routes
 import LedgerRoutes from "./LedgerRoutes";
-// project imports
-// import config from "../../config";
-import CostCenterRoutes from "./CostCenterRoutes";
+import CurrencyRoutes from "./CurrencyRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -23,6 +21,12 @@ const MasterRoutes = () => {
         <Route
           path="/company/:mid/master/cost-center"
           component={CostCenterRoutes}
+        />
+
+        {/* Routes for Currency */}
+        <Route
+          path="/company/:mid/master/currency"
+          component={CurrencyRoutes}
         />
       </React.Fragment>
     </Route>
