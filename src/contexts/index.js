@@ -5,6 +5,7 @@ import { CompanyProvider } from "./CompanyContext";
 import { UserPermissionProvider } from "./UserPermissionContext";
 import { LedgerMasterProvider } from "./master/LedgerMasterContext";
 import { MasterCompanyProvider } from "./master/MasterCompanyContext";
+import { VoucherTypeProvider } from "./master/VoucherTypesContext";
 
 const AppContextProvider = ({ children }) => {
   return (
@@ -12,7 +13,9 @@ const AppContextProvider = ({ children }) => {
       <CompanyProvider>
         <MasterCompanyProvider>
           <UserPermissionProvider>
-            <LedgerMasterProvider>{children}</LedgerMasterProvider>
+            <LedgerMasterProvider>
+              <VoucherTypeProvider>{children}</VoucherTypeProvider>
+            </LedgerMasterProvider>
           </UserPermissionProvider>
         </MasterCompanyProvider>
       </CompanyProvider>

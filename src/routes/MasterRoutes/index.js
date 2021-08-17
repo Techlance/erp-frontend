@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 // routes
 import LedgerRoutes from "./LedgerRoutes";
 import CurrencyRoutes from "./CurrencyRoutes";
+import VoucherTypeRoutes from "./VoucherTypeRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -21,6 +22,12 @@ const MasterRoutes = () => {
         <Route
           path="/company/:mid/master/currency"
           component={CurrencyRoutes}
+        />
+
+        {/* Routes for Voucher Types */}
+        <Route
+          path="/company/:mid/master/voucher-type"
+          component={VoucherTypeRoutes}
         />
       </React.Fragment>
     </Route>

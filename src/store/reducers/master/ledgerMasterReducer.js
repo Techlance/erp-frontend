@@ -1,6 +1,7 @@
 // action - state management
 import * as actionTypes from "../../actions";
-//-----------------------|| USER MANAGEMENT REDUCER ||-----------------------//
+
+//-----------------------|| LEDGER MASTER REDUCER ||-----------------------//
 
 // constant
 const initialState = {
