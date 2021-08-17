@@ -16,6 +16,7 @@ import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useSelector } from "react-redux";
 import CategorySelect from "../../../../components/CostCenter/CategorySelect";
 import ParentGroupSelect from "../../../../components/CostCenter/ParentGroupSelect";
+import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -74,7 +75,7 @@ const CostCenterForm = () => {
   useEffect(() => {
     if (cost_center_details) {
       setCheckList({
-        // Ledgers: cost_center_details.ledger_master,
+        "Cost Center": cost_center_details.child,
       });
       setValues({ ...cost_center_details });
     } else getCostCenterDetails(cen_id);
@@ -164,8 +165,9 @@ const CostCenterForm = () => {
             </Grid>
           </SubCard>
         </Grid>
-        <ConfirmDeleteDialog
-          open={showDeleteModal}
+        <ProtectedDeleteDialog
+          checkList={checkList}
+          showDeleteModal={showDeleteModal}
           handleAgree={() => {
             deleteCostCenter(values.id);
             history.replace(`/company/${mid}/master/cost-center/center`);

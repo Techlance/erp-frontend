@@ -11,6 +11,7 @@ const ProtectedDeleteDialog = ({
   body,
 }) => {
   let check = { ...checkList };
+  console.log(checkList);
   Object.keys(check).map((key) => {
     if (check[key]) {
       if (!check[key].length > 0) delete check[key];

@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 // routes
 import LedgerRoutes from "./LedgerRoutes";
 import CurrencyRoutes from "./CurrencyRoutes";
+import CostCenterRoutes from "./CostCenterRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 

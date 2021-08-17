@@ -14,9 +14,9 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 
 // project imports
 import useCostCenter from "../../../../hooks/useCostCenter";
-import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useSelector } from "react-redux";
 import config from "../../../../config";
+import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -55,14 +55,9 @@ const CostCategoryForm = () => {
     });
   };
 
-  const handleChecked = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.checked,
-    });
-  };
-
   const { cat_id, mid } = useParams();
+
+  const [checkList, setCheckList] = useState({});
 
   useEffect(() => {
     if (cost_category) {
@@ -70,6 +65,9 @@ const CostCategoryForm = () => {
 
       if (category) {
         setValues(category);
+        setCheckList({
+          cost_center: category.cost_center,
+        });
       } else {
         history.replace(config.defaultPath);
       }
@@ -109,7 +107,7 @@ const CostCategoryForm = () => {
                         variant="contained"
                         color="primary"
                         onClick={(e) => {
-                          updateCostCategory(values);
+                          handleUpdateCostCategory();
                         }}
                         startIcon={<SaveIcon />}
                       >
@@ -122,7 +120,9 @@ const CostCategoryForm = () => {
                       <Button
                         variant="contained"
                         color="error"
-                        onClick={() => setShowDeleteModal(true)}
+                        onClick={() => {
+                          setShowDeleteModal(true);
+                        }}
                         startIcon={<DeleteIcon />}
                       >
                         Delete
@@ -135,8 +135,9 @@ const CostCategoryForm = () => {
           </Grid>
         </SubCard>
       </Grid>
-      <ConfirmDeleteDialog
-        open={showDeleteModal}
+      <ProtectedDeleteDialog
+        checkList={checkList}
+        showDeleteModal={showDeleteModal}
         handleAgree={() => {
           deleteCostCategory(values.id);
           history.replace(`/company/${mid}/master/cost-center/cost-category`);
