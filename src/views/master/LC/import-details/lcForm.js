@@ -9,27 +9,27 @@ import {
   TextField,
   Typography,
   IconButton,
+  Switch,
+  FormControlLabel,
 } from "@material-ui/core";
 
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 // assets
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import { gridSpacing } from "../../../store/constant";
-import SubCard from "../../../ui-component/cards/SubCard";
-import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import { gridSpacing } from "../../../../store/constant";
+import SubCard from "../../../../ui-component/cards/SubCard";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
 
 // project imports
-import useCompany from "../../../hooks/useCompany";
-import CurrencySelect from "../../../components/company/CurrencySelect";
-import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
-import ImageUpdateDialog from "../../../components/company/ImageUpdateDialog";
-import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
+import useCompany from "../../../../hooks/useCompany";
+import CurrencySelect from "../../../../components/company/CurrencySelect";
+import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useSelector } from "react-redux";
-import LoadingButton from "../../../ui-component/LoadingButton";
+import LoadingButton from "../../../../ui-component/LoadingButton";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -45,15 +45,23 @@ const useStyles = makeStyles((theme) => ({
 
 //-----------------------|| Company Form ||-----------------------//
 
-const CompanyForm = () => {
+const LcForm = () => {
   const classes = useStyles();
   const history = useHistory();
+
+  const { pathname } = useLocation();
+
+  let flag = true; // Show Payables for import
+  if (pathname.endsWith("/export/", 27)) {
+    //Show Recievables for export
+    flag = false;
+  }
 
   const { current_company } = useSelector((state) => state.company);
   const { updateCompany, deleteCompany } = useCompany();
 
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
-  const [showImageModal, setShowImageModal] = useState(false);
+  //   const [showImageModal, setShowImageModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [clicked, setClicked] = useState(false);
 
@@ -70,6 +78,13 @@ const CompanyForm = () => {
     setValues({
       ...values,
       [key]: value,
+    });
+  };
+
+  const handleChecked = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.checked,
     });
   };
 
@@ -92,207 +107,243 @@ const CompanyForm = () => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      <Grid item sm={6} md={4}>
-        <SubCard title="Company Logo" contentClass={classes.accountContent}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Avatar
-                alt={values?.company_name}
-                src={values?.logo}
-                className={classes.accountAvatar}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="subtitle2" align="center">
-                Upload/Change Company Logo
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <AnimateButton>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  onClick={() => setShowImageModal(true)}
-                  startIcon={<CloudUploadIcon />}
-                >
-                  Upload Logo
-                </Button>
-              </AnimateButton>
-
-              <ImageUpdateDialog
-                open={showImageModal}
-                handleClose={() => setShowImageModal(false)}
-                handleFileUpload={handleFileUpload}
-                values={values}
-              />
-            </Grid>
-          </Grid>
-        </SubCard>
-      </Grid>
-
       <Grid item sm={6} md={8}>
-        <SubCard title="Edit Account Details">
+        <SubCard title="Edit LC Details">
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                id="company_name"
-                label="Company Name"
-                value={values.company_name}
+                id="trans_type"
+                label="Transaction Type"
+                value={values.trans_type}
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="lc_date"
+                label="LC Date"
+                InputLabelProps={{ shrink: true }}
+                type="date"
+                value={values.lc_date}
+                onChange={handleChange}
+              />
+            </Grid>
+            {flag ? (
+              <Grid item xs={12} sm={6}>
+                <CurrencySelect
+                  captionLabel="Party Code(Payables)"
+                  InputLabelProps={{ shrink: true }}
+                  selected={values.party_code}
+                  onChange={handleSelect}
+                />
+              </Grid>
+            ) : (
+              <Grid item xs={12} sm={6}>
+                <CurrencySelect
+                  captionLabel="Party Code(Receivables)"
+                  InputLabelProps={{ shrink: true }}
+                  selected={values.party_code}
+                  onChange={handleSelect}
+                />
+              </Grid>
+            )}
+            <Grid item xs={12} sm={6}>
+              <CurrencySelect
+                captionLabel="Cost Center"
+                InputLabelProps={{ shrink: true }}
+                selected={values.cost_center}
+                onChange={handleSelect}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="applicant_bank"
+                label="Applicant Bank"
+                value={values.applicant_bank}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="applicant_bank_lc_no"
+                label="Applicant Bank LC No."
+                value={values.applicant_bank_lc_no}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="benificiary_bank"
+                label="Beneficiary Bank"
+                value={values.benificiary_bank}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="benificiary_bank_lc_no"
+                label="Beneficiary Bank LC No."
+                value={values.benificiary_bank_lc_no}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    id="inspection"
+                    checked={values.inspection}
+                    onChange={handleChecked}
+                    name="inspection"
+                    color="primary"
+                  />
+                }
+                label="Inspection Certificate"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="bank_ref"
+                label="Bank Ref."
+                InputLabelProps={{ shrink: true }}
+                value={values.bank_ref}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="days_for_submit_to_bank"
+                label="Days Remaining To Return To Bank"
+                type="number"
+                value={values.days_for_submit_to_bank}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="payment_terms"
+                label="Payment Terms"
+                value={values.payment_terms}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="place_of_taking_incharge"
+                label="Incharge Taking Place"
+                value={values.place_of_taking_incharge}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                fullWidth
+                id="final_destiantion_of_delivery"
+                label="Final Delivery Destination"
+                value={values.final_destiantion_of_delivery}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    id="completed"
+                    checked={values.completed}
+                    onChange={handleChecked}
+                    name="completed"
+                    color="primary"
+                  />
+                }
+                label="Completed"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
                 multiline
-                id="address"
-                label="Address"
-                value={values.address}
+                id="shipment_terms"
+                label="Shipment Terms"
                 InputLabelProps={{ shrink: true }}
+                value={values.shipment_terms}
                 onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                fullWidth
+                multiline
+                id="goods_description"
+                label="Goods Description"
+                InputLabelProps={{ shrink: true }}
+                value={values.goods_description}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                fullWidth
+                multiline
+                id="other_lc_terms"
+                label="Other LC Terms"
+                InputLabelProps={{ shrink: true }}
+                value={values.other_lc_terms}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <CurrencySelect
+                captionLabel="Bank A/C"
+                InputLabelProps={{ shrink: true }}
+                selected={values.bank_ac}
+                onChange={handleSelect}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                id="country"
-                label="Country"
-                value={values.country}
+                id="expiry_date"
+                label="Expiry Date"
                 InputLabelProps={{ shrink: true }}
+                type="date"
+                InputProps={{ inputProps: { min: values.lc_date } }}
+                value={values.expiry_date}
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
-                id="state"
-                label="State"
-                value={values.state}
-                InputLabelProps={{ shrink: true }}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="email"
-                InputLabelProps={{ shrink: true }}
-                label="Email"
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="website"
-                label="Website"
-                InputLabelProps={{ shrink: true }}
-                value={values.website}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="contact_no"
-                label="Contact Number"
+                id="lc_amount"
+                label="LC Amount"
                 type="number"
-                value={values.contact_no}
+                value={values.lc_amount}
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Stack direction="row">
-                <CurrencySelect
-                  captionLabel="Base Currency"
-                  InputLabelProps={{ shrink: true }}
-                  selected={values.base_currency}
-                  onChange={handleSelect}
-                />
-
-                <IconButton
-                  aria-label="add-currency"
-                  onClick={() => setShowAddCurrencyModal(true)}
-                >
-                  <AddCircleOutlineIcon fontSize="medium" />
-                </IconButton>
-
-                <AddCurrenyDialog
-                  open={showAddCurrencyModal}
-                  handleClose={() => setShowAddCurrencyModal(false)}
-                />
-              </Stack>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="cr_no"
-                label="CR. No."
-                InputLabelProps={{ shrink: true }}
-                value={values.cr_no}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="registration_no"
-                label="Registration No."
-                value={values.registration_no}
-                InputLabelProps={{ shrink: true }}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="tax_id_no"
-                label="Tax ID No."
-                InputLabelProps={{ shrink: true }}
-                value={values.tax_id_no}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="vat_id_no"
-                label="VAT ID No."
-                InputLabelProps={{ shrink: true }}
-                value={values.vat_id_no}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="year_start_date"
-                label="Year Start Date"
-                InputLabelProps={{ shrink: true }}
-                type="date"
-                value={values.year_start_date}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="year_end_date"
-                label="Year End Date"
-                InputLabelProps={{ shrink: true }}
-                type="date"
-                InputProps={{ inputProps: { min: values.year_end_date } }}
-                value={values.year_end_date}
-                onChange={handleChange}
-              />
-            </Grid>
             <Grid item xs={12}>
               <Stack direction="row">
                 <Grid container justifyContent="space-between">
@@ -340,4 +391,4 @@ const CompanyForm = () => {
   );
 };
 
-export default CompanyForm;
+export default LcForm;

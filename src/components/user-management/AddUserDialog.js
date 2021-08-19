@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Grid, Switch, FormControlLabel } from "@material-ui/core";
+import { Grid, Switch, FormControlLabel, Stack } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../store/constant";
@@ -52,6 +52,13 @@ const AddUserDialog = ({ open, handleClose }) => {
     setClicked(true);
     await createUser(values);
     setClicked(false);
+    setValues({
+      name: "",
+      email: "",
+      is_superuser: false,
+      created_by: user.email,
+    });
+    handleClose();
   };
 
   return (
@@ -121,23 +128,33 @@ const AddUserDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button
-          color="error"
-          variant="contained"
-          size="small"
-          onClick={handleClose}
-        >
-          Cancel
-        </Button>
-        <Button
-          color="primary"
-          variant="contained"
-          size="small"
-          onClick={handleCreateUser}
-          disabled={clicked}
-        >
-          Add
-        </Button>
+        <Grid item xs={11.7}>
+          <Stack direction="row">
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Button
+                  color="error"
+                  variant="contained"
+                  size="medium"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  size="medium"
+                  onClick={handleCreateUser}
+                  disabled={clicked}
+                >
+                  Add
+                </Button>
+              </Grid>
+            </Grid>
+          </Stack>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

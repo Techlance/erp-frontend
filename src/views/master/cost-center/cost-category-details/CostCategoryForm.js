@@ -87,7 +87,7 @@ const CostCategoryForm = () => {
       <Grid item sm={6} md={8}>
         <SubCard title="Edit Cost Category">
           <Grid container spacing={gridSpacing}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
                 id="name"
@@ -100,21 +100,7 @@ const CostCategoryForm = () => {
 
             <Grid item xs={12}>
               <Stack direction="row">
-                <Grid container spacing={3}>
-                  <Grid item>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={(e) => {
-                          handleUpdateCostCategory();
-                        }}
-                        startIcon={<SaveIcon />}
-                      >
-                        Update Details
-                      </Button>
-                    </AnimateButton>
-                  </Grid>
+                <Grid container justifyContent="space-between">
                   <Grid item>
                     <AnimateButton>
                       <Button
@@ -129,6 +115,20 @@ const CostCategoryForm = () => {
                       </Button>
                     </AnimateButton>
                   </Grid>
+                  <Grid item>
+                    <AnimateButton>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={(e) => {
+                          handleUpdateCostCategory();
+                        }}
+                        startIcon={<SaveIcon />}
+                      >
+                        Update Details
+                      </Button>
+                    </AnimateButton>
+                  </Grid>
                 </Grid>
               </Stack>
             </Grid>
@@ -140,7 +140,7 @@ const CostCategoryForm = () => {
         showDeleteModal={showDeleteModal}
         handleAgree={() => {
           deleteCostCategory(values.id);
-          history.replace(`/company/${mid}/master/cost-center/cost-category`);
+          history.replace(`/company/${mid}/master/cost-center/category`);
         }}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"

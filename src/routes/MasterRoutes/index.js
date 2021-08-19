@@ -5,6 +5,7 @@ import { Route } from "react-router-dom";
 import LedgerRoutes from "./LedgerRoutes";
 import CurrencyRoutes from "./CurrencyRoutes";
 import CostCenterRoutes from "./CostCenterRoutes";
+import LcRoutes from "./lcRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -23,6 +24,8 @@ const MasterRoutes = () => {
           path="/company/:mid/master/cost-center"
           component={CostCenterRoutes}
         />
+
+        <Route path="/company/:mid/master/lc" component={LcRoutes} />
 
         {/* Routes for Currency */}
         <Route

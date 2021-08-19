@@ -1,5 +1,6 @@
 // actions
 import { VIEW_USER, VIEW_USER_BY_ID } from "../../store/actions";
+import { dataToForm } from "../../utils";
 
 // project imports
 import instance from "../../utils/axios";
@@ -30,7 +31,9 @@ const getUserAccountsAsync = async (dispatch) => {
 
 const createUserAccountAsync = async (data, dispatch) => {
   delete data.id;
-  const response = await instance.post("/user/add-user", data);
+  const form = dataToForm(data);
+
+  const response = await instance.post("/user/add-user", form);
 
   sendNotification({
     dispatch,
@@ -39,7 +42,8 @@ const createUserAccountAsync = async (data, dispatch) => {
 };
 
 const updateUserAccountAsync = async (data, dispatch) => {
-  const response = await instance.put(`/user/edit-user/${data.id}`, data);
+  const form = dataToForm(data);
+  const response = await instance.put(`/user/edit-user/${data.id}`, form);
 
   sendNotification({
     dispatch,

@@ -35,3 +35,6 @@ export * from "./master/ledger-master/cost-category";
 
 // 2. Cost Center
 export * from "./master/ledger-master/cost-center/cost-center";
+
+// 3. LC
+export * from "./master/LC/lc_import";

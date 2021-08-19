@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { IconButton, Grid } from "@material-ui/core";
+import { IconButton, Grid, Stack } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../store/constant";
@@ -21,7 +21,6 @@ import {
 } from "@material-ui/core";
 
 import SaveIcon from "@material-ui/icons/SaveRounded";
-import CancelIcon from "@material-ui/icons/Cancel";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
@@ -110,7 +109,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby="create-company"
+      aria-labelledby="create-cost-center"
       fullWidth
       maxWidth="sm"
     >
@@ -122,7 +121,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
           <Typography variant="body2">Create a new cost center.</Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
           <Grid item xs={12} sm={6}>
             <CategorySelect
               captionLabel="Cost Category"
@@ -156,19 +155,34 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="error">
-          Cancel
-        </Button>
-        <LoadingButton
-          color="primary"
-          variant="contained"
-          size="small"
-          onClick={createCostCenter}
-          loading={clicked}
-          startIcon={<SaveIcon />}
-        >
-          Add
-        </LoadingButton>
+        <Grid item xs={11.7}>
+          <Stack direction="row">
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Button
+                  onClick={handleClose}
+                  color="error"
+                  size="small"
+                  variant="contained"
+                >
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <LoadingButton
+                  color="primary"
+                  variant="contained"
+                  size="small"
+                  onClick={createCostCenter}
+                  loading={clicked}
+                  startIcon={<SaveIcon />}
+                >
+                  Add
+                </LoadingButton>
+              </Grid>
+            </Grid>
+          </Stack>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

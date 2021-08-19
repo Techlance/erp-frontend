@@ -1,5 +1,6 @@
 // actions
 import { VIEW_USER_COMPANY_GROUP } from "../../store/actions";
+import { dataToForm } from "../../utils";
 
 // project imports
 import instance from "../../utils/axios";
@@ -19,7 +20,9 @@ const getUserCompanyGroupByID = async (id, dispatch) => {
 };
 
 const createUserCompanyGroupAsync = async (data, dispatch) => {
-  const response = await instance.post("/company/add-user-company", data);
+  const form = dataToForm(data);
+
+  const response = await instance.post("/company/add-user-company", form);
 
   sendNotification({
     dispatch,
@@ -28,9 +31,10 @@ const createUserCompanyGroupAsync = async (data, dispatch) => {
 };
 
 const updateUserCompanyGroupAsync = async (data, dispatch) => {
+  const form = dataToForm(data);
   const response = await instance.put(
     `/company/edit-user-company/${data.id}`,
-    data
+    form
   );
 
   sendNotification({

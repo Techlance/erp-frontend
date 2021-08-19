@@ -69,6 +69,23 @@ const AddCompanyDialog = ({ open, handleClose }) => {
     setClicked(true);
     await createCompany(values);
     setClicked(false);
+    setValues({
+      company_name: "",
+      base_currency: { id: 0 },
+      address: "",
+      country: "",
+      state: "",
+      email: "",
+      website: "",
+      contact_no: "",
+      cr_no: "",
+      registration_no: "",
+      tax_id_no: "",
+      vat_id_no: "",
+      year_start_date: "",
+      year_end_date: "",
+      created_by: user.email,
+    });
     handleClose();
   };
 
@@ -77,15 +94,15 @@ const AddCompanyDialog = ({ open, handleClose }) => {
       open={open}
       onClose={handleClose}
       aria-labelledby="create-company"
-      fullWidth
-      maxWidth="sm"
+      fullWidth="true"
+      maxWidth="md"
     >
       <DialogTitle id="form-dialog-title">
         <Typography variant="h4">Create Company</Typography>
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Create a new company.</Typography>
+          <Typography variant="body2">Create a New Company Record.</Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={6}>
@@ -241,7 +258,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
               label="Year End Date"
               InputLabelProps={{ shrink: true }}
               type="date"
-              InputProps={{ inputProps: { min: values.year_end_date } }}
+              InputProps={{ inputProps: { min: values.year_start_date } }}
               value={values.year_end_date}
               onChange={handleChange}
             />
@@ -249,23 +266,33 @@ const AddCompanyDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button
-          onClick={handleClose}
-          color="error"
-          size="small"
-          variant="contained"
-        >
-          Cancel
-        </Button>
-        <Button
-          color="primary"
-          size="small"
-          variant="contained"
-          disabled={clicked}
-          onClick={handleCreateCompany}
-        >
-          Add
-        </Button>
+        <Grid item xs={11.8}>
+          <Stack direction="row">
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Button
+                  onClick={handleClose}
+                  color="error"
+                  size="medium"
+                  variant="contained"
+                >
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="primary"
+                  size="medium"
+                  variant="contained"
+                  disabled={clicked}
+                  onClick={handleCreateCompany}
+                >
+                  Add
+                </Button>
+              </Grid>
+            </Grid>
+          </Stack>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

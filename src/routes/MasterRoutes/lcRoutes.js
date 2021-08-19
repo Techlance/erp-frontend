@@ -5,39 +5,40 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import MainLayout from "../../layout/MainLayout";
 import Loadable from "../../ui-component/Loadable";
 import AuthGuard from "../../utils/route-guard/AuthGuard";
-import CostCategoryDetails from "../../views/master/cost-center/cost-category-details";
+// import CostCategoryDetails from "../../views/master/cost-center/cost-category-details";
 import CompanyGuard from "../../utils/route-guard/CompanyGuard";
-import CostCenterDetails from "../../views/master/cost-center/cost-center-details";
+import LcDetails from "../../views/master/LC/import-details";
 
-// cost category page routing
-const CostCenter = Loadable(
-  lazy(() => import("../../views/master/cost-center/cost-category"))
-);
-const Center = Loadable(
-  lazy(() => import("../../views/master/cost-center/cost-center-sub-menu"))
-);
+// lc page routing
 
-//-----------------------|| Companies Routing ||-----------------------//
-const CostCenterRoutes = ({ match }) => {
+const lc = Loadable(lazy(() => import("../../views/master/LC/Import")));
+// const Center = Loadable(
+//   lazy(() => import("../../views/master/cost-center/cost-center-sub-menu"))
+// );
+
+//-----------------------|| LC Routing ||-----------------------//
+const LcRoutes = ({ match }) => {
   const location = useLocation();
 
   let routes = [
     {
-      url: "/category/:cat_id",
-      component: CostCategoryDetails,
+      // url: "/import/:lc_id",
+      url: "/import/1",
+      component: LcDetails,
     },
     {
-      url: "/center/:cen_id",
-      component: CostCenterDetails,
+      // url: "/export/:lc_id",
+      url: "/export/1",
+      component: LcDetails,
     },
 
     {
-      url: "/category",
-      component: CostCenter,
+      url: "/import",
+      component: lc,
     },
     {
-      url: "/center",
-      component: Center,
+      url: "/export",
+      component: lc,
     },
   ];
   return (
@@ -62,4 +63,4 @@ const CostCenterRoutes = ({ match }) => {
   );
 };
 
-export default CostCenterRoutes;
+export default LcRoutes;

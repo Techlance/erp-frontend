@@ -14,6 +14,7 @@ import {
   Tabs,
   Typography,
   Avatar,
+  Stack,
 } from "@material-ui/core";
 
 // project imports
@@ -253,49 +254,45 @@ const CompanyDetails = () => {
           <Divider />
 
           <CardActions>
-            <Grid
+            {/* <Grid
               container
               flex
               justifyContent="space-between"
               flexDirection="row"
-            >
-              <Grid item xs={12} lg={4}></Grid>
-              <Grid
-                item
-                xs={12}
-                lg={8}
-                flex
-                justifyContent="space-between"
-                flexDirection="row"
-              >
-                {value !== 0 ? (
+            > */}
+
+            <Grid item xs={12}>
+              <Stack direction="row">
+                <Grid container justifyContent="space-between">
+                  {value !== 0 ? (
+                    <Grid item>
+                      <AnimateButton>
+                        <Button
+                          variant="contained"
+                          size="large"
+                          color="error"
+                          onClick={() => setShowDeleteModal(true)}
+                        >
+                          Delete
+                        </Button>
+                      </AnimateButton>
+                    </Grid>
+                  ) : null}
                   <Grid item>
                     <AnimateButton>
                       <Button
                         variant="contained"
                         size="large"
-                        color="error"
-                        onClick={() => setShowDeleteModal(true)}
+                        color="primary"
+                        onClick={handleUpdateUserGroup}
+                        disabled={clicked}
                       >
-                        Delete
+                        {value === 0 ? "Create" : "Update"}
                       </Button>
                     </AnimateButton>
                   </Grid>
-                ) : null}
-                <Grid item>
-                  <AnimateButton>
-                    <Button
-                      variant="contained"
-                      size="large"
-                      color="primary"
-                      onClick={handleUpdateUserGroup}
-                      disabled={clicked}
-                    >
-                      {value === 0 ? "Create" : "Update"}
-                    </Button>
-                  </AnimateButton>
                 </Grid>
-              </Grid>
+              </Stack>
             </Grid>
           </CardActions>
           <ConfirmDeleteDialog

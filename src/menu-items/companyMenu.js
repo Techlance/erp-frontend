@@ -83,7 +83,7 @@ export const company_menu = {
               id: "cost-category",
               title: <FormattedMessage id="menu.cost-category" />,
               type: "item",
-              url: `/company/:mid/master/cost-center/cost-category`,
+              url: `/company/:mid/master/cost-center/category`,
             },
             {
               id: "cost-center",
@@ -130,19 +130,19 @@ export const company_menu = {
           id: "lc",
           title: <FormattedMessage id="menu.lc" />,
           type: "collapse",
-          //   url: "/admin/companies",
+          // url: `/company/:mid/master/lc/import`,
           children: [
             {
               id: "import",
               title: <FormattedMessage id="menu.import" />,
               type: "item",
-              //   url: "/admin/companies",
+              url: `/company/:mid/master/lc/import`,
             },
             {
               id: "export",
               title: <FormattedMessage id="menu.export" />,
               type: "item",
-              //   url: "/admin/companies",
+              url: `/company/:mid/master/lc/export`,
             },
           ],
         },

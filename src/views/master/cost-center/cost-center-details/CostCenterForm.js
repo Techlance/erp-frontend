@@ -9,6 +9,8 @@ import { useHistory, useParams } from "react-router";
 import { gridSpacing } from "../../../../store/constant";
 import SubCard from "../../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
+import SaveIcon from "@material-ui/icons/SaveRounded";
 
 // project imports
 import useCostCenter from "../../../../hooks/useCostCenter";
@@ -134,7 +136,19 @@ const CostCenterForm = () => {
 
               <Grid item xs={12}>
                 <Stack direction="row">
-                  <Grid container spacing={3}>
+                  <Grid container justifyContent="space-between">
+                    <Grid item>
+                      <AnimateButton>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => setShowDeleteModal(true)}
+                          startIcon={<DeleteIcon />}
+                        >
+                          Delete
+                        </Button>
+                      </AnimateButton>
+                    </Grid>
                     <Grid item>
                       <AnimateButton>
                         <Button
@@ -143,19 +157,9 @@ const CostCenterForm = () => {
                           onClick={(e) => {
                             handleUpdateCostCenter();
                           }}
+                          startIcon={<SaveIcon />}
                         >
                           Update Details
-                        </Button>
-                      </AnimateButton>
-                    </Grid>
-                    <Grid item>
-                      <AnimateButton>
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => setShowDeleteModal(true)}
-                        >
-                          Delete
                         </Button>
                       </AnimateButton>
                     </Grid>

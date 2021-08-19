@@ -10,6 +10,7 @@ import {
   DialogTitle,
   Typography,
   Grid,
+  Stack,
 } from "@material-ui/core";
 
 // project imports
@@ -99,17 +100,32 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="error">
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          size="small"
-          onClick={handleAddCompany}
-          color="primary"
-        >
-          Add
-        </Button>
+        <Grid item xs={11.7}>
+          <Stack direction="row">
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Button
+                  onClick={handleClose}
+                  color="error"
+                  variant="contained"
+                  size="medium"
+                >
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={handleAddCompany}
+                  color="primary"
+                >
+                  Add
+                </Button>
+              </Grid>
+            </Grid>
+          </Stack>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

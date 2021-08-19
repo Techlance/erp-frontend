@@ -13,8 +13,6 @@ import { useLocation } from "react-router";
 const MenuList = () => {
   const { pathname } = useLocation();
 
-  console.log(pathname.startsWith("/company"));
-
   let items;
   if (pathname.startsWith("/company")) {
     items = [company_menu];

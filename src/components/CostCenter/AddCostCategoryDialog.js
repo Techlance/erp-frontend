@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Grid } from "@material-ui/core";
+import { Grid, Stack } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../store/constant";
@@ -20,7 +20,6 @@ import {
 import useAuth from "../../hooks/useAuth";
 import useCostCenter from "../../hooks/useCostCenter";
 import useComapanyMaster from "../../hooks/useCompanyMaster";
-import { create } from "@material-ui/core/styles/createTransitions";
 
 const AddCostCategoryDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -70,7 +69,7 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
           <Typography variant="body2">Create a new cost category.</Typography>
         </DialogContentText> */}
         <Grid container spacing={gridSpacing}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <TextField
               fullWidth
               id="name"
@@ -83,20 +82,35 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="error">
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          size="small"
-          onClick={() => {
-            createCostCategory();
-            handleClose();
-          }}
-          color="primary"
-        >
-          Add
-        </Button>
+        <Grid item xs={11.7}>
+          <Stack direction="row">
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Button
+                  onClick={handleClose}
+                  color="error"
+                  size="medium"
+                  variant="contained"
+                >
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => {
+                    createCostCategory();
+                    handleClose();
+                  }}
+                  color="primary"
+                >
+                  Add
+                </Button>
+              </Grid>
+            </Grid>
+          </Stack>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

@@ -12,6 +12,7 @@ const reducer = combineReducers({
   userPermissions: reducers.userPermissionsReducer,
   ledgerMaster: reducers.ledgerMasterReducer,
   costCenter: reducers.costCenterReducer,
+  lc: reducers.lcReducer,
 });
 
 export default reducer;

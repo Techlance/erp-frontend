@@ -12,6 +12,7 @@ import {
   TextField,
   Typography,
   Grid,
+  Stack,
 } from "@material-ui/core";
 
 // project imports
@@ -66,7 +67,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
       created_by: user.email,
       file: null,
     });
-
+    setClicked(false);
     handleClose();
   };
 
@@ -116,23 +117,33 @@ const AddDocumentDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button
-          onClick={handleClose}
-          color="error"
-          variant="contained"
-          size="small"
-        >
-          Cancel
-        </Button>
-        <Button
-          color="primary"
-          variant="contained"
-          size="small"
-          onClick={handleSubmit}
-          disabled={clicked}
-        >
-          Add
-        </Button>
+        <Grid item xs={11.7}>
+          <Stack direction="row">
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Button
+                  onClick={handleClose}
+                  color="error"
+                  variant="contained"
+                  size="medium"
+                >
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  size="medium"
+                  onClick={handleSubmit}
+                  disabled={clicked}
+                >
+                  Add
+                </Button>
+              </Grid>
+            </Grid>
+          </Stack>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

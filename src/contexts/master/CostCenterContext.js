@@ -81,7 +81,7 @@ export const CostCenterProvider = ({ children }) => {
   const deleteCostCenter = async (id) => {
     await deleteCostCenterAsync(id, dispatch);
 
-    await getCostCenterAsync(id, dispatch);
+    // await getCostCenterAsync(id, dispatch);
   };
 
   if (loading) {

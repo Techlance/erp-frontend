@@ -43,7 +43,7 @@ const SelectGroup = () => {
                 color="primary"
                 onClick={() => setShowAddModal(true)}
               >
-                Add Company Group
+                Assign a Company
               </Button>
             </AnimateButton>
           </Grid>
