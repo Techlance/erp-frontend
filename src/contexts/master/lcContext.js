@@ -13,6 +13,17 @@ import {
   addLCAsync,
   updateLCAsync,
   deleteLCAsync,
+  createLCDocAsync,
+  getSelectedLCDocsAsync,
+  deleteLCDocAsync,
+  getLCAmendAsync,
+  createLCAmendAsync,
+  updateLCAmendAsync,
+  deleteLCAmendAsync,
+  getCostCenterAsync,
+  getPartyCodePayAsync,
+  getPartyCodeReceiveAsync,
+  getBankAcAsync,
 } from "../../api";
 
 // constant
@@ -31,6 +42,22 @@ export const LcProvider = ({ children }) => {
 
   const getLC = async (id) => {
     await getLCAsync(id, dispatch);
+  };
+
+  const getCostCenter = async (id) => {
+    await getCostCenterAsync(id, dispatch);
+  };
+
+  const getPartyCodePay = async (id) => {
+    await getPartyCodePayAsync(id, dispatch);
+  };
+
+  const getPartyCodeReceive = async (id) => {
+    await getPartyCodeReceiveAsync(id, dispatch);
+  };
+
+  const getBankAc = async (id) => {
+    await getBankAcAsync(id, dispatch);
   };
 
   const addLC = async (data) => {
@@ -52,6 +79,45 @@ export const LcProvider = ({ children }) => {
     // await getLCAsync(id, dispatch);
   };
 
+  const getLCAmend = async (id) => {
+    await getLCAmendAsync(id, dispatch);
+  };
+
+  const addLCAmend = async (data) => {
+    await createLCAmendAsync(data, dispatch);
+
+    await getLCAmendAsync(data.company_master_id, dispatch);
+  };
+
+  const updateLCAmend = async (data) => {
+    await updateLCAmendAsync(data, dispatch);
+
+    await getLCAmendAsync(data.company_master_id, dispatch);
+    // await getSelectedCompanyAsync(data.id, dispatch);
+  };
+
+  const deleteLCAmend = async (id) => {
+    await deleteLCAmendAsync(id, dispatch);
+
+    // await getLCAmendAsync(id, dispatch);
+  };
+
+  const getSelectedLcDocs = async (id) => {
+    await getSelectedLCDocsAsync(id, dispatch);
+  };
+
+  const createLcDocs = async (data) => {
+    await createLCDocAsync(data, dispatch);
+
+    await getSelectedLCDocsAsync(state.current_company.id, dispatch);
+  };
+
+  const deleteLcDoc = async (id, lc_id) => {
+    await deleteLCDocAsync(id, dispatch);
+
+    await getSelectedLCDocsAsync(lc_id, dispatch);
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -64,6 +130,17 @@ export const LcProvider = ({ children }) => {
         addLC,
         updateLC,
         deleteLC,
+        getSelectedLcDocs,
+        createLcDocs,
+        deleteLcDoc,
+        getLCAmend,
+        updateLCAmend,
+        addLCAmend,
+        deleteLCAmend,
+        getCostCenter,
+        getPartyCodePay,
+        getPartyCodeReceive,
+        getBankAc,
       }}
     >
       {children}

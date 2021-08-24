@@ -19,6 +19,9 @@ import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
 import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
 import DynamicFeedTwoToneIcon from "@material-ui/icons/DynamicFeedTwoTone";
 import AddAmendmentDialog from "../../../../components/master/LC/AddAmendmentDialog";
+import LCDocumentForm from "./LCDocumentForm";
+import AddLCDocumentDialog from "../../../../components/master/LC/AddLCDocumentDialog";
+import LCForm from "./LCDetails";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -166,10 +169,10 @@ const LcDetails = () => {
           <LcForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <CompanyDocumentForm />
+          <LCDocumentForm />
         </TabPanel>
       </div>
-      <AddDocumentDialog
+      <AddLCDocumentDialog
         open={showAddModal}
         handleClose={() => setShowAddModal(false)}
       />

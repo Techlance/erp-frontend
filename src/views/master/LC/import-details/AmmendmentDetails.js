@@ -17,20 +17,21 @@ import AddCostCenterDialog from "../../../../components/CostCenter/AddCostCenter
 import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import useCostCenter from "../../../../hooks/useCostCenter";
 import { useLocation } from "react-router";
+import { number } from "prop-types";
 
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const [costCenter] = useSelector((state) => [state.costCenter]);
+  //   const [costCenter] = useSelector((state) => [state.costCenter]);
 
-  const { company } = useComapanyMaster();
+  //   const { company } = useComapanyMaster();
 
-  const { cost_center } = costCenter;
+  //   const { cost_center } = costCenter;
 
-  const { getCostCenter } = useCostCenter();
+  //   const { getCostCenter } = useCostCenter();
 
-  const [loading, setLoading] = useState(true);
+  //   const [loading, setLoading] = useState(true);
 
   const { pathname } = useLocation();
 
@@ -39,7 +40,6 @@ const SelectGroup = () => {
       field: "id",
       headerName: "Edit",
       flex: 0.2,
-      type: "number",
       headerAlign: "left",
       align: "left",
       renderCell: (params) => (
@@ -56,38 +56,55 @@ const SelectGroup = () => {
       ),
     },
     {
-      field: "cost_center_name",
-      headerName: "Cost Center Name",
-      flex: 0.4,
-    },
-    {
-      field: "cost_category_id",
-      headerName: "Cost Category",
-      flex: 0.5,
-    },
-    {
-      field: "child_of",
-      headerName: "Child Of",
+      field: "issue_date",
+      headerName: "Issue Date",
       flex: 0.4,
       valueFormatter: (params) => {
-        return params.value || "Primary";
+        return formatDate(params.value);
       },
+    },
+    {
+      field: "LDS",
+      headerName: "LDS",
+      flex: 0.5,
+      valueFormatter: (params) => {
+        return formatDate(params.value);
+      },
+    },
+    {
+      field: "expiry_date",
+      headerName: "Expiry Date",
+      flex: 0.4,
+      valueFormatter: (params) => {
+        return formatDate(params.value);
+      },
+    },
+    {
+      field: "lc_amount",
+      headerName: "LC Amount",
+      type: number,
+      flex: 0.4,
+    },
+    {
+      field: "remarks",
+      headerName: "Remarks",
+      flex: 0.4,
     },
     {
       field: "created_by",
       headerName: "Created By",
       flex: 0.4,
     },
-    // {
-    //   field: "created_on",
-    //   headerName: "Created On",
-    //   flex: 0.3,
-    //   headerAlign: "center",
-    //   align: "center",
-    // valueFormatter: (params) => {
-    //     return formatDate(params.value);
-    //   },
-    // },
+    {
+      field: "created_on",
+      headerName: "Created On",
+      flex: 0.3,
+      headerAlign: "center",
+      align: "center",
+      valueFormatter: (params) => {
+        return formatDate(params.value);
+      },
+    },
   ];
 
   useEffect(() => {

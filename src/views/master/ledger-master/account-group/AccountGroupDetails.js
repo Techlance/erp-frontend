@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Button, Grid, Stack, TextField, makeStyles } from "@material-ui/core";
 
 // project imports
-import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -14,7 +13,6 @@ import SubCard from "../../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
-import config from "../../../../config";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AccountHeadSelect from "../../../../components/master/ledger-master/AccountHeadSelect";

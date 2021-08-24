@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Avatar,
   Button,
   Grid,
   Stack,
@@ -13,10 +13,9 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 
-import { useHistory, useLocation } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 
 // assets
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { gridSpacing } from "../../../../store/constant";
 import SubCard from "../../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
@@ -25,40 +24,79 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
 
 // project imports
-import useCompany from "../../../../hooks/useCompany";
 import CurrencySelect from "../../../../components/company/CurrencySelect";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useSelector } from "react-redux";
 import LoadingButton from "../../../../ui-component/LoadingButton";
+import useLC from "../../../../hooks/useLC";
+import config from "../../../../config";
+import CostCenterSelect from "../../../../components/master/LC/CostCenterSelect";
 
 // style constant
+// const useStyles = makeStyles((theme) => ({
+//   accountAvatar: {
+//     width: "100px",
+//     height: "100px",
+//     margin: "0 auto",
+//   },
+//   accountContent: {
+//     textAlign: "center",
+//   },
+// }));
+
 const useStyles = makeStyles((theme) => ({
-  accountAvatar: {
-    width: "100px",
-    height: "100px",
-    margin: "0 auto",
-  },
-  accountContent: {
-    textAlign: "center",
+  accountTab: {
+    marginBottom: "24px",
+    "& a": {
+      minHeight: "auto",
+      minWidth: "10px",
+      padding: "12px 8px",
+      marginRight: "18px",
+      color: theme.palette.grey[600],
+    },
+    "& a.Mui-selected": {
+      color: theme.palette.primary.main,
+    },
+    "& a > span": {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    "& a > span > svg": {
+      marginBottom: "0px !important",
+      marginRight: "10px",
+    },
+    "& a > span > span + svg": {
+      margin: "0px 0px 0px auto !important",
+      width: "14px",
+      height: "14px",
+    },
   },
 }));
 
-//-----------------------|| Company Form ||-----------------------//
+//-----------------------|| LC Form ||-----------------------//
 
 const LcForm = () => {
   const classes = useStyles();
   const history = useHistory();
 
   const { pathname } = useLocation();
+  console.log(pathname);
 
   let flag = true; // Show Payables for import
-  if (pathname.endsWith("/export/", 27)) {
+  if (pathname.includes("/export")) {
     //Show Recievables for export
     flag = false;
   }
 
+  const { l_c } = useSelector((state) => state.lc);
+
   const { current_company } = useSelector((state) => state.company);
-  const { updateCompany, deleteCompany } = useCompany();
+  // const { updateCompany, deleteCompany } = useCompany();
+  const { getLC, updateLC, deleteLC } = useLC();
+
+  const { lc_id, mid } = useParams();
 
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   //   const [showImageModal, setShowImageModal] = useState(false);
@@ -99,9 +137,22 @@ const LcForm = () => {
     setValues({ ...current_company });
   }, [current_company]);
 
+  useEffect(() => {
+    if (l_c) {
+      let lc_det = l_c.find((lc) => lc.id === parseInt(lc_id));
+      if (lc_det) {
+        setValues(lc_det);
+      } else {
+        // history.replace(config.defaultPath);
+      }
+    } else {
+      getLC(mid);
+    }
+  }, [l_c]);
+
   const handleUpdateDetails = async () => {
     setClicked(true);
-    await updateCompany(values);
+    await updateLC(values);
     setClicked(false);
   };
 
@@ -151,7 +202,7 @@ const LcForm = () => {
               </Grid>
             )}
             <Grid item xs={12} sm={6}>
-              <CurrencySelect
+              <CostCenterSelect
                 captionLabel="Cost Center"
                 InputLabelProps={{ shrink: true }}
                 selected={values.cost_center}
@@ -257,9 +308,9 @@ const LcForm = () => {
             <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
-                id="final_destiantion_of_delivery"
+                id="final_destination_of_delivery"
                 label="Final Delivery Destination"
-                value={values.final_destiantion_of_delivery}
+                value={values.final_destination_of_delivery}
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
               />
@@ -380,12 +431,12 @@ const LcForm = () => {
       <ConfirmDeleteDialog
         open={showDeleteModal}
         handleAgree={() => {
-          deleteCompany(values.id);
-          history.replace("/admin/companies");
+          deleteLC(values.id);
+          // history.replace("/admin/companies");
         }}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"
-        body="Are you sure you want to delete this Company records? Once deleted the data can not be retrived!"
+        body="Are you sure you want to delete this LC records? Once deleted the data can not be retrived!"
       />
     </Grid>
   );

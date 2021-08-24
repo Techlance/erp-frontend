@@ -26,28 +26,36 @@ const SelectGroup = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
   //   const [costCenter] = useSelector((state) => [state.costCenter]);
-  const [lc] = useSelector((state) => [state.lc]);
+  const lc = useSelector((state) => state.lc);
+
+  console.log(lc);
 
   const { company } = useComapanyMaster();
 
-  //   const { cost_category } = costCenter;
   const { l_c } = lc;
 
-  //   const { getCostCategory } = useCostCenter();
+  console.log(l_c);
+
   const { getLC } = useLC();
 
   const [loading, setLoading] = useState(true);
 
   const { pathname } = useLocation();
 
+  let flag = true;
+  if (pathname.includes("/export")) {
+    flag = false;
+  }
+
   const columns = [
     {
       field: "id",
       headerName: "Edit",
       flex: 0.2,
-      type: "number",
+      // type: "number",
       headerAlign: "left",
       align: "left",
+      minWidth: 100,
 
       renderCell: (params) => (
         <Button
@@ -66,109 +74,132 @@ const SelectGroup = () => {
       field: "trans_type",
       headerName: "Transaction Type",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "lc_date",
       headerName: "LC Date",
       flex: 0.4,
+      minWidth: 150,
       valueFormatter: (params) => {
         return formatDate(params.value);
       },
     },
     {
-      field: "trans_type",
-      headerName: "Transaction Type",
+      field: "year_id",
+      headerName: "Year ID",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "party_code",
-      headerName: "Party Code",
+      headerName: "Party Code(Payables)",
       flex: 0.5,
+      minWidth: 150,
     },
+
     {
       field: "cost_center",
       headerName: "Cost Center",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "applicant_bank",
       headerName: "Applicant Bank",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "applicant_bank_lc_no",
       headerName: "Applicant Bank LC No.",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "benificiary_bank",
       headerName: "Beneficiary Bank",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "benificiary_bank_lc_no",
       headerName: "Beneficiary Bank LC No.",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "inspection",
       headerName: "Inspection",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "bank_ref",
       headerName: "Bank Ref.",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "days_for_submit_to_bank",
       headerName: "Days Remaining To Return To Bank",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "payment_terms",
       headerName: "Payment Terms",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "place_of_taking_incharge",
       headerName: "Place Of Taking Incharge",
       flex: 0.5,
+      minWidth: 150,
     },
     {
-      field: "fina_destination_of_delivery",
+      field: "final_destination_of_delivery",
       headerName: "Delivery Destination",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "completed",
       headerName: "Completed",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "shipment_terms",
       headerName: "Shipment Terms",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "goods_description",
       headerName: "Goods Description",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "other_lc_terms",
       headerName: "Other LC Terms",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "bank_ac",
       headerName: "Bank A/C",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "expiry_date",
       headerName: "Expiry Date",
       flex: 0.5,
+      minWidth: 150,
+
       valueFormatter: (params) => {
         return formatDate(params.value);
       },
@@ -177,21 +208,25 @@ const SelectGroup = () => {
       field: "lc_amount",
       headerName: "LC Amount",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "trans_type",
       headerName: "Transaction Type",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "trans_type",
       headerName: "Transaction Type",
       flex: 0.5,
+      minWidth: 150,
     },
     {
       field: "created_by",
       headerName: "Created By",
       flex: 0.4,
+      minWidth: 150,
     },
     {
       field: "created_on",
@@ -199,6 +234,8 @@ const SelectGroup = () => {
       flex: 0.3,
       headerAlign: "center",
       align: "center",
+      minWidth: 150,
+
       valueFormatter: (params) => {
         return formatDate(params.value);
       },

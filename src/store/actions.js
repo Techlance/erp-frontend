@@ -93,3 +93,20 @@ export const GET_LC = "GET_LC";
 export const CREATE_LC = "CREATE_LC";
 export const UPDATE_LC = "UPDATE_LC";
 export const DELETE_LC = "DELETE_LC";
+
+// action - master - LC - Docs
+export const GET_LC_DOCS = "GET_LC_DOCS";
+export const CREATE_LC_DOCS = "CREATE_LC_DOCS";
+export const UPDATE_LC_DOCS = "UPDATE_LC_DOCS";
+export const DELETE_LC_DOCS = "DELETE_LC_DOCS";
+
+// action - master - LC - Ammend
+export const GET_LC_AMEND = "GET_LC_AMEND";
+export const CREATE_LC_AMEND = "CREATE_LC_AMEND";
+export const UPDATE_LC_AMEND = "UPDATE_LC_AMEND";
+export const DELETE_LC_AMEND = "DELETE_LC_AMEND";
+
+// action - master - LC - Party Code
+export const GET_PARTY_CODE_PAY = "GET_PARTY_CODE_PAY";
+export const GET_PARTY_CODE_RECEIVE = "GET_PARTY_CODE_RECEIVE";
+export const GET_BANK_AC = "GET_BANK_AC";

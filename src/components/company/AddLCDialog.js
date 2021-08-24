@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  IconButton,
-  Grid,
-  Stack,
-  FormControlLabel,
-  Switch,
-} from "@material-ui/core";
+import { Grid, Stack, FormControlLabel, Switch } from "@material-ui/core";
 
 // assets
 import SaveIcon from "@material-ui/icons/SaveRounded";
@@ -21,7 +15,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
   Typography,
@@ -33,6 +26,10 @@ import useCompany from "../../hooks/useCompany";
 import useLC from "../../hooks/useLC";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router";
+import CostCenterSelect from "../master/LC/CostCenterSelect";
+import PartyCodePaySelect from "../master/LC/PartyCodePaySelect";
+import PartyCodeRecSelect from "../master/LC/PartyCodeRecSelect";
+import BankAcSelect from "../master/LC/BankACSelect";
 
 const AddLCDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -41,7 +38,7 @@ const AddLCDialog = ({ open, handleClose }) => {
   const history = useHistory();
 
   let flag = true; // Show Payables for import
-  if (pathname.endsWith("/export")) {
+  if (pathname.includes("/export")) {
     // Show Receivables for export
     flag = false;
   }
@@ -104,12 +101,6 @@ const AddLCDialog = ({ open, handleClose }) => {
     handleClose();
   };
 
-  const handleUpdateDetails = async () => {
-    setClicked(true);
-    await updateLC(values);
-    setClicked(false);
-  };
-
   return (
     <Dialog
       open={open}
@@ -129,9 +120,9 @@ const AddLCDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              id="trans_type"
-              label="Transaction Type"
-              value={values.trans_type}
+              id="lc_no"
+              label="LC No."
+              value={values.lc_no}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
             />
@@ -149,25 +140,25 @@ const AddLCDialog = ({ open, handleClose }) => {
           </Grid>
           {flag ? (
             <Grid item xs={12} sm={6}>
-              <CurrencySelect
+              <PartyCodePaySelect
                 captionLabel="Party Code (Payables)"
                 InputLabelProps={{ shrink: true }}
-                selected={values.party_code}
+                selected={values.party_code_pay}
                 onChange={handleSelect}
               />
             </Grid>
           ) : (
             <Grid item xs={12} sm={6}>
-              <CurrencySelect
+              <PartyCodeRecSelect
                 captionLabel="Party Code (Receivables)"
                 InputLabelProps={{ shrink: true }}
-                selected={values.party_code}
+                selected={values.party_code_rec}
                 onChange={handleSelect}
               />
             </Grid>
           )}
           <Grid item xs={12} sm={6}>
-            <CurrencySelect
+            <CostCenterSelect
               captionLabel="Cost Center"
               InputLabelProps={{ shrink: true }}
               selected={values.cost_center}
@@ -327,7 +318,7 @@ const AddLCDialog = ({ open, handleClose }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <CurrencySelect
+            <BankAcSelect
               captionLabel="Bank A/C"
               InputLabelProps={{ shrink: true }}
               selected={values.bank_ac}
