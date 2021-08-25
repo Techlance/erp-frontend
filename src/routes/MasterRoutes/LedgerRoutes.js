@@ -20,6 +20,12 @@ const AccountHeadDetails = Loadable(
 const AccountGroup = Loadable(
   lazy(() => import("../../views/master/ledger-master/account-group/"))
 );
+const Ledger = Loadable(
+  lazy(() => import("../../views/master/ledger-master/ledger/"))
+);
+const LedgerDetails = Loadable(
+  lazy(() => import("../../views/master/ledger-master/ledger/LedgerDetails"))
+);
 const AccountGroupDetails = Loadable(
   lazy(() =>
     import(
@@ -45,6 +51,14 @@ const routes = [
     url: "/group",
     component: AccountGroup,
   },
+  {
+    url:"/ledger/:lid",
+    component: LedgerDetails
+  },
+  {
+    url:"/ledger",
+    component: Ledger
+  }
 ];
 
 //-----------------------|| Companies Routing ||-----------------------//

@@ -135,7 +135,7 @@ const AddUserDialog = ({ open, handleClose }) => {
     setClicked(true);
     let form = { ...values };
     form.acc_head_id = parseInt(form.acc_head_id.id);
-    form.child_of = parseInt(form.child_of.id);
+    form.child_of = form.child_of?parseInt(form.child_of.id):null;
     console.log(form);
     await addCompanyAccountGroup(form);
     setClicked(false);
@@ -160,11 +160,11 @@ const AddUserDialog = ({ open, handleClose }) => {
       maxWidth="sm"
     >
       <DialogTitle id="form-dialog-title">
-        <Typography variant="h4">Create Account Head</Typography>
+        <Typography variant="h4">Create Account Group</Typography>
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Create a new account head.</Typography>
+          <Typography variant="body2">Create a new account group.</Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={6}>

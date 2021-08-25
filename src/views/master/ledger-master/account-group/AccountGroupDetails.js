@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Button, Grid, Stack, TextField, makeStyles } from "@material-ui/core";
 
 // project imports
-import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -14,7 +13,6 @@ import SubCard from "../../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
-import config from "../../../../config";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AccountHeadSelect from "../../../../components/master/ledger-master/AccountHeadSelect";
@@ -135,10 +133,11 @@ const UserForm = () => {
     if (company_account_group_details) {
       setCheckList({
         Ledgers: company_account_group_details.ledger_master,
+        "Account Groups": company_account_group_details.child
       });
       setValues({ ...company_account_group_details });
     } else getCompanyAccountGroupDetails(gid);
-  }, [company_account_group_details]);
+  }, [company_account_group_details,gid,getCompanyAccountGroupDetails]);
 
   useEffect(() => {
     if (!company_account_groups) getCompanyAccountGroups(mid);
@@ -260,7 +259,7 @@ const UserForm = () => {
               handleAgree={handleAgree}
               handleClose={() => setShowDeleteModal(false)}
               title="Are you sure?"
-              body="Are you sure you want to delete this Account Head? Once deleted the data can not be retrived!"
+              body="Are you sure you want to delete this Account Group? Once deleted the data can not be retrived!"
             />
           </Grid>
         </div>

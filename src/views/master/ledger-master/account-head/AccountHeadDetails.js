@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Button, Grid, Stack, TextField, makeStyles } from "@material-ui/core";
 
 // project imports
-import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -18,6 +17,7 @@ import config from "../../../../config";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import HeadTitleSelect from "../../../../components/master/ledger-master/HeadTitleSelect";
 import MainCard from "../../../../ui-component/cards/MainCard";
+import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 
 //-----------------------|| User Form ||-----------------------//
 
@@ -74,6 +74,8 @@ const UserForm = () => {
 
   const [error, setError] = useState(false);
 
+  const [checkList,setCheckList] = useState({});
+
   const handleChange = (event) => {
     if (event.target.id === "schedule_no") {
       console.log(event.target.value);
@@ -114,6 +116,9 @@ const UserForm = () => {
       );
       if (account_head && account_head?.is_fixed === false) {
         setValues(account_head);
+        setCheckList({
+          "Account Groups":account_head.acc_group
+        })
       } else {
         history.replace(config.defaultPath);
       }
@@ -173,7 +178,7 @@ const UserForm = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Stack direction="row">
-                      <Grid container justifyContent="space-between">
+                      <Grid container justifyContent="flex-end" spacing={gridSpacing}>
                         <Grid item>
                           <AnimateButton>
                             <Button
@@ -205,8 +210,9 @@ const UserForm = () => {
                 </Grid>
               </SubCard>
             </Grid>
-            <ConfirmDeleteDialog
-              open={showDeleteModal}
+            <ProtectedDeleteDialog
+              checkList={checkList}
+              showDeleteModal={showDeleteModal}
               handleAgree={() => {
                 deleteCompanyAccountHead(values.id);
                 history.replace(`/company/${mid}/master/ledger-master/head/`);

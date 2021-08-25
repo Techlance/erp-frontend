@@ -63,7 +63,7 @@ export const company_menu = {
               id: "ledger",
               title: <FormattedMessage id="menu.ledger" />,
               type: "item",
-              //   url: "/admin/companies",
+              url: "/company/:mid/master/ledger-master/ledger",
             },
             {
               id: "opening-balance",

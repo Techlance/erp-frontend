@@ -22,9 +22,13 @@ import {
 
   //Compny Ledger
   getCompanyLedgersAsync,
+  getCompanyLedgerDetailsAsync,
   addCompanyLedgerAsync,
   updateCompanyLedgerAsync,
   deleteCompanyLedgerAsync,
+  getLedgerDocsAsync,
+  createLedgerDocAsync,
+  deleteLedgerDocAsync
 } from "../../api";
 import useComapanyMaster from "../../hooks/useCompanyMaster";
 
@@ -90,10 +94,16 @@ export const LedgerMasterProvider = ({ children }) => {
     await getCompanyLedgersAsync(id, dispatch);
   };
 
+  const getCompanyLedgerDetails = async (id) => {
+    await getCompanyLedgerDetailsAsync(id, dispatch);
+  };
+
   const addCompanyLedger = async (data) => {
-    await addCompanyLedgerAsync(data, dispatch);
+    const response = await addCompanyLedgerAsync(data, dispatch);
 
     await getCompanyLedgersAsync(data.company_master_id, dispatch);
+    
+    return response;
   };
 
   const updateCompanyLedger = async (data) => {
@@ -107,6 +117,22 @@ export const LedgerMasterProvider = ({ children }) => {
     await deleteCompanyLedgerAsync(id, dispatch);
 
     await getCompanyLedgersAsync(id, dispatch);
+  };
+
+  const getLedgerDocs = async (id) => {
+    await getLedgerDocsAsync(id, dispatch);
+  };
+
+  const createLedgerDoc = async (data) => {
+    await createLedgerDocAsync(data, dispatch);
+
+    await getLedgerDocsAsync(state.company_ledger_details.id, dispatch);
+  };
+
+  const deleteLedgerDoc = async (id, lid) => {
+    await deleteLedgerDocAsync(id, dispatch);
+
+    await getLedgerDocsAsync(lid, dispatch);
   };
 
   useEffect(() => {
@@ -135,9 +161,13 @@ export const LedgerMasterProvider = ({ children }) => {
         updateCompanyAccountGroup,
         deleteCompanyAccountGroup,
         getCompanyLedgers,
+        getCompanyLedgerDetails,
         addCompanyLedger,
         updateCompanyLedger,
         deleteCompanyLedger,
+        getLedgerDocs,
+        createLedgerDoc,
+        deleteLedgerDoc
       }}
     >
       {children}
