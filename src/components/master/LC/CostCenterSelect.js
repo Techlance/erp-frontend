@@ -56,7 +56,7 @@ const CostCenterSelect = ({ captionLabel, formState, selected, onChange }) => {
         variant="outlined"
         InputLabelProps={{ shrink: true }}
       >
-        {centeres.map((option, index) => (
+        {centeres?.map((option, index) => (
           <MenuItem key={index} value={option.id}>
             {option.cost_center_name}
           </MenuItem>

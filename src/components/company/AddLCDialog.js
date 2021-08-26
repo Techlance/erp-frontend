@@ -24,7 +24,7 @@ import {
 import useAuth from "../../hooks/useAuth";
 import useCompany from "../../hooks/useCompany";
 import useLC from "../../hooks/useLC";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useHistory } from "react-router";
 import CostCenterSelect from "../master/LC/CostCenterSelect";
 import PartyCodePaySelect from "../master/LC/PartyCodePaySelect";
@@ -33,7 +33,7 @@ import BankAcSelect from "../master/LC/BankACSelect";
 
 const AddLCDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const { updateLC, addLC } = useLC();
+  const { addLC } = useLC();
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -42,33 +42,37 @@ const AddLCDialog = ({ open, handleClose }) => {
     // Show Receivables for export
     flag = false;
   }
+
+  const { mid } = useParams();
+
   // const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState({
-    trans_type: "",
+    trans_type: flag ? "import" : "export",
+    year_id: 21,
     lc_date: "",
-    party_code: "",
-    cost_center: "",
+    party_code: null,
+    cost_center: null,
     applicant_bank: "",
     applicant_bank_lc_no: "",
     benificiary_bank: "",
     benificiary_bank_lc_no: "",
-    inspection: "",
+    inspection: false,
     bank_ref: "",
     days_for_submit_to_bank: "",
     payment_terms: "",
     place_of_taking_incharge: "",
-    final_destiantion_of_delivery: "",
-    completed: "",
+    final_destination_of_delivery: "",
+    completed: false,
     shipment_terms: "",
     goods_description: "",
     other_lc_terms: "",
-    bank_ac: "",
+    bank_ac: null,
     expiry_date: "",
     lc_amount: "",
-    base_currency: { id: 0 },
-
+    company_master_id: mid,
+    // base_currency: { id: 0 },
     created_by: user.email,
   });
 
@@ -95,9 +99,38 @@ const AddLCDialog = ({ open, handleClose }) => {
 
   const handleCreateLC = async () => {
     setClicked(true);
-    await addLC(values);
+    let form = { ...values };
+    form.cost_center = form.cost_center.id;
+    form.party_code = form.party_code.id;
+    form.bank_ac = form.bank_ac.id;
+    await addLC(form);
     setClicked(false);
-    // history.replace("/company/9/master/lc/import/1");
+    setValues({
+      trans_type: flag ? "import" : "export",
+      year_id: 21,
+      lc_date: "",
+      party_code: null,
+      cost_center: null,
+      applicant_bank: "",
+      applicant_bank_lc_no: "",
+      benificiary_bank: "",
+      benificiary_bank_lc_no: "",
+      inspection: false,
+      bank_ref: "",
+      days_for_submit_to_bank: "",
+      payment_terms: "",
+      place_of_taking_incharge: "",
+      final_destination_of_delivery: "",
+      completed: false,
+      shipment_terms: "",
+      goods_description: "",
+      other_lc_terms: "",
+      bank_ac: null,
+      expiry_date: "",
+      lc_amount: "",
+      company_master_id: mid,
+      created_by: user.email,
+    });
     handleClose();
   };
 
@@ -113,6 +146,7 @@ const AddLCDialog = ({ open, handleClose }) => {
         <Typography variant="h4">Create a new LC</Typography>
       </DialogTitle>
       <DialogContent>
+        {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
         {/* <DialogContentText>
           <Typography variant="body2">Create a new LC.</Typography>
         </DialogContentText> */}
@@ -120,9 +154,10 @@ const AddLCDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              id="lc_no"
-              label="LC No."
-              value={values.lc_no}
+              id="trans_type"
+              label="Transaction Type"
+              disabled
+              value={values.trans_type}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
             />
@@ -143,7 +178,7 @@ const AddLCDialog = ({ open, handleClose }) => {
               <PartyCodePaySelect
                 captionLabel="Party Code (Payables)"
                 InputLabelProps={{ shrink: true }}
-                selected={values.party_code_pay}
+                selected={values.party_code}
                 onChange={handleSelect}
               />
             </Grid>
@@ -152,7 +187,7 @@ const AddLCDialog = ({ open, handleClose }) => {
               <PartyCodeRecSelect
                 captionLabel="Party Code (Receivables)"
                 InputLabelProps={{ shrink: true }}
-                selected={values.party_code_rec}
+                selected={values.party_code}
                 onChange={handleSelect}
               />
             </Grid>
@@ -263,9 +298,9 @@ const AddLCDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={12}>
             <TextField
               fullWidth
-              id="final_destiantion_of_delivery"
+              id="final_destination_of_delivery"
               label="Final Delivery Destination"
-              value={values.final_destiantion_of_delivery}
+              value={values.final_destination_of_delivery}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
             />
@@ -345,6 +380,7 @@ const AddLCDialog = ({ open, handleClose }) => {
               type="number"
               value={values.lc_amount}
               InputLabelProps={{ shrink: true }}
+              // InputProps={{ inputProps: { min: 0 } }}
               onChange={handleChange}
             />
           </Grid>

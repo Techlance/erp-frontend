@@ -30,6 +30,7 @@ const PartyCodeRecSelect = ({
   const { party_code_rec } = lc;
   const errorState = formState === "error" ? true : false;
   const { mid } = useParams();
+
   useEffect(() => {
     getPartyCodeReceive(mid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +49,7 @@ const PartyCodeRecSelect = ({
     const item = party_code_rec.find(
       (option) => option.id === event.target.value
     );
-    onChange("party_code_rec", item);
+    onChange("party_code", item);
   };
 
   return (

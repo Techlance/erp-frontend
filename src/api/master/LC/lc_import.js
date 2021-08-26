@@ -6,6 +6,8 @@ import {
   GET_PARTY_CODE_PAY,
   GET_PARTY_CODE_RECEIVE,
   GET_BANK_AC,
+  GET_DETAIL_LC,
+  GET_LC_AMEND,
 } from "../../../store/actions";
 import { dataToForm } from "../../../utils";
 
@@ -22,6 +24,19 @@ export const getLCAsync = async (id, dispatch) => {
   console.log(response.data.data);
   dispatch({
     type: GET_LC,
+    payload: response.data.data,
+  });
+};
+
+export const getLCDetailAsync = async (id, dispatch) => {
+  if (!id) {
+    return;
+  }
+  const response = await instance.get(`/lc/get-detail-lc/${id}`);
+
+  console.log(response.data.data);
+  dispatch({
+    type: GET_DETAIL_LC,
     payload: response.data.data,
   });
 };
@@ -153,7 +168,7 @@ export const getLCAmendAsync = async (id, dispatch) => {
 
   if (response.data.success) {
     dispatch({
-      type: GET_LC_DOCS,
+      type: GET_LC_AMEND,
       payload: response.data.data,
     });
   }

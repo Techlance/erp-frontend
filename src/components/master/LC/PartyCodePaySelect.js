@@ -30,8 +30,10 @@ const PartyCodePaySelect = ({
   const { party_code_pay } = lc;
   const errorState = formState === "error" ? true : false;
   const { mid } = useParams();
+
   useEffect(() => {
     getPartyCodePay(mid);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -48,7 +50,7 @@ const PartyCodePaySelect = ({
     const item = party_code_pay.find(
       (option) => option.id === event.target.value
     );
-    onChange("party_code_pay", item);
+    onChange("party_code", item);
   };
 
   return (

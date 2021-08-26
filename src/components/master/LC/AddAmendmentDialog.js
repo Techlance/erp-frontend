@@ -22,29 +22,27 @@ import {
 // project imports
 import useAuth from "../../../hooks/useAuth";
 import useCompany from "../../../hooks/useCompany";
+import useLC from "../../../hooks/useLC";
+import { useParams } from "react-router";
 
 const AddAmendmentDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const { createCompany } = useCompany();
+  const { mid, lc_id } = useParams();
+
+  const { addLCAmend } = useLC();
 
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState({
-    company_name: "",
-    base_currency: { id: 0 },
-    address: "",
-    country: "",
-    state: "",
-    email: "",
-    website: "",
-    contact_no: "",
-    cr_no: "",
-    registration_no: "",
-    tax_id_no: "",
-    vat_id_no: "",
-    year_start_date: "",
-    year_end_date: "",
+    lc_id: lc_id,
+    amendment_no: 2,
+    issue_date: "",
+    LDS: "",
+    expiry_date: "",
+    lc_amount: "",
+    remarks: "",
+    company_master_id: mid,
     created_by: user.email,
   });
 
@@ -62,10 +60,21 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
     });
   };
 
-  const handleCreateCompany = async () => {
+  const handleCreateAmendment = async () => {
     setClicked(true);
-    await createCompany(values);
+    await addLCAmend(values);
     setClicked(false);
+    setValues({
+      lc_id: lc_id,
+      amendment_no: 1,
+      issue_date: "",
+      LDS: "",
+      expiry_date: "",
+      lc_amount: "",
+      remarks: "",
+      company_master_id: mid,
+      created_by: user.email,
+    });
     handleClose();
   };
 
@@ -73,10 +82,11 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby="create-company"
+      aria-labelledby="create-amendment"
       fullWidth
       maxWidth="sm"
     >
+      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
       <DialogTitle id="form-dialog-title">
         <Typography variant="h4">Create Amendment</Typography>
       </DialogTitle>
@@ -103,7 +113,7 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
               label="LDS"
               InputLabelProps={{ shrink: true }}
               type="date"
-              //   InputProps={{ inputProps: { min: values.year_end_date } }}
+              InputProps={{ inputProps: { min: values.issue_date } }}
               value={values.LDS}
               onChange={handleChange}
             />
@@ -158,7 +168,7 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
           size="small"
           variant="contained"
           disabled={clicked}
-          //   onClick={handleCreateCompany}
+          onClick={handleCreateAmendment}
         >
           Add
         </Button>

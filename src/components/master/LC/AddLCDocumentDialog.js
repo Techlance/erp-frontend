@@ -21,11 +21,13 @@ import useLC from "../../../hooks/useLC";
 
 // assets
 import { gridSpacing } from "../../../store/constant";
-import { createLCDocAsync } from "../../../api";
+import { useParams } from "react-router";
 
 const AddLCDocumentDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const { createLcDoc } = useLC();
+  const { createLcDocs } = useLC();
+
+  const { lc_id, mid } = useParams();
 
   const lc = useSelector((state) => state.lc);
   const { current_lc } = lc;
@@ -33,6 +35,8 @@ const AddLCDocumentDialog = ({ open, handleClose }) => {
   const [values, setValues] = useState({
     created_by: user.email,
     doc_name: "",
+    company_master_id: mid,
+    lc_id: lc_id,
     // lc_id: current_lc.id,
     file: null,
   });
@@ -75,7 +79,7 @@ const AddLCDocumentDialog = ({ open, handleClose }) => {
   const handleSubmit = async () => {
     if (!values.file) return;
     setClicked(true);
-    await createLCDocAsync(values);
+    await createLcDocs(values);
     handleCloseModal();
   };
 
@@ -91,6 +95,7 @@ const AddLCDocumentDialog = ({ open, handleClose }) => {
         <Typography variant="h4">Upload Document</Typography>
       </DialogTitle>
       <DialogContent>
+        {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
         <DialogContentText>
           <Typography variant="body2">
             {/* Upload A {current_lc.lc_name} related Document. */}

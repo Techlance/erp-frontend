@@ -90,6 +90,7 @@ export const DELETE_COMPANY_LEDGER = "DELETE_COMPANY_LEDGER";
 
 // action - master - LC
 export const GET_LC = "GET_LC";
+export const GET_DETAIL_LC = "GET_DETAIL_LC";
 export const CREATE_LC = "CREATE_LC";
 export const UPDATE_LC = "UPDATE_LC";
 export const DELETE_LC = "DELETE_LC";

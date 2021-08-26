@@ -24,6 +24,7 @@ import {
   getPartyCodePayAsync,
   getPartyCodeReceiveAsync,
   getBankAcAsync,
+  getLCDetailAsync,
 } from "../../api";
 
 // constant
@@ -36,12 +37,17 @@ export const LC = createContext();
 export const LcProvider = ({ children }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.lc);
+
   const [loading] = useState(false);
 
   const { user } = useAuth();
 
   const getLC = async (id) => {
     await getLCAsync(id, dispatch);
+  };
+
+  const getLCDetail = async (id) => {
+    await getLCDetailAsync(id, dispatch);
   };
 
   const getCostCenter = async (id) => {
@@ -69,7 +75,7 @@ export const LcProvider = ({ children }) => {
   const updateLC = async (data) => {
     await updateLCAsync(data, dispatch);
 
-    await getLCAsync(data.company_master_id, dispatch);
+    await getLCAsync(data.lc_id, dispatch);
     // await getSelectedCompanyAsync(data.id, dispatch);
   };
 
@@ -86,7 +92,7 @@ export const LcProvider = ({ children }) => {
   const addLCAmend = async (data) => {
     await createLCAmendAsync(data, dispatch);
 
-    await getLCAmendAsync(data.company_master_id, dispatch);
+    await getLCAmendAsync(data.lc_id, dispatch);
   };
 
   const updateLCAmend = async (data) => {
@@ -99,7 +105,7 @@ export const LcProvider = ({ children }) => {
   const deleteLCAmend = async (id) => {
     await deleteLCAmendAsync(id, dispatch);
 
-    // await getLCAmendAsync(id, dispatch);
+    // await getLCAmendAsync(dispatch);
   };
 
   const getSelectedLcDocs = async (id) => {
@@ -109,7 +115,7 @@ export const LcProvider = ({ children }) => {
   const createLcDocs = async (data) => {
     await createLCDocAsync(data, dispatch);
 
-    await getSelectedLCDocsAsync(state.current_company.id, dispatch);
+    await getSelectedLCDocsAsync(data.lc_id, dispatch);
   };
 
   const deleteLcDoc = async (id, lc_id) => {
@@ -127,6 +133,7 @@ export const LcProvider = ({ children }) => {
       value={{
         ...state,
         getLC,
+        getLCDetail,
         addLC,
         updateLC,
         deleteLC,

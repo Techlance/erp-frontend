@@ -52,6 +52,7 @@ const LCDocumentForm = () => {
     <div>
       <Table>
         <TableHead>
+          {/* <pre>{JSON.stringify(current_lc_docs, null, 2)}</pre> */}
           <TableRow>
             <TableCell>
               <Typography align="left" variant="h4">

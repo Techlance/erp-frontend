@@ -85,17 +85,20 @@ const SelectGroup = () => {
         return formatDate(params.value);
       },
     },
-    {
-      field: "year_id",
-      headerName: "Year ID",
-      flex: 0.5,
-      minWidth: 150,
-    },
+    // {
+    //   field: "year_id",
+    //   headerName: "Year ID",
+    //   flex: 0.5,
+    //   minWidth: 150,
+    // },
     {
       field: "party_code",
       headerName: "Party Code(Payables)",
       flex: 0.5,
       minWidth: 150,
+      valueFormatter: (params) => {
+        return params.value.ledger_name;
+      },
     },
 
     {
@@ -103,6 +106,9 @@ const SelectGroup = () => {
       headerName: "Cost Center",
       flex: 0.5,
       minWidth: 150,
+      valueFormatter: (params) => {
+        return params.value.cost_center_name;
+      },
     },
     {
       field: "applicant_bank",
@@ -193,6 +199,9 @@ const SelectGroup = () => {
       headerName: "Bank A/C",
       flex: 0.5,
       minWidth: 150,
+      valueFormatter: (params) => {
+        return params.value.ledger_name;
+      },
     },
     {
       field: "expiry_date",

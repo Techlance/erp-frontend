@@ -26,8 +26,7 @@ const LcRoutes = ({ match }) => {
       component: LcDetails,
     },
     {
-      // url: "/export/:lc_id",
-      url: "/export/1",
+      url: "/export/:lc_id",
       component: LcDetails,
     },
 

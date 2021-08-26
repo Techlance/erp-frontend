@@ -22,6 +22,7 @@ import AddAmendmentDialog from "../../../../components/master/LC/AddAmendmentDia
 import LCDocumentForm from "./LCDocumentForm";
 import AddLCDocumentDialog from "../../../../components/master/LC/AddLCDocumentDialog";
 import LCForm from "./LCDetails";
+import AmendmentDetails from "./AmmendmentDetails";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -170,6 +171,9 @@ const LcDetails = () => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <LCDocumentForm />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <AmendmentDetails />
         </TabPanel>
       </div>
       <AddLCDocumentDialog
