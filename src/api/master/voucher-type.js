@@ -6,6 +6,23 @@ import { dataToForm } from "../../utils";
 import instance from "../../utils/axios";
 import sendNotification from "../../utils/sendNotification";
 
+export const getVoucherTypesDetailAsync = async (id, dispatch) => {
+  try {
+    if (!id) return;
+
+    const response = await instance.get(
+      `/company/get-detail-vouchertype/${id}`
+    );
+
+    dispatch({
+      type: voucherTypeActions.GET_VOUCHER_TYPES_DETAILS,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log("Error while getting");
+  }
+};
+
 export const getVoucherTypesAsync = async (id, dispatch) => {
   try {
     if (!id) return;

@@ -10,6 +10,9 @@ import CompanyGuard from "../../utils/route-guard/CompanyGuard";
 const VoucherTypeMaster = Loadable(
   lazy(() => import("../../views/master/voucher-type"))
 );
+const VoucherTypeDetails = Loadable(
+  lazy(() => import("../../views/master/voucher-type/VoucherDetails"))
+);
 
 //-----------------------|| Currency Routing ||-----------------------//
 
@@ -17,11 +20,16 @@ const CompanyRoutes = ({ match }) => {
   const location = useLocation();
 
   return (
-    <Route path={[`${match.path}`]}>
+    <Route path={[`${match.path}`, `${match.path}/:vid`]}>
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <CompanyGuard>
             <Switch location={location} key={location.pathname}>
+              <Route
+                path={`${match.path}/:vid`}
+                exact
+                component={VoucherTypeDetails}
+              />
               <Route path={match.path} component={VoucherTypeMaster} />
             </Switch>
           </CompanyGuard>

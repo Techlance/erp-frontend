@@ -11,7 +11,7 @@ import { gridSpacing } from "../../../store/constant";
 
 // assets
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
-import useLedgerMaster from "../../../hooks/useLedgerMaster";
+import useVoucherTypes from "../../../hooks/useVoucherTypes";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../ui-component/CustomDataGrid";
 import useCompanyMaster from "../../../hooks/useCompanyMaster";
@@ -22,11 +22,11 @@ import AddAccountGroupDialog from "../../../components/master/ledger-master/AddA
 const VoucherTypes = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const { company_account_groups } = useSelector((state) => state.ledgerMaster);
+  const { voucher_types } = useSelector((state) => state.voucherTypes);
 
   const { company } = useCompanyMaster();
 
-  const { getCompanyAccountGroups } = useLedgerMaster();
+  const { getVoucherTypes } = useVoucherTypes();
 
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +36,7 @@ const VoucherTypes = () => {
     {
       field: "id",
       headerName: "Edit",
-      flex: 0.2,
+      flex: 0.5,
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -55,63 +55,71 @@ const VoucherTypes = () => {
       ),
     },
     {
-      field: "group_code",
-      headerName: "Group Code",
-      flex: 0.2,
-      minWidth: 150,
+      field: "voucher_name",
+      headerName: "Voucher Name",
+      flex: 0.5,
+      minWidth: 200,
       align: "center",
       headerAlign: "center",
     },
     {
-      field: "group_name",
-      headerName: "Group Name",
+      field: "voucher_class",
+      headerName: "Voucher Class",
       flex: 0.5,
       minWidth: 300,
     },
     {
-      field: "child_of",
-      headerName: "Parent Group",
+      field: "authorization_id",
+      headerName: "Authorization ID",
       flex: 0.5,
-      minWidth: 300,
-      valueFormatter: (params) => {
-        return params.value || "-";
-      },
+      minWidth: 200,
     },
     {
-      field: "acc_head_id",
-      headerName: "Account Head",
-      flex: 0.5,
+      field: "auto_numbering",
+      headerName: "Auto Numbering",
+      flex: 0.2,
       minWidth: 300,
-      // valueFormatter: (params) => {
-      //   return params.value.acc_head_name;
-      // },
+    },
+    {
+      field: "prefix",
+      headerName: "Prefix",
+      flex: 0.2,
+      minWidth: 150,
+    },
+    {
+      field: "restart",
+      headerName: "Restart",
+      flex: 0.2,
+      minWidth: 150,
     },
     {
       field: "created_on",
       headerName: "Created On",
       type: "date",
-      flex: 0.3,
+      flex: 0.5,
+      minWidth: 150,
       valueFormatter: (params) => {
         return formatDate(params.value);
       },
     },
     {
       field: "created_by",
-      headerName: "created By",
-      flex: 0.3,
+      headerName: "Created By",
+      flex: 0.5,
+      minWidth: 150,
     },
   ];
 
   useEffect(() => {
-    getCompanyAccountGroups(company.company_id);
+    getVoucherTypes(company.company_id);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company]);
 
   useEffect(() => {
-    if (company_account_groups) setLoading(false);
+    if (voucher_types) setLoading(false);
     else setLoading(true);
-  }, [company_account_groups, company]);
+  }, [voucher_types, company]);
 
   return (
     <MainCard
@@ -135,7 +143,7 @@ const VoucherTypes = () => {
                 color="primary"
                 onClick={() => setShowAddModal(true)}
               >
-                Add Account Group
+                Add Voucher Type
               </Button>
             </AnimateButton>
           </Grid>
@@ -143,10 +151,10 @@ const VoucherTypes = () => {
       }
       content={true}
     >
-      {/* <pre>{JSON.stringify(company, null, 2)}</pre> */}
+      <pre>{JSON.stringify(voucher_types, null, 2)}</pre>
       <CustomDataGrid
         columns={columns}
-        rows={company_account_groups}
+        rows={voucher_types}
         loading={loading}
       />
       <AddAccountGroupDialog
@@ -160,3 +168,8 @@ const VoucherTypes = () => {
 };
 
 export default VoucherTypes;
+
+// Authorization ID
+// Prefix
+// Auto Number
+// Restart

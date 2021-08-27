@@ -1,9 +1,10 @@
 import React, { createContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
+  getVoucherTypesAsync,
+  getVoucherTypesDetailAsync,
   createVoucherTypesAsync,
   deleteVoucherTypesAsync,
-  getVoucherTypesAsync,
   updateVoucherTypesAsync,
 } from "../../api";
 
@@ -11,7 +12,10 @@ export const VoucherTypesContext = createContext();
 
 export const VoucherTypeProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.voucherTypes);
+
+  const getVoucherTypesDetail = async (vid) => {
+    await getVoucherTypesDetailAsync(vid, dispatch);
+  };
 
   const getVoucherTypes = async (id) => {
     await getVoucherTypesAsync(id, dispatch);
@@ -32,8 +36,8 @@ export const VoucherTypeProvider = ({ children }) => {
   return (
     <VoucherTypesContext.Provider
       value={{
-        ...state,
         getVoucherTypes,
+        getVoucherTypesDetail,
         createVoucherTypes,
         updateVoucherTypes,
         deleteVoucherTypes,
