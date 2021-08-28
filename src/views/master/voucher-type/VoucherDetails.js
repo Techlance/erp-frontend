@@ -3,24 +3,31 @@ import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 // material-ui
-import { Button, Grid, Stack, TextField, makeStyles } from "@material-ui/core";
+import {
+  Button,
+  Collapse,
+  Grid,
+  Stack,
+  TextField,
+  makeStyles,
+} from "@material-ui/core";
 
 // project imports
 import useVoucherTypes from "../../../hooks/useVoucherTypes";
 import { gridSpacing } from "../../../store/constant";
 import SubCard from "../../../ui-component/cards/SubCard";
-import ProtectedDeleteDialog from "../../../components/ProtectedDeleteDialog";
 
 // assets
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import MainCard from "../../../ui-component/cards/MainCard";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
-import LoadingButton from "../../../ui-component/LoadingButton";
 import AuthorizationIDSelect from "../../../components/master/voucher-types/AuthorizationIDSelect";
 import VoucherClassSelect from "../../../components/master/voucher-types/VoucherClassSelect";
 import AutoNumberingCheckbox from "../../../components/master/voucher-types/AutoNumberingCheckbox";
 import RestartSelect from "../../../components/master/voucher-types/RestartSelect";
+import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
+import LoadingButton from "../../../ui-component/LoadingButton";
 
 //-----------------------|| Voucher Type Form ||-----------------------//
 
@@ -61,7 +68,8 @@ const VoucherTypeDetails = () => {
 
   const { voucher_type_details } = useSelector((state) => state.voucherTypes);
 
-  const { getVoucherTypesDetail } = useVoucherTypes();
+  const { getVoucherTypesDetail, updateVoucherTypes, deleteVoucherTypes } =
+    useVoucherTypes();
 
   const { vid, mid } = useParams();
 
@@ -69,10 +77,6 @@ const VoucherTypeDetails = () => {
 
   const [values, setValues] = useState(null);
   const [clicked, setClicked] = useState(false);
-
-  const [error, setError] = useState(false);
-  const [nameError, setNameError] = useState(false);
-  const [checkList, setCheckList] = useState({});
 
   const handleChecked = (event) => {
     setValues({
@@ -90,9 +94,6 @@ const VoucherTypeDetails = () => {
 
   useEffect(() => {
     if (voucher_type_details) {
-      // setCheckList({
-      //   Ledgers: voucher_type_details,
-      // });
       setValues({ ...voucher_type_details });
     } else {
       getVoucherTypesDetail(vid);
@@ -102,7 +103,7 @@ const VoucherTypeDetails = () => {
   }, [voucher_type_details]);
 
   const handleAgree = () => {
-    // deleteCompanyAccountGroup(values.id);
+    deleteVoucherTypes(values.id);
     history.replace(`/company/${mid}/master/voucher-type`);
   };
 
@@ -111,6 +112,17 @@ const VoucherTypeDetails = () => {
       ...values,
       [event.target.id]: event.target.value,
     });
+  };
+
+  const handleUpdateVoucherType = async () => {
+    setClicked(true);
+    if (values.authorization_id !== null) {
+      values.authorization_id = values.authorization_id.id;
+    } else {
+      values.authorization_id = "null";
+    }
+    await updateVoucherTypes(values);
+    setClicked(false);
   };
 
   return (
@@ -130,7 +142,6 @@ const VoucherTypeDetails = () => {
                       InputLabelProps={{ shrink: true }}
                       onChange={handleChange}
                       type="text"
-                      error={error}
                     />
                   </Grid>
                   <Grid item sm={6}>
@@ -139,7 +150,6 @@ const VoucherTypeDetails = () => {
                       captionLabel="Voucher Class"
                       selected={values.voucher_class}
                       onChange={handleSelect}
-                      error={error}
                     />
                   </Grid>
                 </Grid>
@@ -164,7 +174,7 @@ const VoucherTypeDetails = () => {
                     />
                   </Grid>
                 </Grid>
-                {values.auto_numbering && (
+                <Collapse in={values.auto_numbering}>
                   <Grid container spacing={2} mb={2}>
                     <Grid item sm={6}>
                       <TextField
@@ -175,7 +185,6 @@ const VoucherTypeDetails = () => {
                         InputLabelProps={{ shrink: true }}
                         onChange={handleChange}
                         type="text"
-                        error={error}
                       />
                     </Grid>
                     <Grid item sm={6}>
@@ -186,7 +195,7 @@ const VoucherTypeDetails = () => {
                       />
                     </Grid>
                   </Grid>
-                )}
+                </Collapse>
 
                 <Grid item xs={12}>
                   <Stack direction="row">
@@ -204,33 +213,27 @@ const VoucherTypeDetails = () => {
                         </AnimateButton>
                       </Grid>
                       <Grid item>
-                        <AnimateButton>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            // onClick={handleUpdateAccountHead}
-                            startIcon={<SaveIcon />}
-                            disabled={clicked}
-                          >
-                            Save Details
-                          </Button>
-                        </AnimateButton>
+                        <LoadingButton
+                          variant="contained"
+                          color="primary"
+                          onClick={handleUpdateVoucherType}
+                          startIcon={<SaveIcon />}
+                          loading={clicked}
+                        >
+                          Save Details
+                        </LoadingButton>
                       </Grid>
                     </Grid>
                   </Stack>
                 </Grid>
-                <Grid container>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
-                </Grid>
               </SubCard>
             </Grid>
-            <ProtectedDeleteDialog
-              checkList={checkList}
+            <ConfirmDeleteDialog
               showDeleteModal={showDeleteModal}
               handleAgree={handleAgree}
               handleClose={() => setShowDeleteModal(false)}
               title="Are you sure?"
-              body="Are you sure you want to delete this Account Head? Once deleted the data can not be retrived!"
+              body="Are you sure you want to delete this Voucher Type? Once deleted the data can not be retrived!"
             />
           </Grid>
         </div>

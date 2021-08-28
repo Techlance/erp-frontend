@@ -18,7 +18,8 @@ import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../ui-component/CustomDataGrid";
 
-//-----------------------|| User List ||-----------------------//
+//-----------------------|| Voucher Type List ||-----------------------//
+
 const VoucherTypes = () => {
   const { pathname } = useLocation();
   const { company } = useCompanyMaster();
@@ -43,7 +44,6 @@ const VoucherTypes = () => {
           color="primary"
           aria-label="more-details"
           href={`${pathname}/${params.value}`}
-          // target="_blank"
         >
           <Typography align="center">Edit </Typography>
           <IconArrowRight sx={{ fontSize: "1.1rem" }} />
@@ -147,7 +147,6 @@ const VoucherTypes = () => {
       }
       content={true}
     >
-      {/* <pre>{JSON.stringify(voucher_types, null, 2)}</pre> */}
       <CustomDataGrid
         columns={columns}
         rows={voucher_types}

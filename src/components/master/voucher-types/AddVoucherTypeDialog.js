@@ -11,6 +11,7 @@ import {
   TextField,
   Button,
   Typography,
+  Collapse,
 } from "@material-ui/core";
 
 // assets
@@ -40,7 +41,7 @@ const AddVoucherType = ({ open, handleClose }) => {
     auto_numbering: false,
     prefix: null,
     restart: "year",
-    is_fixed: true,
+    is_fixed: false,
     company_master_id: parseInt(mid),
     created_by: user.email,
   });
@@ -132,26 +133,6 @@ const AddVoucherType = ({ open, handleClose }) => {
         </Grid>
         <Grid container spacing={2} mb={2}>
           <Grid item sm={6}>
-            <TextField
-              fullWidth
-              id="prefix"
-              label="Prefix"
-              value={values.prefix}
-              InputLabelProps={{ shrink: true }}
-              onChange={handleChange}
-              type="text"
-            />
-          </Grid>
-          <Grid item sm={6}>
-            <RestartSelect
-              captionLabel="Restart"
-              selected={values.restart}
-              onChange={handleSelect}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} mb={2}>
-          <Grid item sm={6}>
             <AutoNumberingCheckbox
               fullWidth
               InputLabelProps={{ shrink: true }}
@@ -162,6 +143,28 @@ const AddVoucherType = ({ open, handleClose }) => {
             />
           </Grid>
         </Grid>
+        <Collapse in={values.auto_numbering}>
+          <Grid container spacing={2} mb={2}>
+            <Grid item sm={6}>
+              <TextField
+                fullWidth
+                id="prefix"
+                label="Prefix"
+                value={values.prefix}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+                type="text"
+              />
+            </Grid>
+            <Grid item sm={6}>
+              <RestartSelect
+                captionLabel="Restart"
+                selected={values.restart}
+                onChange={handleSelect}
+              />
+            </Grid>
+          </Grid>
+        </Collapse>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <AnimateButton>
