@@ -28,6 +28,7 @@ import AutoNumberingCheckbox from "../../../components/master/voucher-types/Auto
 import RestartSelect from "../../../components/master/voucher-types/RestartSelect";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import LoadingButton from "../../../ui-component/LoadingButton";
+import Loader from "../../../ui-component/Loader";
 
 //-----------------------|| Voucher Type Form ||-----------------------//
 
@@ -102,8 +103,8 @@ const VoucherTypeDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voucher_type_details]);
 
-  const handleAgree = () => {
-    deleteVoucherTypes(values.id);
+  const handleAgree = async () => {
+    await deleteVoucherTypes(values.id);
     history.replace(`/company/${mid}/master/voucher-type`);
   };
 
@@ -125,8 +126,10 @@ const VoucherTypeDetails = () => {
     setClicked(false);
   };
 
+  if (!values) return <Loader />;
+
   return (
-    values && (
+    <>
       <MainCard title="Voucher Type Details">
         <div className={classes.root}>
           <Grid container spacing={gridSpacing} justifyContent="center">
@@ -228,17 +231,17 @@ const VoucherTypeDetails = () => {
                 </Grid>
               </SubCard>
             </Grid>
-            <ConfirmDeleteDialog
-              showDeleteModal={showDeleteModal}
-              handleAgree={handleAgree}
-              handleClose={() => setShowDeleteModal(false)}
-              title="Are you sure?"
-              body="Are you sure you want to delete this Voucher Type? Once deleted the data can not be retrived!"
-            />
           </Grid>
         </div>
       </MainCard>
-    )
+      <ConfirmDeleteDialog
+        open={showDeleteModal}
+        handleAgree={handleAgree}
+        handleClose={() => setShowDeleteModal(false)}
+        title="Are you sure?"
+        body="Are you sure you want to delete this Voucher Type? Once deleted the data can not be retrived!"
+      />
+    </>
   );
 };
 

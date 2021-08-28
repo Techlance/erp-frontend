@@ -70,11 +70,11 @@ const CustomDataGrid = (props) => {
 
   return (
     <Box
-      height={500}
+      height={600}
       width="100%"
       sx={{
         "& .MuiDataGrid-root": {
-          border: "none",
+          "border": "none",
           "& .MuiDataGrid-cell": {
             borderColor:
               theme.palette.mode === "dark"
