@@ -32,7 +32,6 @@ export const getCompanyLedgerDetailsAsync = async (id, dispatch) => {
 
 export const addCompanyLedgerAsync = async (data, dispatch) => {
   delete data.id;
-  console.log(data);
   const response = await instance.post(
     "/company/add-ledger-master",
     dataToForm(data)

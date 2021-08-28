@@ -7,6 +7,9 @@ export * from "./master/companyMasterReducer";
 // Ledger Master Reducer.
 export * from "./master/ledgerMasterReducer";
 
+// Voucher Types Reducer
+export * from "./master/voucherTypeReducer";
+
 // Company Reducer.
 export * from "./companyReducer";
 

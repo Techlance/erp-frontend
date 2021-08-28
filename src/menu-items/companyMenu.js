@@ -117,7 +117,7 @@ export const company_menu = {
           id: "voucher-types",
           title: <FormattedMessage id="menu.voucher-types" />,
           type: "item",
-          //   url: "/admin/companies",
+          url: "/company/:mid/master/voucher-type",
         },
         {
           id: "currency",
