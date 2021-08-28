@@ -17,6 +17,10 @@ import MainCard from "../../../ui-component/cards/MainCard";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import LoadingButton from "../../../ui-component/LoadingButton";
+import AuthorizationIDSelect from "../../../components/master/voucher-types/AuthorizationIDSelect";
+import VoucherClassSelect from "../../../components/master/voucher-types/VoucherClassSelect";
+import AutoNumberingCheckbox from "../../../components/master/voucher-types/AutoNumberingCheckbox";
+import RestartSelect from "../../../components/master/voucher-types/RestartSelect";
 
 //-----------------------|| Voucher Type Form ||-----------------------//
 
@@ -51,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserForm = () => {
+const VoucherTypeDetails = () => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -70,12 +74,12 @@ const UserForm = () => {
   const [nameError, setNameError] = useState(false);
   const [checkList, setCheckList] = useState({});
 
-  // const handleChecked = (event) => {
-  //   setValues({
-  //     ...values,
-  //     [event.target.name]: event.target.checked,
-  //   });
-  // };
+  const handleChecked = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.checked,
+    });
+  };
 
   const handleSelect = (key, value) => {
     setValues({
@@ -102,15 +106,121 @@ const UserForm = () => {
     history.replace(`/company/${mid}/master/voucher-type`);
   };
 
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.id]: event.target.value,
+    });
+  };
+
   return (
     values && (
       <MainCard title="Voucher Type Details">
         <div className={classes.root}>
           <Grid container spacing={gridSpacing} justifyContent="center">
             <Grid item sm={12} md={8}>
-              <SubCard title="Edit Account Group">
+              <SubCard title="Voucher Type">
+                <Grid container spacing={2} mb={2}>
+                  <Grid item sm={6}>
+                    <TextField
+                      fullWidth
+                      id="voucher_name"
+                      label="Voucher Name"
+                      value={values.voucher_name}
+                      InputLabelProps={{ shrink: true }}
+                      onChange={handleChange}
+                      type="text"
+                      error={error}
+                    />
+                  </Grid>
+                  <Grid item sm={6}>
+                    <VoucherClassSelect
+                      fullWidth
+                      captionLabel="Voucher Class"
+                      selected={values.voucher_class}
+                      onChange={handleSelect}
+                      error={error}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2} mb={2}>
+                  <Grid item sm={12}>
+                    <AuthorizationIDSelect
+                      selected={values.authorization_id}
+                      captionLabel="Authorization"
+                      onChange={handleSelect}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2} mb={2}>
+                  <Grid item sm={6}>
+                    <AutoNumberingCheckbox
+                      fullWidth
+                      InputLabelProps={{ shrink: true }}
+                      id="auto_numbering"
+                      captionLabel="Auto Numbering"
+                      selected={values.auto_numbering}
+                      onChange={handleChecked}
+                    />
+                  </Grid>
+                </Grid>
+                {values.auto_numbering && (
+                  <Grid container spacing={2} mb={2}>
+                    <Grid item sm={6}>
+                      <TextField
+                        fullWidth
+                        id="prefix"
+                        label="Prefix"
+                        value={values.prefix}
+                        InputLabelProps={{ shrink: true }}
+                        onChange={handleChange}
+                        type="text"
+                        error={error}
+                      />
+                    </Grid>
+                    <Grid item sm={6}>
+                      <RestartSelect
+                        captionLabel="Restart"
+                        selected={values.restart}
+                        onChange={handleSelect}
+                      />
+                    </Grid>
+                  </Grid>
+                )}
+
+                <Grid item xs={12}>
+                  <Stack direction="row">
+                    <Grid container justifyContent="space-between">
+                      <Grid item>
+                        <AnimateButton>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => setShowDeleteModal(true)}
+                            startIcon={<DeleteIcon />}
+                          >
+                            Delete
+                          </Button>
+                        </AnimateButton>
+                      </Grid>
+                      <Grid item>
+                        <AnimateButton>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            // onClick={handleUpdateAccountHead}
+                            startIcon={<SaveIcon />}
+                            disabled={clicked}
+                          >
+                            Save Details
+                          </Button>
+                        </AnimateButton>
+                      </Grid>
+                    </Grid>
+                  </Stack>
+                </Grid>
                 <Grid container>
-                  <pre>{JSON.stringify(voucher_type_details, null, 2)}</pre>
+                  <pre>{JSON.stringify(values, null, 2)}</pre>
                 </Grid>
               </SubCard>
             </Grid>
@@ -129,4 +239,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default VoucherTypeDetails;

@@ -6,31 +6,27 @@ import { useLocation } from "react-router-dom";
 import { Button, Grid, Typography } from "@material-ui/core";
 
 // project imports
+import useVoucherTypes from "../../../hooks/useVoucherTypes";
 import MainCard from "../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../store/constant";
+import AddVoucherType from "../../../components/master/voucher-types/AddVoucherTypeDialog";
+import useCompanyMaster from "../../../hooks/useCompanyMaster";
+import formatDate from "../../../utils/format-date";
 
 // assets
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
-import useVoucherTypes from "../../../hooks/useVoucherTypes";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../ui-component/CustomDataGrid";
-import useCompanyMaster from "../../../hooks/useCompanyMaster";
-import formatDate from "../../../utils/format-date";
-import AddAccountGroupDialog from "../../../components/master/ledger-master/AddAccountGroupDialog";
 
 //-----------------------|| User List ||-----------------------//
 const VoucherTypes = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
-
-  const { voucher_types } = useSelector((state) => state.voucherTypes);
-
+  const { pathname } = useLocation();
   const { company } = useCompanyMaster();
-
+  const { voucher_types } = useSelector((state) => state.voucherTypes);
   const { getVoucherTypes } = useVoucherTypes();
 
   const [loading, setLoading] = useState(true);
-
-  const { pathname } = useLocation();
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const columns = [
     {
@@ -151,13 +147,13 @@ const VoucherTypes = () => {
       }
       content={true}
     >
-      <pre>{JSON.stringify(voucher_types, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(voucher_types, null, 2)}</pre> */}
       <CustomDataGrid
         columns={columns}
         rows={voucher_types}
         loading={loading}
       />
-      <AddAccountGroupDialog
+      <AddVoucherType
         open={showAddModal}
         handleClose={() => {
           setShowAddModal(false);
