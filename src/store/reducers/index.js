@@ -10,6 +10,9 @@ export * from "./master/ledgerMasterReducer";
 // Voucher Types Reducer
 export * from "./master/voucherTypeReducer";
 
+// Opening Balance BRS Reducer
+export * from "./master/brsReducer";
+
 // Company Reducer.
 export * from "./companyReducer";
 

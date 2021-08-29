@@ -1,4 +1,4 @@
-// Async// actions
+// async actions
 import { voucherTypeActions } from "../../store/actions";
 import { dataToForm } from "../../utils";
 

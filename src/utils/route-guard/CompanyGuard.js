@@ -4,7 +4,7 @@ import { Redirect, useParams } from "react-router-dom";
 
 // project imports
 import config from "../../config";
-import useComapanyMaster from "../../hooks/useCompanyMaster";
+import useCompanyMaster from "../../hooks/useCompanyMaster";
 import useRequest from "../../hooks/useRequest";
 import Loader from "../../ui-component/Loader";
 
@@ -17,7 +17,7 @@ import Loader from "../../ui-component/Loader";
 
 const CompanyGuard = ({ children }) => {
   const { mid } = useParams();
-  const { setMasterCompany } = useComapanyMaster();
+  const { setMasterCompany } = useCompanyMaster();
 
   const [loading, setLoading] = useState(true);
 

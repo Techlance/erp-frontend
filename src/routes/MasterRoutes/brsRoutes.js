@@ -6,31 +6,27 @@ import MainLayout from "../../layout/MainLayout";
 import Loadable from "../../ui-component/Loadable";
 import CompanyGuard from "../../utils/route-guard/CompanyGuard";
 
-// voucher type page routing
-const VoucherTypeMaster = Loadable(
-  lazy(() => import("../../views/master/voucher-type"))
-);
-const VoucherTypeDetails = Loadable(
-  lazy(() => import("../../views/master/voucher-type/VoucherDetails"))
+// BRS page routing
+const BrsMaster = Loadable(lazy(() => import("../../views/master/brs")));
+const BrsDetails = Loadable(
+  lazy(() => import("../../views/master/brs/BrsDetails"))
 );
 
-//-----------------------|| Currency Routing ||-----------------------//
-
-const CompanyRoutes = ({ match }) => {
+const BrsRoutes = ({ match }) => {
   const location = useLocation();
 
   return (
-    <Route path={[`${match.path}`, `${match.path}/:vid`]}>
+    <Route path={[`${match.path}`, `${match.path}/:brs_id`]}>
       <MainLayout>
         <Switch location={location} key={location.pathname}>
           <CompanyGuard>
             <Switch location={location} key={location.pathname}>
               <Route
-                path={`${match.path}/:vid`}
+                path={`${match.path}/:brs_id`}
                 exact
-                component={VoucherTypeDetails}
+                component={BrsDetails}
               />
-              <Route path={match.path} component={VoucherTypeMaster} />
+              <Route path={match.path} component={BrsMaster} />
             </Switch>
           </CompanyGuard>
         </Switch>
@@ -39,4 +35,4 @@ const CompanyRoutes = ({ match }) => {
   );
 };
 
-export default CompanyRoutes;
+export default BrsRoutes;

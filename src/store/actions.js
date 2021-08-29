@@ -50,11 +50,13 @@ export const DELETE_USER_GROUP = "DELETE_USER_GROUP";
 export const VIEW_USER_GROUP_BY_ID = "VIEW_USER_GROUP_BY_ID";
 
 // action - user management - user rights
-export const CREATE_USER_RIGHTS = "CREATE_USER_RIGHTS";
-export const EDIT_USER_RIGHTS = "EDIT_USER_RIGHTS";
-export const VIEW_USER_RIGHTS = "VIEW_USER_RIGHTS";
-export const DELETE_USER_RIGHTS = "DELETE_USER_RIGHTS";
-export const VIEW_USER_RIGHTS_BY_ID = "VIEW_USER_RIGHTS_BY_ID";
+export const userRightsActions = {
+  CREATE_USER_RIGHTS: "CREATE_USER_RIGHTS",
+  EDIT_USER_RIGHTS: "EDIT_USER_RIGHTS",
+  VIEW_USER_RIGHTS: "VIEW_USER_RIGHTS",
+  DELETE_USER_RIGHTS: "DELETE_USER_RIGHTS",
+  VIEW_USER_RIGHTS_BY_ID: "VIEW_USER_RIGHTS_BY_ID",
+};
 
 // action - master - ledger master - account head
 export const GET_COMPANY_ACCOUNT_HEADS = "GET_COMPANY_ACCOUNT_HEADS";
@@ -82,4 +84,12 @@ export const VIEW_LEDGER_DOCS = "VIEW_LEDGER_DOCS";
 export const voucherTypeActions = {
   GET_VOUCHER_TYPES: "GET_VOUCHER_TYPES",
   GET_VOUCHER_TYPES_DETAILS: "GET_VOUCHER_TYPES_DETAILS",
+};
+
+//action - master - opening balance
+export const brsActions = {
+  GET_BRS_BANKS: "GET_BRS_BANKS",
+  SET_BRS_BANK: "SET_BRS_BANK",
+  GET_BRS: "GET_BRS",
+  GET_BRS_DETAIL: "GET_BRS_DETAIL",
 };

@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-// user management provider
+// voucher type provider
 import { VoucherTypesContext } from "../contexts/master/VoucherTypesContext";
 
-//-----------------------|| USER MANAGEMENT HOOKS ||-----------------------//
+//-----------------------|| Voucher Types Hooks ||-----------------------//
 
 const useVoucherTypes = () => useContext(VoucherTypesContext);
 

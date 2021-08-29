@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 // material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
 
-//-----------------------|| CURRENCY SELECT ||-----------------------//
+//-----------------------|| Head Title Select ||-----------------------//
 
 const HeadTitleSelect = ({ captionLabel, formState, selected, onChange }) => {
   const [current, setCurrent] = useState(() => {

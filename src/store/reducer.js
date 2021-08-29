@@ -12,6 +12,7 @@ const reducer = combineReducers({
   userPermissions: reducers.userPermissionsReducer,
   ledgerMaster: reducers.ledgerMasterReducer,
   voucherTypes: reducers.voucherTypesReducer,
+  brs: reducers.brsReducer,
 });
 
 export default reducer;

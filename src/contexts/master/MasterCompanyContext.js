@@ -1,25 +1,17 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext } from "react";
+import { useDispatch } from "react-redux";
 import {
   // EXIT_COMPANY,
   SELECT_COMPANY,
 } from "../../store/actions";
 
 // project imports
-import { companyMasterReducer } from "../../store/reducers";
 // import Loader from "../../ui-component/Loader";
 
-// constant
-const initialState = {
-  isInitialized: false,
-  company: null,
-};
-
-export const MasterCompanyContext = createContext({
-  ...initialState,
-});
+export const MasterCompanyContext = createContext();
 
 export const MasterCompanyProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(companyMasterReducer, initialState);
+  const dispatch = useDispatch();
 
   const setMasterCompany = (item) => {
     if (item === null) return;
@@ -34,7 +26,7 @@ export const MasterCompanyProvider = ({ children }) => {
   // if (!state.isInitialized) return <Loader />;
 
   return (
-    <MasterCompanyContext.Provider value={{ ...state, setMasterCompany }}>
+    <MasterCompanyContext.Provider value={{ setMasterCompany }}>
       {children}
     </MasterCompanyContext.Provider>
   );

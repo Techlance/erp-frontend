@@ -5,6 +5,7 @@ import { Route } from "react-router-dom";
 import LedgerRoutes from "./LedgerRoutes";
 import CurrencyRoutes from "./CurrencyRoutes";
 import VoucherTypeRoutes from "./VoucherTypeRoutes";
+import BrsRoutes from "./brsRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -29,6 +30,9 @@ const MasterRoutes = () => {
           path="/company/:mid/master/voucher-type"
           component={VoucherTypeRoutes}
         />
+
+        {/* Routes for BRS */}
+        <Route path="/company/:mid/master/op-bal-brs" component={BrsRoutes} />
       </React.Fragment>
     </Route>
   );

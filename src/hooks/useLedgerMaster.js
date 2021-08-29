@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-// user management provider
+// ledger master provider
 import { LedgerMaster } from "../contexts/master/LedgerMasterContext";
 
-//-----------------------|| USER MANAGEMENT HOOKS ||-----------------------//
+//-----------------------|| Ledger Master Hooks ||-----------------------//
 
 const useLedgerMaster = () => useContext(LedgerMaster);
 

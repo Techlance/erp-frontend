@@ -29,5 +29,8 @@ export * from "./master/ledger-master/account-group";
 // 1.3. Ledger Master
 export * from "./master/ledger-master/ledger";
 
+// 1.4 Opening Balance
+export * from "./master/brs";
+
 // 4. Voucher Types
 export * from "./master/voucher-type";

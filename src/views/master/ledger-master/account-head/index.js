@@ -24,7 +24,7 @@ const SelectGroup = () => {
 
   const { company_account_heads } = useSelector((state) => state.ledgerMaster);
 
-  const { company } = useCompanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
 
   const { getCompanyAccountHeads } = useLedgerMaster();
 
