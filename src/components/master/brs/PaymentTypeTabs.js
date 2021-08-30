@@ -3,9 +3,6 @@ import { PropTypes } from "prop-types";
 
 //  material-ui
 import { Box, Grid, Tab, Tabs, TextField, Typography } from "@material-ui/core";
-import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
-import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
-import DatePicker from "@material-ui/lab/DatePicker";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
