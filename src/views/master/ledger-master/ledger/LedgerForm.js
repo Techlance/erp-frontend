@@ -94,45 +94,42 @@ const LedgerForm = () => {
     // form.bank_ac_no = parseInt(form.bank_ac_no);
     // form.credit_limit = parseFloat(form.credit_limit);
     form.credit_days = parseInt(form.credit_days);
-    if (!(receivable || payable)) {
-      form.maintain_billwise = false;
-      form = {
-        ...form,
-        payment_terms: null,
-        delivery_terms: null,
-        vat_no: null,
-        cc_exp_date: null,
-        cc_no: null,
-        id_exp_date: null,
-        id_no: null,
-        cr_exp_date: null,
-        cr_no: null,
-        tax_reg_no: null,
-        contact_person: null,
-        email: null,
-        tel: null,
-        address: null,
-      };
-    } else {
-      form.maintain_billwise = true;
-    }
-    if (!receivable) {
-      form = {
-        ...form,
-        credit_limit: null,
-        credit_days: null,
-        credit_rating: null,
-        block_ac: null,
-      };
-    } else if (!payable) {
-      form = {
-        ...form,
-        bank_name: null,
-        bank_code: null,
-        branch_name: null,
-        bank_ac_no: null,
-      };
-    }
+      if (!(receivable || payable)) {
+        form = {
+          ...form,
+          payment_terms: null,
+          delivery_terms: null,
+          vat_no: null,
+          cc_exp_date: null,
+          cc_no: null,
+          id_exp_date: null,
+          id_no: null,
+          cr_exp_date: null,
+          cr_no: null,
+          tax_reg_no: null,
+          contact_person: null,
+          email: null,
+          tel: null,
+          address: null,
+        };
+      }
+      if (!receivable) {
+        form = {
+          ...form,
+          credit_limit: null,
+          credit_days: null,
+          credit_rating: null,
+          block_ac: null,
+        };
+      } else if (!payable) {
+        form = {
+          ...form,
+          bank_name: null,
+          bank_code: null,
+          branch_name: null,
+          bank_ac_no: null,
+        };
+      }
     await updateCompanyLedger(form);
     setClicked(false);
   };

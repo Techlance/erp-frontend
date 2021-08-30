@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { FormControlLabel, Grid, Switch } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../../store/constant";
-import LoadingButton from "../../../../ui-component/LoadingButton";
 
 // material-ui
 import {
@@ -14,21 +13,15 @@ import {
   Fade,
 } from "@material-ui/core";
 
-import SaveIcon from "@material-ui/icons/SaveRounded";
-import CancelIcon from "@material-ui/icons/Cancel";
-
 // project imports
 import useAuth from "../../../../hooks/useAuth";
-import useLedgerMaster from "../../../../hooks/useLedgerMaster";
-import { useParams } from "react-router";
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import AccountGroupSelect from "../AccountGroupSelect";
 
 // const AddUserDialog = ({ open, handleClose }) => {
-const AddUserDialog = ({ handleNext, setErrorIndex, values, setValues, receivable, setReceivable, payable, setPayable, bs, setBs }) => {
+const LedgerForm = ({ handleNext, setErrorIndex, values, setValues, receivable, setReceivable, payable, setPayable, bs, setBs }) => {
   const { user } = useAuth();
 //   const { addCompanyLedger } = useLedgerMaster();
-  const { mid } = useParams();
+  // const { mid } = useParams();
 //   const [clicked, setClicked] = useState(false);
 //   const [receivable, setReceivable] = useState(false);
 //   const [payable, setPayable] = useState(false);
@@ -568,4 +561,4 @@ const AddUserDialog = ({ handleNext, setErrorIndex, values, setValues, receivabl
   );
 };
 
-export default AddUserDialog;
+export default LedgerForm;

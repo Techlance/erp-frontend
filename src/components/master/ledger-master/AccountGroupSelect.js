@@ -49,6 +49,7 @@ const AccountGroupSelect = ({
       const item = data.find((option) => option.id === selected.id);
       setReceivable(item?.is_Receivables)
       setPayable(item?.is_payables)
+      if(setBs) 
       setBs(item?.is_bs)
     }
   },[data,setReceivable,setPayable,setBs,selected])
@@ -57,7 +58,8 @@ const AccountGroupSelect = ({
     const item = data.find((option) => option.id === event.target.value);
     setReceivable(item.is_Receivables)
     setPayable(item.is_payables)
-    setBs(item.is_bs)
+    if(setBs)
+    setBs(item?.is_bs)
     onChange("acc_group_id", item);
   };
 

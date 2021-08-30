@@ -50,7 +50,7 @@ const Ledger = () => {
             variant="text"
             color="primary"
             aria-label="more-details"
-            href={`${pathname}/${params.value}`}
+            href={`${pathname}${pathname.endsWith("/")?"":"/"}${params.value}`}
             // target="_blank"
           >
             <Typography align="center">More </Typography>

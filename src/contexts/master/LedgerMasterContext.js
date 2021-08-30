@@ -28,7 +28,14 @@ import {
   deleteCompanyLedgerAsync,
   getLedgerDocsAsync,
   createLedgerDocAsync,
-  deleteLedgerDocAsync
+  deleteLedgerDocAsync,
+  addLedgerBalanceAsync,
+  addLedgerBillwiseAsync,
+  getLedgerBalanceAsync,
+  getLedgerBillwiseAsync,
+  updateLedgerBalanceAsync,
+  updateLedgerBillwiseAsync,
+  deleteLedgerBillAsync
 } from "../../api";
 import useComapanyMaster from "../../hooks/useCompanyMaster";
 
@@ -135,6 +142,34 @@ export const LedgerMasterProvider = ({ children }) => {
     await getLedgerDocsAsync(lid, dispatch);
   };
 
+  const addLedgerBalance = async (data) => {
+    await addLedgerBalanceAsync(data, dispatch);
+  }
+
+  const addLedgerBillwise = async (data) => {
+    await addLedgerBillwiseAsync(data, dispatch);
+  }
+
+  const getLedgerBalance = async (id) => {
+    await getLedgerBalanceAsync(id, dispatch);
+  };
+
+  const getLedgerBillwise = async (id) => {
+    await getLedgerBillwiseAsync(id, dispatch);
+  };
+
+  const updateLedgerBalance = async (data) => {
+    await updateLedgerBalanceAsync(data,dispatch);
+  }
+
+  const updateLedgerBillwise = async (data) => {
+    await updateLedgerBillwiseAsync(data,dispatch);
+  }
+
+  const deleteLedgerBill = async (id) => {
+    await deleteLedgerBillAsync(id, dispatch);
+  }
+
   useEffect(() => {
     getCompanyAccountHeads(company?.company_id);
     getCompanyAccountGroups(company?.company_id);
@@ -167,7 +202,14 @@ export const LedgerMasterProvider = ({ children }) => {
         deleteCompanyLedger,
         getLedgerDocs,
         createLedgerDoc,
-        deleteLedgerDoc
+        deleteLedgerDoc,
+        getLedgerBalance,
+        getLedgerBillwise,
+        addLedgerBalance,
+        addLedgerBillwise,
+        updateLedgerBalance,
+        updateLedgerBillwise,
+        deleteLedgerBill
       }}
     >
       {children}

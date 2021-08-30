@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // material-ui
-import { Button, Step, Stepper, StepLabel, Stack, Typography,  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Collapse, Fade, Grid, FormControlLabel, Switch } from '@material-ui/core';
+import { Button, Step, Stepper, StepLabel, Typography,  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, FormControlLabel, Switch } from '@material-ui/core';
 
 import {
 } from "@material-ui/core";
@@ -15,13 +15,15 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import CancelIcon from "@material-ui/icons/Cancel";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import useLedgerMaster from '../../../../hooks/useLedgerMaster';
-import { gridSpacing } from '../../../../store/constant';
+import useComapanyMaster from '../../../../hooks/useCompanyMaster';
+import LedgerBalanceForm from './LedgerBalanceForm';
+import LedgerBillwiseForm from './LedgerBillwiseForm';
 
 
 // step options
 const steps = ['Ledger Details', 'Balances'];
 
-function getStepContent(step, handleNext, handleBack, setErrorIndex, values, setValues, receivable, setReceivable, payable, setPayable,bs, setBs, paymentData, setPaymentData) {
+function getStepContent(step, handleNext, handleBack, setErrorIndex, values, setValues, receivable, setReceivable, payable, setPayable,bs, setBs, balanceValues, setBalanceValues,newLedger,billwiseValues, setBillwiseValues) {
     switch (step) {
         case 0:
             return (
@@ -40,17 +42,17 @@ function getStepContent(step, handleNext, handleBack, setErrorIndex, values, set
             );
         case 1:
             return (
-                <LedgerForm
+                newLedger.maintain_billwise?
+                <LedgerBillwiseForm
+                values = {billwiseValues}
+                setValues = {setBillwiseValues}
+                setErrorIndex={setErrorIndex}
+                />
+                :<LedgerBalanceForm
                 handleNext={handleNext}
                 setErrorIndex={setErrorIndex}
-                values={values}
-                setValues={setValues}
-                receivable={receivable}
-                setReceivable={setReceivable}
-                payable={payable}
-                setPayable={setPayable}
-                bs={bs}
-                setBs={setBs}
+                values={balanceValues}
+                setValues={setBalanceValues}
                 />
             );
         default:
@@ -63,13 +65,35 @@ function getStepContent(step, handleNext, handleBack, setErrorIndex, values, set
 const AddLedgerDialog = ({open, handleClose}) => {
     const { user } = useAuth();
     const [clicked, setClicked] = useState(false);
-    const { addCompanyLedger } = useLedgerMaster();
+    const { addCompanyLedger, addLedgerBalance, addLedgerBillwise } = useLedgerMaster();
     const { mid } = useParams();
     const [activeStep, setActiveStep] = React.useState(0);
     const [receivable, setReceivable] = useState(false);
     const [payable, setPayable] = useState(false);
     const [bs, setBs] = useState(false);
     const [newLedger, setNewLedger] = useState(null);
+    const [billwiseValues, setBillwiseValues] = useState({
+      company_master_id:null,
+      ledger_master_id:null,
+      fc_name:null,
+      billwise:[
+        {
+          ref_no:null,
+          is_cr:true,
+          amt:0,
+          fc_amount:0,
+          bill_date:null,
+          due_date:null
+        }
+      ]
+    })
+    const [balanceValues,setBalanceValues] = useState({
+      amt:0,
+      is_cr:true,
+      fc_amount:null,
+      fc_name:null,
+    })
+    const { company } = useComapanyMaster();
 
     const handleNext = () => {
       setActiveStep(activeStep + 1);
@@ -104,7 +128,7 @@ const AddLedgerDialog = ({open, handleClose}) => {
       email: null,
       tel: null,
       address: null,
-      maintain_billwise: null,
+      maintain_billwise: false,
       acc_group_id: null,
       is_fixed: false,
       company_master_id: parseInt(mid),
@@ -119,7 +143,6 @@ const AddLedgerDialog = ({open, handleClose}) => {
       // form.credit_limit = parseFloat(form.credit_limit);
       form.credit_days = parseInt(form.credit_days);
       if (!(receivable || payable)) {
-        form.maintain_billwise = false;
         form = {
           ...form,
           payment_terms: null,
@@ -161,6 +184,73 @@ const AddLedgerDialog = ({open, handleClose}) => {
       console.log(form);
       let response = await addCompanyLedger(form);
       setClicked(false);
+      if(response.success && bs){
+        setNewLedger(response.data)
+        handleNext();
+      }
+      else{
+        handleClearClose();
+      }
+      // handleClearClose();
+      // handleNext();
+    };
+
+    const handleSubmitBalance = async ()=>{
+      setClicked(true);
+      let form = {
+        company_master_id:mid,
+        ledger_id:newLedger.id,
+        cr:balanceValues.is_cr?balanceValues.amt:0,
+        dr:balanceValues.is_cr?0:balanceValues.amt,
+        total_cr:balanceValues.is_cr?balanceValues.amt:0,
+        total_dr:balanceValues.is_cr?0:balanceValues.amt,
+        fc_name:balanceValues.fc_name?balanceValues.fc_name.id:company.base_currency,
+        fc_amount:(balanceValues.fc_name && balanceValues.fc_name?.id!==company.base_currency)?parseInt(balanceValues.fc_amount):parseInt(balanceValues.amt),
+        created_by:user.email
+      }
+      await addLedgerBalance(form);
+      setClicked(false);
+      handleClearClose();
+    }
+      const makeBillwise = ()=>{
+        console.log(billwiseValues.fc_name)
+        console.log(company.base_currency)
+        return billwiseValues.billwise.map(val=>{
+          return({
+            ref_no:val.ref_no,
+            fc_amount:(billwiseValues.fc_name && billwiseValues.fc_name?.id!==company.base_currency)?parseInt(val.fc_amount):parseInt(val.amt),
+            bill_date:val.bill_date,
+            due_date:val.due_date,
+            amount:parseInt(val.amt),
+            cr:val.is_cr?parseInt(val.amt):0,
+            dr:val.is_cr?0:parseInt(val.amt),
+            created_by:user.email
+          })
+        })
+      }
+      const handleSubmitBillwise = async ()=>{
+        setClicked(true);
+        let bills = makeBillwise();
+        let form = {
+          company_master_id:mid,
+          ledger_master_id:newLedger.id,
+          fc_name:billwiseValues.fc_name?billwiseValues.fc_name.id:company.base_currency,
+          billwise:bills
+        }
+        await addLedgerBillwise(form);
+        setClicked(false);
+        handleClearClose();
+      }
+
+    const handleChecked = (event) => {
+      setValues({
+        ...values,
+        [event.target.name]: event.target.checked,
+      });
+    };
+    const [errorIndex, setErrorIndex] = React.useState(null);
+
+    const setDefault = ()=>{
       setValues({
         ledger_name: null,
         old_ledger_id: null,
@@ -191,36 +281,45 @@ const AddLedgerDialog = ({open, handleClose}) => {
         company_master_id: parseInt(mid),
         created_by: user.email,
       });
+      setActiveStep(0);
       setReceivable(false);
       setPayable(false);
-      if(response.success && bs){
-        setNewLedger(response.data)
-        handleNext();
-      }
-      else{
-        handleClose();
-      }
-      // handleClose();
-      // handleNext();
-    };
-
-    const handleChecked = (event) => {
-      setValues({
-        ...values,
-        [event.target.name]: event.target.checked,
-      });
-    };
-  
-    const [paymentData, setPaymentData] = React.useState({});
-    const [errorIndex, setErrorIndex] = React.useState(null);
-
+      setBs(false);
+      setNewLedger(null);
+      setBillwiseValues({
+        company_master_id:null,
+        ledger_master_id:null,
+        fc_name:null,
+        billwise:[
+          {
+            ref_no:null,
+            is_cr:true,
+            amt:0,
+            fc_amount:0,
+            bill_date:null,
+            due_date:null
+          }
+        ]
+      })
+      setBalanceValues({
+        amt:0,
+        is_cr:true,
+        fc_amount:null,
+        fc_name:null,
+      })
+      setErrorIndex(null);
+    }
+    const handleClearClose = ()=>{
+      setDefault();
+      handleClose();
+    }
     return (
       <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleClearClose}
       aria-labelledby="create-user"
       fullWidth
-      maxWidth="sm"
+      maxWidth={(activeStep===1 && newLedger?.maintain_billwise)?"xl":"md"}
     >
       <DialogTitle id="form-dialog-title">
         <Typography variant="h4">Create Ledger</Typography>
@@ -251,34 +350,6 @@ const AddLedgerDialog = ({open, handleClose}) => {
                     );
                 })}
             </Stepper>
-            <React.Fragment>
-                {activeStep === steps.length ? (
-                    <React.Fragment>
-                        <Typography variant="h5" gutterBottom>
-                            Thank you for your order.
-                        </Typography>
-                        <Typography variant="subtitle1">
-                            Your order number is #2001539. We have emailed your order confirmation, and will send you an update when your
-                            order has shipped.
-                        </Typography>
-                        <Stack direction="row" justifyContent="flex-end">
-                            <AnimateButton>
-                                <Button
-                                    variant="contained"
-                                    color="error"
-                                    onClick={() => {
-                                        setValues({});
-                                        setPaymentData({});
-                                        setActiveStep(0);
-                                    }}
-                                    sx={{ my: 3, ml: 1 }}
-                                >
-                                    Reset
-                                </Button>
-                            </AnimateButton>
-                        </Stack>
-                    </React.Fragment>
-                ) : (
                     <React.Fragment>
                         {getStepContent(
                             activeStep,
@@ -293,33 +364,23 @@ const AddLedgerDialog = ({open, handleClose}) => {
                             setPayable,
                             bs,
                             setBs,
-                            paymentData,
-                            setPaymentData
-                        )}
-                        {activeStep === steps.length - 1 && (
-                            <Stack direction="row" justifyContent={activeStep !== 0 ? 'space-between' : 'flex-end'}>
-                                {activeStep !== 0 && (
-                                    <Button onClick={handleBack} sx={{ my: 3, ml: 1 }}>
-                                        Back
-                                    </Button>
-                                )}
-                                <AnimateButton>
-                                    <Button variant="contained" onClick={handleNext} sx={{ my: 3, ml: 1 }}>
-                                        {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                                    </Button>
-                                </AnimateButton>
-                            </Stack>
+                            balanceValues,
+                            setBalanceValues,
+                            newLedger,
+                            billwiseValues,
+                            setBillwiseValues
                         )}
                     </React.Fragment>
-                )}
-            </React.Fragment>
         {/* </MainCard> */}
+        {JSON.stringify(company,null,2)}
         </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <Grid container justifyContent="space-between">
           <Grid item>
+          {activeStep===0 && 
           <Grid item sm={12}>
-            <FormControlLabel
+            {!(receivable||payable) && 
+            <FormControlLabel disabled={clicked}
               control={
                 <Switch
                   id="maintain_billwise"
@@ -330,8 +391,8 @@ const AddLedgerDialog = ({open, handleClose}) => {
                 />
               }
               label="Maintain Billwise"
-            />
-          </Grid>
+            />}
+          </Grid>}
           </Grid>
           <Grid item>
             <Grid container spacing={2.5}>
@@ -342,42 +403,12 @@ const AddLedgerDialog = ({open, handleClose}) => {
             variant="contained"
             size="small"
             onClick={() => {
-              setValues({
-                ledger_name: null,
-                old_ledger_id: null,
-                payment_terms: null,
-                delivery_terms: null,
-                vat_no: null,
-                cc_exp_date: null,
-                cc_no: null,
-                id_exp_date: null,
-                id_no: null,
-                cr_exp_date: null,
-                cr_no: null,
-                tax_reg_no: null,
-                block_ac: false,
-                credit_rating: null,
-                credit_limit: null,
-                bank_ac_no: null,
-                bank_code: null,
-                branch_name: null,
-                bank_name: null,
-                contact_person: null,
-                email: null,
-                tel: null,
-                address: null,
-                maintain_billwise: null, // not input
-                acc_group_id: null,
-                is_fixed: false,
-                company_master_id: parseInt(mid),
-                created_by: user.email,
-              });
-              handleClose();
+              handleClearClose();
             }}
             disabled={clicked}
             startIcon={<CancelIcon />}
             >
-            Cancel
+            {activeStep===1?"Skip":"Cancel"}
           </Button>
         </AnimateButton>
         </Grid>
@@ -386,10 +417,12 @@ const AddLedgerDialog = ({open, handleClose}) => {
           color="primary"
           variant="contained"
           size="small"
-          onClick={handleSubmit}
+          onClick={
+            activeStep===0?handleSubmit:newLedger?.maintain_billwise?handleSubmitBillwise:handleSubmitBalance
+          }
           loading={clicked}
           startIcon={<SaveIcon />}
-          >
+        >
           Add
         </LoadingButton>
             </Grid>

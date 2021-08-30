@@ -95,6 +95,18 @@ const ledgerMasterReducer = (state = initialState, action) => {
         current_ledger_docs: action.payload,
       };
     }
+    case actionTypes.VIEW_LEDGER_BALANCE: {
+      return {
+        ...state,
+        ledger_balance: action.payload,
+      };
+    }
+    case actionTypes.VIEW_LEDGER_BILLWISE: {
+      return {
+        ...state,
+        ledger_billwise: action.payload,
+      };
+    }
     default: {
       return {
         ...state,

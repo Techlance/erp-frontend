@@ -20,6 +20,8 @@ import LedgerDocumentForm from "./LedgerDocumentForm";
 import AddDocumentDialog from "../../../../components/master/ledger-master/AddDocumentDialog";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { useSelector } from "react-redux";
+import LedgerBalance from "./LedgerBalance";
+import LedgerBillwise from "./LederBillwise";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +99,7 @@ const LedgerDetails = () => {
   };
 
   useEffect(() => {
-    if(!(company_ledger_details && (company_ledger_details?.id === lid)))
+    if(!(company_ledger_details || (company_ledger_details?.id === lid)))
       getCompanyLedgerDetails(lid);
   }, [company_ledger_details,getCompanyLedgerDetails,lid]);
 
@@ -154,7 +156,7 @@ const LedgerDetails = () => {
           <LedgerForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <LedgerForm />
+          {company_ledger_details?.maintain_billwise?<LedgerBillwise/>:<LedgerBalance />}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <LedgerDocumentForm />
