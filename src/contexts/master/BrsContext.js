@@ -1,6 +1,14 @@
 import React, { createContext } from "react";
 import { useDispatch } from "react-redux";
-import { getBanksAsync, getOpeningBalBRSAsync, setBankAsync } from "../../api";
+import {
+  createBrsAsync,
+  deleteBrsAsync,
+  getBanksAsync,
+  getBrsDetailsAsync,
+  getOpeningBalBRSAsync,
+  setBankAsync,
+  updateBrsAsync,
+} from "../../api";
 
 export const BrsContext = createContext();
 
@@ -20,15 +28,19 @@ export const BrsProvider = ({ children }) => {
   };
 
   const getBrsDetails = async (id) => {
-    // await getBrsDetailsAsync(id, dispatch)
+    await getBrsDetailsAsync(id, dispatch);
   };
 
   const createBrs = async (data) => {
-    // await createBrsAsync(data, dispatch)
+    await createBrsAsync(data, dispatch);
   };
 
   const updateBrs = async (data) => {
-    // await updateBrsAsync(data, dispatch)
+    await updateBrsAsync(data, dispatch);
+  };
+
+  const deleteBrs = async (id) => {
+    await deleteBrsAsync(id, dispatch);
   };
 
   return (
@@ -40,6 +52,7 @@ export const BrsProvider = ({ children }) => {
         getBrsDetails,
         createBrs,
         updateBrs,
+        deleteBrs,
       }}
     >
       {children}

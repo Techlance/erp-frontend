@@ -14,8 +14,8 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`payments-tabpanel-${index}`}
+      aria-labelledby={`payments-tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -33,43 +33,18 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function CustomDatePicker({ label }) {
-  const [value, setValue] = useState(null);
+const PaymentTypeTabs = ({ values, onChange }) => {
+  const [tabValue, setTabValue] = useState(0);
 
-  return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DatePicker
-        indicatorColor="primary"
-        renderInput={(props) => (
-          <TextField fullWidth {...props} helperText="" />
-        )}
-        label="Date & Time"
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        sx={{
-          "& .MuiTabs-flexContainer .MuiTabs-indicator": {
-            bgcolor: "primary.main",
-          },
-        }}
-      />
-    </LocalizationProvider>
-  );
-}
-
-const PaymentTypeTabs = () => {
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
   };
 
   return (
     <>
       <Tabs
-        value={value}
-        onChange={handleChange}
+        value={tabValue}
+        onChange={handleTabChange}
         indicatorColor="primary"
         textColor="primary"
         centered
@@ -79,7 +54,7 @@ const PaymentTypeTabs = () => {
         <Tab label="Online Transfer" />
       </Tabs>
 
-      <TabPanel value={value} index={0}>
+      <TabPanel value={tabValue} index={0}>
         <Grid container spacing={2}>
           <Grid item sm={6}>
             <TextField
@@ -87,29 +62,47 @@ const PaymentTypeTabs = () => {
               id="chq_no"
               label="Cheque Number"
               InputLabelProps={{ shrink: true }}
-              onChange={handleChange}
+              onChange={onChange}
+              value={values.chq_no}
               type="text"
             />
           </Grid>
           <Grid item sm={6}>
-            <CustomDatePicker label="Cheque Date" />
+            <TextField
+              fullWidth
+              id="chq_date"
+              label="Cheque Date"
+              InputLabelProps={{ shrink: true }}
+              value={values.chq_date}
+              onChange={onChange}
+              type="date"
+            />
           </Grid>
         </Grid>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={tabValue} index={1}>
         <Grid container spacing={2}>
           <Grid item sm={6}>
             <TextField
               fullWidth
-              id="chq_no"
+              id="transaction_no"
               label="Transaction Number"
               InputLabelProps={{ shrink: true }}
-              onChange={handleChange}
+              value={values.transaction_no}
+              onChange={onChange}
               type="text"
             />
           </Grid>
           <Grid item sm={6}>
-            <CustomDatePicker label="Cheque Date" />
+            <TextField
+              fullWidth
+              id="transaction_date"
+              label="Transaction Date"
+              InputLabelProps={{ shrink: true }}
+              value={values.transaction_date}
+              onChange={onChange}
+              type="date"
+            />
           </Grid>
         </Grid>
       </TabPanel>

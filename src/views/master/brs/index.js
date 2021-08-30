@@ -88,6 +88,7 @@ const BRS = () => {
       minWidth: 180,
       align: "center",
       headerAlign: "center",
+      renderCell: (params) => params.value.ledger_name,
     },
     {
       field: "name",
@@ -190,6 +191,7 @@ const BRS = () => {
       }
       content={true}
     >
+      <pre>{JSON.stringify(brs_list, null, 2)}</pre>
       <SelectBankSelect captionLabel="Select Bank" onChange={onChange} />
       {brs_list && (
         <>
