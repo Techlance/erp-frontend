@@ -1,11 +1,9 @@
 const dataToForm = (data) => {
   const form = new FormData();
+
   for (let each in data) {
     if (data.hasOwnProperty(each)) {
-      if(data[each]===null){
-        // form.append([each], 'None');
-      }
-      else{
+      if (data[each] !== null) {
         form.append([each], data[each]);
       }
     }

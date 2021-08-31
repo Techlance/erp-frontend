@@ -71,7 +71,6 @@ const AddUserDialog = ({ open, handleClose }) => {
 
   const handleChange = (event) => {
     if (event.target.id === "schedule_no") {
-      console.log(event.target.value);
       if (
         company_account_heads.find(
           (acc) => acc.schedule_no === parseInt(event.target.value)
@@ -99,7 +98,6 @@ const AddUserDialog = ({ open, handleClose }) => {
     setClicked(true);
     let form = { ...values };
     form.schedule_no = parseInt(values.schedule_no);
-    console.log(form);
     form.bs = form.title === "ASSETS" || form.title === "EQUITY AND LIABLITIES";
     await addCompanyAccountHead(form);
     setClicked(false);

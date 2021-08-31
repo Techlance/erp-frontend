@@ -67,27 +67,6 @@ const CompanyGuard = ({ children }) => {
   } else {
     return <Loader />;
   }
-  // console.log(loading || loadingCompanies);
-
-  // if (loading || loadingCompanies) {
-  //   return <Loader />;
-  // } else {
-  //   function isPresent({ company_id }) {
-  //     return company_id === parseInt(mid);
-  //   }
-
-  //   const company = companies.find(isPresent);
-
-  //   if (company) {
-  //     console.log("yay");
-  //     setMasterCompany(company);
-  //     return children;
-  //   }
-
-  //   // return children;
-
-  //   return <Redirect to={config.defaultPath} />;
-  // }
 };
 
 CompanyGuard.propTypes = {

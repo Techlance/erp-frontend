@@ -20,11 +20,11 @@ import LoadingButton from "../../../../ui-component/LoadingButton";
 import ParentGroupSelect from "../../../../components/master/ledger-master/ParentGroupSelect";
 import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 
-//-----------------------|| User Form ||-----------------------//
+//-----------------------|| Account Group Form ||-----------------------//
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -81,7 +81,6 @@ const UserForm = () => {
 
   const handleChange = (event) => {
     if (event.target.id === "group_code") {
-      console.log(event.target.value);
       if (
         company_account_groups?.find(
           (acc) =>
@@ -96,7 +95,6 @@ const UserForm = () => {
       if (event.target.value.length > 4) return null;
     }
     if (event.target.id === "group_name") {
-      console.log(event.target.value);
       if (
         company_account_groups?.find(
           (acc) =>
@@ -132,12 +130,12 @@ const UserForm = () => {
   useEffect(() => {
     if (company_account_group_details) {
       setCheckList({
-        Ledgers: company_account_group_details.ledger_master,
-        "Account Groups": company_account_group_details.child
+        "Ledgers": company_account_group_details.ledger_master,
+        "Account Groups": company_account_group_details.child,
       });
       setValues({ ...company_account_group_details });
     } else getCompanyAccountGroupDetails(gid);
-  }, [company_account_group_details,gid,getCompanyAccountGroupDetails]);
+  }, [company_account_group_details, gid, getCompanyAccountGroupDetails]);
 
   useEffect(() => {
     if (!company_account_groups) getCompanyAccountGroups(mid);
@@ -165,7 +163,6 @@ const UserForm = () => {
             <Grid item sm={12} md={8}>
               <SubCard title="Edit Account Group">
                 <Grid container spacing={gridSpacing}>
-                  {/* <pre>{JSON.stringify(values,null,2)}</pre> */}
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth

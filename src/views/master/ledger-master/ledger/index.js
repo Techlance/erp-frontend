@@ -32,14 +32,12 @@ const Ledger = () => {
 
   const { pathname } = useLocation();
 
-  console.log(company_ledgers);
-
   const columns = [
     {
       field: "id",
       headerName: "Edit",
       flex: 0.2,
-      minWidth:100,
+      minWidth: 100,
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -50,7 +48,9 @@ const Ledger = () => {
             variant="text"
             color="primary"
             aria-label="more-details"
-            href={`${pathname}/${params.value}`}
+            href={`${pathname}${pathname.endsWith("/") ? "" : "/"}${
+              params.value
+            }`}
             // target="_blank"
           >
             <Typography align="center">More </Typography>
@@ -83,7 +83,7 @@ const Ledger = () => {
     {
       field: "maintain_billwise",
       headerName: "Maintain Billwise",
-      type:"boolean",
+      type: "boolean",
       flex: 0.3,
       minWidth: 200,
     },
@@ -147,8 +147,8 @@ const Ledger = () => {
       align: "",
       headerAlign: "",
       valueFormatter: (params) => {
-        return params.value?formatDate(params.value):null;
-      }
+        return params.value ? formatDate(params.value) : null;
+      },
     },
     {
       field: "id_no",
@@ -164,8 +164,8 @@ const Ledger = () => {
       align: "",
       headerAlign: "",
       valueFormatter: (params) => {
-        return params.value?formatDate(params.value):null;
-      }
+        return params.value ? formatDate(params.value) : null;
+      },
     },
     {
       field: "cc_no",
@@ -181,8 +181,8 @@ const Ledger = () => {
       align: "",
       headerAlign: "",
       valueFormatter: (params) => {
-        return params.value?formatDate(params.value):null;
-      }
+        return params.value ? formatDate(params.value) : null;
+      },
     },
     {
       field: "vat_no",
@@ -239,30 +239,30 @@ const Ledger = () => {
       minWidth: 200,
     },
     {
-      field:"credit_rating",
-      headerName:"Credit Rating",
-      flex:0.3,
-      minWidth:200
+      field: "credit_rating",
+      headerName: "Credit Rating",
+      flex: 0.3,
+      minWidth: 200,
     },
     {
-      field:"block_ac",
-      headerName:"Block A/C",
-      flex:0.3,
-      minWidth:200
+      field: "block_ac",
+      headerName: "Block A/C",
+      flex: 0.3,
+      minWidth: 200,
     },
     {
       field: "created_on",
       headerName: "Created On",
       type: "date",
       flex: 0.3,
-      minWidth:200,
+      minWidth: 200,
       valueFormatter: (params) => {
-        return params.value?formatDate(params.value):null;
+        return params.value ? formatDate(params.value) : null;
       },
     },
     {
       field: "created_by",
-      minWidth:200,
+      minWidth: 200,
       headerName: "created By",
       flex: 0.3,
     },
@@ -309,7 +309,6 @@ const Ledger = () => {
       }
       content={true}
     >
-
       <CustomDataGrid
         columns={columns}
         rows={company_ledgers}
