@@ -13,24 +13,21 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 import formatDate from "../../../../utils/format-date";
 import AddLedgerDialog from "../../../../components/master/ledger-master/AddLedgerDialog";
 import { useLocation } from "react-router-dom";
 
 //-----------------------|| User List ||-----------------------//
 const Ledger = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
+  const { pathname } = useLocation();
 
+  const { company } = useSelector((state) => state.companyMaster);
   const { company_ledgers } = useSelector((state) => state.ledgerMaster);
-
-  const { company } = useCompanyMaster();
 
   const { getCompanyLedgers } = useLedgerMaster();
 
   const [loading, setLoading] = useState(true);
-
-  const { pathname } = useLocation();
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const columns = [
     {

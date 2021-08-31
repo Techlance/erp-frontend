@@ -20,9 +20,10 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 //-----------------------|| Account Head List ||-----------------------//
 const SelectGroup = () => {
   const { pathname } = useLocation();
-  const { company } = useSelector((state) => state.companyMaster);
 
+  const { company } = useSelector((state) => state.companyMaster);
   const { company_account_heads } = useSelector((state) => state.ledgerMaster);
+
   const { getCompanyAccountHeads } = useLedgerMaster();
 
   const [showAddModal, setShowAddModal] = useState(false);
