@@ -28,7 +28,7 @@ import LoadingButton from "../../../../ui-component/LoadingButton";
 import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 import AccountGroupSelect from "../../../../components/master/ledger-master/AccountGroupSelect";
 
-//-----------------------|| User Form ||-----------------------//
+//-----------------------|| Ledger Form ||-----------------------//
 
 const LedgerForm = () => {
   const history = useHistory();
@@ -37,11 +37,8 @@ const LedgerForm = () => {
     (state) => state.ledgerMaster
   );
 
-  const {
-    getCompanyLedgers,
-    updateCompanyLedger,
-    deleteCompanyLedger,
-  } = useLedgerMaster();
+  const { getCompanyLedgers, updateCompanyLedger, deleteCompanyLedger } =
+    useLedgerMaster();
 
   const { mid } = useParams();
 
@@ -51,7 +48,7 @@ const LedgerForm = () => {
   const [clicked, setClicked] = useState(false);
   const [receivable, setReceivable] = useState(false);
   const [payable, setPayable] = useState(false);
-  const [checkList, setCheckList] = useState({});
+  const [checkList] = useState({});
 
   const handleChange = (event) => {
     setValues({
@@ -76,9 +73,6 @@ const LedgerForm = () => {
 
   useEffect(() => {
     if (company_ledger_details) {
-      setCheckList({
-        // "Ledgers":company_ledger_details.ledger_master
-      });
       setValues({ ...company_ledger_details });
     }
   }, [company_ledger_details]);
@@ -95,7 +89,6 @@ const LedgerForm = () => {
     // form.credit_limit = parseFloat(form.credit_limit);
     form.credit_days = parseInt(form.credit_days);
     if (!(receivable || payable)) {
-      form.maintain_billwise = false;
       form = {
         ...form,
         payment_terms: null,
@@ -113,8 +106,6 @@ const LedgerForm = () => {
         tel: null,
         address: null,
       };
-    } else {
-      form.maintain_billwise = true;
     }
     if (!receivable) {
       form = {
@@ -147,7 +138,6 @@ const LedgerForm = () => {
       <Grid item sm={12} md={8}>
         <SubCard title="Edit Ledger">
           <Grid container spacing={gridSpacing}>
-            {/* <pre>{JSON.stringify(values,null,2)}</pre> */}
             <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth

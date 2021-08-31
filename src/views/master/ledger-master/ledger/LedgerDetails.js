@@ -13,13 +13,15 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 
 // assets
 import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
 import LedgerDocumentForm from "./LedgerDocumentForm";
 import AddDocumentDialog from "../../../../components/master/ledger-master/AddDocumentDialog";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { useSelector } from "react-redux";
+import LedgerBalance from "./LedgerBalance";
+import LedgerBillwise from "./LederBillwise";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -83,12 +85,9 @@ const LedgerDetails = () => {
   const [value, setValue] = useState(0);
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const {
-    getCompanyLedgerDetails
-  } = useLedgerMaster();
+  const { getCompanyLedgerDetails } = useLedgerMaster();
 
   const { company_ledger_details } = useSelector((state) => state.ledgerMaster);
-
 
   const { lid } = useParams();
 
@@ -97,9 +96,9 @@ const LedgerDetails = () => {
   };
 
   useEffect(() => {
-    if(!(company_ledger_details && (company_ledger_details?.id === lid)))
+    if (!(company_ledger_details || company_ledger_details?.id === lid))
       getCompanyLedgerDetails(lid);
-  }, [company_ledger_details,getCompanyLedgerDetails,lid]);
+  }, [company_ledger_details, getCompanyLedgerDetails, lid]);
 
   return (
     <MainCard title="Company Details">
@@ -154,7 +153,11 @@ const LedgerDetails = () => {
           <LedgerForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <LedgerForm />
+          {company_ledger_details?.maintain_billwise ? (
+            <LedgerBillwise />
+          ) : (
+            <LedgerBalance />
+          )}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <LedgerDocumentForm />
@@ -169,4 +172,3 @@ const LedgerDetails = () => {
 };
 
 export default LedgerDetails;
-

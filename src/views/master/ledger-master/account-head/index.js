@@ -18,21 +18,16 @@ import formatDate from "../../../../utils/format-date";
 import AddAccountHeadDialog from "../../../../components/master/ledger-master/AddAccountHeadDialog";
 import { useLocation } from "react-router-dom";
 
-//-----------------------|| User List ||-----------------------//
+//-----------------------|| Account Head List ||-----------------------//
 const SelectGroup = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
-
-  const { company_account_heads } = useSelector((state) => state.ledgerMaster);
-
   const { company } = useCompanyMaster();
-
-  const { getCompanyAccountHeads } = useLedgerMaster();
-
-  const [loading, setLoading] = useState(true);
-
   const { pathname } = useLocation();
 
-  console.log(company_account_heads);
+  const { company_account_heads } = useSelector((state) => state.ledgerMaster);
+  const { getCompanyAccountHeads } = useLedgerMaster();
+
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const columns = [
     {
@@ -142,7 +137,6 @@ const SelectGroup = () => {
       }
       content={true}
     >
-      {/* <pre>{JSON.stringify(company, null, 2)}</pre> */}
       <CustomDataGrid
         columns={columns}
         rows={company_account_heads}

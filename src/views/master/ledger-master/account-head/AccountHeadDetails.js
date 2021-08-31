@@ -23,7 +23,7 @@ import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog"
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -74,11 +74,10 @@ const UserForm = () => {
 
   const [error, setError] = useState(false);
 
-  const [checkList,setCheckList] = useState({});
+  const [checkList, setCheckList] = useState({});
 
   const handleChange = (event) => {
     if (event.target.id === "schedule_no") {
-      console.log(event.target.value);
       if (
         company_account_heads.find(
           (acc) => acc.schedule_no === parseInt(event.target.value)
@@ -117,8 +116,8 @@ const UserForm = () => {
       if (account_head && account_head?.is_fixed === false) {
         setValues(account_head);
         setCheckList({
-          "Account Groups":account_head.acc_group
-        })
+          "Account Groups": account_head.acc_group,
+        });
       } else {
         history.replace(config.defaultPath);
       }
@@ -178,7 +177,11 @@ const UserForm = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Stack direction="row">
-                      <Grid container justifyContent="flex-end" spacing={gridSpacing}>
+                      <Grid
+                        container
+                        justifyContent="flex-end"
+                        spacing={gridSpacing}
+                      >
                         <Grid item>
                           <AnimateButton>
                             <Button

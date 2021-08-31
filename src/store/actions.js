@@ -77,6 +77,9 @@ export const CREATE_COMPANY_LEDGER = "CREATE_COMPANY_LEDGER";
 export const UPDATE_COMPANY_LEDGER = "UPDATE_COMPANY_LEDGER";
 export const DELETE_COMPANY_LEDGER = "DELETE_COMPANY_LEDGER";
 export const VIEW_LEDGER_DOCS = "VIEW_LEDGER_DOCS";
+export const VIEW_LEDGER_BALANCE = "VIEW_LEDGER_BALANCE";
+export const UPDATE_LEDGER_BALANCE = "UPDATE_LEDGER_BALANCE";
+export const VIEW_LEDGER_BILLWISE = "VIEW_LEDGER_BILLWISE";
 
 // action - master - voucher type
 export const voucherTypeActions = {
