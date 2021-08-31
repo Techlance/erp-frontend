@@ -35,7 +35,7 @@ import {
   getLedgerBillwiseAsync,
   updateLedgerBalanceAsync,
   updateLedgerBillwiseAsync,
-  deleteLedgerBillAsync
+  deleteLedgerBillAsync,
 } from "../../api";
 import useComapanyMaster from "../../hooks/useCompanyMaster";
 
@@ -109,7 +109,7 @@ export const LedgerMasterProvider = ({ children }) => {
     const response = await addCompanyLedgerAsync(data, dispatch);
 
     await getCompanyLedgersAsync(data.company_master_id, dispatch);
-    
+
     return response;
   };
 
@@ -144,11 +144,11 @@ export const LedgerMasterProvider = ({ children }) => {
 
   const addLedgerBalance = async (data) => {
     await addLedgerBalanceAsync(data, dispatch);
-  }
+  };
 
   const addLedgerBillwise = async (data) => {
     await addLedgerBillwiseAsync(data, dispatch);
-  }
+  };
 
   const getLedgerBalance = async (id) => {
     await getLedgerBalanceAsync(id, dispatch);
@@ -159,16 +159,16 @@ export const LedgerMasterProvider = ({ children }) => {
   };
 
   const updateLedgerBalance = async (data) => {
-    await updateLedgerBalanceAsync(data,dispatch);
-  }
+    await updateLedgerBalanceAsync(data, dispatch);
+  };
 
   const updateLedgerBillwise = async (data) => {
-    await updateLedgerBillwiseAsync(data,dispatch);
-  }
+    await updateLedgerBillwiseAsync(data, dispatch);
+  };
 
   const deleteLedgerBill = async (id) => {
     await deleteLedgerBillAsync(id, dispatch);
-  }
+  };
 
   useEffect(() => {
     getCompanyAccountHeads(company?.company_id);
@@ -209,7 +209,7 @@ export const LedgerMasterProvider = ({ children }) => {
         addLedgerBillwise,
         updateLedgerBalance,
         updateLedgerBillwise,
-        deleteLedgerBill
+        deleteLedgerBill,
       }}
     >
       {children}

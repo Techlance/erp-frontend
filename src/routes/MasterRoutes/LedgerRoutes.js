@@ -52,13 +52,13 @@ const routes = [
     component: AccountGroup,
   },
   {
-    url:"/ledger/:lid",
-    component: LedgerDetails
+    url: "/ledger/:lid",
+    component: LedgerDetails,
   },
   {
-    url:"/ledger",
-    component: Ledger
-  }
+    url: "/ledger",
+    component: Ledger,
+  },
 ];
 
 //-----------------------|| Companies Routing ||-----------------------//

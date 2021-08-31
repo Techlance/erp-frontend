@@ -28,7 +28,7 @@ import LoadingButton from "../../../../ui-component/LoadingButton";
 import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 import AccountGroupSelect from "../../../../components/master/ledger-master/AccountGroupSelect";
 
-//-----------------------|| User Form ||-----------------------//
+//-----------------------|| Ledger Form ||-----------------------//
 
 const LedgerForm = () => {
   const history = useHistory();
@@ -37,11 +37,8 @@ const LedgerForm = () => {
     (state) => state.ledgerMaster
   );
 
-  const {
-    getCompanyLedgers,
-    updateCompanyLedger,
-    deleteCompanyLedger,
-  } = useLedgerMaster();
+  const { getCompanyLedgers, updateCompanyLedger, deleteCompanyLedger } =
+    useLedgerMaster();
 
   const { mid } = useParams();
 
@@ -51,7 +48,7 @@ const LedgerForm = () => {
   const [clicked, setClicked] = useState(false);
   const [receivable, setReceivable] = useState(false);
   const [payable, setPayable] = useState(false);
-  const [checkList, setCheckList] = useState({});
+  const [checkList] = useState({});
 
   const handleChange = (event) => {
     setValues({
@@ -76,9 +73,6 @@ const LedgerForm = () => {
 
   useEffect(() => {
     if (company_ledger_details) {
-      setCheckList({
-        // "Ledgers":company_ledger_details.ledger_master
-      });
       setValues({ ...company_ledger_details });
     }
   }, [company_ledger_details]);
@@ -94,42 +88,42 @@ const LedgerForm = () => {
     // form.bank_ac_no = parseInt(form.bank_ac_no);
     // form.credit_limit = parseFloat(form.credit_limit);
     form.credit_days = parseInt(form.credit_days);
-      if (!(receivable || payable)) {
-        form = {
-          ...form,
-          payment_terms: null,
-          delivery_terms: null,
-          vat_no: null,
-          cc_exp_date: null,
-          cc_no: null,
-          id_exp_date: null,
-          id_no: null,
-          cr_exp_date: null,
-          cr_no: null,
-          tax_reg_no: null,
-          contact_person: null,
-          email: null,
-          tel: null,
-          address: null,
-        };
-      }
-      if (!receivable) {
-        form = {
-          ...form,
-          credit_limit: null,
-          credit_days: null,
-          credit_rating: null,
-          block_ac: null,
-        };
-      } else if (!payable) {
-        form = {
-          ...form,
-          bank_name: null,
-          bank_code: null,
-          branch_name: null,
-          bank_ac_no: null,
-        };
-      }
+    if (!(receivable || payable)) {
+      form = {
+        ...form,
+        payment_terms: null,
+        delivery_terms: null,
+        vat_no: null,
+        cc_exp_date: null,
+        cc_no: null,
+        id_exp_date: null,
+        id_no: null,
+        cr_exp_date: null,
+        cr_no: null,
+        tax_reg_no: null,
+        contact_person: null,
+        email: null,
+        tel: null,
+        address: null,
+      };
+    }
+    if (!receivable) {
+      form = {
+        ...form,
+        credit_limit: null,
+        credit_days: null,
+        credit_rating: null,
+        block_ac: null,
+      };
+    } else if (!payable) {
+      form = {
+        ...form,
+        bank_name: null,
+        bank_code: null,
+        branch_name: null,
+        bank_ac_no: null,
+      };
+    }
     await updateCompanyLedger(form);
     setClicked(false);
   };
@@ -144,7 +138,6 @@ const LedgerForm = () => {
       <Grid item sm={12} md={8}>
         <SubCard title="Edit Ledger">
           <Grid container spacing={gridSpacing}>
-            {/* <pre>{JSON.stringify(values,null,2)}</pre> */}
             <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth

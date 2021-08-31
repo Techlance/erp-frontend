@@ -16,7 +16,7 @@ const AccountGroupSelect = ({
   disabled,
   setReceivable,
   setPayable,
-  setBs
+  setBs,
 }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
@@ -44,22 +44,20 @@ const AccountGroupSelect = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
-  useEffect(()=>{
-    if(selected && data){
+  useEffect(() => {
+    if (selected && data) {
       const item = data.find((option) => option.id === selected.id);
-      setReceivable(item?.is_Receivables)
-      setPayable(item?.is_payables)
-      if(setBs) 
-      setBs(item?.is_bs)
+      setReceivable(item?.is_Receivables);
+      setPayable(item?.is_payables);
+      if (setBs) setBs(item?.is_bs);
     }
-  },[data,setReceivable,setPayable,setBs,selected])
+  }, [data, setReceivable, setPayable, setBs, selected]);
 
   const handleChange = (event) => {
     const item = data.find((option) => option.id === event.target.value);
-    setReceivable(item.is_Receivables)
-    setPayable(item.is_payables)
-    if(setBs)
-    setBs(item?.is_bs)
+    setReceivable(item.is_Receivables);
+    setPayable(item.is_payables);
+    if (setBs) setBs(item?.is_bs);
     onChange("acc_group_id", item);
   };
 

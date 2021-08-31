@@ -10,7 +10,13 @@ import useCompany from "../../../../hooks/useCompany";
 
 //-----------------------|| CURRENCY SELECT ||-----------------------//
 
-const FcNameSelect = ({ captionLabel, formState, selected, onChange, baseCurrency }) => {
+const FcNameSelect = ({
+  captionLabel,
+  formState,
+  selected,
+  onChange,
+  baseCurrency,
+}) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
     return baseCurrency;
@@ -55,7 +61,9 @@ const FcNameSelect = ({ captionLabel, formState, selected, onChange, baseCurrenc
       >
         {currencies.map((option, index) => (
           <MenuItem key={index} value={option.id}>
-            {option.id===baseCurrency?`Base(${option.currency})`:option.currency}
+            {option.id === baseCurrency
+              ? `Base(${option.currency})`
+              : option.currency}
           </MenuItem>
         ))}
       </TextField>

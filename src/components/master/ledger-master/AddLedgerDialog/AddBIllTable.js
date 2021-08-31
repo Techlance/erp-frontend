@@ -1,7 +1,7 @@
 import React from "react";
 
 // material-ui
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import {
   Button,
@@ -19,8 +19,7 @@ import {
 
 //-----------------------|| Billwise List ||-----------------------//
 
-const AddBillTable = ({billwise,setBillwise,deleteBill,addShortcut}) => {
-
+const AddBillTable = ({ billwise, setBillwise, deleteBill, addShortcut }) => {
   return (
     <Table size="medium">
       <TableHead>
@@ -64,95 +63,103 @@ const AddBillTable = ({billwise,setBillwise,deleteBill,addShortcut}) => {
         {billwise?.map((row, index) => (
           <TableRow hover key={index}>
             <TableCell>
-            <TextField
-              onKeyPress={addShortcut}
-              fullWidth
-              id="ref_no"
-              label="Reference No."
-              value={row.ref_no}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e)=>{setBillwise(index,e)}}
-            />
-            </TableCell>
-            
-            <TableCell>
-            <FormControl fullWidth variant="outlined">
               <TextField
-                id="is_cr"
-                select
+                onKeyPress={addShortcut}
                 fullWidth
-                label="Type"
-                value={row.is_cr}
-                onChange={(e)=>{setBillwise(index,e)}}
-                variant="outlined"
+                id="ref_no"
+                label="Reference No."
+                value={row.ref_no}
                 InputLabelProps={{ shrink: true }}
-              >
-                  <MenuItem value={true}>
-                    Credit
-                  </MenuItem>
-                  <MenuItem value={false}>
-                    Debit
-                  </MenuItem>
-              </TextField>
-            </FormControl>
+                onChange={(e) => {
+                  setBillwise(index, e);
+                }}
+              />
+            </TableCell>
+
+            <TableCell>
+              <FormControl fullWidth variant="outlined">
+                <TextField
+                  id="is_cr"
+                  select
+                  fullWidth
+                  label="Type"
+                  value={row.is_cr}
+                  onChange={(e) => {
+                    setBillwise(index, e);
+                  }}
+                  variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                >
+                  <MenuItem value={true}>Credit</MenuItem>
+                  <MenuItem value={false}>Debit</MenuItem>
+                </TextField>
+              </FormControl>
             </TableCell>
             <TableCell>
-            <TextField
-              onKeyPress={addShortcut}
-              fullWidth
-              id="bill_date"
-              label="Bill Date"
-              value={row.bill_date}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e)=>{setBillwise(index,e)}}
-              type="date"
-            />
+              <TextField
+                onKeyPress={addShortcut}
+                fullWidth
+                id="bill_date"
+                label="Bill Date"
+                value={row.bill_date}
+                InputLabelProps={{ shrink: true }}
+                onChange={(e) => {
+                  setBillwise(index, e);
+                }}
+                type="date"
+              />
             </TableCell>
-            
+
             <TableCell>
-            <TextField
-              onKeyPress={addShortcut}
-              fullWidth
-              id="due_date"
-              label="Due Date"
-              value={row.due_date}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e)=>{setBillwise(index,e)}}
-              type="date"
-            />
+              <TextField
+                onKeyPress={addShortcut}
+                fullWidth
+                id="due_date"
+                label="Due Date"
+                value={row.due_date}
+                InputLabelProps={{ shrink: true }}
+                onChange={(e) => {
+                  setBillwise(index, e);
+                }}
+                type="date"
+              />
             </TableCell>
             <TableCell>
-            <TextField
-              onKeyPress={addShortcut}
-              fullWidth
-              id="amt"
-              label="Amount"
-              value={row.amt}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e)=>{setBillwise(index,e)}}
-              type="number"
-              inputProps={{
-                min:"0"
-              }}
-            />
+              <TextField
+                onKeyPress={addShortcut}
+                fullWidth
+                id="amt"
+                label="Amount"
+                value={row.amt}
+                InputLabelProps={{ shrink: true }}
+                onChange={(e) => {
+                  setBillwise(index, e);
+                }}
+                type="number"
+                inputProps={{
+                  min: "0",
+                }}
+              />
             </TableCell>
-            
+
             <TableCell>
-            <TextField
-              onKeyPress={addShortcut}
-              fullWidth
-              id="ref_no"
-              label="Reference No."
-              value={row.ref_no}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e)=>{setBillwise(index,e)}}
-              type="number"
-              inputProps={{
-                min:"0"
-              }}
-            />
+              <TextField
+                onKeyPress={addShortcut}
+                fullWidth
+                id="ref_no"
+                label="Reference No."
+                value={row.ref_no}
+                InputLabelProps={{ shrink: true }}
+                onChange={(e) => {
+                  setBillwise(index, e);
+                }}
+                type="number"
+                inputProps={{
+                  min: "0",
+                }}
+              />
             </TableCell>
-            
+
             <TableCell align="center">
               <Stack
                 direction="row"
@@ -163,9 +170,10 @@ const AddBillTable = ({billwise,setBillwise,deleteBill,addShortcut}) => {
                   variant="text"
                   color="error"
                   aria-label="delete"
-                  onClick={()=>{deleteBill(index)}}
+                  onClick={() => {
+                    deleteBill(index);
+                  }}
                 >
-                  
                   <DeleteIcon sx={{ fontSize: "1.3rem" }} />
                 </Button>
               </Stack>
