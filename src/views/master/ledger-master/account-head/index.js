@@ -20,8 +20,8 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 
 //-----------------------|| Account Head List ||-----------------------//
 const SelectGroup = () => {
-  const { company } = useCompanyMaster();
   const { pathname } = useLocation();
+  const { company } = useSelector((state) => state.companyMaster);
 
   const { company_account_heads } = useSelector((state) => state.ledgerMaster);
   const { getCompanyAccountHeads } = useLedgerMaster();
@@ -45,7 +45,6 @@ const SelectGroup = () => {
             color="primary"
             aria-label="more-details"
             href={`${pathname}/${params.value}`}
-            // target="_blank"
           >
             <Typography align="center">More </Typography>
             <IconArrowRight sx={{ fontSize: "1.1rem" }} />
