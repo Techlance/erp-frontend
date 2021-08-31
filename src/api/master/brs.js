@@ -60,10 +60,9 @@ export const getBrsDetailsAsync = async (brs_id, dispatch) => {
 
 export const createBrsAsync = async (data, dispatch) => {
   try {
-    data.bank_ledger_id = data.bank_ledger_id.id;
     data.acc_code = data.acc_code.id;
 
-    const response = await instance.put(
+    const response = await instance.post(
       `/ledger-balance/add-op-bal-brs`,
       dataToForm(data)
     );

@@ -17,6 +17,7 @@ import formatDate from "../../../utils";
 // assets
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../ui-component/CustomDataGrid";
+import AddBrsDialog from "../../../components/master/brs/AddBrsDialog";
 
 // style
 
@@ -175,23 +176,24 @@ const BRS = () => {
               {`${company?.company_name}'s BRS`}
             </Typography>
           </Grid>
-          <Grid item>
-            <AnimateButton>
-              <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                onClick={() => setShowAddModal(true)}
-              >
-                Add BRS
-              </Button>
-            </AnimateButton>
-          </Grid>
+          {brs_list && (
+            <Grid item>
+              <AnimateButton>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  onClick={() => setShowAddModal(true)}
+                >
+                  Add BRS
+                </Button>
+              </AnimateButton>
+            </Grid>
+          )}
         </Grid>
       }
       content={true}
     >
-      <pre>{JSON.stringify(brs_list, null, 2)}</pre>
       <SelectBankSelect captionLabel="Select Bank" onChange={onChange} />
       {brs_list && (
         <>
@@ -204,6 +206,10 @@ const BRS = () => {
           <CustomDataGrid columns={columns} rows={brs_list} loading={loading} />
         </>
       )}
+      <AddBrsDialog
+        open={showAddModal}
+        handleClose={() => setShowAddModal(false)}
+      />
     </MainCard>
   );
 };

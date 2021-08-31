@@ -20,7 +20,6 @@ const CompanyGuard = ({ children }) => {
   const { setMasterCompany } = useCompanyMaster();
 
   const [loading, setLoading] = useState(true);
-
   const [forward, setForward] = useState(0);
 
   const [getCompanies, loadingCompanies, , { companies }] = useRequest({
@@ -50,7 +49,7 @@ const CompanyGuard = ({ children }) => {
 
       if (company) {
         setMasterCompany(company);
-        // return children;
+
         setForward(1);
       } else {
         setForward(2);
