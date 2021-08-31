@@ -7,7 +7,6 @@ import { Button, Grid, Typography } from "@material-ui/core";
 
 // project imports
 import MainCard from "../../../../ui-component/cards/MainCard";
-import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 import { gridSpacing } from "../../../../store/constant";
 import formatDate from "../../../../utils/format-date";
 import AddAccountHeadDialog from "../../../../components/master/ledger-master/AddAccountHeadDialog";
