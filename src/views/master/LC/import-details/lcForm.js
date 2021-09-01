@@ -376,14 +376,14 @@ const LcForm = () => {
                       onChange={handleChange}
                     />
                   </Grid>
-                  {/* <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6}>
                     <CurrencySelect
                       captionLabel="Currency"
                       InputLabelProps={{ shrink: true }}
-                      selected={values.currency_name}
+                      selected={values.base_currency}
                       onChange={handleSelect}
                     />
-                  </Grid> */}
+                  </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth

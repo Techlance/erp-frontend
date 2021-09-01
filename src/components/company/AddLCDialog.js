@@ -10,15 +10,7 @@ import { gridSpacing } from "../../store/constant";
 import CurrencySelect from "./CurrencySelect";
 
 // material-ui
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
 // project imports
 import useAuth from "../../hooks/useAuth";

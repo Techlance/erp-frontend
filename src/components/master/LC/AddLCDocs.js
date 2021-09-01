@@ -41,7 +41,7 @@ const LCDocs = ({ newLC }) => {
   //   const { lid } = useParams();
   const { lc_id } = useParams();
   //   const { deleteLedgerDoc } = useLedgerMaster();
-  const { deleteLCDoc } = useLC();
+  const { deleteLcDoc } = useLC();
   const [showDeleteModal, setShowDeleteModal] = useState(null);
   const [currentDocID, setCurrentDocID] = useState(0);
   const [newDocs, setNewDocs] = useState([]);
@@ -63,7 +63,7 @@ const LCDocs = ({ newLC }) => {
 
   useEffect(() => {
     getLCDocs();
-  }, [showAddModal]);
+  }, [showAddModal, deleteLcDoc]);
 
   useEffect(() => {
     console.log(data);
@@ -162,7 +162,7 @@ const LCDocs = ({ newLC }) => {
           </TableBody>
           <ConfirmDeleteDialog
             open={showDeleteModal}
-            // handleAgree={() => deleteLCDoc(currentDocID, lc_id)}
+            handleAgree={() => deleteLcDoc(currentDocID, newLC.id)}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
             body="Are you sure you want to delete this Document? Once deleted the data can not be retrived!"

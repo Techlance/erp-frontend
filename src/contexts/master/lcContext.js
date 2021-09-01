@@ -138,6 +138,9 @@ export const LcProvider = ({ children }) => {
   };
 
   const deleteLcDoc = async (id, lc_id) => {
+    console.log(lc_id);
+    console.log("lc_id");
+
     await deleteLCDocAsync(id, dispatch);
 
     await getSelectedLCDocsAsync(lc_id, dispatch);
