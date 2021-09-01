@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { IconButton, Grid, Stack } from "@material-ui/core";
 
 // assets
 
 // project imports
-import { gridSpacing } from "../../../store/constant";
+import { gridSpacing } from "../../../../store/constant";
 
 // material-ui
 import {
@@ -20,18 +20,16 @@ import {
 } from "@material-ui/core";
 
 // project imports
-import useAuth from "../../../hooks/useAuth";
-import useCompany from "../../../hooks/useCompany";
-import useLC from "../../../hooks/useLC";
+import useAuth from "../../../../hooks/useAuth";
+import useLC from "../../../../hooks/useLC";
 import { useParams } from "react-router";
 
-const AddAmendmentDialog = ({ open, handleClose }) => {
+const EditAmendDialog = ({ open, handleClose, data }) => {
   const { user } = useAuth();
   const { mid, lc_id } = useParams();
 
-  const { addLCAmend } = useLC();
+  const { updateLCAmend } = useLC();
 
-  const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState({
@@ -45,6 +43,24 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
     company_master_id: mid,
     created_by: user.email,
   });
+
+  useEffect(() => {
+    setValues({
+      lc_id: data.lc_id,
+      amendment_no: data.amendment_no,
+      issue_date: data.issue_date,
+      LDS: data.LDS,
+      expiry_date: data.expiry_date,
+      lc_amount: data.lc_amount,
+      remarks: data.remarks,
+      company_master_id: data.mid,
+      created_by: user.email,
+      //   id: data.id,
+      //   created_by: data.created_by,
+      //   currency_name: data.currency_name,
+      //   currency: data.currency,
+    });
+  }, [data]);
 
   const handleChange = (event) => {
     setValues({
@@ -60,21 +76,12 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
     });
   };
 
-  const handleCreateAmendment = async () => {
+  const handleUpdateAmendment = async () => {
     setClicked(true);
-    await addLCAmend(values);
+    await updateLCAmend(values, lc_id);
+    // await getLCAmend(values);
+
     setClicked(false);
-    setValues({
-      lc_id: lc_id,
-      amendment_no: 1,
-      issue_date: "",
-      LDS: "",
-      expiry_date: "",
-      lc_amount: "",
-      remarks: "",
-      company_master_id: mid,
-      created_by: user.email,
-    });
     handleClose();
   };
 
@@ -88,7 +95,7 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
     >
       {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
       <DialogTitle id="form-dialog-title">
-        <Typography variant="h4">Create Amendment</Typography>
+        <Typography variant="h4">Update Amendment</Typography>
       </DialogTitle>
       <DialogContent>
         {/* <DialogContentText>
@@ -136,6 +143,7 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
               id="lc_amount"
               label="LC Amount"
               type="number"
+              InputProps={{ inputProps: { min: 1 } }}
               value={values.lc_amount}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
@@ -168,13 +176,13 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
           size="small"
           variant="contained"
           disabled={clicked}
-          onClick={handleCreateAmendment}
+          onClick={handleUpdateAmendment}
         >
-          Add
+          Save
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default AddAmendmentDialog;
+export default EditAmendDialog;

@@ -1,6 +1,7 @@
 // action - state management
 import {
-  GET_LC,
+  GET_IMPORT_LC,
+  GET_EXPORT_LC,
   GET_DETAIL_LC,
   UPDATE_LC,
   CREATE_LC,
@@ -16,10 +17,9 @@ import {
 
 // constant
 const initialState = {
-  l_c: null,
+  lc_import: null,
+  lc_export: null,
   lc_detail: null,
-  //   cost_center: null,
-  //   cost_center_details: null,
   centeres: [],
   party_code_pay: [],
   party_code_rec: [],
@@ -30,10 +30,16 @@ const initialState = {
 
 const lcReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_LC: {
+    case GET_IMPORT_LC: {
       return {
         ...state,
-        l_c: action.payload,
+        lc_import: action.payload,
+      };
+    }
+    case GET_EXPORT_LC: {
+      return {
+        ...state,
+        lc_export: action.payload,
       };
     }
     case GET_LC_DOCS: {

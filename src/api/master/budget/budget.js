@@ -16,11 +16,11 @@ import { dataToForm } from "../../../utils";
 import instance from "../../../utils/axios";
 import sendNotification from "../../../utils/sendNotification";
 
-export const getImportLCAsync = async (id, dispatch) => {
+export const getBudgetAsync = async (id, dispatch) => {
   if (!id) {
     return;
   }
-  const response = await instance.get(`/lc/get-import-lc/${id}`);
+  const response = await instance.get(`/lc/ get-import-lc/${id}`);
 
   console.log(response.data.data);
   dispatch({

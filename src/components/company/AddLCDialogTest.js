@@ -31,7 +31,7 @@ import PartyCodePaySelect from "../master/LC/PartyCodePaySelect";
 import PartyCodeRecSelect from "../master/LC/PartyCodeRecSelect";
 import BankAcSelect from "../master/LC/BankACSelect";
 
-const AddLCDialog = ({ open, handleClose, values, setValues }) => {
+const AddLCDialogTest = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { addImportLC, addExportLC } = useLC();
   const { pathname } = useLocation();
@@ -47,6 +47,34 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
 
   // const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [clicked, setClicked] = useState(false);
+
+  const [values, setValues] = useState({
+    trans_type: flag ? "import" : "export",
+    year_id: 21,
+    lc_date: "",
+    party_code: null,
+    cost_center: null,
+    applicant_bank: "",
+    applicant_bank_lc_no: "",
+    benificiary_bank: "",
+    benificiary_bank_lc_no: "",
+    inspection: false,
+    bank_ref: "",
+    days_for_submit_to_bank: "",
+    payment_terms: "",
+    place_of_taking_incharge: "",
+    final_destination_of_delivery: "",
+    completed: false,
+    shipment_terms: "",
+    goods_description: "",
+    other_lc_terms: "",
+    bank_ac: null,
+    expiry_date: "",
+    lc_amount: "",
+    company_master_id: mid,
+    // base_currency: { id: 0 },
+    created_by: user.email,
+  });
 
   const handleChange = (event) => {
     setValues({
@@ -102,7 +130,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
       bank_ac: null,
       expiry_date: "",
       lc_amount: "",
-      base_currency: { id: 0 },
+      // base_currency: { id: 0 },
       company_master_id: mid,
       created_by: user.email,
     });
@@ -111,23 +139,22 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
 
   return (
     <>
-      {/* // <Dialog
-    //   open={open}
-    //   onClose={handleClose}
-    //   aria-labelledby="create-lc-dialog"
-    //   fullWidth
-    //   maxWidth="md"
-    // >
-      // <DialogTitle id="form-dialog-title">
-      //   <Typography variant="h4">Create a new LC</Typography>
-      // </DialogTitle>
-      // <DialogContent> */}
+      {/*  <Dialog
+       open={open}
+       onClose={handleClose}
+       aria-labelledby="create-lc-dialog"
+       fullWidth
+       maxWidth="md"
+     >
+       <DialogTitle id="form-dialog-title">
+         <Typography variant="h4">Create a new LC</Typography>
+       </DialogTitle>
+       <DialogContent> */}
       {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
       {/* <DialogContentText>
           <Typography variant="body2">Create a new LC.</Typography>
         </DialogContentText> */}
       <Grid container spacing={gridSpacing}>
-        {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
@@ -349,14 +376,14 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <CurrencySelect
-            captionLabel="Currency"
-            InputLabelProps={{ shrink: true }}
-            selected={values.base_currency}
-            onChange={handleSelect}
-          />
-        </Grid>
+        {/* <Grid item xs={12} sm={6}>
+            <CurrencySelect
+              captionLabel="Currency"
+              InputLabelProps={{ shrink: true }}
+              selected={values.currency_name}
+              onChange={handleSelect}
+            />
+          </Grid> */}
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
@@ -372,39 +399,39 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
       </Grid>
       {/* </DialogContent> */}
 
-      {/* <DialogActions sx={{ pr: 2.5 }}>
-        <Grid item xs={12}>
-          <Stack direction="row">
-            <Grid container justifyContent="space-between">
-              <Grid item>
-                <Button
-                  onClick={handleClose}
-                  color="error"
-                  size="medium"
-                  variant="contained"
-                >
-                  Cancel
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  color="primary"
-                  size="medium"
-                  variant="contained"
-                  disabled={clicked}
-                  onClick={handleCreateLC}
-                  startIcon={<SaveIcon />}
-                >
-                  Save and Upload Documents
-                </Button>
-              </Grid>
+      {/* <DialogActions sx={{ pr: 2.5 }}> */}
+      <Grid item xs={12}>
+        <Stack direction="row">
+          <Grid container justifyContent="space-between">
+            <Grid item>
+              <Button
+                onClick={handleClose}
+                color="error"
+                size="medium"
+                variant="contained"
+              >
+                Cancel
+              </Button>
             </Grid>
-          </Stack>
-        </Grid>
-      </DialogActions>
-    </Dialog> */}
+            <Grid item>
+              <Button
+                color="primary"
+                size="medium"
+                variant="contained"
+                disabled={clicked}
+                onClick={handleCreateLC}
+                startIcon={<SaveIcon />}
+              >
+                Save and Upload Documents
+              </Button>
+            </Grid>
+          </Grid>
+        </Stack>
+      </Grid>
+      {/* </DialogActions> */}
+      {/* </Dialog> */}
     </>
   );
 };
 
-export default AddLCDialog;
+export default AddLCDialogTest;

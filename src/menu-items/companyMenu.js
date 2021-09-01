@@ -102,14 +102,30 @@ export const company_menu = {
             {
               id: "pl-budget",
               title: <FormattedMessage id="menu.pl-budget" />,
-              type: "item",
+              type: "collapse",
               //   url: "/admin/companies",
+              children: [
+                {
+                  id: "revised-budget",
+                  title: <FormattedMessage id="menu.revised-budget" />,
+                  type: "item",
+                  //   url: "/admin/companies",
+                },
+              ],
             },
             {
               id: "cash-flow-budget",
               title: <FormattedMessage id="menu.cash-flow-budget" />,
-              type: "item",
+              type: "collapse",
               //   url: "/admin/companies",
+              children: [
+                {
+                  id: "revised-budget",
+                  title: <FormattedMessage id="menu.revised-budget" />,
+                  type: "item",
+                  //   url: "/admin/companies",
+                },
+              ],
             },
           ],
         },

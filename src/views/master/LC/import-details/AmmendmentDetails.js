@@ -9,20 +9,23 @@ import { gridSpacing } from "../../../../store/constant";
 
 // assets
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
+import EditIcon from "@material-ui/icons/EditTwoTone";
 
 // import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { number } from "prop-types";
 import formatDate from "../../../../utils";
 import useLC from "../../../../hooks/useLC";
 import { IconButton, Stack } from "@material-ui/core";
 import useAuth from "../../../../hooks/useAuth";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
+import EditAmendDialog from "./EditAmendDialog";
 
 //-----------------------|| User List ||-----------------------//
 const AmendmentDetails = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const { lc_id, mid } = useParams();
 
@@ -48,10 +51,13 @@ const AmendmentDetails = () => {
 
   const { pathname } = useLocation();
 
+  // const [currentAmendID, setAmendID] = useState(0);
+
   const handleDeleteAmend = async () => {
     if (value.id === 0) return;
 
-    await deleteLCAmend(value.id);
+    await deleteLCAmend(value.id, lc_id);
+
     // history.replace(`company/${mid}/master/lc/import/${lc_id}`);
   };
 
@@ -149,17 +155,18 @@ const AmendmentDetails = () => {
       renderCell: (params) => {
         return (
           <Stack direction="row" justifyContent="center" alignItems="center">
-            {/* <IconButton
+            <IconButton
               onClick={() => {
                 setValue(params.row);
                 setShowEditModal(true);
               }}
             >
               <EditIcon color="primary" />
-            </IconButton> */}
+            </IconButton>
             <IconButton
               onClick={() => {
                 setValue(params);
+                // setAmendID(row.id);
                 setShowDeleteModal(true);
               }}
             >
@@ -189,9 +196,14 @@ const AmendmentDetails = () => {
       <ConfirmDeleteDialog
         open={showDeleteModal}
         handleClose={() => setShowDeleteModal(false)}
-        title="Are you sure you want to delete this LC Amendment."
-        // body="Something"
+        title="Are you sure?"
+        body="Are you sure you want to delete this LC Amendment? Once deleted the data can not be retrived!"
         handleAgree={handleDeleteAmend}
+      />
+      <EditAmendDialog
+        open={showEditModal}
+        handleClose={() => setShowEditModal(false)}
+        data={value}
       />
     </>
   );

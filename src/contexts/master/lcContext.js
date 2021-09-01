@@ -9,7 +9,9 @@ import useAuth from "../../hooks/useAuth";
 
 import {
   // Company LC
-  getLCAsync,
+
+  getImportLCAsync,
+  getExportLCAsync,
   addLCAsync,
   updateLCAsync,
   deleteLCAsync,
@@ -42,8 +44,12 @@ export const LcProvider = ({ children }) => {
 
   const { user } = useAuth();
 
-  const getLC = async (id) => {
-    await getLCAsync(id, dispatch);
+  const getImportLC = async (id) => {
+    await getImportLCAsync(id, dispatch);
+  };
+
+  const getExportLC = async (id) => {
+    await getExportLCAsync(id, dispatch);
   };
 
   const getLCDetail = async (id) => {
@@ -66,17 +72,27 @@ export const LcProvider = ({ children }) => {
     await getBankAcAsync(id, dispatch);
   };
 
-  const addLC = async (data) => {
-    await addLCAsync(data, dispatch);
+  const addImportLC = async (data) => {
+    return await addLCAsync(data, dispatch);
 
-    await getLCAsync(data.company_master_id, dispatch);
+    // await getImportLCAsync(data.company_master_id, dispatch);
   };
 
-  const updateLC = async (data) => {
+  const addExportLC = async (data) => {
+    return await addLCAsync(data, dispatch);
+
+    // await getImportLCAsync(data.company_master_id, dispatch);
+  };
+
+  const updateImportLC = async (data) => {
     await updateLCAsync(data, dispatch);
 
-    await getLCAsync(data.lc_id, dispatch);
-    // await getSelectedCompanyAsync(data.id, dispatch);
+    await getImportLCAsync(data.lc_id, dispatch);
+  };
+  const updateExportLC = async (data) => {
+    await updateLCAsync(data, dispatch);
+
+    await getExportLCAsync(data.lc_id, dispatch);
   };
 
   const deleteLC = async (id) => {
@@ -91,21 +107,24 @@ export const LcProvider = ({ children }) => {
 
   const addLCAmend = async (data) => {
     await createLCAmendAsync(data, dispatch);
-
+    // console.log(data.lc_id);
+    // console.log("HELLO");
     await getLCAmendAsync(data.lc_id, dispatch);
   };
 
-  const updateLCAmend = async (data) => {
+  const updateLCAmend = async (data, lc_id) => {
+    console.log(data);
+    console.log("HI");
     await updateLCAmendAsync(data, dispatch);
 
-    await getLCAmendAsync(data.company_master_id, dispatch);
-    // await getSelectedCompanyAsync(data.id, dispatch);
+    await getLCAmendAsync(lc_id, dispatch);
   };
 
-  const deleteLCAmend = async (id) => {
+  const deleteLCAmend = async (id, lc_id) => {
     await deleteLCAmendAsync(id, dispatch);
-
-    // await getLCAmendAsync(dispatch);
+    console.log(lc_id);
+    console.log("HELLO");
+    await getLCAmendAsync(lc_id, dispatch);
   };
 
   const getSelectedLcDocs = async (id) => {
@@ -132,10 +151,13 @@ export const LcProvider = ({ children }) => {
     <LC.Provider
       value={{
         ...state,
-        getLC,
+        getImportLC,
+        getExportLC,
         getLCDetail,
-        addLC,
-        updateLC,
+        addImportLC,
+        addExportLC,
+        updateImportLC,
+        updateExportLC,
         deleteLC,
         getSelectedLcDocs,
         createLcDocs,

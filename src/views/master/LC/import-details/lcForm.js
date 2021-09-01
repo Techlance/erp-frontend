@@ -30,6 +30,7 @@ import PartyCodePaySelect from "../../../../components/master/LC/PartyCodePaySel
 import PartyCodeRecSelect from "../../../../components/master/LC/PartyCodeRecSelect";
 import BankAcSelect from "../../../../components/master/LC/BankACSelect";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
+import CurrencySelect from "../../../../components/company/CurrencySelect";
 
 //-----------------------|| User Form ||-----------------------//
 
@@ -78,7 +79,13 @@ const LcForm = () => {
 
   const { lc_detail } = useSelector((state) => state.lc);
 
-  const { getLC, updateLC, deleteLC, getLCDetail, getPartyCodePay } = useLC();
+  const {
+    updateImportLC,
+    updateExportLC,
+    deleteLC,
+    getLCDetail,
+    getPartyCodePay,
+  } = useLC();
 
   const { lc_id, mid } = useParams();
 
@@ -114,17 +121,9 @@ const LcForm = () => {
 
   useEffect(() => {
     if (lc_detail) {
-      //   setCheckList({
-      //     Ledgers: lc_detail.ledger_master,
-      //     "Account Groups": lc_detail.child,
-      //   });
       setValues({ ...lc_detail });
     } else getLCDetail(lc_id);
   }, [lc_detail]);
-
-  // useEffect(() => {
-  //   if (!l_c) getPartyCodePay(mid);
-  // });
 
   const handleClose = () => setShowDeleteModal(false);
 
@@ -134,7 +133,8 @@ const LcForm = () => {
     form.cost_center = form.cost_center.id;
     form.party_code = form.party_code.id;
     form.bank_ac = form.bank_ac.id;
-    await updateLC(form);
+    // form.base_currency = form.base_currency.id;
+    flag ? await updateImportLC(form) : await updateExportLC(form);
     setClicked(false);
     // history.replace("/company/9/master/lc/import/1");
   };
@@ -376,14 +376,26 @@ const LcForm = () => {
                       onChange={handleChange}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12}>
+                  {/* <Grid item xs={12} sm={6}>
+                    <CurrencySelect
+                      captionLabel="Currency"
+                      InputLabelProps={{ shrink: true }}
+                      selected={values.currency_name}
+                      onChange={handleSelect}
+                    />
+                  </Grid> */}
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       id="lc_amount"
                       label="LC Amount"
-                      type="number"
+                      type="tel"
                       value={values.lc_amount}
                       InputLabelProps={{ shrink: true }}
+                      InputProps={{ inputProps: { max: 1 } }}
+                      // inputProps={{
+                      //   pattern: "[0-9]*",
+                      // }}
                       onChange={handleChange}
                     />
                   </Grid>

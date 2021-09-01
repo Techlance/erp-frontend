@@ -19,6 +19,9 @@ import { useLocation } from "react-router";
 import formatDate from "../../../../utils/format-date";
 import useLC from "../../../../hooks/useLC";
 import AddLCDialog from "../../../../components/company/AddLCDialog";
+import LCStepper from "../../../../components/company/LCStepper";
+import AddLCDialogTesting from "../../../../components/company/AddLCDialogTesting";
+import AddLCDialogFinal from "../../../../components/company/AddLCDialogFinal";
 
 //-----------------------|| LC List ||-----------------------//
 
@@ -32,11 +35,9 @@ const SelectGroup = () => {
 
   const { company } = useComapanyMaster();
 
-  const { l_c } = lc;
+  const { lc_import, lc_export } = lc;
 
-  console.log(l_c);
-
-  const { getLC } = useLC();
+  const { getLC, getImportLC, getExportLC } = useLC();
 
   const [loading, setLoading] = useState(true);
 
@@ -70,12 +71,12 @@ const SelectGroup = () => {
         </Button>
       ),
     },
-    {
-      field: "trans_type",
-      headerName: "Transaction Type",
-      flex: 0.5,
-      minWidth: 150,
-    },
+    // {
+    //   field: "trans_type",
+    //   headerName: "Transaction Type",
+    //   flex: 0.5,
+    //   minWidth: 150,
+    // },
     {
       field: "lc_date",
       headerName: "LC Date",
@@ -91,15 +92,25 @@ const SelectGroup = () => {
     //   flex: 0.5,
     //   minWidth: 150,
     // },
-    {
-      field: "party_code",
-      headerName: "Party Code(Payables)",
-      flex: 0.5,
-      minWidth: 150,
-      valueFormatter: (params) => {
-        return params.value.ledger_name;
-      },
-    },
+    flag
+      ? {
+          field: "party_code",
+          headerName: "Party Code(Payables)",
+          flex: 0.5,
+          minWidth: 150,
+          valueFormatter: (params) => {
+            return params.value.ledger_name;
+          },
+        }
+      : {
+          field: "party_code",
+          headerName: "Party Code(Receivables)",
+          flex: 0.5,
+          minWidth: 150,
+          valueFormatter: (params) => {
+            return params.value.ledger_name;
+          },
+        },
 
     {
       field: "cost_center",
@@ -213,21 +224,15 @@ const SelectGroup = () => {
         return formatDate(params.value);
       },
     },
+    // {
+    //   field: "base_currency",
+    //   headerName: "Currency",
+    //   flex: 0.5,
+    //   minWidth: 150,
+    // },
     {
       field: "lc_amount",
       headerName: "LC Amount",
-      flex: 0.5,
-      minWidth: 150,
-    },
-    {
-      field: "trans_type",
-      headerName: "Transaction Type",
-      flex: 0.5,
-      minWidth: 150,
-    },
-    {
-      field: "trans_type",
-      headerName: "Transaction Type",
       flex: 0.5,
       minWidth: 150,
     },
@@ -253,14 +258,23 @@ const SelectGroup = () => {
 
   useEffect(() => {
     setLoading(true);
-    getLC(company?.company_id);
+    flag ? getImportLC(company?.company_id) : getExportLC(company?.company_id);
+    // await getImportLC(company?.company_id);
   }, [company]);
 
   useEffect(() => {
-    // console.log(company_account_heads);
-    if (l_c) setLoading(false);
+    console.log(lc_import);
+    console.log("lc_import");
+
+    if (lc_import) setLoading(false);
     else setLoading(true);
-  }, [l_c]);
+  }, [lc_import]);
+
+  useEffect(() => {
+    // console.log(company_account_heads);
+    if (lc_export) setLoading(false);
+    else setLoading(true);
+  }, [lc_export]);
 
   return (
     <MainCard
@@ -292,8 +306,31 @@ const SelectGroup = () => {
       }
       content={true}
     >
-      <CustomDataGrid columns={columns} rows={l_c} loading={loading} />
-      <AddLCDialog
+      {flag ? (
+        <CustomDataGrid columns={columns} rows={lc_import} loading={loading} />
+      ) : (
+        <CustomDataGrid columns={columns} rows={lc_export} loading={loading} />
+      )}
+
+      {/* <AddLCDialog
+        open={showAddModal}
+        handleClose={() => {
+          setShowAddModal(false);
+        }}
+      /> */}
+      {/* <AddLCDialogTesting
+        open={showAddModal}
+        handleClose={() => {
+          setShowAddModal(false);
+        }}
+      /> */}
+      {/* <LCStepper
+        open={showAddModal}
+        handleClose={() => {
+          setShowAddModal(false);
+        }}
+      /> */}
+      <AddLCDialogFinal
         open={showAddModal}
         handleClose={() => {
           setShowAddModal(false);

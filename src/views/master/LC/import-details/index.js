@@ -21,7 +21,6 @@ import DynamicFeedTwoToneIcon from "@material-ui/icons/DynamicFeedTwoTone";
 import AddAmendmentDialog from "../../../../components/master/LC/AddAmendmentDialog";
 import LCDocumentForm from "./LCDocumentForm";
 import AddLCDocumentDialog from "../../../../components/master/LC/AddLCDocumentDialog";
-import LCForm from "./LCDetails";
 import AmendmentDetails from "./AmmendmentDetails";
 
 // style constant

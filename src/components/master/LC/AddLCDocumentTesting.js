@@ -23,13 +23,7 @@ import useLC from "../../../hooks/useLC";
 import { gridSpacing } from "../../../store/constant";
 import { useParams } from "react-router";
 
-const AddLCDocumentDialog = ({
-  newLC,
-  open,
-  handleClose,
-  values,
-  setValues,
-}) => {
+const AddLCDocumentTesting = ({ newLC, handleClose }) => {
   const { user } = useAuth();
   const { createLcDocs } = useLC();
 
@@ -38,14 +32,14 @@ const AddLCDocumentDialog = ({
   const lc = useSelector((state) => state.lc);
   const { current_lc } = lc;
 
-  // const [values, setValues] = useState({
-  //   created_by: user.email,
-  //   doc_name: "",
-  //   company_master_id: mid,
-  //   lc_id: newLC?.lc_no,
-  //   // lc_id: current_lc.id,
-  //   file: null,
-  // });
+  const [values, setValues] = useState({
+    created_by: user.email,
+    doc_name: "",
+    company_master_id: mid,
+    lc_id: newLC?.lc_no,
+    // lc_id: current_lc.id,
+    file: null,
+  });
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
@@ -87,31 +81,31 @@ const AddLCDocumentDialog = ({
     setClicked(true);
     let form = { ...values };
     form.lc_no = newLC.id;
-    await createLcDocs(values);
-    handleCloseModal();
+    await createLcDocs(form);
+    // handleCloseModal();
   };
 
   return (
+    // <Dialog
+    //   open={open}
+    //   onClose={handleClose}
+    //   aria-labelledby="upload-document"
+    //   fullWidth
+    //   maxWidth="sm"
+    // >
+    //   <DialogTitle id="form-dialog-title">
+    //     <Typography variant="h4">Upload Document</Typography>
+    //   </DialogTitle>
+    //   <DialogContent>
+    //      <pre>{JSON.stringify(values, null, 2)}</pre>
+    //     <DialogContentText>
+    //       <Typography variant="body2">
+    //         {/* Upload A {current_lc.lc_name} related Document. */}
+    //         Upload a Document.
+    //       </Typography>
+    //     </DialogContentText>
     <>
-      {/* <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="upload-document"
-      fullWidth
-      maxWidth="sm"
-    >
-      <DialogTitle id="form-dialog-title">
-        <Typography variant="h4">Upload Document</Typography>
-      </DialogTitle>
-    <DialogContent>
-         <pre>{JSON.stringify(values, null, 2)}</pre> 
-        <DialogContentText>
-          <Typography variant="body2">
-            {/* Upload A {current_lc.lc_name} related Document. 
-            Upload a Document.
-          </Typography>
-        </DialogContentText>*/}
-      <Grid container spacing={gridSpacing}>
+      <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
         <Grid item sm={12} xs={12}>
           <TextField
             fullWidth
@@ -132,7 +126,7 @@ const AddLCDocumentDialog = ({
         </Grid>
       </Grid>
       {/* </DialogContent> */}
-      {/* // <DialogActions sx={{ pr: 2.5 }}> */}
+      {/*  <DialogActions sx={{ pr: 2.5 }}> */}
       <Grid item xs={11.7}>
         <Stack direction="row">
           <Grid container justifyContent="space-between">
@@ -160,10 +154,10 @@ const AddLCDocumentDialog = ({
           </Grid>
         </Stack>
       </Grid>
-      {/* </DialogActions>
-    </Dialog> */}
     </>
+    //   </DialogActions>
+    // </Dialog>
   );
 };
 
-export default AddLCDocumentDialog;
+export default AddLCDocumentTesting;
