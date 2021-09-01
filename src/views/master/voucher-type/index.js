@@ -10,7 +10,6 @@ import useVoucherTypes from "../../../hooks/useVoucherTypes";
 import MainCard from "../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../store/constant";
 import AddVoucherType from "../../../components/master/voucher-types/AddVoucherTypeDialog";
-import useCompanyMaster from "../../../hooks/useCompanyMaster";
 import formatDate from "../../../utils/format-date";
 
 // assets
@@ -22,8 +21,9 @@ import CustomDataGrid from "../../../ui-component/CustomDataGrid";
 
 const VoucherTypes = () => {
   const { pathname } = useLocation();
-  const { company } = useCompanyMaster();
   const { voucher_types } = useSelector((state) => state.voucherTypes);
+
+  const { company } = useSelector((state) => state.companyMaster);
   const { getVoucherTypes } = useVoucherTypes();
 
   const [loading, setLoading] = useState(true);

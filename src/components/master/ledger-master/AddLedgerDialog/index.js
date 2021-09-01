@@ -28,12 +28,13 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import CancelIcon from "@material-ui/icons/Cancel";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
-import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import LedgerBalanceForm from "./LedgerBalanceForm";
 import LedgerBillwiseForm from "./LedgerBillwiseForm";
+import { useSelector } from "react-redux";
+import LedgerDocumentForm from "./LedgerDocuments";
 
 // step options
-const steps = ["Ledger Details", "Balances"];
+const steps = ["Ledger Details", "Balances","Documents"];
 
 function getStepContent(
   step,
@@ -85,6 +86,12 @@ function getStepContent(
           setValues={setBalanceValues}
         />
       );
+    case 2:
+      return (
+        <LedgerDocumentForm
+          newLedger={newLedger}
+        />
+      )
     default:
       throw new Error("Unknown step");
   }
@@ -94,11 +101,15 @@ function getStepContent(
 
 const AddLedgerDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const [clicked, setClicked] = useState(false);
-  const { addCompanyLedger, addLedgerBalance, addLedgerBillwise } =
-    useLedgerMaster();
   const { mid } = useParams();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const { company } = useSelector((state) => state.companyMaster);
+  const { 
+    addCompanyLedger,
+    addLedgerBalance, 
+    addLedgerBillwise 
+  } = useLedgerMaster();
+  const [clicked, setClicked] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
   const [receivable, setReceivable] = useState(false);
   const [payable, setPayable] = useState(false);
   const [bs, setBs] = useState(false);
@@ -124,17 +135,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     fc_amount: null,
     fc_name: null,
   });
-  const { company } = useComapanyMaster();
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-    setErrorIndex(null);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-
+  
   const [values, setValues] = useState({
     ledger_name: null,
     old_ledger_id: null,
@@ -165,6 +166,15 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     company_master_id: parseInt(mid),
     created_by: user.email,
   });
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+    setErrorIndex(null);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
 
   const handleSubmit = async () => {
     setClicked(true);
@@ -211,9 +221,14 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     }
     let response = await addCompanyLedger(form);
     setClicked(false);
-    if (response.success && bs) {
-      setNewLedger(response.data);
-      handleNext();
+    if (response.success ) {
+      if(bs){
+        setNewLedger(response.data);
+        handleNext();
+      }
+      else{
+        setActiveStep(2);
+      }
     } else {
       handleClearClose();
     }
@@ -240,7 +255,8 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     };
     await addLedgerBalance(form);
     setClicked(false);
-    handleClearClose();
+    // handleClearClose();
+    handleNext();
   };
   const makeBillwise = () => {
     return billwiseValues.billwise.map((val) => {
@@ -273,7 +289,8 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     };
     await addLedgerBillwise(form);
     setClicked(false);
-    handleClearClose();
+    // handleClearClose();
+    handleNext();
   };
 
   const handleChecked = (event) => {
@@ -347,6 +364,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     setDefault();
     handleClose();
   };
+
   return (
     <Dialog
       open={open}
@@ -431,6 +449,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item>
             <Grid container spacing={2.5}>
+              {(activeStep!==2) && 
               <Grid item>
                 <AnimateButton>
                   <Button
@@ -446,7 +465,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
                     {activeStep === 1 ? "Skip" : "Cancel"}
                   </Button>
                 </AnimateButton>
-              </Grid>
+              </Grid>}
               <Grid item>
                 <LoadingButton
                   color="primary"
@@ -455,14 +474,16 @@ const AddLedgerDialog = ({ open, handleClose }) => {
                   onClick={
                     activeStep === 0
                       ? handleSubmit
-                      : newLedger?.maintain_billwise
-                      ? handleSubmitBillwise
+                      : activeStep ===1? 
+                        newLedger?.maintain_billwise?
+                        handleSubmitBillwise
                       : handleSubmitBalance
+                      : handleClearClose
                   }
                   loading={clicked}
                   startIcon={<SaveIcon />}
                 >
-                  Add
+                  {activeStep===2?"Okay":"Add"}
                 </LoadingButton>
               </Grid>
             </Grid>

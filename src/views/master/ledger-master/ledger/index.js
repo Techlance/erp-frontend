@@ -13,18 +13,17 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 import formatDate from "../../../../utils/format-date";
 import AddLedgerDialog from "../../../../components/master/ledger-master/AddLedgerDialog";
 import { useLocation } from "react-router-dom";
 
-//-----------------------|| User List ||-----------------------//
+//-----------------------|| Ledger List ||-----------------------//
 const Ledger = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const { company_ledgers } = useSelector((state) => state.ledgerMaster);
 
-  const { company } = useCompanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
 
   const { getCompanyLedgers } = useLedgerMaster();
 
@@ -61,8 +60,18 @@ const Ledger = () => {
         ),
     },
     {
+      // id:"A",
       field: "ledger_id",
       headerName: "Ledger ID",
+      flex: 0.2,
+      minWidth: 200,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      // id:"B",
+      field: "ledger_id",
+      headerName: "Ledger IE",
       flex: 0.2,
       minWidth: 200,
       align: "center",
@@ -97,7 +106,7 @@ const Ledger = () => {
     },
     {
       field: "old_ledger_id",
-      headerName: "Ledger ID",
+      headerName: "Old Ledger ID",
       flex: 0.2,
       minWidth: 100,
       align: "center",

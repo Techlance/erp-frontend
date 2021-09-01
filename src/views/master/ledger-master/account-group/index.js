@@ -13,19 +13,16 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import useCompanyMaster from "../../../../hooks/useCompanyMaster";
 import formatDate from "../../../../utils/format-date";
 import AddAccountGroupDialog from "../../../../components/master/ledger-master/AddAccountGroupDialog";
 import { useLocation } from "react-router-dom";
 
 //-----------------------|| Account Group List ||-----------------------//
 const AccountGroup = () => {
-  const { company } = useCompanyMaster();
   const { pathname } = useLocation();
-
   const { company_account_groups } = useSelector((state) => state.ledgerMaster);
+  const { company } = useSelector((state) => state.companyMaster);
   const { getCompanyAccountGroups } = useLedgerMaster();
-
   const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(true);
 

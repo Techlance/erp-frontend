@@ -22,7 +22,7 @@ import { gridSpacing } from "../../../store/constant";
 import useLedgerMaster from "../../../hooks/useLedgerMaster";
 import { useParams } from "react-router";
 
-const AddDocumentDialog = ({ open, handleClose }) => {
+const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
   const { user } = useAuth();
   const { createLedgerDoc } = useLedgerMaster();
   const { mid } = useParams();
@@ -33,7 +33,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
     created_by: user.email,
     doc_name: "",
     company_master_id: parseInt(mid),
-    ledger_master_id: parseInt(company_ledger_details?.id),
+    ledger_master_id: newLedger?parseInt(newLedger.id):parseInt(company_ledger_details?.id),
     file: null,
   });
   const [clicked, setClicked] = useState(false);
@@ -56,7 +56,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
     setValues({
       doc_name: "",
       company_master_id: parseInt(mid),
-      ledger_master_id: parseInt(company_ledger_details?.id),
+      ledger_master_id: newLedger?parseInt(newLedger.id):parseInt(company_ledger_details?.id),
       created_by: user.email,
       file: null,
     });
@@ -86,7 +86,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
       <DialogContent>
         <DialogContentText>
           <Typography variant="body2">
-            Upload A {company_ledger_details?.ledger_name} related Document.
+            Upload A {newLedger?newLedger.ledger_name:company_ledger_details?.ledger_name} related Document.
           </Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>

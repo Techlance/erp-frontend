@@ -43,8 +43,8 @@ export const LedgerMaster = createContext();
 
 export const LedgerMasterProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const { company } = useComapanyMaster();
   const state = useSelector((state) => state.ledgerMaster);
+  const { company } = useSelector((state) => state.companyMaster);
   const [loading] = useState(false);
 
   const getCompanyAccountHeads = async (id) => {
@@ -133,7 +133,7 @@ export const LedgerMasterProvider = ({ children }) => {
   const createLedgerDoc = async (data) => {
     await createLedgerDocAsync(data, dispatch);
 
-    await getLedgerDocsAsync(state.company_ledger_details.id, dispatch);
+    await getLedgerDocsAsync(state.company_ledger_details?.id, dispatch);
   };
 
   const deleteLedgerDoc = async (id, lid) => {

@@ -21,13 +21,12 @@ import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 
 import FcNameSelect from "../../../../components/master/ledger-master/AddLedgerDialog/FcNameSelect";
-import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 
 //-----------------------|| Ledger Balance Form ||-----------------------//
 
 const LedgerBalance = () => {
   const { lid } = useParams();
-  const { company } = useComapanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
 
   const { ledger_balance } = useSelector((state) => state.ledgerMaster);
   const { getLedgerBalance, updateLedgerBalance } = useLedgerMaster();
@@ -121,6 +120,16 @@ const LedgerBalance = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
+              <FcNameSelect
+                captionLabel="Currency"
+                InputLabelProps={{ shrink: true }}
+                selected={values?.fc_name}
+                onChange={handleSelect}
+                baseCurrency={company.base_currency}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              {(values.fc_name && values.fc_name?.id !== company.base_currency) &&
               <TextField
                 fullWidth
                 id="fc_amount"
@@ -141,16 +150,7 @@ const LedgerBalance = () => {
                     values?.fc_name?.id !== company.base_currency
                   ),
                 }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FcNameSelect
-                captionLabel="Currency"
-                InputLabelProps={{ shrink: true }}
-                selected={values?.fc_name}
-                onChange={handleSelect}
-                baseCurrency={company.base_currency}
-              />
+              />}
             </Grid>
             <Grid item xs={12}>
               <Stack direction="row">
