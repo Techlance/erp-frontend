@@ -28,6 +28,7 @@ import formatDate from "../../../utils/format-date";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import useRequest from "../../../hooks/useRequest";
 import AddLCDocumentDialog from "./AddLCDocumentDialog";
+import useLC from "../../../hooks/useLC";
 
 const useStyles = makeStyles({
   root: {
@@ -38,7 +39,9 @@ const useStyles = makeStyles({
 const LCDocs = ({ newLC }) => {
   const classes = useStyles();
   //   const { lid } = useParams();
+  const { lc_id } = useParams();
   //   const { deleteLedgerDoc } = useLedgerMaster();
+  const { deleteLCDoc } = useLC();
   const [showDeleteModal, setShowDeleteModal] = useState(null);
   const [currentDocID, setCurrentDocID] = useState(0);
   const [newDocs, setNewDocs] = useState([]);
@@ -159,7 +162,7 @@ const LCDocs = ({ newLC }) => {
           </TableBody>
           <ConfirmDeleteDialog
             open={showDeleteModal}
-            //   handleAgree={() => deleteLedgerDoc(currentDocID, lid)}
+            // handleAgree={() => deleteLCDoc(currentDocID, lc_id)}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
             body="Are you sure you want to delete this Document? Once deleted the data can not be retrived!"

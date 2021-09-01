@@ -78,7 +78,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
   return (
     <>
       <Grid container spacing={gridSpacing}>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth

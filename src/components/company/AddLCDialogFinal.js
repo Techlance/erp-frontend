@@ -55,37 +55,9 @@ function getStepContent(
 ) {
   switch (step) {
     case 0:
-      return (
-        <AddLCDialog values={values} setValues={setValues} />
-        // <LedgerForm
-        //   handleNext={handleNext}
-        //   setErrorIndex={setErrorIndex}
-        //   values={values}
-        //   setValues={setValues}
-        //   receivable={receivable}
-        //   setReceivable={setReceivable}
-        //   payable={payable}
-        //   setPayable={setPayable}
-        //   bs={bs}
-        //   setBs={setBs}
-        // />
-      );
+      return <AddLCDialog values={values} setValues={setValues} />;
     case 1:
-      return (
-        <AddLCDocs newLC={newLC} />
-        // <LedgerForm
-        //   handleNext={handleNext}
-        //   setErrorIndex={setErrorIndex}
-        //   values={values}
-        //   setValues={setValues}
-        //   receivable={receivable}
-        //   setReceivable={setReceivable}
-        //   payable={payable}
-        //   setPayable={setPayable}
-        //   bs={bs}
-        //   setBs={setBs}
-        // />
-      );
+      return <AddLCDocs newLC={newLC} />;
     default:
       throw new Error("Unknown step");
   }
@@ -127,28 +99,28 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const [values, setValues] = useState({
     trans_type: flag ? "import" : "export",
     year_id: 21,
-    lc_date: "2021-08-12",
+    lc_date: "2021-02-08",
     party_code: null,
     cost_center: null,
     applicant_bank: "HSBC",
     applicant_bank_lc_no: "123asd123",
-    benificiary_bank: "SBI",
+    benificiary_bank: "Axis",
     benificiary_bank_lc_no: "123asd123",
     inspection: false,
-    bank_ref: "REference",
+    bank_ref: "Reference",
     days_for_submit_to_bank: "12",
     payment_terms: "Terms",
-    place_of_taking_incharge: "Qatar",
-    final_destination_of_delivery: "Doha",
+    place_of_taking_incharge: "India",
+    final_destination_of_delivery: "Delhi",
     completed: false,
     shipment_terms: "Terms",
     goods_description: "Terms",
     other_lc_terms: "Terms",
     bank_ac: null,
-    expiry_date: "2021-09-23",
-    lc_amount: "123.321",
-    company_master_id: mid,
+    expiry_date: "2021-02-08",
+    lc_amount: "2021-02-08",
     base_currency: { id: company.base_currency },
+    company_master_id: mid,
     created_by: user.email,
   });
 

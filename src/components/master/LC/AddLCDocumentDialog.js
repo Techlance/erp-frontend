@@ -69,6 +69,7 @@ const AddLCDocumentDialog = ({ newLC, open, handleClose }) => {
     setValues({
       doc_name: "",
       //   lc_id: current_lc.id,
+      company_master_id: mid,
       created_by: user.email,
       file: null,
     });

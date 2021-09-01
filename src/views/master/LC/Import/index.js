@@ -18,9 +18,6 @@ import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import { useLocation } from "react-router";
 import formatDate from "../../../../utils/format-date";
 import useLC from "../../../../hooks/useLC";
-import AddLCDialog from "../../../../components/company/AddLCDialog";
-import LCStepper from "../../../../components/company/LCStepper";
-import AddLCDialogTesting from "../../../../components/company/AddLCDialogTesting";
 import AddLCDialogFinal from "../../../../components/company/AddLCDialogFinal";
 
 //-----------------------|| LC List ||-----------------------//
@@ -312,24 +309,6 @@ const SelectGroup = () => {
         <CustomDataGrid columns={columns} rows={lc_export} loading={loading} />
       )}
 
-      {/* <AddLCDialog
-        open={showAddModal}
-        handleClose={() => {
-          setShowAddModal(false);
-        }}
-      /> */}
-      {/* <AddLCDialogTesting
-        open={showAddModal}
-        handleClose={() => {
-          setShowAddModal(false);
-        }}
-      /> */}
-      {/* <LCStepper
-        open={showAddModal}
-        handleClose={() => {
-          setShowAddModal(false);
-        }}
-      /> */}
       <AddLCDialogFinal
         open={showAddModal}
         handleClose={() => {
