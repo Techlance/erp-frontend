@@ -103,7 +103,7 @@ const AddLCDocumentDialog = ({ newLC, open, handleClose }) => {
         <Typography variant="h4">Upload Document</Typography>
       </DialogTitle>
       <DialogContent>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
         <DialogContentText>
           <Typography variant="body2">
             Upload A {current_lc ? current_lc?.lc_name : newLC?.lc_name} related

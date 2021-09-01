@@ -99,30 +99,58 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const [values, setValues] = useState({
     trans_type: flag ? "import" : "export",
     year_id: 21,
-    lc_date: "2021-02-08",
+    lc_date: "",
     party_code: null,
     cost_center: null,
-    applicant_bank: "HSBC",
-    applicant_bank_lc_no: "123asd123",
-    benificiary_bank: "Axis",
-    benificiary_bank_lc_no: "123asd123",
+    applicant_bank: "",
+    applicant_bank_lc_no: "",
+    benificiary_bank: "",
+    benificiary_bank_lc_no: "",
     inspection: false,
-    bank_ref: "Reference",
-    days_for_submit_to_bank: "12",
-    payment_terms: "Terms",
-    place_of_taking_incharge: "India",
-    final_destination_of_delivery: "Delhi",
+    bank_ref: "",
+    days_for_submit_to_bank: "",
+    payment_terms: "",
+    place_of_taking_incharge: "",
+    final_destination_of_delivery: "",
     completed: false,
-    shipment_terms: "Terms",
-    goods_description: "Terms",
-    other_lc_terms: "Terms",
+    shipment_terms: "",
+    goods_description: "",
+    other_lc_terms: "",
     bank_ac: null,
-    expiry_date: "2021-02-08",
-    lc_amount: "2021-02-08",
+    expiry_date: "",
+    lc_amount: "",
     base_currency: { id: company.base_currency },
     company_master_id: mid,
     created_by: user.email,
   });
+
+  // const [values, setValues] = useState({
+  //   trans_type: flag ? "import" : "export",
+  //   year_id: 21,
+  //   lc_date: "2021-02-08",
+  //   party_code: null,
+  //   cost_center: null,
+  //   applicant_bank: "HSBC",
+  //   applicant_bank_lc_no: "123asd123",
+  //   benificiary_bank: "Axis",
+  //   benificiary_bank_lc_no: "123asd123",
+  //   inspection: false,
+  //   bank_ref: "Reference",
+  //   days_for_submit_to_bank: "12",
+  //   payment_terms: "Terms",
+  //   place_of_taking_incharge: "India",
+  //   final_destination_of_delivery: "Delhi",
+  //   completed: false,
+  //   shipment_terms: "Terms",
+  //   goods_description: "Terms",
+  //   other_lc_terms: "Terms",
+  //   bank_ac: null,
+  //   expiry_date: "2021-02-08",
+  //   lc_amount: "123",
+  //   base_currency: { id: company.base_currency },
+  //   company_master_id: mid,
+  //   created_by: user.email,
+  // });
 
   const lc = useSelector((state) => state.lc);
   const { current_lc } = lc;
@@ -180,10 +208,69 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const [paymentData, setPaymentData] = React.useState({});
   const [errorIndex, setErrorIndex] = React.useState(null);
 
+  const setDefault = () => {
+    setValues({
+      trans_type: flag ? "import" : "export",
+      year_id: 21,
+      lc_date: "",
+      party_code: null,
+      cost_center: null,
+      applicant_bank: "",
+      applicant_bank_lc_no: "",
+      benificiary_bank: "",
+      benificiary_bank_lc_no: "",
+      inspection: false,
+      bank_ref: "",
+      days_for_submit_to_bank: "",
+      payment_terms: "",
+      place_of_taking_incharge: "",
+      final_destination_of_delivery: "",
+      completed: false,
+      shipment_terms: "",
+      goods_description: "",
+      other_lc_terms: "",
+      bank_ac: null,
+      expiry_date: "",
+      lc_amount: "",
+      base_currency: { id: company.base_currency },
+      company_master_id: mid,
+      created_by: user.email,
+    });
+    setActiveStep(0);
+    setNewLC(null);
+    // setBillwiseValues({
+    //   company_master_id: null,
+    //   ledger_master_id: null,
+    //   fc_name: null,
+    //   billwise: [
+    //     {
+    //       ref_no: null,
+    //       is_cr: true,
+    //       amt: 0,
+    //       fc_amount: 0,
+    //       bill_date: null,
+    //       due_date: null,
+    //     },
+    //   ],
+    // });
+    // setBalanceValues({
+    //   amt: 0,
+    //   is_cr: true,
+    //   fc_amount: null,
+    //   fc_name: null,
+    // });
+    setErrorIndex(null);
+  };
+  const handleClearClose = () => {
+    setDefault();
+    handleClose();
+  };
+
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleClearClose}
+      // onClose={handleClose}
       aria-labelledby="create-lc"
       fullWidth
       maxWidth="md"
@@ -232,67 +319,72 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
         )}
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Grid item>
+        {/* <Grid item>
           <Grid container spacing={2.5}>
-            <Grid item>
-              {activeStep === 0 && (
-                <AnimateButton>
-                  <Button
-                    color="error"
-                    variant="contained"
-                    size="small"
-                    onClick={() => {
-                      setValues({
-                        trans_type: flag ? "import" : "export",
-                        year_id: 21,
-                        lc_date: "",
-                        party_code: null,
-                        cost_center: null,
-                        applicant_bank: "",
-                        applicant_bank_lc_no: "",
-                        benificiary_bank: "",
-                        benificiary_bank_lc_no: "",
-                        inspection: false,
-                        bank_ref: "",
-                        days_for_submit_to_bank: "",
-                        payment_terms: "",
-                        place_of_taking_incharge: "",
-                        final_destination_of_delivery: "",
-                        completed: false,
-                        shipment_terms: "",
-                        goods_description: "",
-                        other_lc_terms: "",
-                        bank_ac: null,
-                        expiry_date: "",
-                        lc_amount: "",
-                        base_currency: { id: company.base_currency },
-                        company_master_id: mid,
-                        created_by: user.email,
-                      });
+            <Grid item> */}
+        <Grid item xs={11.7}>
+          <Stack direction="row">
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                {activeStep === 0 && (
+                  <AnimateButton>
+                    <Button
+                      color="error"
+                      variant="contained"
+                      size="medium"
+                      onClick={() => {
+                        setValues({
+                          trans_type: flag ? "import" : "export",
+                          year_id: 21,
+                          lc_date: "",
+                          party_code: null,
+                          cost_center: null,
+                          applicant_bank: "",
+                          applicant_bank_lc_no: "",
+                          benificiary_bank: "",
+                          benificiary_bank_lc_no: "",
+                          inspection: false,
+                          bank_ref: "",
+                          days_for_submit_to_bank: "",
+                          payment_terms: "",
+                          place_of_taking_incharge: "",
+                          final_destination_of_delivery: "",
+                          completed: false,
+                          shipment_terms: "",
+                          goods_description: "",
+                          other_lc_terms: "",
+                          bank_ac: null,
+                          expiry_date: "",
+                          lc_amount: "",
+                          base_currency: { id: company.base_currency },
+                          company_master_id: mid,
+                          created_by: user.email,
+                        });
 
-                      handleClose();
-                    }}
-                    disabled={clicked}
-                    startIcon={<CancelIcon />}
-                  >
-                    Cancel
-                  </Button>
-                </AnimateButton>
-              )}
+                        handleClose();
+                      }}
+                      disabled={clicked}
+                      startIcon={<CancelIcon />}
+                    >
+                      Cancel
+                    </Button>
+                  </AnimateButton>
+                )}
+              </Grid>
+              <Grid item>
+                <LoadingButton
+                  color="primary"
+                  variant="contained"
+                  size="medium"
+                  onClick={activeStep === 0 ? handleSubmit1 : handleClearClose}
+                  loading={clicked}
+                  startIcon={<SaveIcon />}
+                >
+                  {activeStep === 0 ? "Add" : "Okay"}
+                </LoadingButton>
+              </Grid>
             </Grid>
-            <Grid item>
-              <LoadingButton
-                color="primary"
-                variant="contained"
-                size="small"
-                onClick={activeStep === 0 ? handleSubmit1 : handleClose}
-                loading={clicked}
-                startIcon={<SaveIcon />}
-              >
-                {activeStep === 0 ? "Add" : "Okay"}
-              </LoadingButton>
-            </Grid>
-          </Grid>
+          </Stack>
         </Grid>
       </DialogActions>
     </Dialog>
