@@ -22,7 +22,7 @@ import {
 
 // project imports
 import useAuth from "../../hooks/useAuth";
-import useCompany from "../../hooks/useCompany";
+import useCompanyMaster from "../../hooks/useCompanyMaster";
 import useLC from "../../hooks/useLC";
 import { useLocation, useParams } from "react-router";
 import { useHistory } from "react-router";
@@ -30,12 +30,18 @@ import CostCenterSelect from "../master/LC/CostCenterSelect";
 import PartyCodePaySelect from "../master/LC/PartyCodePaySelect";
 import PartyCodeRecSelect from "../master/LC/PartyCodeRecSelect";
 import BankAcSelect from "../master/LC/BankACSelect";
+import FcNameSelect from "../master/LC/FcNameSelect";
+import { useSelector } from "react-redux";
 
 const AddLCDialog = ({ open, handleClose, values, setValues }) => {
   const { user } = useAuth();
   const { addImportLC, addExportLC } = useLC();
   const { pathname } = useLocation();
   const history = useHistory();
+
+  // const { company } = useSelector((state) => state.companyMaster);
+
+  const { company } = useCompanyMaster();
 
   let flag = true; // Show Payables for import
   if (pathname.includes("/export")) {
@@ -69,65 +75,10 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
     });
   };
 
-  const handleCreateLC = async () => {
-    setClicked(true);
-    let form = { ...values };
-    form.cost_center = form.cost_center.id;
-    form.party_code = form.party_code.id;
-    form.bank_ac = form.bank_ac.id;
-    {
-      flag ? await addImportLC(form) : await addExportLC(form);
-    }
-    setClicked(false);
-    setValues({
-      trans_type: flag ? "import" : "export",
-      year_id: 21,
-      lc_date: "",
-      party_code: null,
-      cost_center: null,
-      applicant_bank: "",
-      applicant_bank_lc_no: "",
-      benificiary_bank: "",
-      benificiary_bank_lc_no: "",
-      inspection: false,
-      bank_ref: "",
-      days_for_submit_to_bank: "",
-      payment_terms: "",
-      place_of_taking_incharge: "",
-      final_destination_of_delivery: "",
-      completed: false,
-      shipment_terms: "",
-      goods_description: "",
-      other_lc_terms: "",
-      bank_ac: null,
-      expiry_date: "",
-      lc_amount: "",
-      base_currency: { id: 0 },
-      company_master_id: mid,
-      created_by: user.email,
-    });
-    handleClose();
-  };
-
   return (
     <>
-      {/* // <Dialog
-    //   open={open}
-    //   onClose={handleClose}
-    //   aria-labelledby="create-lc-dialog"
-    //   fullWidth
-    //   maxWidth="md"
-    // >
-      // <DialogTitle id="form-dialog-title">
-      //   <Typography variant="h4">Create a new LC</Typography>
-      // </DialogTitle>
-      // <DialogContent> */}
-      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
-      {/* <DialogContentText>
-          <Typography variant="body2">Create a new LC.</Typography>
-        </DialogContentText> */}
       <Grid container spacing={gridSpacing}>
-        {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+        <pre>{JSON.stringify(values, null, 2)}</pre>
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
@@ -350,11 +301,12 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CurrencySelect
+          <FcNameSelect
             captionLabel="Currency"
             InputLabelProps={{ shrink: true }}
             selected={values.base_currency}
             onChange={handleSelect}
+            baseCurrency={company.base_currency}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -370,39 +322,6 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
           />
         </Grid>
       </Grid>
-      {/* </DialogContent> */}
-
-      {/* <DialogActions sx={{ pr: 2.5 }}>
-        <Grid item xs={12}>
-          <Stack direction="row">
-            <Grid container justifyContent="space-between">
-              <Grid item>
-                <Button
-                  onClick={handleClose}
-                  color="error"
-                  size="medium"
-                  variant="contained"
-                >
-                  Cancel
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  color="primary"
-                  size="medium"
-                  variant="contained"
-                  disabled={clicked}
-                  onClick={handleCreateLC}
-                  startIcon={<SaveIcon />}
-                >
-                  Save and Upload Documents
-                </Button>
-              </Grid>
-            </Grid>
-          </Stack>
-        </Grid>
-      </DialogActions>
-    </Dialog> */}
     </>
   );
 };

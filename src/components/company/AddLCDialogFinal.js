@@ -31,12 +31,13 @@ import { useHistory, useLocation, useParams } from "react-router";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import CancelIcon from "@material-ui/icons/Cancel";
 import LoadingButton from "../../ui-component/LoadingButton";
-// import useLedgerMaster from "../../../../hooks/useLedgerMaster";
-// import { gridSpacing } from "../../../../store/constant";
+
 import AddLCDialog from "./AddLCDialog";
-import AddLCDocumentDialog from "../master/LC/AddLCDocumentDialog";
+// import AddLCDocumentDialog from "../master/LC/AddLCDocumentDialog";
+import AddLCDocs from "../master/LC/AddLCDocs";
 import useLC from "../../hooks/useLC";
 import { useSelector } from "react-redux";
+import useComapanyMaster from "../../hooks/useCompanyMaster";
 
 // step options
 const steps = ["LC Detials", "Upload Documents"];
@@ -48,8 +49,6 @@ function getStepContent(
   setErrorIndex,
   values,
   setValues,
-  valuesDoc,
-  setValuesDoc,
   newLC,
   paymentData,
   setPaymentData
@@ -73,11 +72,7 @@ function getStepContent(
       );
     case 1:
       return (
-        <AddLCDocumentDialog
-          newLC={newLC}
-          values={valuesDoc}
-          setValues={setValuesDoc}
-        />
+        <AddLCDocs newLC={newLC} />
         // <LedgerForm
         //   handleNext={handleNext}
         //   setErrorIndex={setErrorIndex}
@@ -102,6 +97,9 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { addImportLC, addExportLC, createLcDocs } = useLC();
   const { pathname } = useLocation();
+  // const { company } = useSelector((state) => state.companyMaster);
+
+  const { company } = useComapanyMaster();
 
   const history = useHistory();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -129,43 +127,34 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const [values, setValues] = useState({
     trans_type: flag ? "import" : "export",
     year_id: 21,
-    lc_date: "",
+    lc_date: "2021-08-12",
     party_code: null,
     cost_center: null,
-    applicant_bank: "",
-    applicant_bank_lc_no: "",
-    benificiary_bank: "",
-    benificiary_bank_lc_no: "",
+    applicant_bank: "HSBC",
+    applicant_bank_lc_no: "123asd123",
+    benificiary_bank: "SBI",
+    benificiary_bank_lc_no: "123asd123",
     inspection: false,
-    bank_ref: "",
-    days_for_submit_to_bank: "",
-    payment_terms: "",
-    place_of_taking_incharge: "",
-    final_destination_of_delivery: "",
+    bank_ref: "REference",
+    days_for_submit_to_bank: "12",
+    payment_terms: "Terms",
+    place_of_taking_incharge: "Qatar",
+    final_destination_of_delivery: "Doha",
     completed: false,
-    shipment_terms: "",
-    goods_description: "",
-    other_lc_terms: "",
+    shipment_terms: "Terms",
+    goods_description: "Terms",
+    other_lc_terms: "Terms",
     bank_ac: null,
-    expiry_date: "",
-    lc_amount: "",
+    expiry_date: "2021-09-23",
+    lc_amount: "123.321",
     company_master_id: mid,
-    base_currency: { id: 0 },
+    base_currency: { id: company.base_currency },
     created_by: user.email,
   });
 
   const lc = useSelector((state) => state.lc);
   const { current_lc } = lc;
   const [newLC, setNewLC] = useState(null);
-
-  const [valuesDoc, setValuesDoc] = useState({
-    created_by: user.email,
-    doc_name: "",
-    company_master_id: mid,
-    lc_id: newLC?.lc_no,
-    // lc_id: current_lc.id,
-    file: null,
-  });
 
   const handleSubmit1 = async () => {
     setClicked(true);
@@ -208,51 +197,14 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
       bank_ac: null,
       expiry_date: "",
       lc_amount: "",
-      base_currency: { id: 0 },
+      base_currency: { id: company.base_currency },
       company_master_id: mid,
       created_by: user.email,
     });
-    // handleClose();
     handleNext();
     setClicked(false);
   };
 
-  const handleSubmit2 = async () => {
-    console.log("submi1");
-
-    if (!valuesDoc.file) return;
-    setClicked(true);
-    let form = { ...valuesDoc };
-    console.log(valuesDoc);
-    console.log("valuesDoc");
-    console.log(newLC);
-    console.log("newLC");
-
-    form.lc_id = newLC.id;
-    await createLcDocs(form);
-    handleClose();
-  };
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.id]: event.target.value,
-    });
-  };
-
-  const handleSelect = (key, value) => {
-    setValues({
-      ...values,
-      [key]: value,
-    });
-  };
-
-  const handleChecked = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.checked,
-    });
-  };
   const [paymentData, setPaymentData] = React.useState({});
   const [errorIndex, setErrorIndex] = React.useState(null);
 
@@ -272,7 +224,6 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
           <Typography variant="body2">Create a new LC.</Typography>
         </DialogContentText>
         {/* <MainCard title="Validation"> */}
-        <pre>{JSON.stringify(valuesDoc, null, 2)}</pre>
 
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
           {steps.map((label, index) => {
@@ -295,163 +246,82 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
             );
           })}
         </Stepper>
-        <React.Fragment>
-          {activeStep === steps.length ? (
-            <React.Fragment>
-              <Typography variant="h5" gutterBottom>
-                Thank you for your order.
-              </Typography>
-              <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
-              </Typography>
-              <Stack direction="row" justifyContent="flex-end">
-                <AnimateButton>
-                  <Button
-                    variant="contained"
-                    color="error"
-                    onClick={() => {
-                      setValues({});
-                      setPaymentData({});
-                      setActiveStep(0);
-                    }}
-                    sx={{ my: 3, ml: 1 }}
-                  >
-                    Reset
-                  </Button>
-                </AnimateButton>
-              </Stack>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {getStepContent(
-                activeStep,
-                handleNext,
-                handleBack,
-                setErrorIndex,
-                values,
-                setValues,
-                valuesDoc,
-                setValuesDoc,
-                paymentData,
-                setPaymentData
-              )}
-              {activeStep === steps.length - 1 && (
-                <Stack
-                  direction="row"
-                  justifyContent={
-                    activeStep !== 0 ? "space-between" : "flex-end"
-                  }
-                >
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ my: 3, ml: 1 }}>
-                      Back
-                    </Button>
-                  )}
-                  <AnimateButton>
-                    <Button
-                      variant="contained"
-                      onClick={handleNext}
-                      sx={{ my: 3, ml: 1 }}
-                    >
-                      {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                    </Button>
-                  </AnimateButton>
-                </Stack>
-              )}
-            </React.Fragment>
-          )}
-        </React.Fragment>
-        {/* </MainCard> */}
+
+        {getStepContent(
+          activeStep,
+          handleNext,
+          handleBack,
+          setErrorIndex,
+          values,
+          setValues,
+          newLC,
+          paymentData,
+          setPaymentData
+        )}
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        {/* <Grid container justifyContent="space-between"> */}
-        {/* <Grid item>
-            <Grid item sm={12}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    id="maintain_billwise"
-                    checked={values.maintain_billwise}
-                    onChange={handleChecked}
-                    name="maintain_billwise"
-                    color="primary"
-                  />
-                }
-                label="Maintain Billwise"
-              />
-            </Grid>
-          </Grid> */}
         <Grid item>
           <Grid container spacing={2.5}>
             <Grid item>
-              <AnimateButton>
-                <Button
-                  color="error"
-                  variant="contained"
-                  size="small"
-                  onClick={() => {
-                    setValues({
-                      trans_type: flag ? "import" : "export",
-                      year_id: 21,
-                      lc_date: "",
-                      party_code: null,
-                      cost_center: null,
-                      applicant_bank: "",
-                      applicant_bank_lc_no: "",
-                      benificiary_bank: "",
-                      benificiary_bank_lc_no: "",
-                      inspection: false,
-                      bank_ref: "",
-                      days_for_submit_to_bank: "",
-                      payment_terms: "",
-                      place_of_taking_incharge: "",
-                      final_destination_of_delivery: "",
-                      completed: false,
-                      shipment_terms: "",
-                      goods_description: "",
-                      other_lc_terms: "",
-                      bank_ac: null,
-                      expiry_date: "",
-                      lc_amount: "",
-                      base_currency: { id: 0 },
-                      company_master_id: mid,
-                      created_by: user.email,
-                    });
-                    setValuesDoc({
-                      created_by: user.email,
-                      doc_name: "",
-                      company_master_id: mid,
-                      lc_id: lc_id,
-                      // lc_id: current_lc.id,
-                      file: null,
-                    });
+              {activeStep === 0 && (
+                <AnimateButton>
+                  <Button
+                    color="error"
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      setValues({
+                        trans_type: flag ? "import" : "export",
+                        year_id: 21,
+                        lc_date: "",
+                        party_code: null,
+                        cost_center: null,
+                        applicant_bank: "",
+                        applicant_bank_lc_no: "",
+                        benificiary_bank: "",
+                        benificiary_bank_lc_no: "",
+                        inspection: false,
+                        bank_ref: "",
+                        days_for_submit_to_bank: "",
+                        payment_terms: "",
+                        place_of_taking_incharge: "",
+                        final_destination_of_delivery: "",
+                        completed: false,
+                        shipment_terms: "",
+                        goods_description: "",
+                        other_lc_terms: "",
+                        bank_ac: null,
+                        expiry_date: "",
+                        lc_amount: "",
+                        base_currency: { id: company.base_currency },
+                        company_master_id: mid,
+                        created_by: user.email,
+                      });
 
-                    handleClose();
-                  }}
-                  disabled={clicked}
-                  startIcon={<CancelIcon />}
-                >
-                  Cancel
-                </Button>
-              </AnimateButton>
+                      handleClose();
+                    }}
+                    disabled={clicked}
+                    startIcon={<CancelIcon />}
+                  >
+                    Cancel
+                  </Button>
+                </AnimateButton>
+              )}
             </Grid>
             <Grid item>
               <LoadingButton
                 color="primary"
                 variant="contained"
                 size="small"
-                onClick={activeStep === 0 ? handleSubmit1 : handleSubmit2}
+                onClick={activeStep === 0 ? handleSubmit1 : handleClose}
                 loading={clicked}
                 startIcon={<SaveIcon />}
               >
-                Add
+                {activeStep === 0 ? "Add" : "Okay"}
               </LoadingButton>
             </Grid>
           </Grid>
         </Grid>
-        {/* </Grid> */}
       </DialogActions>
     </Dialog>
   );

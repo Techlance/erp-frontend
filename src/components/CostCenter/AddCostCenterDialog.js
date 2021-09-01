@@ -121,7 +121,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
           <Typography variant="body2">Create a new cost center.</Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
-          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+          <pre>{JSON.stringify(values, null, 2)}</pre>
           <Grid item xs={12} sm={6}>
             <CategorySelect
               captionLabel="Cost Category"

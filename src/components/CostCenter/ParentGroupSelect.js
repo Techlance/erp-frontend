@@ -17,7 +17,7 @@ const ParentGroupSelect = ({
 }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
-    return null;
+    return -1;
   });
   const errorState = formState === "error" ? true : false;
 
@@ -30,15 +30,10 @@ const ParentGroupSelect = ({
     getCostCategory();
   }, [cat_id]);
 
-  //   useEffect(() => {
-
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, []);
-
   useEffect(() => {
     setCurrent(() => {
       if (selected) return selected.id;
-      return null;
+      return -1;
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,6 +59,10 @@ const ParentGroupSelect = ({
         InputProps={{ readOnly: disabled || loading }}
         helperText={loading && "Loading Data"}
       >
+        <MenuItem key={-1} value={-1}>
+          {"Primary"}
+        </MenuItem>
+
         {data?.map((option, index) => (
           <MenuItem key={index} value={option.id}>
             {`${option.cost_center_name}`.toUpperCase()}
