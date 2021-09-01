@@ -1,7 +1,14 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 // project imports
 import instance from "../utils/axios";
+
+/**
+ * useRequest hook
+ * @returns {Function} dorequest Function to execute the request.
+ * @returns {boolean} loading Loading status.
+ */
 
 const useRequest = ({
   url,
@@ -52,6 +59,20 @@ const useRequest = ({
   };
 
   return [doRequest, loading, error, responseData];
+};
+
+useRequest.defaultProps = {
+  method: "GET",
+};
+
+useRequest.propTypes = {
+  url: PropTypes.string.isRequired,
+  method: PropTypes.oneOf(["GET", "POST", "PUT", "DELETE"]),
+  data: PropTypes.any,
+  headers: PropTypes.any,
+  nextSuccess: PropTypes.func,
+  nextError: PropTypes.func,
+  initialState: PropTypes.any,
 };
 
 export default useRequest;

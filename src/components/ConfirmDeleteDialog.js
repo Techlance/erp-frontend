@@ -1,3 +1,6 @@
+import React from "react";
+
+// material-ui
 import {
   Button,
   Dialog,
@@ -7,7 +10,9 @@ import {
   DialogTitle,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+
+// assets
+import DeleteIcon from "@material-ui/icons/DeleteForever";
 
 const ConfirmDeleteDialog = ({
   open,
@@ -43,6 +48,7 @@ const ConfirmDeleteDialog = ({
             handleAgree();
             handleClose();
           }}
+          startIcon={<DeleteIcon />}
           color="error"
         >
           Delete

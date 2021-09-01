@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import useRequest from "../../../hooks/useRequest";
+
+// material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
+import CachedIcon from "@material-ui/icons/Cached";
+
+// project import
+import useRequest from "../../../hooks/useRequest";
 
 const VoucherClassSelect = ({
   captionLabel,
@@ -52,8 +57,10 @@ const VoucherClassSelect = ({
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
-        InputProps={{ readOnly: disabled || loading }}
-        helperText={loading && "Loading Data"}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
       >
         {data?.map((option, index) => (
           <MenuItem key={index} value={option}>

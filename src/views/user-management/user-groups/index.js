@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
 // material-ui
@@ -14,21 +14,24 @@ import {
   Tabs,
   Typography,
   Avatar,
+  Stack,
 } from "@material-ui/core";
-
-// project imports
-import { gridSpacing } from "../../../store/constant";
 
 // assets
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import MainCard from "../../../ui-component/cards/MainCard";
 import GroupsProfile from "./GroupsProfile";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
+import SaveIcon from "@material-ui/icons/SaveRounded";
+import AddIcon from "@material-ui/icons/AddCircleTwoTone";
 
-// project imports
+// project import
 import useAuth from "../../../hooks/useAuth";
 import useUserPermissions from "../../../hooks/useUserPermissions";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
+import { gridSpacing } from "../../../store/constant";
+import LoadingButton from "../../../ui-component/LoadingButton";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -110,7 +113,7 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -253,48 +256,42 @@ const CompanyDetails = () => {
           <Divider />
 
           <CardActions>
-            <Grid
-              container
-              flex
-              justifyContent="space-between"
-              flexDirection="row"
-            >
+            <Grid container flex flexDirection="row">
               <Grid item xs={12} lg={4}></Grid>
-              <Grid
-                item
-                xs={12}
-                lg={8}
-                flex
-                justifyContent="space-between"
-                flexDirection="row"
-              >
-                {value !== 0 ? (
-                  <Grid item>
-                    <AnimateButton>
-                      <Button
+              <Grid item xs={12} lg={8}>
+                <Stack direction="row">
+                  <Grid
+                    container
+                    justifyContent="space-between"
+                    spacing={gridSpacing}
+                  >
+                    {value !== 0 ? (
+                      <Grid item>
+                        <AnimateButton>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => setShowDeleteModal(true)}
+                            startIcon={<DeleteIcon />}
+                          >
+                            Delete
+                          </Button>
+                        </AnimateButton>
+                      </Grid>
+                    ) : null}
+                    <Grid item>
+                      <LoadingButton
                         variant="contained"
-                        size="large"
-                        color="error"
-                        onClick={() => setShowDeleteModal(true)}
+                        color="primary"
+                        onClick={handleUpdateUserGroup}
+                        loading={clicked}
+                        startIcon={value === 0 ? <AddIcon /> : <SaveIcon />}
                       >
-                        Delete
-                      </Button>
-                    </AnimateButton>
+                        {value === 0 ? "Create" : "Save"}
+                      </LoadingButton>
+                    </Grid>
                   </Grid>
-                ) : null}
-                <Grid item>
-                  <AnimateButton>
-                    <Button
-                      variant="contained"
-                      size="large"
-                      color="primary"
-                      onClick={handleUpdateUserGroup}
-                      disabled={clicked}
-                    >
-                      {value === 0 ? "Create" : "Update"}
-                    </Button>
-                  </AnimateButton>
-                </Grid>
+                </Stack>
               </Grid>
             </Grid>
           </CardActions>

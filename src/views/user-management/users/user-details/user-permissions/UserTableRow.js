@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // material ui
-import { Button, TableCell, Typography } from "@material-ui/core";
+import { TableCell, Typography } from "@material-ui/core";
 
 // project imports
 import useUserPermissions from "../../../../../hooks/useUserPermissions";
@@ -9,6 +9,7 @@ import UserGroupsSelect from "../../../../../components/user-management/UserGrou
 
 // assets
 import SaveIcon from "@material-ui/icons/SaveRounded";
+import LoadingButton from "../../../../../ui-component/LoadingButton";
 
 const TransactionTabRow = ({ data }) => {
   const { updateUserCompanyGroup } = useUserPermissions();
@@ -80,15 +81,15 @@ const TransactionTabRow = ({ data }) => {
       </TableCell>
       <TableCell align="center">
         {modified && (
-          <Button
+          <LoadingButton
             onClick={handleUpdateButton}
             color="primary"
             variant="contained"
-            disabled={clicked}
+            loading={clicked}
             startIcon={<SaveIcon />}
           >
             Save
-          </Button>
+          </LoadingButton>
         )}
       </TableCell>
     </>

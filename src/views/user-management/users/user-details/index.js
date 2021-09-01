@@ -9,7 +9,7 @@ import { Box, Tab, Tabs } from "@material-ui/core";
 import useUserPermissions from "../../../../hooks/useUserPermissions";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import UserForm from "./UserForm";
-import SelectGroup from "./select-group";
+import UserPermissions from "./user-permissions";
 
 // assets
 import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
@@ -19,7 +19,7 @@ import AddDocumentDialog from "../../../../components/company/AddDocumentDialog"
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -66,7 +66,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -125,7 +125,7 @@ const UserDetails = () => {
           <UserForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <SelectGroup />
+          <UserPermissions />
         </TabPanel>
       </div>
       <AddDocumentDialog

@@ -1,5 +1,10 @@
 // action - state management
-import { userRightsActions } from "../actions";
+import {
+  userManagementUserActions,
+  userRightsActions,
+  userManagementUserCompanyGroupActions,
+  userManagementUserGroups,
+} from "../actions";
 
 //-----------------------|| USER MANAGEMENT REDUCER ||-----------------------//
 
@@ -26,7 +31,7 @@ const userPermissionsReducer = (state = initialState, action) => {
     //     ...state,
     //   };
     // }
-    case userRightsActions.VIEW_USER: {
+    case userManagementUserActions.VIEW_USER: {
       return {
         ...state,
         user_accounts: action.payload,
@@ -37,7 +42,7 @@ const userPermissionsReducer = (state = initialState, action) => {
     //     ...state,
     //   };
     // }
-    case userRightsActions.VIEW_USER_BY_ID: {
+    case userManagementUserActions.VIEW_USER_BY_ID: {
       return {
         ...state,
         current_user_account: action.payload.data,
@@ -53,7 +58,7 @@ const userPermissionsReducer = (state = initialState, action) => {
     //     ...state,
     //   };
     // }
-    case userRightsActions.VIEW_USER_GROUP: {
+    case userManagementUserGroups.VIEW_USER_GROUP: {
       return {
         ...state,
         user_groups: action.payload,
@@ -64,7 +69,7 @@ const userPermissionsReducer = (state = initialState, action) => {
     //     ...state,
     //   };
     // }
-    case userRightsActions.VIEW_USER_GROUP_BY_ID: {
+    case userManagementUserGroups.VIEW_USER_GROUP_BY_ID: {
       return {
         ...state,
         current_user_group: action.payload,
@@ -97,7 +102,7 @@ const userPermissionsReducer = (state = initialState, action) => {
         current_user_right: action.payload,
       };
     }
-    case userRightsActions.VIEW_USER_COMPANY_GROUP: {
+    case userManagementUserCompanyGroupActions.VIEW_USER_COMPANY_GROUP: {
       return {
         ...state,
         user_company_group: action.payload,

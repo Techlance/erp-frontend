@@ -1,5 +1,6 @@
 // actions
-import { VIEW_USER_COMPANY_GROUP } from "../../store/actions";
+import { userManagementUserCompanyGroupActions } from "../../store/actions";
+import { dataToForm } from "../../utils";
 
 // project imports
 import instance from "../../utils/axios";
@@ -13,13 +14,20 @@ const getUserCompanyGroupByID = async (id, dispatch) => {
   const response = await instance.get(`/company/get-user-company-group/${id}`);
 
   dispatch({
-    type: VIEW_USER_COMPANY_GROUP,
+    type: userManagementUserCompanyGroupActions.VIEW_USER_COMPANY_GROUP,
     payload: response.data.data,
   });
 };
 
 const createUserCompanyGroupAsync = async (data, dispatch) => {
-  const response = await instance.post("/company/add-user-company", data);
+  let newData = { ...data };
+  newData.company_master_id = newData.company_master_id.company_id;
+  newData.user_group_id = newData.user_group_id.id;
+
+  const response = await instance.post(
+    "/company/add-user-company",
+    dataToForm(newData)
+  );
 
   sendNotification({
     dispatch,
@@ -30,7 +38,7 @@ const createUserCompanyGroupAsync = async (data, dispatch) => {
 const updateUserCompanyGroupAsync = async (data, dispatch) => {
   const response = await instance.put(
     `/company/edit-user-company/${data.id}`,
-    data
+    dataToForm(data)
   );
 
   sendNotification({

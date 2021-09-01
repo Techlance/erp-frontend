@@ -1,5 +1,6 @@
 // actions
-import { VIEW_USER, VIEW_USER_BY_ID } from "../../store/actions";
+import { userManagementUserActions } from "../../store/actions";
+import { dataToForm } from "../../utils";
 
 // project imports
 import instance from "../../utils/axios";
@@ -12,7 +13,7 @@ const getUserAccountByIDAsync = async (id, dispatch) => {
   const response = await instance.get(`/user/get-users/${id}`);
 
   dispatch({
-    type: VIEW_USER_BY_ID,
+    type: userManagementUserActions.VIEW_USER_BY_ID,
     payload: {
       data: response.data.data,
     },
@@ -23,14 +24,14 @@ const getUserAccountsAsync = async (dispatch) => {
   const response = await instance.get("/user/get-users");
 
   dispatch({
-    type: VIEW_USER,
+    type: userManagementUserActions.VIEW_USER,
     payload: response.data.data,
   });
 };
 
 const createUserAccountAsync = async (data, dispatch) => {
   delete data.id;
-  const response = await instance.post("/user/add-user", data);
+  const response = await instance.post("/user/add-user", dataToForm(data));
 
   sendNotification({
     dispatch,
@@ -39,7 +40,10 @@ const createUserAccountAsync = async (data, dispatch) => {
 };
 
 const updateUserAccountAsync = async (data, dispatch) => {
-  const response = await instance.put(`/user/edit-user/${data.id}`, data);
+  const response = await instance.put(
+    `/user/edit-user/${data.id}`,
+    dataToForm(data)
+  );
 
   sendNotification({
     dispatch,

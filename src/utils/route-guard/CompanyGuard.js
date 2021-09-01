@@ -24,7 +24,6 @@ const CompanyGuard = ({ children }) => {
 
   const [getCompanies, loadingCompanies, , { companies }] = useRequest({
     url: "/company/get-user-company",
-    method: "GET",
     initialState: {
       companies: [],
     },

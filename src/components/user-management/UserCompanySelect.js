@@ -1,8 +1,11 @@
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 // material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
+import CachedIcon from "@material-ui/icons/Cached";
+
+// project import
 import useRequest from "../../hooks/useRequest";
 
 //-----------------------|| USRT GROUPS SELECT ||-----------------------//
@@ -15,7 +18,7 @@ const UserSelectCompany = ({ captionLabel, formState, selected, onChange }) => {
 
   const errorState = formState === "error" ? true : false;
 
-  const [getUserCompany, , , data] = useRequest({
+  const [getUserCompany, loading, , data] = useRequest({
     url: "/company/get-user-company",
     initialState: [],
   });
@@ -53,6 +56,10 @@ const UserSelectCompany = ({ captionLabel, formState, selected, onChange }) => {
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
       >
         {data.companies?.map((option, index) => (
           <MenuItem key={index} value={option.company_id}>

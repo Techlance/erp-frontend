@@ -40,12 +40,11 @@ const UserTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {user_company_group &&
-            user_company_group.map((row, index) => (
-              <TableRow hover key={index}>
-                <UserTableRow data={row} />
-              </TableRow>
-            ))}
+          {user_company_group?.map((row, index) => (
+            <TableRow hover key={index}>
+              <UserTableRow data={row} />
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

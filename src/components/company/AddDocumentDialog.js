@@ -25,8 +25,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { createCompanyDoc } = useCompany();
 
-  const company = useSelector((state) => state.company);
-  const { current_company } = company;
+  const { current_company } = useSelector((state) => state.company);
 
   const [values, setValues] = useState({
     created_by: user.email,
@@ -42,6 +41,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
       company_master_id: current_company.id,
       created_by: user.email,
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current_company]);
 

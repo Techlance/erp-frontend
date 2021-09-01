@@ -1,15 +1,5 @@
 import React, { useState } from "react";
 
-import { IconButton, Grid, Stack } from "@material-ui/core";
-
-// assets
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-
-// project imports
-import { gridSpacing } from "../../store/constant";
-import AddCurrenyDialog from "./AddCurrencyDialog";
-import CurrencySelect from "../../components/company/CurrencySelect";
-
 // material-ui
 import {
   Button,
@@ -20,11 +10,24 @@ import {
   DialogTitle,
   TextField,
   Typography,
+  IconButton,
+  Grid,
+  Stack,
 } from "@material-ui/core";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
 import useCompany from "../../hooks/useCompany";
+import AnimateButton from "../../ui-component/extended/AnimateButton";
+import { gridSpacing } from "../../store/constant";
+import AddCurrenyDialog from "./AddCurrencyDialog";
+import CurrencySelect from "../../components/company/CurrencySelect";
+
+// assets
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import SaveIcon from "@material-ui/icons/SaveRounded";
+import CancelIcon from "@material-ui/icons/Cancel";
+import LoadingButton from "../../ui-component/LoadingButton";
 
 const AddCompanyDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -249,23 +252,28 @@ const AddCompanyDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button
-          onClick={handleClose}
-          color="error"
-          size="small"
-          variant="contained"
-        >
-          Cancel
-        </Button>
-        <Button
+        <AnimateButton>
+          <Button
+            onClick={handleClose}
+            color="error"
+            size="small"
+            variant="contained"
+            disabled={clicked}
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
+        </AnimateButton>
+        <LoadingButton
           color="primary"
           size="small"
           variant="contained"
-          disabled={clicked}
+          loading={clicked}
           onClick={handleCreateCompany}
+          startIcon={<SaveIcon />}
         >
           Add
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

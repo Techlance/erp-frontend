@@ -11,19 +11,24 @@ import {
   Typography,
   Grid,
 } from "@material-ui/core";
+import AddCircleIcon from "@material-ui/icons/AddCircleTwoTone";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
 import useUserPermissions from "../../hooks/useUserPermissions";
 import UserGroupsSelect from "./UserGroupsSelect";
-import UserCompanySelect from "./UserComapnySelect";
+import UserCompanySelect from "./UserCompanySelect";
 import { gridSpacing } from "../../store/constant";
+import AnimateButton from "../../ui-component/extended/AnimateButton";
+import LoadingButton from "../../ui-component/LoadingButton";
 
 const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
   const { user } = useAuth();
 
   const { addUserCompanyGroup } = useUserPermissions();
 
+  const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState({
     created_by: user.email,
     user: user_id,
@@ -55,12 +60,10 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
     handleClose();
   };
 
-  const handleAddCompany = () => {
-    let data = { ...values };
-    data.company_master_id = data.company_master_id.company_id;
-    data.user_group_id = data.user_group_id.id;
-
-    addUserCompanyGroup(data);
+  const handleAddCompany = async () => {
+    setClicked(true);
+    await addUserCompanyGroup(values);
+    setClicked(false);
     handleCloseModal();
   };
 
@@ -99,17 +102,27 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="error">
-          Cancel
-        </Button>
-        <Button
+        <AnimateButton>
+          <Button
+            onClick={handleClose}
+            size="small"
+            color="error"
+            variant="contained"
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
+        </AnimateButton>
+        <LoadingButton
           variant="contained"
           size="small"
           onClick={handleAddCompany}
           color="primary"
+          loading={clicked}
+          startIcon={<AddCircleIcon />}
         >
           Add
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

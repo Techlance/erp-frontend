@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 
-import { Grid, Switch, FormControlLabel } from "@material-ui/core";
-
-// project imports
-import { gridSpacing } from "../../store/constant";
-
 // material-ui
 import {
+  Grid,
+  Switch,
+  FormControlLabel,
   Button,
   Dialog,
   DialogActions,
@@ -16,10 +14,15 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import AddCircleIcon from "@material-ui/icons/AddCircleTwoTone";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
+import { gridSpacing } from "../../store/constant";
 import useUserPermissions from "../../hooks/useUserPermissions";
+import LoadingButton from "../../ui-component/LoadingButton";
+import AnimateButton from "../../ui-component/extended/AnimateButton";
 
 const AddUserDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -121,23 +124,27 @@ const AddUserDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button
-          color="error"
-          variant="contained"
-          size="small"
-          onClick={handleClose}
-        >
-          Cancel
-        </Button>
-        <Button
+        <AnimateButton>
+          <Button
+            color="error"
+            variant="contained"
+            size="small"
+            onClick={handleClose}
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
+        </AnimateButton>
+        <LoadingButton
           color="primary"
           variant="contained"
           size="small"
           onClick={handleCreateUser}
-          disabled={clicked}
+          loading={clicked}
+          startIcon={<AddCircleIcon />}
         >
           Add
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

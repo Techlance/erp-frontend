@@ -35,19 +35,20 @@ export const SELECT_COMPANY = "SELECT_COMPANY";
 export const EXIT_COMPANY = "EXIT_COMPANY";
 
 // action - user management - user
-export const CREATE_USER = "CREATE_USER";
-export const EDIT_USER = "EDIT_USER";
-export const VIEW_USER = "VIEW_USER";
-export const DELETE_USER = "DELETE_USER";
-export const VIEW_USER_BY_ID = "VIEW_USER_BY_ID";
-export const VIEW_USER_COMPANY_GROUP = "VIEW_USER_COMPANY_GROUP";
+export const userManagementUserActions = {
+  VIEW_USER: "VIEW_USER",
+  VIEW_USER_BY_ID: "VIEW_USER_BY_ID",
+};
 
-// action - user management - user group
-export const CREATE_USER_GROUP = "CREATE_USER_GROUP";
-export const EDIT_USER_GROUP = "EDIT_USER_GROUP";
-export const VIEW_USER_GROUP = "VIEW_USER_GROUP";
-export const DELETE_USER_GROUP = "DELETE_USER_GROUP";
-export const VIEW_USER_GROUP_BY_ID = "VIEW_USER_GROUP_BY_ID";
+export const userManagementUserCompanyGroupActions = {
+  VIEW_USER_COMPANY_GROUP: "VIEW_USER_COMPANY_GROUP",
+};
+
+// action - user management - user groups
+export const userManagementUserGroups = {
+  VIEW_USER_GROUP: "VIEW_USER_GROUP",
+  VIEW_USER_GROUP_BY_ID: "VIEW_USER_GROUP_BY_ID",
+};
 
 // action - user management - user rights
 export const userRightsActions = {

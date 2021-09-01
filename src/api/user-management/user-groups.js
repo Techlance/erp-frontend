@@ -1,5 +1,6 @@
 // actions
-import { VIEW_USER_GROUP } from "../../store/actions";
+import { userManagementUserGroups } from "../../store/actions";
+import { dataToForm } from "../../utils";
 
 // project imports
 import instance from "../../utils/axios";
@@ -9,13 +10,16 @@ const getUserGroupsAsync = async (dispatch) => {
   const response = await instance.get("/user/get-user-group");
 
   dispatch({
-    type: VIEW_USER_GROUP,
+    type: userManagementUserGroups.VIEW_USER_GROUP,
     payload: response.data.data,
   });
 };
 
 const createUserGroupAsync = async (data, dispatch) => {
-  const response = await instance.post("/user/add-user-group", data);
+  const response = await instance.post(
+    "/user/add-user-group",
+    dataToForm(data)
+  );
 
   sendNotification({
     dispatch,
@@ -24,7 +28,10 @@ const createUserGroupAsync = async (data, dispatch) => {
 };
 
 const updateUserGroupAsync = async (id, data, dispatch) => {
-  const response = await instance.put(`/user/edit-user-group/${id}`, data);
+  const response = await instance.put(
+    `/user/edit-user-group/${id}`,
+    dataToForm(data)
+  );
 
   sendNotification({
     dispatch,

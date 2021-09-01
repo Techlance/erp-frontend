@@ -14,7 +14,7 @@ import AddUserCompanyGroup from "../../../../../components/user-management/AddUs
 import AnimateButton from "../../../../../ui-component/extended/AnimateButton";
 
 //-----------------------|| User List ||-----------------------//
-const SelectGroup = () => {
+const UserPermissions = () => {
   const { current_user_account } = useSelector(
     (state) => state.userPermissions
   );
@@ -63,4 +63,4 @@ const SelectGroup = () => {
   );
 };
 
-export default SelectGroup;
+export default UserPermissions;

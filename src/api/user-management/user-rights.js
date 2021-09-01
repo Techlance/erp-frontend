@@ -2,6 +2,7 @@
 // import { VIEW_USER_RIGHTS } from "../../store/actions";
 
 // project imports
+import { dataToForm } from "../../utils";
 import instance from "../../utils/axios";
 import sendNotification from "../../utils/sendNotification";
 
@@ -14,7 +15,10 @@ const getUserRightsAsync = async (dispatch) => {
 };
 
 const createUserRightsAsync = async (data, dispatch) => {
-  const response = await instance.post("/user/add-user-right", data);
+  const response = await instance.post(
+    "/user/add-user-right",
+    dataToForm(data)
+  );
 
   sendNotification({
     dispatch,
@@ -23,7 +27,10 @@ const createUserRightsAsync = async (data, dispatch) => {
 };
 
 const updateUserRightsAsync = async (data, dispatch) => {
-  const response = await instance.put(`/user/edit-user-right/${data.id}`, data);
+  const response = await instance.put(
+    `/user/edit-user-right/${data.id}`,
+    dataToForm(data)
+  );
 
   sendNotification({
     dispatch,

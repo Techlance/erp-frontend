@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 
 // material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
+import CachedIcon from "@material-ui/icons/Cached";
 
 // project imports
 import useRequest from "../../../hooks/useRequest";
@@ -54,8 +55,10 @@ const AccountCodeSelect = ({ captionLabel, formState, selected, onChange }) => {
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
-        InputProps={{ readOnly: loading }}
-        helperText={loading && "Loading Data"}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
       >
         {data?.map((option, index) => (
           <MenuItem key={index} value={option.id}>

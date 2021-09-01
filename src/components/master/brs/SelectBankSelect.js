@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
 import React from "react";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 // material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
-import { useSelector } from "react-redux";
 
 //-----------------------|| Head Title Select ||-----------------------//
 

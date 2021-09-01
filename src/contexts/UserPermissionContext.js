@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 
 // reducer - state management
-import { userRightsActions } from "../store/actions";
+import { userManagementUserGroups, userRightsActions } from "../store/actions";
 
 // project imports
 import Loader from "../ui-component/Loader";
@@ -93,7 +93,7 @@ export const UserPermissionProvider = ({ children }) => {
   const updateUserCompanyGroup = async (data) => {
     await updateUserCompanyGroupAsync(data, dispatch);
 
-    // await getUserCompanyGroupByID(state.current_user_account.id, dispatch);
+    await getUserCompanyGroupByID(state.current_user_account.id, dispatch);
   };
 
   const addUserCompanyGroup = async (data) => {
@@ -110,7 +110,7 @@ export const UserPermissionProvider = ({ children }) => {
 
   const updateUserGroup = async (id, data) => {
     if (id === 0) {
-      await createUserGroupAsync(data, dispatch);
+      await createUserGroup(data, dispatch);
     } else {
       await updateUserGroupAsync(id, data, dispatch);
 
@@ -132,7 +132,7 @@ export const UserPermissionProvider = ({ children }) => {
     const userGroup = state.user_groups.find((item) => item.id === id);
 
     dispatch({
-      type: userRightsActions.VIEW_USER_GROUP_BY_ID,
+      type: userManagementUserGroups.VIEW_USER_GROUP_BY_ID,
       payload: userGroup,
     });
   };

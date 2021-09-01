@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 
 // material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
+import CachedIcon from "@material-ui/icons/Cached";
+
+// project import
 import useRequest from "../../hooks/useRequest";
 
 //-----------------------|| USRT GROUPS SELECT ||-----------------------//
@@ -15,7 +18,7 @@ const UserGroupsSelect = ({ captionLabel, formState, selected, onChange }) => {
 
   const errorState = formState === "error" ? true : false;
 
-  const [getUserGroups, , , data] = useRequest({
+  const [getUserGroups, loading, , data] = useRequest({
     url: "/user/get-user-group",
     initialState: [],
   });
@@ -50,6 +53,10 @@ const UserGroupsSelect = ({ captionLabel, formState, selected, onChange }) => {
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
       >
         {data.map((option, index) => (
           <MenuItem key={index} value={option.id}>

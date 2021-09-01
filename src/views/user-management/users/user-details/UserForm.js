@@ -22,6 +22,7 @@ import SubCard from "../../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
+import LoadingButton from "../../../../ui-component/LoadingButton";
 
 //-----------------------|| User Form ||-----------------------//
 
@@ -135,17 +136,15 @@ const UserForm = () => {
                     </AnimateButton>
                   </Grid>
                   <Grid item>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleUpdateUser}
-                        startIcon={<SaveIcon />}
-                        disabled={clicked}
-                      >
-                        Save Details
-                      </Button>
-                    </AnimateButton>
+                    <LoadingButton
+                      variant="contained"
+                      color="primary"
+                      onClick={handleUpdateUser}
+                      loading={clicked}
+                      startIcon={<SaveIcon />}
+                    >
+                      Save Details
+                    </LoadingButton>
                   </Grid>
                 </Grid>
               </Stack>
