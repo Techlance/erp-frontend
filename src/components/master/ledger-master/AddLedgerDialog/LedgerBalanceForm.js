@@ -11,12 +11,12 @@ import { TextField } from "@material-ui/core";
 // project imports
 import useAuth from "../../../../hooks/useAuth";
 import FcNameSelect from "./FcNameSelect";
-import useComapanyMaster from "../../../../hooks/useCompanyMaster";
+import { useSelector } from "react-redux";
 
 // const AddUserDialog = ({ open, handleClose }) => {
 const LedgerBalanceForm = ({ values, setValues }) => {
   const { user } = useAuth();
-  const { company } = useComapanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
 
   useEffect(() => {
     setValues({
@@ -82,6 +82,16 @@ const LedgerBalanceForm = ({ values, setValues }) => {
         </FormControl>
       </Grid>
       <Grid item xs={12} sm={6}>
+        <FcNameSelect
+          captionLabel="Currency"
+          InputLabelProps={{ shrink: true }}
+          selected={values.fc_name}
+          onChange={handleSelect}
+          baseCurrency={company.base_currency}
+        />
+      </Grid>
+      {values.fc_name &&
+          values.fc_name?.id !== company.base_currency&& <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
           id="fc_amount"
@@ -94,16 +104,7 @@ const LedgerBalanceForm = ({ values, setValues }) => {
             min: "0",
           }}
         />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <FcNameSelect
-          captionLabel="Currency"
-          InputLabelProps={{ shrink: true }}
-          selected={values.fc_name}
-          onChange={handleSelect}
-          baseCurrency={company.base_currency}
-        />
-      </Grid>
+      </Grid>}
     </Grid>
   );
 };

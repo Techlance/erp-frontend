@@ -6,6 +6,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import {
   Button,
   FormControl,
+  FormHelperText,
+  makeStyles,
   MenuItem,
   Stack,
   Table,
@@ -19,6 +21,17 @@ import {
 
 //-----------------------|| Billwise List ||-----------------------//
 
+const useStyles = makeStyles({
+  root: {
+    position:"relative"
+  },
+  helperText:{
+    position:"absolute",
+    bottom:0,
+    left:"20px"
+  }
+});
+
 const BillwiseTable = ({
   deleteExistingBill,
   existingBills,
@@ -26,7 +39,9 @@ const BillwiseTable = ({
   setBillwise,
   deleteBill,
   addShortcut,
+  is_fc
 }) => {
+  const classes = useStyles();
   return (
     <Table size="medium">
       <TableHead>
@@ -54,11 +69,12 @@ const BillwiseTable = ({
               Amount
             </Typography>
           </TableCell>
+          {is_fc && 
           <TableCell>
             <Typography align="center" variant="h4">
               FC Amount
             </Typography>
-          </TableCell>
+          </TableCell>}
           <TableCell>
             <Typography align="center" variant="h4">
               Delete
@@ -90,9 +106,11 @@ const BillwiseTable = ({
               </Typography>
             </TableCell>
 
-            <TableCell>
+            {is_fc && 
+            <TableCell align="center">
               <Typography align="center">{row.fc_amount}</Typography>
-            </TableCell>
+              <Typography  align="center" variant="caption"> FC Rate: {Math.abs(((row.cr > 0 ? row.cr : row.dr)/row.fc_amount).toFixed(4))} </Typography>
+            </TableCell>}
             <TableCell align="center">
               <Stack
                 direction="row"
@@ -114,7 +132,7 @@ const BillwiseTable = ({
           </TableRow>
         ))}
         {billwise?.map((row, index) => (
-          <TableRow hover key={index}>
+          <TableRow hover key={index} alignItems="top">
             <TableCell>
               <TextField
                 onKeyPress={addShortcut}
@@ -195,13 +213,14 @@ const BillwiseTable = ({
               />
             </TableCell>
 
-            <TableCell>
+            {is_fc &&
+            <TableCell className={classes.root}>
               <TextField
                 onKeyPress={addShortcut}
                 fullWidth
-                id="ref_no"
-                label="Reference No."
-                value={row.ref_no}
+                id="fc_amount"
+                label="FC Amount"
+                value={row.fc_amount}
                 InputLabelProps={{ shrink: true }}
                 onChange={(e) => {
                   setBillwise(index, e);
@@ -210,8 +229,12 @@ const BillwiseTable = ({
                 inputProps={{
                   min: "0",
                 }}
+                // helperText={`FC Rate: ${Math.abs((row.amt/row.fc_amount).toFixed(4))}`}
+                // FormHelperTextProps={{ClassNames:classes.root}}
+                aria-describedby="component-error-text"
               />
-            </TableCell>
+            <FormHelperText id="component-error-text" className={classes.helperText}>{`FC Rate: ${Math.abs((row.amt/row.fc_amount).toFixed(4))}`}</FormHelperText>
+            </TableCell>}
 
             <TableCell align="center">
               <Stack

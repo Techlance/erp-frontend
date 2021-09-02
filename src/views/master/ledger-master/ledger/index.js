@@ -17,7 +17,7 @@ import formatDate from "../../../../utils/format-date";
 import AddLedgerDialog from "../../../../components/master/ledger-master/AddLedgerDialog";
 import { useLocation } from "react-router-dom";
 
-//-----------------------|| User List ||-----------------------//
+//-----------------------|| Ledger List ||-----------------------//
 const Ledger = () => {
   const { pathname } = useLocation();
 
@@ -58,8 +58,18 @@ const Ledger = () => {
         ),
     },
     {
+      // id:"A",
       field: "ledger_id",
       headerName: "Ledger ID",
+      flex: 0.2,
+      minWidth: 200,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      // id:"B",
+      field: "ledger_id",
+      headerName: "Ledger IE",
       flex: 0.2,
       minWidth: 200,
       align: "center",
@@ -94,7 +104,7 @@ const Ledger = () => {
     },
     {
       field: "old_ledger_id",
-      headerName: "Ledger ID",
+      headerName: "Old Ledger ID",
       flex: 0.2,
       minWidth: 100,
       align: "center",

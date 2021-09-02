@@ -14,7 +14,6 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import FcNameSelect from "../../../../components/master/ledger-master/AddLedgerDialog/FcNameSelect";
-import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import useAuth from "../../../../hooks/useAuth";
 import BillwiseTable from "./BillwiseTable";
 
@@ -36,7 +35,7 @@ const LedgerBillwise = () => {
 
   const [values, setValues] = useState({ is_cr: false });
   const [clicked, setClicked] = useState(false);
-  const { company } = useComapanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
   const [existingBills, setExistingBills] = useState([]);
 
   const { user } = useAuth();
@@ -190,6 +189,7 @@ const LedgerBillwise = () => {
             deleteBill={deleteBill}
             addShortcut={addShortcut}
             deleteExistingBill={deleteExistingBill}
+            is_fc = {values.fc_name && values.fc_name?.id !== company.base_currency}
           />
           <Grid item xs={12}>
             <Stack direction="row">

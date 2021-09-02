@@ -9,14 +9,14 @@ import { gridSpacing } from "../../../../store/constant";
 // project imports
 import useAuth from "../../../../hooks/useAuth";
 import FcNameSelect from "./FcNameSelect";
-import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import AddBillTable from "./AddBIllTable";
+import { useSelector } from "react-redux";
 
 // const AddUserDialog = ({ open, handleClose }) => {
 const LedgerBillwiseForm = ({ values, setValues }) => {
   const { user } = useAuth();
-  const { company } = useComapanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
 
   const addShortcut = (e) => {
     if (e.key === "Enter") {
@@ -30,16 +30,7 @@ const LedgerBillwiseForm = ({ values, setValues }) => {
       ...values,
       created_by: user.email,
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-
-  // const handleChange = (event) => {
-  //   setValues({
-  //     ...values,
-  //     [event.target.id]: event.target.value,
-  //   });
-  // };
 
   const handleSelect = (key, value) => {
     setValues({
@@ -111,6 +102,8 @@ const LedgerBillwiseForm = ({ values, setValues }) => {
         setBillwise={setBillwise}
         deleteBill={deleteBill}
         addShortcut={addShortcut}
+        fcName = {values.fc_name}
+        base_currency={company.base_currency}
       />
     </Grid>
   );
