@@ -103,6 +103,7 @@ const LedgerBalanceForm = ({ values, setValues }) => {
           inputProps={{
             min: "0",
           }}
+          helperText={`FC Rate: ${Math.abs(((values.amt)/values.fc_amount).toFixed(4))}`}
         />
       </Grid>}
     </Grid>

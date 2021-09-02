@@ -29,6 +29,13 @@ const Ledger = () => {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
 
+  const getBalAmt = (params,ind) => {
+    if(ind==="is_cr"){
+      return params.row.ledger_balance.length>0?params.row.ledger_balance[0].cr>0?"Credit":"Debit":""
+    }
+    return `${params.row.ledger_balance.length>0?params.row.ledger_balance[0][ind]:""}`;
+  }
+
   const columns = [
     {
       field: "id",
@@ -67,15 +74,6 @@ const Ledger = () => {
       headerAlign: "center",
     },
     {
-      // id:"B",
-      field: "ledger_id",
-      headerName: "Ledger IE",
-      flex: 0.2,
-      minWidth: 200,
-      align: "center",
-      headerAlign: "center",
-    },
-    {
       field: "ledger_name",
       headerName: "Ledger Name",
       flex: 0.5,
@@ -86,6 +84,33 @@ const Ledger = () => {
       headerName: "Account Group",
       flex: 0.5,
       minWidth: 300,
+    },
+    {
+      field: "cr_dr",
+      headerName: "Cr/Dr",
+      flex: 0.5,
+      minWidth: 150,
+      valueGetter: (params)=>{return getBalAmt(params,"is_cr")},
+      sortComparator: (v1, v2, cellParams1, cellParams2) =>
+        getBalAmt(cellParams1,"is_cr").localeCompare(getBalAmt(cellParams2,"is_cr")),
+    },
+    {
+      field: "bal_amt",
+      headerName: "Balance",
+      flex: 0.5,
+      minWidth: 150,
+      valueGetter: (params)=>{return getBalAmt(params,"balance")},
+      sortComparator: (v1, v2, cellParams1, cellParams2) =>
+        getBalAmt(cellParams1,"balance").localeCompare(getBalAmt(cellParams2,"balance")),
+    },
+    {
+      field: "bal_fc_amt",
+      headerName: "FC Amount",
+      flex: 0.5,
+      minWidth: 150,
+      valueGetter: (params)=>{return getBalAmt(params,"fc_amount")},
+      sortComparator: (v1, v2, cellParams1, cellParams2) =>
+        getBalAmt(cellParams1,"fc_amount").localeCompare(getBalAmt(cellParams2,"fc_amount")),
     },
     {
       field: "maintain_billwise",
