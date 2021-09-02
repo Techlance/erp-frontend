@@ -69,7 +69,7 @@ export const company_menu = {
               id: "opening-balance",
               title: <FormattedMessage id="menu.opening-balance" />,
               type: "item",
-              //   url: "/admin/companies",
+              url: "/company/:mid/master/op-bal-brs",
             },
           ],
         },

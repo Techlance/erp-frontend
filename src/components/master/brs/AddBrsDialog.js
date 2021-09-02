@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormControlLabel,
   Grid,
@@ -104,13 +103,9 @@ const AddBrsDialog = ({ open, handleClose }) => {
       maxWidth="sm"
     >
       <DialogTitle id="form-dialog-title">
-        <Typography variant="h4">Create Account Head</Typography>
+        <Typography variant="h4">Create</Typography>
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          <Typography variant="body2">Create a new account head.</Typography>
-        </DialogContentText>
-        <pre>{JSON.stringify(values, null, 2)}</pre>
         <Grid container spacing={2} mb={2}>
           <Grid item sm={12}>
             <AccountCodeSelect

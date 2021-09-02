@@ -19,7 +19,7 @@ const AccountCodeSelect = ({ captionLabel, formState, selected, onChange }) => {
   const errorState = formState === "error" ? true : false;
 
   const [getAccountCodes, loading, , data] = useRequest({
-    url: `/company/get-acc-ledger-master/${mid}`,
+    url: `/company/get-ledger-master/${mid}`,
     initialState: [],
   });
 
@@ -62,7 +62,7 @@ const AccountCodeSelect = ({ captionLabel, formState, selected, onChange }) => {
       >
         {data?.map((option, index) => (
           <MenuItem key={index} value={option.id}>
-            {option.group_name}
+            {`${option.ledger_id} - ${option.ledger_name}`}
           </MenuItem>
         ))}
       </TextField>
