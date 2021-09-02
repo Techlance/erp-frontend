@@ -150,6 +150,7 @@ const LedgerBalance = () => {
                     values?.fc_name?.id !== company.base_currency
                   ),
                 }}
+                helperText={`FC Rate: ${Math.abs(((values.cr > 0 ? values.cr : values.dr)/values.fc_amount).toFixed(4))}`}
               />}
             </Grid>
             <Grid item xs={12}>
