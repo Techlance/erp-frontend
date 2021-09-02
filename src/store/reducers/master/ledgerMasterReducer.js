@@ -1,6 +1,7 @@
 // action - state management
 import * as actionTypes from "../../actions";
-//-----------------------|| USER MANAGEMENT REDUCER ||-----------------------//
+
+//-----------------------|| LEDGER MASTER REDUCER ||-----------------------//
 
 // constant
 const initialState = {
@@ -8,6 +9,8 @@ const initialState = {
   company_account_groups: null,
   company_account_group_details: null,
   company_ledgers: null,
+  company_ledger_details: null,
+  current_ledger_docs: [],
 };
 
 const ledgerMasterReducer = (state = initialState, action) => {
@@ -66,6 +69,12 @@ const ledgerMasterReducer = (state = initialState, action) => {
         company_ledgers: action.payload,
       };
     }
+    case actionTypes.GET_COMPANY_LEDGER_DETAILS: {
+      return {
+        ...state,
+        company_ledger_details: action.payload,
+      };
+    }
     case actionTypes.UPDATE_COMPANY_LEDGER: {
       return {
         ...state,
@@ -79,6 +88,24 @@ const ledgerMasterReducer = (state = initialState, action) => {
     case actionTypes.DELETE_COMPANY_LEDGER: {
       return {
         ...state,
+      };
+    }
+    case actionTypes.VIEW_LEDGER_DOCS: {
+      return {
+        ...state,
+        current_ledger_docs: action.payload,
+      };
+    }
+    case actionTypes.VIEW_LEDGER_BALANCE: {
+      return {
+        ...state,
+        ledger_balance: action.payload,
+      };
+    }
+    case actionTypes.VIEW_LEDGER_BILLWISE: {
+      return {
+        ...state,
+        ledger_billwise: action.payload,
       };
     }
     default: {

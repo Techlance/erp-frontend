@@ -3,7 +3,7 @@ import { useContext } from "react";
 // company provider
 import { CompanyContext } from "../contexts/CompanyContext";
 
-//-----------------------|| Company HOOKS ||-----------------------//
+//-----------------------|| Company Hooks ||-----------------------//
 
 const useCompany = () => useContext(CompanyContext);
 

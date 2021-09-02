@@ -13,6 +13,8 @@ const reducer = combineReducers({
   ledgerMaster: reducers.ledgerMasterReducer,
   costCenter: reducers.costCenterReducer,
   lc: reducers.lcReducer,
+  voucherTypes: reducers.voucherTypesReducer,
+  brs: reducers.brsReducer,
 });
 
 export default reducer;

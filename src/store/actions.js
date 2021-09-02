@@ -1,11 +1,11 @@
-// action - account reducer
+// action - account
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const ACCOUNT_INITIALIZE = "ACCOUNT_INITIALIZE";
 export const FIREBASE_STATE_CHANGED = "FIREBASE_STATE_CHANGED";
 export const SET_MENU = "SET_MENU";
 
-// action - customization reducer
+// action - customization
 export const MENU_TOGGLE = "@customization/MENU_TOGGLE";
 export const MENU_OPEN = "@customization/MENU_OPEN";
 export const MENU_TYPE = "@customization/MENU_TYPE";
@@ -19,7 +19,7 @@ export const SET_OUTLINED_FILLED = "@customization/SET_OUTLINED_FILLED";
 // action - snackbar
 export const SNACKBAR_OPEN = "@snackbar/SNACKBAR_OPEN";
 
-// action - company master reducer
+// action - company master
 export const COMPANIES_INITIALIZE = "COMPANIES_INITIALIZE";
 export const GET_USER_COMPANIES = "GET_USER_COMPANIES";
 export const VIEW_COMPANY = "VIEW_COMPANY";
@@ -34,7 +34,7 @@ export const ADD_CURRENCY = "ADD_CURRENCY";
 export const SELECT_COMPANY = "SELECT_COMPANY";
 export const EXIT_COMPANY = "EXIT_COMPANY";
 
-// action - user management - user reducer
+// action - user management - user
 export const CREATE_USER = "CREATE_USER";
 export const EDIT_USER = "EDIT_USER";
 export const VIEW_USER = "VIEW_USER";
@@ -42,19 +42,21 @@ export const DELETE_USER = "DELETE_USER";
 export const VIEW_USER_BY_ID = "VIEW_USER_BY_ID";
 export const VIEW_USER_COMPANY_GROUP = "VIEW_USER_COMPANY_GROUP";
 
-// action - user management - user group reducer
+// action - user management - user group
 export const CREATE_USER_GROUP = "CREATE_USER_GROUP";
 export const EDIT_USER_GROUP = "EDIT_USER_GROUP";
 export const VIEW_USER_GROUP = "VIEW_USER_GROUP";
 export const DELETE_USER_GROUP = "DELETE_USER_GROUP";
 export const VIEW_USER_GROUP_BY_ID = "VIEW_USER_GROUP_BY_ID";
 
-// action - user management - user rights reducer
-export const CREATE_USER_RIGHTS = "CREATE_USER_RIGHTS";
-export const EDIT_USER_RIGHTS = "EDIT_USER_RIGHTS";
-export const VIEW_USER_RIGHTS = "VIEW_USER_RIGHTS";
-export const DELETE_USER_RIGHTS = "DELETE_USER_RIGHTS";
-export const VIEW_USER_RIGHTS_BY_ID = "VIEW_USER_RIGHTS_BY_ID";
+// action - user management - user rights
+export const userRightsActions = {
+  CREATE_USER_RIGHTS: "CREATE_USER_RIGHTS",
+  EDIT_USER_RIGHTS: "EDIT_USER_RIGHTS",
+  VIEW_USER_RIGHTS: "VIEW_USER_RIGHTS",
+  DELETE_USER_RIGHTS: "DELETE_USER_RIGHTS",
+  VIEW_USER_RIGHTS_BY_ID: "VIEW_USER_RIGHTS_BY_ID",
+};
 
 // action - master - ledger master - account head
 export const GET_COMPANY_ACCOUNT_HEADS = "GET_COMPANY_ACCOUNT_HEADS";
@@ -74,7 +76,8 @@ export const CREATE_COST_CENTER = "CREATE_COST_CENTER";
 export const UPDATE_COST_CENTER = "UPDATE_COST_CENTER";
 export const DELETE_COST_CENTER = "DELETE_COST_CENTER";
 export const GET_COST_CENTER_DETAILS = "GET_COST_CENTER_DETAILS";
-//action - master - ledger master - account group
+
+// action - master - ledger master - account group
 export const GET_COMPANY_ACCOUNT_GROUPS = "GET_COMPANY_ACCOUNT_GROUPS";
 export const GET_COMPANY_ACCOUNT_GROUP_DETAILS =
   "GET_COMPANY_ACCOUNT_GROUP_DETAILS";
@@ -82,8 +85,9 @@ export const CREATE_COMPANY_ACCOUNT_GROUP = "CREATE_COMPANY_ACCOUNT_GROUP";
 export const UPDATE_COMPANY_ACCOUNT_GROUP = "UPDATE_COMPANY_ACCOUNT_GROUP";
 export const DELETE_COMPANY_ACCOUNT_GROUP = "DELETE_COMPANY_ACCOUNT_GROUP";
 
-//action - master - ledger master - ledger
+// action - master - ledger master - ledger
 export const GET_COMPANY_LEDGERS = "GET_COMPANY_LEDGERS";
+export const GET_COMPANY_LEDGER_DETAILS = "GET_COMPANY_LEDGER_DETAILS";
 export const CREATE_COMPANY_LEDGER = "CREATE_COMPANY_LEDGER";
 export const UPDATE_COMPANY_LEDGER = "UPDATE_COMPANY_LEDGER";
 export const DELETE_COMPANY_LEDGER = "DELETE_COMPANY_LEDGER";
@@ -112,3 +116,21 @@ export const DELETE_LC_AMEND = "DELETE_LC_AMEND";
 export const GET_PARTY_CODE_PAY = "GET_PARTY_CODE_PAY";
 export const GET_PARTY_CODE_RECEIVE = "GET_PARTY_CODE_RECEIVE";
 export const GET_BANK_AC = "GET_BANK_AC";
+export const VIEW_LEDGER_DOCS = "VIEW_LEDGER_DOCS";
+export const VIEW_LEDGER_BALANCE = "VIEW_LEDGER_BALANCE";
+export const UPDATE_LEDGER_BALANCE = "UPDATE_LEDGER_BALANCE";
+export const VIEW_LEDGER_BILLWISE = "VIEW_LEDGER_BILLWISE";
+
+// action - master - voucher type
+export const voucherTypeActions = {
+  GET_VOUCHER_TYPES: "GET_VOUCHER_TYPES",
+  GET_VOUCHER_TYPES_DETAILS: "GET_VOUCHER_TYPES_DETAILS",
+};
+
+//action - master - opening balance
+export const brsActions = {
+  GET_BRS_BANKS: "GET_BRS_BANKS",
+  SET_BRS_BANK: "SET_BRS_BANK",
+  GET_BRS: "GET_BRS",
+  GET_BRS_DETAIL: "GET_BRS_DETAIL",
+};

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // material-ui
@@ -7,32 +8,25 @@ import { Button, Grid, Typography } from "@material-ui/core";
 // project imports
 import MainCard from "../../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../../store/constant";
+import formatDate from "../../../../utils/format-date";
+import AddAccountHeadDialog from "../../../../components/master/ledger-master/AddAccountHeadDialog";
 
 // assets
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import useCompanyMaster from "../../../../hooks/useCompanyMaster";
-import formatDate from "../../../../utils/format-date";
-import AddAccountHeadDialog from "../../../../components/master/ledger-master/AddAccountHeadDialog";
-import { useLocation } from "react-router-dom";
 
-//-----------------------|| User List ||-----------------------//
+//-----------------------|| Account Head List ||-----------------------//
 const SelectGroup = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
+  const { pathname } = useLocation();
+  const { company } = useSelector((state) => state.companyMaster);
 
   const { company_account_heads } = useSelector((state) => state.ledgerMaster);
-
-  const { company } = useCompanyMaster();
-
   const { getCompanyAccountHeads } = useLedgerMaster();
 
+  const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  const { pathname } = useLocation();
-
-  console.log(company_account_heads);
 
   const columns = [
     {
@@ -50,7 +44,6 @@ const SelectGroup = () => {
             color="primary"
             aria-label="more-details"
             href={`${pathname}/${params.value}`}
-            // target="_blank"
           >
             <Typography align="center">More </Typography>
             <IconArrowRight sx={{ fontSize: "1.1rem" }} />
@@ -142,7 +135,6 @@ const SelectGroup = () => {
       }
       content={true}
     >
-      {/* <pre>{JSON.stringify(company, null, 2)}</pre> */}
       <CustomDataGrid
         columns={columns}
         rows={company_account_heads}

@@ -1,10 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 
 // reducer - state management
-import {
-  VIEW_USER_GROUP_BY_ID,
-  VIEW_USER_RIGHTS_BY_ID,
-} from "../store/actions";
+import { userRightsActions } from "../store/actions";
 
 // project imports
 import Loader from "../ui-component/Loader";
@@ -135,7 +132,7 @@ export const UserPermissionProvider = ({ children }) => {
     const userGroup = state.user_groups.find((item) => item.id === id);
 
     dispatch({
-      type: VIEW_USER_GROUP_BY_ID,
+      type: userRightsActions.VIEW_USER_GROUP_BY_ID,
       payload: userGroup,
     });
   };
@@ -172,7 +169,7 @@ export const UserPermissionProvider = ({ children }) => {
     const userRight = state.user_rights.find((item) => item.id === id);
 
     dispatch({
-      type: VIEW_USER_RIGHTS_BY_ID,
+      type: userRightsActions.VIEW_USER_RIGHTS_BY_ID,
       payload: userRight,
     });
   };

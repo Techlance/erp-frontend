@@ -6,21 +6,27 @@ import { UserPermissionProvider } from "./UserPermissionContext";
 import { LedgerMasterProvider } from "./master/LedgerMasterContext";
 import { CostCenterProvider } from "./master/CostCenterContext";
 import { MasterCompanyProvider } from "./master/MasterCompanyContext";
+import { VoucherTypeProvider } from "./master/VoucherTypesContext";
+import { BrsProvider } from "./master/BrsContext";
 import { LcProvider } from "./master/lcContext";
 
 const AppContextProvider = ({ children }) => {
   return (
     <JWTProvider>
       <CompanyProvider>
-        <UserPermissionProvider>
-          <MasterCompanyProvider>
+        <MasterCompanyProvider>
+          <UserPermissionProvider>
             <LedgerMasterProvider>
-              <LcProvider>
-                <CostCenterProvider>{children}</CostCenterProvider>
-              </LcProvider>
+              <VoucherTypeProvider>
+                <BrsProvider>
+                  <LcProvider>
+                    <CostCenterProvider>{children}</CostCenterProvider>
+                  </LcProvider>
+                </BrsProvider>
+              </VoucherTypeProvider>
             </LedgerMasterProvider>
-          </MasterCompanyProvider>
-        </UserPermissionProvider>
+          </UserPermissionProvider>
+        </MasterCompanyProvider>
       </CompanyProvider>
     </JWTProvider>
   );

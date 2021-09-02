@@ -5,6 +5,6 @@ import { MasterCompanyContext } from "../contexts/master/MasterCompanyContext";
 
 //-----------------------|| Master Company Hooks ||-----------------------//
 
-const useComapanyMaster = () => useContext(MasterCompanyContext);
+const useCompanyMaster = () => useContext(MasterCompanyContext);
 
-export default useComapanyMaster;
+export default useCompanyMaster;
