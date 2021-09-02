@@ -147,6 +147,7 @@ const CompanyForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                multiline
                 id="address"
                 label="Address"
                 value={values.address}

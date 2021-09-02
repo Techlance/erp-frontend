@@ -11,6 +11,8 @@ const reducer = combineReducers({
   companyMaster: reducers.companyMasterReducer,
   userPermissions: reducers.userPermissionsReducer,
   ledgerMaster: reducers.ledgerMasterReducer,
+  costCenter: reducers.costCenterReducer,
+  lc: reducers.lcReducer,
   voucherTypes: reducers.voucherTypesReducer,
   brs: reducers.brsReducer,
 });

@@ -55,6 +55,13 @@ const AddUserDialog = ({ open, handleClose }) => {
     setClicked(true);
     await createUser(values);
     setClicked(false);
+    setValues({
+      name: "",
+      email: "",
+      is_superuser: false,
+      created_by: user.email,
+    });
+    handleClose();
   };
 
   return (

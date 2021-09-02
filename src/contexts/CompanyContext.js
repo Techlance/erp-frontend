@@ -22,6 +22,8 @@ import {
   getUserCompaniesAsync,
   updateCompanyAsync,
 } from "../api/company";
+
+import { dataToForm } from "../utils";
 import {
   addCurrencyAsync,
   deleteCurrencyAsync,
@@ -131,7 +133,9 @@ export const CompanyProvider = ({ children }) => {
   };
 
   const addCurrency = async (data) => {
-    await addCurrencyAsync(data, dispatch, getCurrency);
+    const form = dataToForm(data);
+
+    await addCurrencyAsync(form, dispatch, getCurrency);
   };
 
   const updateCurrency = async (data) => {

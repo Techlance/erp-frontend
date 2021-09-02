@@ -71,7 +71,7 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Create a new base currency.</Typography>
+          <Typography variant="body2">Create a New Currency Record.</Typography>
         </DialogContentText>
 
         <TextField
@@ -96,31 +96,27 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
         />
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Stack direction="row">
-          <Grid container justifyContent="space-between" spacing={2}>
-            <Grid item>
-              <Button
-                onClick={handleClose}
-                variant="contained"
-                color="error"
-                startIcon={<CancelIcon />}
-              >
-                Cancel
-              </Button>
+        <Grid item xs={11.6}>
+          <Stack direction="row">
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Button onClick={handleClose} variant="contained" color="error">
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <LoadingButton
+                  loading={clicked}
+                  onClick={handleAddCurrency}
+                  variant="contained"
+                  color="primary"
+                >
+                  Add
+                </LoadingButton>
+              </Grid>
             </Grid>
-            <Grid item>
-              <LoadingButton
-                loading={clicked}
-                onClick={handleAddCurrency}
-                variant="contained"
-                color="primary"
-                startIcon={<AddCircleIcon />}
-              >
-                Add
-              </LoadingButton>
-            </Grid>
-          </Grid>
-        </Stack>
+          </Stack>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

@@ -65,6 +65,19 @@ export const CREATE_COMPANY_ACCOUNT_HEAD = "CREATE_COMPANY_ACCOUNT_HEAD";
 export const UPDATE_COMPANY_ACCOUNT_HEAD = "UPDATE_COMPANY_ACCOUNT_HEAD";
 export const DELETE_COMPANY_ACCOUNT_HEAD = "DELETE_COMPANY_ACCOUNT_HEAD";
 
+// action - master - cost center - cost category
+export const GET_COST_CATEGORY = "GET_COST_CATEGORY";
+export const CREATE_COST_CATEGORY = "CREATE_COST_CATEGORY";
+export const UPDATE_COST_CATEGORY = "UPDATE_COST_CATEGORY";
+export const DELETE_COST_CATEGORY = "DELETE_COST_CATEGORY";
+
+// action - master - cost center - cost center
+export const GET_COST_CENTER = "GET_COST_CENTER";
+export const CREATE_COST_CENTER = "CREATE_COST_CENTER";
+export const UPDATE_COST_CENTER = "UPDATE_COST_CENTER";
+export const DELETE_COST_CENTER = "DELETE_COST_CENTER";
+export const GET_COST_CENTER_DETAILS = "GET_COST_CENTER_DETAILS";
+
 // action - master - ledger master - account group
 export const GET_COMPANY_ACCOUNT_GROUPS = "GET_COMPANY_ACCOUNT_GROUPS";
 export const GET_COMPANY_ACCOUNT_GROUP_DETAILS =
@@ -79,6 +92,31 @@ export const GET_COMPANY_LEDGER_DETAILS = "GET_COMPANY_LEDGER_DETAILS";
 export const CREATE_COMPANY_LEDGER = "CREATE_COMPANY_LEDGER";
 export const UPDATE_COMPANY_LEDGER = "UPDATE_COMPANY_LEDGER";
 export const DELETE_COMPANY_LEDGER = "DELETE_COMPANY_LEDGER";
+
+// action - master - LC
+export const GET_IMPORT_LC = "GET_IMPORT_LC";
+export const GET_EXPORT_LC = "GET_EXPORT_LC";
+export const GET_DETAIL_LC = "GET_DETAIL_LC";
+export const CREATE_LC = "CREATE_LC";
+export const UPDATE_LC = "UPDATE_LC";
+export const DELETE_LC = "DELETE_LC";
+
+// action - master - LC - Docs
+export const GET_LC_DOCS = "GET_LC_DOCS";
+export const CREATE_LC_DOCS = "CREATE_LC_DOCS";
+export const UPDATE_LC_DOCS = "UPDATE_LC_DOCS";
+export const DELETE_LC_DOCS = "DELETE_LC_DOCS";
+
+// action - master - LC - Ammend
+export const GET_LC_AMEND = "GET_LC_AMEND";
+export const CREATE_LC_AMEND = "CREATE_LC_AMEND";
+export const UPDATE_LC_AMEND = "UPDATE_LC_AMEND";
+export const DELETE_LC_AMEND = "DELETE_LC_AMEND";
+
+// action - master - LC - Party Code
+export const GET_PARTY_CODE_PAY = "GET_PARTY_CODE_PAY";
+export const GET_PARTY_CODE_RECEIVE = "GET_PARTY_CODE_RECEIVE";
+export const GET_BANK_AC = "GET_BANK_AC";
 export const VIEW_LEDGER_DOCS = "VIEW_LEDGER_DOCS";
 export const VIEW_LEDGER_BALANCE = "VIEW_LEDGER_BALANCE";
 export const UPDATE_LEDGER_BALANCE = "UPDATE_LEDGER_BALANCE";

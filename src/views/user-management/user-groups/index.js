@@ -218,7 +218,7 @@ const CompanyDetails = () => {
                     }
                     {...a11yProps(0)}
                   />
-                  {user_groups.map((tab) => (
+                  {user_groups?.map((tab) => (
                     <Tab
                       key={tab.id}
                       value={tab.id}

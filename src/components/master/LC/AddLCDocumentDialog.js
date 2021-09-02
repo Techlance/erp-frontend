@@ -16,35 +16,40 @@ import {
 } from "@material-ui/core";
 
 // project imports
-import useAuth from "../../hooks/useAuth";
-import useCompany from "../../hooks/useCompany";
+import useAuth from "../../../hooks/useAuth";
+import useLC from "../../../hooks/useLC";
 
 // assets
-import { gridSpacing } from "../../store/constant";
+import { gridSpacing } from "../../../store/constant";
+import { useParams } from "react-router";
 
-const AddDocumentDialog = ({ open, handleClose }) => {
+const AddLCDocumentDialog = ({ newLC, open, handleClose }) => {
   const { user } = useAuth();
-  const { createCompanyDoc } = useCompany();
+  const { createLcDocs } = useLC();
 
-  const { current_company } = useSelector((state) => state.company);
+  const { lc_id, mid } = useParams();
+
+  const lc = useSelector((state) => state.lc);
+  const { current_lc } = lc;
 
   const [values, setValues] = useState({
     created_by: user.email,
     doc_name: "",
-    company_master_id: current_company.id,
+    company_master_id: mid,
+    // lc_id: newLC?.lc_no,
+    // lc_id: current_lc.id,
     file: null,
   });
   const [clicked, setClicked] = useState(false);
 
-  useEffect(() => {
-    setValues({
-      ...values,
-      company_master_id: current_company.id,
-      created_by: user.email,
-    });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current_company]);
+  // useEffect(() => {
+  //   setValues({
+  //     ...values,
+  //     //   lc_id: current_lc.id,
+  //     created_by: user.email,
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [current_lc]);
 
   const handleChange = (event) => {
     setValues({
@@ -63,7 +68,8 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   const handleCloseModal = () => {
     setValues({
       doc_name: "",
-      company_master_id: current_company.id,
+      //   lc_id: current_lc.id,
+      company_master_id: mid,
       created_by: user.email,
       file: null,
     });
@@ -74,7 +80,14 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   const handleSubmit = async () => {
     if (!values.file) return;
     setClicked(true);
-    await createCompanyDoc(values);
+    let form = { ...values };
+    form.created_by = user.email;
+    if (newLC) {
+      form.lc_id = newLC.lc_no;
+    } else {
+      form.lc_id = lc_id;
+    }
+    await createLcDocs(form);
     handleCloseModal();
   };
 
@@ -90,9 +103,11 @@ const AddDocumentDialog = ({ open, handleClose }) => {
         <Typography variant="h4">Upload Document</Typography>
       </DialogTitle>
       <DialogContent>
+        {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
         <DialogContentText>
           <Typography variant="body2">
-            Upload A {current_company.company_name} related Document.
+            Upload A {current_lc ? current_lc?.lc_name : newLC?.lc_name} related
+            Document. Upload a Document.
           </Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
@@ -101,7 +116,7 @@ const AddDocumentDialog = ({ open, handleClose }) => {
               fullWidth
               id="doc_name"
               label="Document Name"
-              value={values.registration_no}
+              value={values.doc_name}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
             />
@@ -149,4 +164,4 @@ const AddDocumentDialog = ({ open, handleClose }) => {
   );
 };
 
-export default AddDocumentDialog;
+export default AddLCDocumentDialog;

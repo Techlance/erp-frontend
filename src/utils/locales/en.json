@@ -137,6 +137,7 @@
     "menu.budget": "Budget",
     "menu.pl-budget": "Profit & Loss Budget",
     "menu.cash-flow-budget": "Cash Flow Budget",
+    "menu.revised-budget" : "Revised Budget",
     "menu.voucher-types": "Voucher Types",
     "menu.currency": "Currency",
     "menu.lc": "LC",
