@@ -18,7 +18,7 @@ import PlGrid from "./PlGrid";
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -65,7 +65,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -75,9 +75,12 @@ function a11yProps(index) {
 const BudgetPlDetails = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [edited, setEdited] = useState({});
+  const [edited, setEdited] = useState([]);
 
-  const { getBudgetPlDetails } = useBudget();
+  const { 
+    getBudgetPlDetails,
+    updateBudgetPlDetails
+  } = useBudget();
 
   const { company_budget_details } = useSelector((state) => state.budget);
 
@@ -92,6 +95,19 @@ const BudgetPlDetails = () => {
     console.log(company_budget_details);
   }, [company_budget_details, getBudgetPlDetails, bid]);
 
+  const successFn = ()=>{
+    setEdited([]);
+    getBudgetPlDetails(bid);
+    console.log(edited)
+  }
+
+  const handleUpdate = ()=>{
+    let form = {
+      "changed_budget_details":edited
+    }
+    console.log("update")
+    updateBudgetPlDetails(bid,form,successFn)
+  }
   return (
     <MainCard title="Company Details">
       <div className={classes.root}>
@@ -123,15 +139,18 @@ const BudgetPlDetails = () => {
           {/* <LedgerForm /> */}
           <PlGrid
             rows={company_budget_details}
-            handleUpdate={() => {
-              return null;
-            }}
+            handleUpdate={handleUpdate}
             edited={edited}
             setEdited={setEdited}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {/* <LedgerBillwise /> */}
+        <PlGrid
+            rows={company_budget_details}
+            handleUpdate={handleUpdate}
+            edited={edited}
+            setEdited={setEdited}
+          />
         </TabPanel>
       </div>
     </MainCard>

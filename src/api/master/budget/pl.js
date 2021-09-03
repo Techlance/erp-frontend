@@ -46,3 +46,27 @@ export const getBudgetPlDetailsAsync = async (id, dispatch) => {
     console.log("Error while getting");
   }
 };
+
+export const updateBudgetPlDetailsAsync = async (id, data, successFn, dispatch) => {
+  try {
+    if (!id) return;
+
+    const response = await instance.put(`/budget/edit-changed-budget-details/${id}`,data);
+
+    dispatch({
+      type: budgetActions.UPDATE_COMPANY_BUDGET_DETAILS,
+    });
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    if(response.data.success)
+      successFn();
+
+  } catch (error) {
+    console.log("Error while getting");
+  }
+};
+

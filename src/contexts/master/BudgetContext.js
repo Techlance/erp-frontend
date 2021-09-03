@@ -11,6 +11,7 @@ import {
   getCompanyBudgetAsync,
   addCompanyBudgetAsync,
   getBudgetPlDetailsAsync,
+  updateBudgetPlDetailsAsync
 } from "../../api";
 
 export const Budget = createContext();
@@ -34,6 +35,10 @@ export const BudgetProvider = ({ children }) => {
     await getBudgetPlDetailsAsync(id, dispatch);
   };
 
+  const updateBudgetPlDetails = async (id, data, successFn) => {
+    await updateBudgetPlDetailsAsync(id, data, successFn, dispatch);
+  };
+
   useEffect(() => {
     getCompanyBudget(company?.company_id);
 
@@ -51,6 +56,7 @@ export const BudgetProvider = ({ children }) => {
         getCompanyBudget,
         addCompanyBudget,
         getBudgetPlDetails,
+        updateBudgetPlDetails
       }}
     >
       {children}
