@@ -107,14 +107,14 @@ const BudgetPlDetails = () => {
           <Tab
             component={Link}
             to="#"
-            label="Ledger"
+            label="Budget"
             icon={<MenuBookIcon sx={{ fontSize: "1.3rem" }} />}
             {...a11yProps(0)}
           />
           <Tab
             component={Link}
             to="#"
-            label="Balances"
+            label="Revised"
             icon={<AccountBalanceWalletIcon sx={{ fontSize: "1.3rem" }} />}
             {...a11yProps(1)}
           />
