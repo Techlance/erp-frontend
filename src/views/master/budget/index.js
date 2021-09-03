@@ -42,9 +42,11 @@ const SelectGroup = () => {
           variant="text"
           color="primary"
           aria-label="more-details"
-          href={`${pathname}/${params.value}`}
+          href={`${pathname}/${
+            params.row.budget_type === "P&L" ? "pl" : "cashflow"
+          }/${params.value}`}
         >
-          <Typography align="center">More </Typography>
+          <Typography align="center">More</Typography>
           <IconArrowRight sx={{ fontSize: "1.1rem" }} />
         </Button>
       ),

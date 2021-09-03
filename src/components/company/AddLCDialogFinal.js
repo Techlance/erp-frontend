@@ -61,7 +61,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const { mid } = useParams();
   const { pathname } = useLocation();
 
-  const { addImportLC, addExportLC } = useLC();
+  const { addImportLC, addExportLC, getImportLC, getExportLC } = useLC();
   const { company } = useSelector((state) => state.companyMaster);
 
   const [clicked, setClicked] = useState(false);
@@ -197,8 +197,12 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
     setNewLC(null);
     setErrorIndex(null);
   };
-  const handleClearClose = () => {
+  const handleClearClose = async () => {
     setDefault();
+    flag
+      ? await getImportLC(company.company_id)
+      : await getExportLC(company.company_id);
+
     handleClose();
   };
 
