@@ -14,7 +14,8 @@ import {
   GridToolbarColumnsButton,
   useGridSlotComponentProps,
   GridOverlay,
-} from "@material-ui/data-grid";
+} from "@mui/x-data-grid";
+
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 const CustomToolBar = () => {
