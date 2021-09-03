@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 // material-ui
@@ -25,31 +25,19 @@ import { useParams } from "react-router";
 
 const AddLCDocumentDialog = ({ newLC, open, handleClose }) => {
   const { user } = useAuth();
-  const { createLcDocs } = useLC();
-
   const { lc_id, mid } = useParams();
 
-  const lc = useSelector((state) => state.lc);
-  const { current_lc } = lc;
+  const { current_lc } = useSelector((state) => state.lc);
+  const { createLcDocs } = useLC();
 
   const [values, setValues] = useState({
     created_by: user.email,
     doc_name: "",
     company_master_id: mid,
-    // lc_id: newLC?.lc_no,
-    // lc_id: current_lc.id,
+
     file: null,
   });
   const [clicked, setClicked] = useState(false);
-
-  // useEffect(() => {
-  //   setValues({
-  //     ...values,
-  //     //   lc_id: current_lc.id,
-  //     created_by: user.email,
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [current_lc]);
 
   const handleChange = (event) => {
     setValues({

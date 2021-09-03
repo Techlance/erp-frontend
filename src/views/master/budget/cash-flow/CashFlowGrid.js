@@ -1,45 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 
 // material-ui
-import { Grid, Stack } from "@material-ui/core";
+import { Autocomplete, Grid, Stack, TextField } from "@material-ui/core";
 
 // assets
 import { gridSpacing } from "../../../../store/constant";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
+import CashFlowAutoSelect from "../../../../components/master/budget/CashFlowAutoSelect";
 
-//-----------------------|| Ledger Form ||-----------------------//
+//-----------------------|| CashFlow Grid ||-----------------------//
 
-const PlGrid = ({ rows, edited, setEdited, handleUpdate }) => {
-  const handleEdit = ({ id, field, value }) => {
-    let editedCopy = [...edited];
-    editedCopy = editedCopy.map((e) => {
-      return { ...e };
-    });
-    let row = rows.find((row) => row.id === id);
-    let edit = editedCopy.find((row) => row.id === id);
-    if (edit && row[field] === value) {
-      if (edit[field]) delete editedCopy[editedCopy.indexOf(edit)][field];
-      else editedCopy[editedCopy.indexOf(edit)][field] = value;
-    } else if (edit) {
-      editedCopy[editedCopy.indexOf(edit)][field] = value;
-    } else {
-      editedCopy.push({
-        id: id,
-        [field]: value,
-      });
-    }
-    setEdited(editedCopy);
+const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
+  const handleEdit = (model) => {
+    // console.log(model);
+    // console.log(rows);
+    setEdited(model);
   };
 
   const columns = [
     {
-      field: "ledger_id",
-      headerName: "Ledger",
+      field: "cashflow_head",
+      headerName: "Cash Flow Head",
       flex: 0.3,
       headerAlign: "left",
       align: "left",
+      minWidth: 320,
+      editable: true,
+      renderCell: (params) => <CashFlowAutoSelect params={params} />,
     },
     {
       field: "jan",
@@ -160,7 +149,8 @@ const PlGrid = ({ rows, edited, setEdited, handleUpdate }) => {
               columns={columns}
               rows={rows}
               loading={false}
-              onCellEditCommit={handleEdit}
+              onEditRowsModelChange={handleEdit}
+              editRowsModel={edited}
             />
           </Grid>
           <Grid item xs={12}>
@@ -186,4 +176,4 @@ const PlGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   );
 };
 
-export default PlGrid;
+export default CashFlowGrid;

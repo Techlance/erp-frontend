@@ -26,9 +26,11 @@ import FcNameSelect from "../../../../components/master/ledger-master/AddLedgerD
 
 const LedgerBalance = () => {
   const { lid } = useParams();
-  const { company } = useSelector((state) => state.companyMaster);
+  const [{ company }, { ledger_balance }] = useSelector((state) => [
+    state.companyMaster,
+    state.ledgerMaster,
+  ]);
 
-  const { ledger_balance } = useSelector((state) => state.ledgerMaster);
   const { getLedgerBalance, updateLedgerBalance } = useLedgerMaster();
 
   const [values, setValues] = useState({ is_cr: false });

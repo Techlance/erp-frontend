@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 
 // material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
+
+// project import
 import useRequest from "../../hooks/useRequest";
+
+// assets
+import CachedIcon from "@material-ui/icons/Cached";
 
 //-----------------------|| USRT GROUPS SELECT ||-----------------------//
 
@@ -12,7 +17,6 @@ const ParentGroupSelect = ({
   formState,
   selected,
   onChange,
-  disabled,
   cat_id,
 }) => {
   const [current, setCurrent] = useState(() => {
@@ -28,6 +32,8 @@ const ParentGroupSelect = ({
 
   useEffect(() => {
     getCostCategory();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cat_id]);
 
   useEffect(() => {
@@ -56,8 +62,10 @@ const ParentGroupSelect = ({
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
-        InputProps={{ readOnly: disabled || loading }}
-        helperText={loading && "Loading Data"}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
       >
         <MenuItem key={-1} value={-1}>
           {"Primary"}

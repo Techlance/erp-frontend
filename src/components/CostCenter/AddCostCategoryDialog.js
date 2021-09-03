@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-
-import { Grid, Stack } from "@material-ui/core";
-
-// project imports
-import { gridSpacing } from "../../store/constant";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 // material-ui
 import {
@@ -12,26 +8,43 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Grid,
+  Stack,
   TextField,
   Typography,
 } from "@material-ui/core";
 
 // project imports
+import { gridSpacing } from "../../store/constant";
 import useAuth from "../../hooks/useAuth";
 import useCostCenter from "../../hooks/useCostCenter";
-import useComapanyMaster from "../../hooks/useCompanyMaster";
+
+// assets
+import CancelIcon from "@material-ui/icons/CancelTwoTone";
+import SaveIcon from "@material-ui/icons/SaveRounded";
+import LoadingButton from "../../ui-component/LoadingButton";
 
 const AddCostCategoryDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { addCostCategory } = useCostCenter();
-  const { company } = useComapanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
   const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState({
-    company_master_id: company.company_id,
     name: "",
+    company_master_id: company?.company_id,
     created_by: user.email,
   });
+
+  useEffect(() => {
+    setValues({
+      name: "",
+      company_master_id: company?.company_id,
+      created_by: user.email,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company]);
 
   const createCostCategory = async () => {
     setClicked(true);
@@ -39,8 +52,8 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
     await addCostCategory(form);
     setClicked(false);
     setValues({
-      company_master_id: company.company_id,
       name: "",
+      company_master_id: company?.company_id,
       created_by: user.email,
     });
     handleClose();
@@ -65,9 +78,7 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
         <Typography variant="h4">Add Cost Category</Typography>
       </DialogTitle>
       <DialogContent>
-        {/* <DialogContentText>
-          <Typography variant="body2">Create a new cost category.</Typography>
-        </DialogContentText> */}
+        <pre>{JSON.stringify(values, null, 2)} </pre>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={12}>
             <TextField
@@ -89,24 +100,28 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
                 <Button
                   onClick={handleClose}
                   color="error"
-                  size="medium"
+                  size="small"
                   variant="contained"
+                  disabled={clicked}
+                  startIcon={<CancelIcon />}
                 >
                   Cancel
                 </Button>
               </Grid>
               <Grid item>
-                <Button
+                <LoadingButton
                   variant="contained"
-                  size="medium"
+                  size="small"
                   onClick={() => {
                     createCostCategory();
                     handleClose();
                   }}
                   color="primary"
+                  loading={clicked}
+                  startIcon={<SaveIcon />}
                 >
                   Add
-                </Button>
+                </LoadingButton>
               </Grid>
             </Grid>
           </Stack>

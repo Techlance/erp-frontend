@@ -11,11 +11,18 @@ const BudgetList = Loadable(lazy(() => import("../../views/master/budget")));
 const BudgetPlDetails = Loadable(
   lazy(() => import("../../views/master/budget/pl-budget/PlBudgetDetails"))
 );
+const CashFlowDetails = Loadable(
+  lazy(() => import("../../views/master/budget/cash-flow/CashFlowDetails"))
+);
 
 const routes = [
   {
     url: "/pl/:bid",
     component: BudgetPlDetails,
+  },
+  {
+    url: "/cashflow/:bid",
+    component: CashFlowDetails,
   },
   {
     url: "",

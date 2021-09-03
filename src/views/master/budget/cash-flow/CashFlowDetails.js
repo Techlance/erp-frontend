@@ -13,7 +13,7 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import { useSelector } from "react-redux";
 import useBudget from "../../../../hooks/useBudget";
-import PlGrid from "./PlGrid";
+import CashFlowGrid from "./CashFlowGrid";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -75,17 +75,11 @@ function a11yProps(index) {
 const BudgetPlDetails = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [edited, setEdited] = useState([]);
-  const [revised, setRevised] = useState([]);
+  const [edited, setEdited] = useState({});
 
-  const {
-    getBudgetPlDetails,
-    updateBudgetPlDetails,
-    getBudgetPlRevise,
-    updateBudgetPlRevise,
-  } = useBudget();
+  const { getBudgetCashFlowDetails } = useBudget();
 
-  const { company_budget_details, company_budget_revise } = useSelector(
+  const { company_budget_cashflow_details } = useSelector(
     (state) => state.budget
   );
 
@@ -96,42 +90,13 @@ const BudgetPlDetails = () => {
   };
 
   useEffect(() => {
-    if (!company_budget_details) getBudgetPlDetails(bid);
-    if (!company_budget_revise) getBudgetPlRevise(bid);
-  }, [
-    company_budget_details,
-    company_budget_revise,
-    getBudgetPlDetails,
-    getBudgetPlRevise,
-    bid,
-  ]);
+    if (!company_budget_cashflow_details) getBudgetCashFlowDetails(bid);
 
-  const successFn = () => {
-    setEdited([]);
-    getBudgetPlDetails(bid);
-    console.log(edited);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company_budget_cashflow_details, bid]);
 
-  const successRevise = () => {
-    setRevised([]);
-    getBudgetPlDetails(bid);
-  };
-
-  const handleUpdate = () => {
-    let form = {
-      changed_budget_details: edited,
-    };
-    updateBudgetPlDetails(bid, form, successFn);
-  };
-
-  const handleRevise = () => {
-    let form = {
-      changed_budget_details: revised,
-    };
-    updateBudgetPlRevise(bid, form, successRevise);
-  };
   return (
-    <MainCard title="Company Details">
+    <MainCard title="Cash Flow Details">
       <div className={classes.root}>
         <Tabs
           value={value}
@@ -139,7 +104,7 @@ const BudgetPlDetails = () => {
           textColor="primary"
           onChange={handleChange}
           className={classes.accountTab}
-          aria-label="simple tabs example"
+          aria-label="cash-flow-tabs"
           variant="scrollable"
         >
           <Tab
@@ -158,21 +123,17 @@ const BudgetPlDetails = () => {
           />
         </Tabs>
         <TabPanel value={value} index={0}>
-          {/* <LedgerForm /> */}
-          <PlGrid
-            rows={company_budget_details}
-            handleUpdate={handleUpdate}
+          <CashFlowGrid
+            rows={company_budget_cashflow_details}
+            handleUpdate={() => {
+              return null;
+            }}
             edited={edited}
             setEdited={setEdited}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <PlGrid
-            rows={company_budget_revise}
-            handleUpdate={handleRevise}
-            edited={revised}
-            setEdited={setRevised}
-          />
+          {/* <LedgerBillwise /> */}
         </TabPanel>
       </div>
     </MainCard>

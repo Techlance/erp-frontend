@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useLocation, useParams } from "react-router";
+import { useSelector } from "react-redux";
 
 // material-ui
 import {
@@ -13,31 +15,20 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
-  Collapse,
-  Fade,
   Grid,
-  FormControlLabel,
-  Switch,
 } from "@material-ui/core";
 
-import {} from "@material-ui/core";
-
 // project imports
-// import LedgerForm from "./LedgerForm";
-import AnimateButton from "../../ui-component/extended/AnimateButton";
 import useAuth from "../../hooks/useAuth";
-import { useHistory, useLocation, useParams } from "react-router";
-import SaveIcon from "@material-ui/icons/SaveRounded";
-import CancelIcon from "@material-ui/icons/Cancel";
 import LoadingButton from "../../ui-component/LoadingButton";
-
 import AddLCDialog from "./AddLCDialog";
-// import AddLCDocumentDialog from "../master/LC/AddLCDocumentDialog";
 import AddLCDocs from "../master/LC/AddLCDocs";
 import useLC from "../../hooks/useLC";
-import { useSelector } from "react-redux";
-import useComapanyMaster from "../../hooks/useCompanyMaster";
+
+// assets
+import AnimateButton from "../../ui-component/extended/AnimateButton";
+import SaveIcon from "@material-ui/icons/SaveRounded";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 // step options
 const steps = ["LC Detials", "Upload Documents"];
@@ -67,13 +58,13 @@ function getStepContent(
 
 const AddLCDialogFinal = ({ open, handleClose }) => {
   const { user } = useAuth();
-  const { addImportLC, addExportLC, createLcDocs } = useLC();
+  const { mid } = useParams();
   const { pathname } = useLocation();
-  // const { company } = useSelector((state) => state.companyMaster);
 
-  const { company } = useComapanyMaster();
+  const { addImportLC, addExportLC } = useLC();
+  const { company } = useSelector((state) => state.companyMaster);
 
-  const history = useHistory();
+  const [clicked, setClicked] = useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   console.log(activeStep === 0);
 
@@ -82,10 +73,6 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
     // Show Receivables for export
     flag = false;
   }
-
-  const { lc_id, mid } = useParams();
-
-  const [clicked, setClicked] = useState(false);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -124,36 +111,6 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
     created_by: user.email,
   });
 
-  // const [values, setValues] = useState({
-  //   trans_type: flag ? "import" : "export",
-  //   year_id: 21,
-  //   lc_date: "2021-02-08",
-  //   party_code: null,
-  //   cost_center: null,
-  //   applicant_bank: "HSBC",
-  //   applicant_bank_lc_no: "123asd123",
-  //   benificiary_bank: "Axis",
-  //   benificiary_bank_lc_no: "123asd123",
-  //   inspection: false,
-  //   bank_ref: "Reference",
-  //   days_for_submit_to_bank: "12",
-  //   payment_terms: "Terms",
-  //   place_of_taking_incharge: "India",
-  //   final_destination_of_delivery: "Delhi",
-  //   completed: false,
-  //   shipment_terms: "Terms",
-  //   goods_description: "Terms",
-  //   other_lc_terms: "Terms",
-  //   bank_ac: null,
-  //   expiry_date: "2021-02-08",
-  //   lc_amount: "123",
-  //   base_currency: { id: company.base_currency },
-  //   company_master_id: mid,
-  //   created_by: user.email,
-  // });
-
-  const lc = useSelector((state) => state.lc);
-  const { current_lc } = lc;
   const [newLC, setNewLC] = useState(null);
 
   const handleSubmit1 = async () => {
@@ -238,27 +195,6 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
     });
     setActiveStep(0);
     setNewLC(null);
-    // setBillwiseValues({
-    //   company_master_id: null,
-    //   ledger_master_id: null,
-    //   fc_name: null,
-    //   billwise: [
-    //     {
-    //       ref_no: null,
-    //       is_cr: true,
-    //       amt: 0,
-    //       fc_amount: 0,
-    //       bill_date: null,
-    //       due_date: null,
-    //     },
-    //   ],
-    // });
-    // setBalanceValues({
-    //   amt: 0,
-    //   is_cr: true,
-    //   fc_amount: null,
-    //   fc_name: null,
-    // });
     setErrorIndex(null);
   };
   const handleClearClose = () => {

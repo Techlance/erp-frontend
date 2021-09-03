@@ -21,8 +21,10 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 const SelectGroup = () => {
   const { pathname } = useLocation();
 
-  const { company } = useSelector((state) => state.companyMaster);
-  const { company_account_heads } = useSelector((state) => state.ledgerMaster);
+  const [{ company }, { company_account_heads }] = useSelector((state) => [
+    state.companyMaster,
+    state.ledgerMaster,
+  ]);
 
   const { getCompanyAccountHeads } = useLedgerMaster();
 

@@ -100,7 +100,12 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
           <Stack direction="row">
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Button onClick={handleClose} variant="contained" color="error">
+                <Button
+                  onClick={handleClose}
+                  variant="contained"
+                  color="error"
+                  startIcon={<CancelIcon />}
+                >
                   Cancel
                 </Button>
               </Grid>
@@ -110,6 +115,7 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
                   onClick={handleAddCurrency}
                   variant="contained"
                   color="primary"
+                  startIcon={<AddCircleIcon />}
                 >
                   Add
                 </LoadingButton>

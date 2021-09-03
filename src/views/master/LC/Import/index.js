@@ -23,9 +23,11 @@ import AddLCDialogFinal from "../../../../components/company/AddLCDialogFinal";
 
 const SelectGroup = () => {
   const { pathname } = useLocation();
-  const { company } = useSelector((state) => state.companyMaster);
+  const [{ company }, { lc_import, lc_export }] = useSelector((state) => [
+    state.companyMaster,
+    state.lc,
+  ]);
 
-  const { lc_import, lc_export } = useSelector((state) => state.lc);
   const { getImportLC, getExportLC } = useLC();
 
   const [showAddModal, setShowAddModal] = useState(false);

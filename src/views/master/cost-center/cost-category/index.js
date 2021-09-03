@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 // material-ui
 import { Button, Grid, Typography } from "@material-ui/core";
@@ -7,35 +8,29 @@ import { Button, Grid, Typography } from "@material-ui/core";
 // project imports
 import MainCard from "../../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../../store/constant";
+import formatDate from "../../../../utils/format-date";
+import useCostCenter from "../../../../hooks/useCostCenter";
+import AddCostCategoryDialog from "../../../../components/CostCenter/AddCostCategoryDialog";
 
 // assets
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import AddCostCategoryDialog from "../../../../components/CostCenter/AddCostCategoryDialog";
-import useCostCenter from "../../../../hooks/useCostCenter";
-import useComapanyMaster from "../../../../hooks/useCompanyMaster";
-import { useLocation } from "react-router";
-import formatDate from "../../../../utils/format-date";
 
 //-----------------------|| User List ||-----------------------//
 
 const SelectGroup = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
+  const { pathname } = useLocation();
 
-  const [costCenter] = useSelector((state) => [state.costCenter]);
-
-  const { company } = useComapanyMaster();
-
-  // const { company } = company;
-
-  const { cost_category } = costCenter;
+  const [{ cost_category }, { company }] = useSelector((state) => [
+    state.costCenter,
+    state.companyMaster,
+  ]);
 
   const { getCostCategory } = useCostCenter();
 
+  const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  const { pathname } = useLocation();
 
   const columns = [
     {
@@ -104,7 +99,7 @@ const SelectGroup = () => {
         >
           <Grid item>
             <Typography variant="h3">
-              {`${company.company_name}'s Cost Category`}
+              {`${company?.company_name}'s Cost Category`}
             </Typography>
           </Grid>
           <Grid item>

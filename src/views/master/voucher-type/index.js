@@ -21,9 +21,11 @@ import CustomDataGrid from "../../../ui-component/CustomDataGrid";
 
 const VoucherTypes = () => {
   const { pathname } = useLocation();
-  const { voucher_types } = useSelector((state) => state.voucherTypes);
+  const [{ company }, { voucher_types }] = useSelector((state) => [
+    state.companyMaster,
+    state.voucherTypes,
+  ]);
 
-  const { company } = useSelector((state) => state.companyMaster);
   const { getVoucherTypes } = useVoucherTypes();
 
   const [loading, setLoading] = useState(true);

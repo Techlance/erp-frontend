@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-
-import { IconButton, Grid, Stack } from "@material-ui/core";
-
-// project imports
-import { gridSpacing } from "../../store/constant";
-import CategorySelect from "../../components/CostCenter/CategorySelect";
-import LoadingButton from "../../ui-component/LoadingButton";
+import { useParams } from "react-router";
 
 // material-ui
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Dialog,
@@ -16,6 +9,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Grid,
+  Stack,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -24,33 +19,16 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
-import useCompany from "../../hooks/useCompany";
+import { gridSpacing } from "../../store/constant";
 import ParentGroupSelect from "./ParentGroupSelect";
-import { useParams } from "react-router";
 import useCostCenter from "../../hooks/useCostCenter";
 
-const useStyles = makeStyles((theme) => ({
-  alertIcon: {
-    height: "16px",
-    width: "16px",
-    marginRight: "8px",
-    verticalAlign: "text-bottom",
-  },
-  userAvatar: {
-    height: "80px",
-    width: "80px",
-  },
-  addButtonGrid: {
-    paddingTop: "1 !important",
-    paddingLeft: "0 !important",
-  },
-}));
+// assets
+import CategorySelect from "../../components/CostCenter/CategorySelect";
+import LoadingButton from "../../ui-component/LoadingButton";
 
 const AddCostCenterDialog = ({ open, handleClose }) => {
-  //   const classes = useStyles();
   const { user } = useAuth();
-  //   const { createCompany } = useCompany();
-
   const { mid } = useParams();
 
   const { addCostCenter } = useCostCenter();

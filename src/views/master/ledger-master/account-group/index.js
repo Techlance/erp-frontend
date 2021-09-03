@@ -20,8 +20,10 @@ import { useLocation } from "react-router-dom";
 //-----------------------|| Account Group List ||-----------------------//
 const AccountGroup = () => {
   const { pathname } = useLocation();
-  const { company_account_groups } = useSelector((state) => state.ledgerMaster);
-  const { company } = useSelector((state) => state.companyMaster);
+  const [{ company }, { company_account_groups }] = useSelector((state) => [
+    state.companyMaster,
+    state.ledgerMaster,
+  ]);
   const { getCompanyAccountGroups } = useLedgerMaster();
   const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(true);

@@ -21,8 +21,10 @@ import { useLocation } from "react-router-dom";
 const Ledger = () => {
   const { pathname } = useLocation();
 
-  const { company } = useSelector((state) => state.companyMaster);
-  const { company_ledgers } = useSelector((state) => state.ledgerMaster);
+  const [{ company }, { company_ledgers }] = useSelector((state) => [
+    state.companyMaster,
+    state.ledgerMaster,
+  ]);
 
   const { getCompanyLedgers } = useLedgerMaster();
 

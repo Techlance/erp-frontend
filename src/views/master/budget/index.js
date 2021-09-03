@@ -17,19 +17,17 @@ import useBudget from "../../../hooks/useBudget";
 import { gridSpacing } from "../../../store/constant";
 import AddBudgetDialog from "../../../components/master/budget/addBudgetDialog";
 
-//-----------------------|| Account Head List ||-----------------------//
+//-----------------------|| Budget List ||-----------------------//
 const SelectGroup = () => {
   const { pathname } = useLocation();
   const { mid } = useParams();
 
   const { company_budgets } = useSelector((state) => state.budget);
   const { company } = useSelector((state) => state.companyMaster);
-  console.log(company_budgets);
   const { getCompanyBudget } = useBudget();
 
-  const [showAddModal, setShowAddModal] = useState(false);
-
   const [loading, setLoading] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const columns = [
     {

@@ -33,8 +33,10 @@ const AddBrsDialog = ({ open, handleClose }) => {
   const theme = useTheme();
   const { user } = useAuth();
 
-  const { company } = useSelector((state) => state.companyMaster);
-  const { selected_bank } = useSelector((state) => state.brs);
+  const [{ company }, { selected_bank }] = useSelector((state) => [
+    state.companyMaster,
+    state.brs,
+  ]);
 
   const { createBrs } = useBRS();
 
