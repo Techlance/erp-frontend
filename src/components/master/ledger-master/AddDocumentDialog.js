@@ -33,7 +33,9 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
     created_by: user.email,
     doc_name: "",
     company_master_id: parseInt(mid),
-    ledger_master_id: newLedger?parseInt(newLedger.id):parseInt(company_ledger_details?.id),
+    ledger_master_id: newLedger
+      ? parseInt(newLedger.id)
+      : parseInt(company_ledger_details?.id),
     file: null,
   });
   const [clicked, setClicked] = useState(false);
@@ -56,7 +58,9 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
     setValues({
       doc_name: "",
       company_master_id: parseInt(mid),
-      ledger_master_id: newLedger?parseInt(newLedger.id):parseInt(company_ledger_details?.id),
+      ledger_master_id: newLedger
+        ? parseInt(newLedger.id)
+        : parseInt(company_ledger_details?.id),
       created_by: user.email,
       file: null,
     });
@@ -86,7 +90,11 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
       <DialogContent>
         <DialogContentText>
           <Typography variant="body2">
-            Upload A {newLedger?newLedger.ledger_name:company_ledger_details?.ledger_name} related Document.
+            Upload A{" "}
+            {newLedger
+              ? newLedger.ledger_name
+              : company_ledger_details?.ledger_name}{" "}
+            related Document.
           </Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>

@@ -43,3 +43,6 @@ export * from "./master/brs";
 
 // 4. Voucher Types
 export * from "./master/voucher-type";
+
+// 5. Budget
+export * from "./master/budget";

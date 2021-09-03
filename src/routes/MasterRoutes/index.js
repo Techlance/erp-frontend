@@ -8,6 +8,7 @@ import CostCenterRoutes from "./CostCenterRoutes";
 import LcRoutes from "./lcRoutes";
 import VoucherTypeRoutes from "./VoucherTypeRoutes";
 import BrsRoutes from "./brsRoutes";
+import BudgetRoutes from "./budgetRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -43,6 +44,9 @@ const MasterRoutes = () => {
 
         {/* Routes for BRS */}
         <Route path="/company/:mid/master/op-bal-brs" component={BrsRoutes} />
+
+        {/* Routes for Budget */}
+        <Route path="/company/:mid/master/budget" component={BudgetRoutes} />
       </React.Fragment>
     </Route>
   );

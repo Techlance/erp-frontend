@@ -189,7 +189,9 @@ const LedgerBillwise = () => {
             deleteBill={deleteBill}
             addShortcut={addShortcut}
             deleteExistingBill={deleteExistingBill}
-            is_fc = {values.fc_name && values.fc_name?.id !== company.base_currency}
+            is_fc={
+              values.fc_name && values.fc_name?.id !== company.base_currency
+            }
           />
           <Grid item xs={12}>
             <Stack direction="row">

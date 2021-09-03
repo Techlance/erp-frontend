@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
 
 // material ui
 import {
@@ -23,7 +22,6 @@ import { IconFileDownload } from "@tabler/icons";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
 // project imports
-// import useLedgerMaster from "../../../hooks/useLedgerMaster";
 import formatDate from "../../../utils/format-date";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import useRequest from "../../../hooks/useRequest";
@@ -38,9 +36,6 @@ const useStyles = makeStyles({
 
 const LCDocs = ({ newLC }) => {
   const classes = useStyles();
-  //   const { lid } = useParams();
-  const { lc_id } = useParams();
-  //   const { deleteLedgerDoc } = useLedgerMaster();
   const { deleteLcDoc } = useLC();
   const [showDeleteModal, setShowDeleteModal] = useState(null);
   const [currentDocID, setCurrentDocID] = useState(0);
@@ -63,6 +58,8 @@ const LCDocs = ({ newLC }) => {
 
   useEffect(() => {
     getLCDocs();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showAddModal, deleteLcDoc]);
 
   useEffect(() => {

@@ -14,27 +14,21 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import AddCostCenterDialog from "../../../../components/CostCenter/AddCostCenterDialog";
-import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import useCostCenter from "../../../../hooks/useCostCenter";
 import { useLocation } from "react-router";
 
 //-----------------------|| User List ||-----------------------//
 const SelectGroup = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
-
-  const [costCenter] = useSelector((state) => [state.costCenter]);
-
-  const { company } = useSelector((state) => state.companyMaster);
-
-  // const { company } = useComapanyMaster();
-
-  const { cost_center } = costCenter;
-
+  const { pathname } = useLocation();
   const { getCostCenter } = useCostCenter();
 
-  const [loading, setLoading] = useState(true);
+  const [{ company }, { cost_center }] = useSelector((state) => [
+    state.companyMaster,
+    state.costCenter,
+  ]);
 
-  const { pathname } = useLocation();
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const columns = [
     {
@@ -95,6 +89,8 @@ const SelectGroup = () => {
   useEffect(() => {
     setLoading(true);
     getCostCenter(company?.company_id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company]);
 
   useEffect(() => {

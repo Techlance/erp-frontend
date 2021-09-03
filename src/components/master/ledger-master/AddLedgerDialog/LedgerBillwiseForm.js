@@ -30,6 +30,8 @@ const LedgerBillwiseForm = ({ values, setValues }) => {
       ...values,
       created_by: user.email,
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const handleSelect = (key, value) => {
@@ -102,7 +104,7 @@ const LedgerBillwiseForm = ({ values, setValues }) => {
         setBillwise={setBillwise}
         deleteBill={deleteBill}
         addShortcut={addShortcut}
-        fcName = {values.fc_name}
+        fcName={values.fc_name}
         base_currency={company.base_currency}
       />
     </Grid>

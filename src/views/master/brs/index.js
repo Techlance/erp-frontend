@@ -31,8 +31,10 @@ const useStyles = makeStyles((theme) => ({
 const BRS = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
-  const { company } = useSelector((state) => state.companyMaster);
-  const { selected_bank, brs_list } = useSelector((state) => state.brs);
+  const [{ company }, { selected_bank, brs_list }] = useSelector((state) => [
+    state.companyMaster,
+    state.brs,
+  ]);
 
   const { getBanks, getOpeningBalBRS, setBank } = useBRS();
   const [showAddModal, setShowAddModal] = useState(false);

@@ -24,7 +24,6 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import useLC from "../../../../hooks/useLC";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import LoadingButton from "../../../../ui-component/LoadingButton";
-import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 import CostCenterSelect from "../../../../components/master/LC/CostCenterSelect";
 import PartyCodePaySelect from "../../../../components/master/LC/PartyCodePaySelect";
 import PartyCodeRecSelect from "../../../../components/master/LC/PartyCodeRecSelect";
@@ -79,13 +78,7 @@ const LcForm = () => {
 
   const { lc_detail } = useSelector((state) => state.lc);
 
-  const {
-    updateImportLC,
-    updateExportLC,
-    deleteLC,
-    getLCDetail,
-    getPartyCodePay,
-  } = useLC();
+  const { updateImportLC, updateExportLC, deleteLC, getLCDetail } = useLC();
 
   const { lc_id, mid } = useParams();
 
@@ -93,10 +86,6 @@ const LcForm = () => {
 
   const [values, setValues] = useState(null);
   const [clicked, setClicked] = useState(false);
-
-  const [error, setError] = useState(false);
-  const [nameError, setNameError] = useState(false);
-  const [checkList, setCheckList] = useState({});
 
   const handleChange = (event) => {
     setValues({
@@ -123,9 +112,9 @@ const LcForm = () => {
     if (lc_detail) {
       setValues({ ...lc_detail });
     } else getLCDetail(lc_id);
-  }, [lc_detail]);
 
-  const handleClose = () => setShowDeleteModal(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lc_detail]);
 
   const handleUpdateLC = async () => {
     setClicked(true);
@@ -139,10 +128,10 @@ const LcForm = () => {
     // history.replace("/company/9/master/lc/import/1");
   };
 
-  const handleAgree = () => {
-    deleteLC(values.id);
-    history.replace(`/company/${mid}/master/lc/import`);
-  };
+  // const handleAgree = () => {
+  //   deleteLC(values.id);
+  //   history.replace(`/company/${mid}/master/lc/import`);
+  // };
 
   return (
     values && (
@@ -150,7 +139,6 @@ const LcForm = () => {
         <div className={classes.root}>
           <Grid container spacing={gridSpacing} justifyContent="center">
             <Grid item sm={6} md={8}>
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
               <SubCard title="Edit LC Details">
                 <Grid container spacing={gridSpacing}>
                   <Grid item xs={12} sm={6}>

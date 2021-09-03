@@ -90,22 +90,25 @@ const LedgerBalanceForm = ({ values, setValues }) => {
           baseCurrency={company.base_currency}
         />
       </Grid>
-      {values.fc_name &&
-          values.fc_name?.id !== company.base_currency&& <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          id="fc_amount"
-          label="FC Amount"
-          value={values.fc_amount}
-          InputLabelProps={{ shrink: true }}
-          onChange={handleChange}
-          type="number"
-          inputProps={{
-            min: "0",
-          }}
-          helperText={`FC Rate: ${Math.abs(((values.amt)/values.fc_amount).toFixed(4))}`}
-        />
-      </Grid>}
+      {values.fc_name && values.fc_name?.id !== company.base_currency && (
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            id="fc_amount"
+            label="FC Amount"
+            value={values.fc_amount}
+            InputLabelProps={{ shrink: true }}
+            onChange={handleChange}
+            type="number"
+            inputProps={{
+              min: "0",
+            }}
+            helperText={`FC Rate: ${Math.abs(
+              (values.amt / values.fc_amount).toFixed(4)
+            )}`}
+          />
+        </Grid>
+      )}
     </Grid>
   );
 };

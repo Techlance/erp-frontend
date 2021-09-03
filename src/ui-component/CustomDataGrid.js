@@ -14,7 +14,8 @@ import {
   GridToolbarColumnsButton,
   useGridSlotComponentProps,
   GridOverlay,
-} from "@material-ui/data-grid";
+} from "@mui/x-data-grid";
+
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 const CustomToolBar = () => {
@@ -74,7 +75,7 @@ const CustomDataGrid = (props) => {
       width="100%"
       sx={{
         "& .MuiDataGrid-root": {
-          "border": "none",
+          border: "none",
           "& .MuiDataGrid-cell": {
             borderColor:
               theme.palette.mode === "dark"

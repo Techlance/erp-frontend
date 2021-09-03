@@ -9,9 +9,7 @@ import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 import useCompany from "../../../../hooks/useCompany";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import AddDocumentDialog from "../../../../components/company/AddDocumentDialog";
 import LcForm from "./lcForm";
-import CompanyDocumentForm from "../../../company/company-details/CompanyDocumentForm";
 
 // assets
 import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";

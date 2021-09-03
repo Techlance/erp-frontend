@@ -30,3 +30,6 @@ export * from "./costCenterReducer";
 
 // LC Reducer.
 export * from "./master/lcReducer";
+
+// Budget
+export * from "./master/budgetReducer";

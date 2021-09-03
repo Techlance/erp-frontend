@@ -23,13 +23,13 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    position:"relative"
+    position: "relative",
   },
-  helperText:{
-    position:"absolute",
-    bottom:0,
-    left:"20px"
-  }
+  helperText: {
+    position: "absolute",
+    bottom: 0,
+    left: "20px",
+  },
 });
 
 const BillwiseTable = ({
@@ -39,7 +39,7 @@ const BillwiseTable = ({
   setBillwise,
   deleteBill,
   addShortcut,
-  is_fc
+  is_fc,
 }) => {
   const classes = useStyles();
   return (
@@ -69,12 +69,13 @@ const BillwiseTable = ({
               Amount
             </Typography>
           </TableCell>
-          {is_fc && 
-          <TableCell>
-            <Typography align="center" variant="h4">
-              FC Amount
-            </Typography>
-          </TableCell>}
+          {is_fc && (
+            <TableCell>
+              <Typography align="center" variant="h4">
+                FC Amount
+              </Typography>
+            </TableCell>
+          )}
           <TableCell>
             <Typography align="center" variant="h4">
               Delete
@@ -106,11 +107,18 @@ const BillwiseTable = ({
               </Typography>
             </TableCell>
 
-            {is_fc && 
-            <TableCell align="center">
-              <Typography align="center">{row.fc_amount}</Typography>
-              <Typography  align="center" variant="caption"> FC Rate: {Math.abs(((row.cr > 0 ? row.cr : row.dr)/row.fc_amount).toFixed(4))} </Typography>
-            </TableCell>}
+            {is_fc && (
+              <TableCell align="center">
+                <Typography align="center">{row.fc_amount}</Typography>
+                <Typography align="center" variant="caption">
+                  {" "}
+                  FC Rate:{" "}
+                  {Math.abs(
+                    ((row.cr > 0 ? row.cr : row.dr) / row.fc_amount).toFixed(4)
+                  )}{" "}
+                </Typography>
+              </TableCell>
+            )}
             <TableCell align="center">
               <Stack
                 direction="row"
@@ -213,28 +221,34 @@ const BillwiseTable = ({
               />
             </TableCell>
 
-            {is_fc &&
-            <TableCell className={classes.root}>
-              <TextField
-                onKeyPress={addShortcut}
-                fullWidth
-                id="fc_amount"
-                label="FC Amount"
-                value={row.fc_amount}
-                InputLabelProps={{ shrink: true }}
-                onChange={(e) => {
-                  setBillwise(index, e);
-                }}
-                type="number"
-                inputProps={{
-                  min: "0",
-                }}
-                // helperText={`FC Rate: ${Math.abs((row.amt/row.fc_amount).toFixed(4))}`}
-                // FormHelperTextProps={{ClassNames:classes.root}}
-                aria-describedby="component-error-text"
-              />
-            <FormHelperText id="component-error-text" className={classes.helperText}>{`FC Rate: ${Math.abs((row.amt/row.fc_amount).toFixed(4))}`}</FormHelperText>
-            </TableCell>}
+            {is_fc && (
+              <TableCell className={classes.root}>
+                <TextField
+                  onKeyPress={addShortcut}
+                  fullWidth
+                  id="fc_amount"
+                  label="FC Amount"
+                  value={row.fc_amount}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => {
+                    setBillwise(index, e);
+                  }}
+                  type="number"
+                  inputProps={{
+                    min: "0",
+                  }}
+                  // helperText={`FC Rate: ${Math.abs((row.amt/row.fc_amount).toFixed(4))}`}
+                  // FormHelperTextProps={{ClassNames:classes.root}}
+                  aria-describedby="component-error-text"
+                />
+                <FormHelperText
+                  id="component-error-text"
+                  className={classes.helperText}
+                >{`FC Rate: ${Math.abs(
+                  (row.amt / row.fc_amount).toFixed(4)
+                )}`}</FormHelperText>
+              </TableCell>
+            )}
 
             <TableCell align="center">
               <Stack

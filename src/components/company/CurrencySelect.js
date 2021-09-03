@@ -16,7 +16,6 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
     return null;
   });
 
-  // const { currencies, getCurrency } = useCompany();
   const { getCurrency } = useCompany();
   const company = useSelector((state) => state.company);
   const { currencies } = company;
@@ -24,6 +23,7 @@ const CurrencySelect = ({ captionLabel, formState, selected, onChange }) => {
 
   useEffect(() => {
     getCurrency();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

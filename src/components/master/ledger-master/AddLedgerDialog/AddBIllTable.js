@@ -21,19 +21,25 @@ import {
 
 //-----------------------|| Billwise List ||-----------------------//
 
-
 const useStyles = makeStyles({
   root: {
-    position:"relative"
+    position: "relative",
   },
-  helperText:{
-    position:"absolute",
-    bottom:0,
-    left:"20px"
-  }
+  helperText: {
+    position: "absolute",
+    bottom: 0,
+    left: "20px",
+  },
 });
 
-const AddBillTable = ({fcName, base_currency, billwise, setBillwise, deleteBill, addShortcut }) => {
+const AddBillTable = ({
+  fcName,
+  base_currency,
+  billwise,
+  setBillwise,
+  deleteBill,
+  addShortcut,
+}) => {
   const classes = useStyles();
   return (
     <Table size="medium">
@@ -62,13 +68,13 @@ const AddBillTable = ({fcName, base_currency, billwise, setBillwise, deleteBill,
               Amount
             </Typography>
           </TableCell>
-          {(fcName &&
-          fcName?.id !== base_currency) &&
-          <TableCell>
-            <Typography align="center" variant="h4">
-              FC Amount
-            </Typography>
-          </TableCell>}
+          {fcName && fcName?.id !== base_currency && (
+            <TableCell>
+              <Typography align="center" variant="h4">
+                FC Amount
+              </Typography>
+            </TableCell>
+          )}
           <TableCell>
             <Typography align="center" variant="h4">
               Delete
@@ -159,28 +165,32 @@ const AddBillTable = ({fcName, base_currency, billwise, setBillwise, deleteBill,
               />
             </TableCell>
 
-            {(fcName &&
-          fcName?.id !== base_currency) &&
-          <TableCell className={classes.root}> 
-              <TextField
-                onKeyPress={addShortcut}
-                fullWidth
-                id="fc_amount"
-                label="FC Amount"
-                value={row.fc_amount}
-                InputLabelProps={{ shrink: true }}
-                onChange={(e) => {
-                  setBillwise(index, e);
-                }}
-                type="number"
-                inputProps={{
-                  min: "0",
-                }}
-                aria-describedby="component-error-text"
-              />
-            <FormHelperText id="component-error-text" className={classes.helperText}>{`FC Rate: ${Math.abs((row.amt/row.fc_amount).toFixed(4))}`}</FormHelperText>
-
-            </TableCell>}
+            {fcName && fcName?.id !== base_currency && (
+              <TableCell className={classes.root}>
+                <TextField
+                  onKeyPress={addShortcut}
+                  fullWidth
+                  id="fc_amount"
+                  label="FC Amount"
+                  value={row.fc_amount}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => {
+                    setBillwise(index, e);
+                  }}
+                  type="number"
+                  inputProps={{
+                    min: "0",
+                  }}
+                  aria-describedby="component-error-text"
+                />
+                <FormHelperText
+                  id="component-error-text"
+                  className={classes.helperText}
+                >{`FC Rate: ${Math.abs(
+                  (row.amt / row.fc_amount).toFixed(4)
+                )}`}</FormHelperText>
+              </TableCell>
+            )}
 
             <TableCell align="center">
               <Stack

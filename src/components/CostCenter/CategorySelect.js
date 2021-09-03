@@ -1,10 +1,15 @@
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { useParams } from "react-router";
 
 // material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
+
+// project import
 import useRequest from "../../hooks/useRequest";
-import { useParams } from "react-router";
+
+// assets
+import CachedIcon from "@material-ui/icons/Cached";
 
 //-----------------------|| COST CATEGORY SELECT ||-----------------------//
 
@@ -13,7 +18,6 @@ const CostCategorySelect = ({
   formState,
   selected,
   onChange,
-  disabled,
 }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
@@ -22,7 +26,7 @@ const CostCategorySelect = ({
   const { mid } = useParams();
   const errorState = formState === "error" ? true : false;
 
-  const [getCostCategory, , , data] = useRequest({
+  const [getCostCategory, loading, , data] = useRequest({
     url: `/company/get-cost-category/${mid}`,
     initialState: [],
   });
@@ -58,7 +62,10 @@ const CostCategorySelect = ({
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
-        InputProps={{ readOnly: disabled }}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
       >
         {data?.map((option, index) => (
           <MenuItem key={index} value={option.id}>

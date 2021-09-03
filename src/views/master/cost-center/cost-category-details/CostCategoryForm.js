@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-// material-ui
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Grid, Stack, TextField } from "@material-ui/core";
-
 import { useHistory, useParams } from "react-router";
+
+// material-ui
+import { Button, Grid, Stack, TextField } from "@material-ui/core";
 
 // assets
 import { gridSpacing } from "../../../../store/constant";
@@ -17,37 +16,20 @@ import useCostCenter from "../../../../hooks/useCostCenter";
 import { useSelector } from "react-redux";
 import config from "../../../../config";
 import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
-
-// style constant
-const useStyles = makeStyles((theme) => ({
-  accountAvatar: {
-    width: "100px",
-    height: "100px",
-    margin: "0 auto",
-  },
-  accountContent: {
-    textAlign: "center",
-  },
-}));
+import LoadingButton from "../../../../ui-component/LoadingButton";
 
 //-----------------------|| Cost Category Form ||-----------------------//
 
 const CostCategoryForm = () => {
-  const classes = useStyles();
+  const history = useHistory();
 
   const { cost_category } = useSelector((state) => state.costCenter);
   const { getCostCategory, updateCostCategory, deleteCostCategory } =
     useCostCenter();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
   const [values, setValues] = useState({ ...cost_category });
-
-  const history = useHistory();
-
   const [clicked, setClicked] = useState(false);
-
-  const [error, setError] = useState(false);
 
   const handleChange = (event) => {
     setValues({
@@ -75,6 +57,8 @@ const CostCategoryForm = () => {
     } else {
       getCostCategory(mid);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cost_category]);
 
   const handleUpdateCostCategory = async () => {
@@ -118,18 +102,15 @@ const CostCategoryForm = () => {
                     </AnimateButton>
                   </Grid>
                   <Grid item>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={(e) => {
-                          handleUpdateCostCategory();
-                        }}
-                        startIcon={<SaveIcon />}
-                      >
-                        Update Details
-                      </Button>
-                    </AnimateButton>
+                    <LoadingButton
+                      variant="contained"
+                      color="primary"
+                      onClick={handleUpdateCostCategory}
+                      loading={clicked}
+                      startIcon={<SaveIcon />}
+                    >
+                      Update Details
+                    </LoadingButton>
                   </Grid>
                 </Grid>
               </Stack>

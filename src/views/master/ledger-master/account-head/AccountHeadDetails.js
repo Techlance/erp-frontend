@@ -23,7 +23,7 @@ import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog"
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    "marginBottom": "24px",
+    marginBottom: "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",

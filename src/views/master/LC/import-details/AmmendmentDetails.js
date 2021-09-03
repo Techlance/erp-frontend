@@ -1,36 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router";
 
 // material-ui
+import { IconButton, Stack } from "@material-ui/core";
+import formatDate from "../../../../utils";
+import EditAmendDialog from "./EditAmendDialog";
 
 // project imports
-import MainCard from "../../../../ui-component/cards/MainCard";
-import { gridSpacing } from "../../../../store/constant";
+import useAuth from "../../../../hooks/useAuth";
+import useLC from "../../../../hooks/useLC";
 
 // assets
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import EditIcon from "@material-ui/icons/EditTwoTone";
 
-// import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import { useLocation, useParams } from "react-router";
-import { number } from "prop-types";
-import formatDate from "../../../../utils";
-import useLC from "../../../../hooks/useLC";
-import { IconButton, Stack } from "@material-ui/core";
-import useAuth from "../../../../hooks/useAuth";
+import MainCard from "../../../../ui-component/cards/MainCard";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
-import EditAmendDialog from "./EditAmendDialog";
 
 //-----------------------|| User List ||-----------------------//
 const AmendmentDetails = () => {
+  const { user } = useAuth();
+  const { lc_id, mid } = useParams();
+  const { getLCAmend, deleteLCAmend } = useLC();
+
+  const { lc_amend } = useSelector((state) => state.lc);
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-
-  const { lc_id, mid } = useParams();
-
-  const { user } = useAuth();
-
+  const [loading, setLoading] = useState(true);
   const [value, setValue] = useState({
     lc_id: lc_id,
     amendment_no: 1,
@@ -43,16 +42,6 @@ const AmendmentDetails = () => {
     created_by: user.email,
   });
 
-  const { lc_amend } = useSelector((state) => state.lc);
-
-  const { getLCAmend, deleteLCAmend } = useLC();
-
-  const [loading, setLoading] = useState(true);
-
-  const { pathname } = useLocation();
-
-  // const [currentAmendID, setAmendID] = useState(0);
-
   const handleDeleteAmend = async () => {
     if (value.id === 0) return;
 
@@ -62,25 +51,6 @@ const AmendmentDetails = () => {
   };
 
   const columns = [
-    // {
-    //   field: "id",
-    //   headerName: "Edit",
-    //   flex: 0.2,
-    //   headerAlign: "left",
-    //   align: "left",
-    //   renderCell: (params) => (
-    //     <Button
-    //       variant="text"
-    //       color="primary"
-    //       aria-label="more-details"
-    //       // onClick={(row) => handleCompanyClick(row.company_id)}
-    //       href={`${pathname}/${params.value}`}
-    //     >
-    //       <Typography align="center">More </Typography>
-    //       <IconArrowRight sx={{ fontSize: "1.1rem" }} />
-    //     </Button>
-    //   ),
-    // },
     {
       field: "amendment_no",
       headerName: "Amend No.",
@@ -116,7 +86,7 @@ const AmendmentDetails = () => {
     {
       field: "lc_amount",
       headerName: "LC Amount",
-      type: number,
+      type: "number",
       minWidth: 125,
       flex: 0.4,
     },
@@ -181,6 +151,8 @@ const AmendmentDetails = () => {
   useEffect(() => {
     setLoading(true);
     getLCAmend(lc_id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

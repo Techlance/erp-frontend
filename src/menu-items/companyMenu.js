@@ -97,13 +97,13 @@ export const company_menu = {
           id: "budget",
           title: <FormattedMessage id="menu.budget" />,
           type: "collapse",
-          //   url: "/admin/companies",
+          // url: "/admin/companies",
           children: [
             {
               id: "pl-budget",
               title: <FormattedMessage id="menu.pl-budget" />,
               type: "collapse",
-              //   url: "/admin/companies",
+              url: "/company/:mid/master/budget/pl/:bid",
               children: [
                 {
                   id: "revised-budget",
