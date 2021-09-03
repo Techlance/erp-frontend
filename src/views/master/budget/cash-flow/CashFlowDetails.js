@@ -18,7 +18,7 @@ import CashFlowGrid from "./CashFlowGrid";
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -65,7 +65,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -75,13 +75,18 @@ function a11yProps(index) {
 const BudgetPlDetails = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [edited, setEdited] = useState({});
+  const [edited, setEdited] = useState([]);
+  const [revised, setRevised] = useState([]);
 
-  const { getBudgetCashFlowDetails } = useBudget();
+  const {
+    getBudgetCashFlowDetails,
+    updateBudgetCashflowDetails,
+    getBudgetCashflowRevise,
+    updateBudgetCashflowRevise,
+  } = useBudget();
 
-  const { company_budget_cashflow_details } = useSelector(
-    (state) => state.budget
-  );
+  const { company_budget_cashflow_details, company_budget_cashflow_revise } =
+    useSelector((state) => state.budget);
 
   const { bid } = useParams();
 
@@ -91,9 +96,34 @@ const BudgetPlDetails = () => {
 
   useEffect(() => {
     if (!company_budget_cashflow_details) getBudgetCashFlowDetails(bid);
+    if (!company_budget_cashflow_revise) getBudgetCashflowRevise(bid);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company_budget_cashflow_details, bid]);
+
+  const onSuccess = async () => {
+    setEdited([]);
+    await getBudgetCashFlowDetails(bid);
+  };
+
+  const onSuccessRevise = async () => {
+    setRevised([]);
+    await getBudgetCashFlowDetails(bid);
+  };
+
+  const handleUpdate = async () => {
+    let form = {
+      changed_budget_details: edited,
+    };
+    await updateBudgetCashflowDetails(bid, form, onSuccess);
+  };
+
+  const handleRevise = async () => {
+    let form = {
+      changed_budget_details: revised,
+    };
+    await updateBudgetCashflowRevise(bid, form, onSuccessRevise);
+  };
 
   return (
     <MainCard title="Cash Flow Details">
@@ -125,15 +155,18 @@ const BudgetPlDetails = () => {
         <TabPanel value={value} index={0}>
           <CashFlowGrid
             rows={company_budget_cashflow_details}
-            handleUpdate={() => {
-              return null;
-            }}
+            handleUpdate={handleUpdate}
             edited={edited}
             setEdited={setEdited}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {/* <LedgerBillwise /> */}
+          <CashFlowGrid
+            rows={company_budget_cashflow_revise}
+            handleUpdate={handleRevise}
+            edited={edited}
+            setEdited={setEdited}
+          />
         </TabPanel>
       </div>
     </MainCard>

@@ -30,8 +30,8 @@ const useRequest = ({
 
   const doRequest = async () => {
     try {
-      setError(null);
       setLoading(true);
+      setError(null);
       const response = await instance({
         url,
         method,
@@ -43,18 +43,18 @@ const useRequest = ({
         if (nextSuccess) {
           nextSuccess(response.data);
         }
-        setLoading(false);
         setData(response.data.data);
+        setLoading(false);
       } else {
         if (nextError) {
           nextError(response.data.message);
         }
-        setLoading(false);
         setError(response.data.message);
+        setLoading(false);
       }
     } catch (err) {
-      setLoading(false);
       setError(err);
+      setLoading(false);
     }
   };
 

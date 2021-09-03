@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 // material-ui
 import { Grid, Stack } from "@material-ui/core";
@@ -11,7 +11,7 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 
 //-----------------------|| Ledger Form ||-----------------------//
 
-const PlGrid = ({ rows, edited, setEdited, handleUpdate }) => {
+const PlGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
   const handleEdit = ({ id, field, value }) => {
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
@@ -159,7 +159,7 @@ const PlGrid = ({ rows, edited, setEdited, handleUpdate }) => {
             <CustomDataGrid
               columns={columns}
               rows={rows}
-              loading={false}
+              loading={loading}
               onCellEditCommit={handleEdit}
             />
           </Grid>
@@ -172,7 +172,7 @@ const PlGrid = ({ rows, edited, setEdited, handleUpdate }) => {
                     color="primary"
                     onClick={handleUpdate}
                     startIcon={<SaveIcon />}
-                    loading={false}
+                    loading={loading}
                   >
                     Save Details
                   </LoadingButton>

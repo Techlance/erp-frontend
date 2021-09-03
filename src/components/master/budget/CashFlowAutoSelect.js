@@ -1,25 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 // material-ui
 import { Autocomplete, TextField } from "@material-ui/core";
 
-// project imports
-import useRequest from "../../../hooks/useRequest";
-
 // assets
 import CachedIcon from "@material-ui/icons/Cached";
 
-const CashFlowAutoSelect = ({ params }) => {
-  const [getCashFlowHead, loading, , data] = useRequest({
-    url: `/budget/get-cashflow-head`,
-    initialState: [],
-  });
-
-  useEffect(() => {
-    getCashFlowHead();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+const CashFlowAutoSelect = ({ params, options, loading, err }) => {
   // useEffect(() => {
   //   setCurrent(() => {
   //     if (selected) return selected.id;
@@ -37,7 +24,7 @@ const CashFlowAutoSelect = ({ params }) => {
   return (
     <Autocomplete
       id="cash-flow-cash-head"
-      options={data}
+      options={options}
       fullWidth
       getOptionLabel={(option) => option.head}
       value={params.value}
@@ -45,17 +32,7 @@ const CashFlowAutoSelect = ({ params }) => {
       InputProps={{
         startAdornment: <> {loading && <CachedIcon />} </>,
       }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Cash Flow Head"
-          variant="outlined"
-          disabled={loading}
-          InputProps={{
-            startAdornment: <> {loading && <CachedIcon />} </>,
-          }}
-        />
-      )}
+      renderInput={(params) => <TextField {...params} variant="outlined" />}
     />
   );
 };

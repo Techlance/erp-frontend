@@ -15,13 +15,15 @@ import {
   getBudgetPlReviseAsync,
   updateBudgetPlReviseAsync,
   getBudgetCashflowDetailsAsync,
+  getBudgetCashflowReviseAsync,
+  updateBudgetCashflowReviseAsync,
+  updateBudgetCashflowDetailsAsync,
 } from "../../api";
 
-export const Budget = createContext();
+export const BudgetContext = createContext();
 
 export const BudgetProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.budget);
   const { company } = useSelector((state) => state.companyMaster);
   const [loading] = useState(false);
 
@@ -46,12 +48,24 @@ export const BudgetProvider = ({ children }) => {
     await getBudgetPlReviseAsync(id, dispatch);
   };
 
-  const updateBudgetPlRevise = async (id, data, successFn) => {
-    await updateBudgetPlReviseAsync(id, data, successFn, dispatch);
+  const updateBudgetPlRevise = async (id, data, onSuccess) => {
+    await updateBudgetPlReviseAsync(id, data, onSuccess, dispatch);
   };
 
   const getBudgetCashFlowDetails = async (id) => {
     await getBudgetCashflowDetailsAsync(id, dispatch);
+  };
+
+  const getBudgetCashflowRevise = async (id, data, onSuccess) => {
+    await getBudgetCashflowReviseAsync(id, dispatch);
+  };
+
+  const updateBudgetCashflowDetails = async (id, data, onSuccess) => {
+    await updateBudgetCashflowDetailsAsync(id, data, onSuccess, dispatch);
+  };
+
+  const updateBudgetCashflowRevise = async (id, data, onSuccess) => {
+    await updateBudgetCashflowReviseAsync(id, data, onSuccess, dispatch);
   };
 
   useEffect(() => {
@@ -65,9 +79,8 @@ export const BudgetProvider = ({ children }) => {
   }
 
   return (
-    <Budget.Provider
+    <BudgetContext.Provider
       value={{
-        ...state,
         getCompanyBudget,
         addCompanyBudget,
         getBudgetPlDetails,
@@ -75,9 +88,12 @@ export const BudgetProvider = ({ children }) => {
         getBudgetPlRevise,
         updateBudgetPlRevise,
         getBudgetCashFlowDetails,
+        updateBudgetCashflowDetails,
+        getBudgetCashflowRevise,
+        updateBudgetCashflowRevise,
       }}
     >
       {children}
-    </Budget.Provider>
+    </BudgetContext.Provider>
   );
 };

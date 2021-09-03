@@ -18,7 +18,7 @@ import PlGrid from "./PlGrid";
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -65,7 +65,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -75,6 +75,7 @@ function a11yProps(index) {
 const BudgetPlDetails = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState([]);
   const [revised, setRevised] = useState([]);
 
@@ -98,38 +99,39 @@ const BudgetPlDetails = () => {
   useEffect(() => {
     if (!company_budget_details) getBudgetPlDetails(bid);
     if (!company_budget_revise) getBudgetPlRevise(bid);
-  }, [
-    company_budget_details,
-    company_budget_revise,
-    getBudgetPlDetails,
-    getBudgetPlRevise,
-    bid,
-  ]);
 
-  const successFn = () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company_budget_details, company_budget_revise, bid]);
+
+  const onSuccess = () => {
     setEdited([]);
     getBudgetPlDetails(bid);
-    console.log(edited);
   };
 
-  const successRevise = () => {
+  const onSuccessRevise = () => {
     setRevised([]);
     getBudgetPlDetails(bid);
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
+    setLoading(true);
     let form = {
       changed_budget_details: edited,
     };
-    updateBudgetPlDetails(bid, form, successFn);
+    await updateBudgetPlDetails(bid, form, onSuccess);
+    setLoading(false);
   };
 
-  const handleRevise = () => {
+  const handleRevise = async () => {
+    setLoading(true);
+
     let form = {
       changed_budget_details: revised,
     };
-    updateBudgetPlRevise(bid, form, successRevise);
+    await updateBudgetPlRevise(bid, form, onSuccessRevise);
+    setLoading(false);
   };
+
   return (
     <MainCard title="Company Details">
       <div className={classes.root}>
@@ -161,6 +163,7 @@ const BudgetPlDetails = () => {
           {/* <LedgerForm /> */}
           <PlGrid
             rows={company_budget_details}
+            loading={loading}
             handleUpdate={handleUpdate}
             edited={edited}
             setEdited={setEdited}
@@ -169,6 +172,7 @@ const BudgetPlDetails = () => {
         <TabPanel value={value} index={1}>
           <PlGrid
             rows={company_budget_revise}
+            loading={loading}
             handleUpdate={handleRevise}
             edited={revised}
             setEdited={setRevised}

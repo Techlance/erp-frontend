@@ -1,22 +1,84 @@
 import React from "react";
 
 // material-ui
-import { Autocomplete, Grid, Stack, TextField } from "@material-ui/core";
+import { Grid, Stack } from "@material-ui/core";
+
+// project import
+import { gridSpacing } from "../../../../store/constant";
+// import useRequest from "../../../../hooks/useRequest";
+import CashFlowAutoSelect from "../../../../components/master/budget/CashFlowAutoSelect";
 
 // assets
-import { gridSpacing } from "../../../../store/constant";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import CashFlowAutoSelect from "../../../../components/master/budget/CashFlowAutoSelect";
 
 //-----------------------|| CashFlow Grid ||-----------------------//
 
-const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
-  const handleEdit = (model) => {
-    // console.log(model);
-    // console.log(rows);
-    setEdited(model);
+const data = [
+  {
+    id: 1,
+    head: "receipt1",
+    created_by: "jainam@gmail.com",
+    created_on: "2021-09-02T14:28:48.181005Z",
+  },
+  {
+    id: 2,
+    head: "receipt2",
+    created_by: "jainam@gmail.com",
+    created_on: "2021-09-02T14:28:48.181005Z",
+  },
+  {
+    id: 3,
+    head: "payment1",
+    created_by: "jainam@gmail.com",
+    created_on: "2021-09-02T19:53:42.635736Z",
+  },
+  {
+    id: 5,
+    head: "payment2",
+    created_by: "jainam@gmail.com",
+    created_on: "2021-09-02T20:01:37.032799Z",
+  },
+  {
+    id: 6,
+    head: "payment3",
+    created_by: "jainam@gmail.com",
+    created_on: "2021-09-02T20:01:37.032799Z",
+  },
+];
+
+const CashFlowGrid = ({ rows, edited, loading, setEdited, handleUpdate }) => {
+  // const [getCashFlowHead, loading, , data] = useRequest({
+  //   url: "/budget/get-cashflow-head",
+  //   method: "GET",
+  //   initialState: [],
+  // });
+
+  // useEffect(() => {
+  //   getCashFlowHead();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+  const handleEdit = ({ id, field, value }) => {
+    let editedCopy = [...edited];
+    editedCopy = editedCopy.map((e) => {
+      return { ...e };
+    });
+    let row = rows.find((row) => row.id === id);
+    let edit = editedCopy.find((row) => row.id === id);
+    if (edit && row[field] === value) {
+      if (edit[field]) delete editedCopy[editedCopy.indexOf(edit)][field];
+      else editedCopy[editedCopy.indexOf(edit)][field] = value;
+    } else if (edit) {
+      editedCopy[editedCopy.indexOf(edit)][field] = value;
+    } else {
+      editedCopy.push({
+        id: id,
+        [field]: value,
+      });
+    }
+    setEdited(editedCopy);
   };
 
   const columns = [
@@ -27,8 +89,13 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      editable: true,
-      renderCell: (params) => <CashFlowAutoSelect params={params} />,
+      renderCell: (params) => (
+        <CashFlowAutoSelect
+          params={params}
+          options={data}
+          // loading={loading}
+        />
+      ),
     },
     {
       field: "jan",
@@ -148,9 +215,8 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
             <CustomDataGrid
               columns={columns}
               rows={rows}
-              loading={false}
-              onEditRowsModelChange={handleEdit}
-              editRowsModel={edited}
+              loading={loading}
+              onCellEditCommit={handleEdit}
             />
           </Grid>
           <Grid item xs={12}>
@@ -162,7 +228,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
                     color="primary"
                     onClick={handleUpdate}
                     startIcon={<SaveIcon />}
-                    loading={false}
+                    loading={loading}
                   >
                     Save Details
                   </LoadingButton>

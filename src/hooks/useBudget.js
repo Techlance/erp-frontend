@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
 // brs provider
-import { Budget } from "../contexts/master/BudgetContext";
+import { BudgetContext } from "../contexts/master/BudgetContext";
 
 //-----------------------|| Opening Balance Brs Hook ||-----------------------//
 
-const useBudget = () => useContext(Budget);
+const useBudget = () => useContext(BudgetContext);
 
 export default useBudget;
