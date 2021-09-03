@@ -34,7 +34,7 @@ import { useSelector } from "react-redux";
 import LedgerDocumentForm from "./LedgerDocuments";
 
 // step options
-const steps = ["Ledger Details", "Balances","Documents"];
+const steps = ["Ledger Details", "Balances", "Documents"];
 
 function getStepContent(
   step,
@@ -87,11 +87,7 @@ function getStepContent(
         />
       );
     case 2:
-      return (
-        <LedgerDocumentForm
-          newLedger={newLedger}
-        />
-      )
+      return <LedgerDocumentForm newLedger={newLedger} />;
     default:
       throw new Error("Unknown step");
   }
@@ -103,11 +99,8 @@ const AddLedgerDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { mid } = useParams();
   const { company } = useSelector((state) => state.companyMaster);
-  const { 
-    addCompanyLedger,
-    addLedgerBalance, 
-    addLedgerBillwise 
-  } = useLedgerMaster();
+  const { addCompanyLedger, addLedgerBalance, addLedgerBillwise } =
+    useLedgerMaster();
   const [clicked, setClicked] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [receivable, setReceivable] = useState(false);
@@ -135,7 +128,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     fc_amount: null,
     fc_name: null,
   });
-  
+
   const [values, setValues] = useState({
     ledger_name: null,
     old_ledger_id: null,
@@ -221,12 +214,11 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     }
     let response = await addCompanyLedger(form);
     setClicked(false);
-    if (response.success ) {
-      if(bs){
+    if (response.success) {
+      if (bs) {
         setNewLedger(response.data);
         handleNext();
-      }
-      else{
+      } else {
         setActiveStep(2);
       }
     } else {
@@ -449,23 +441,24 @@ const AddLedgerDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item>
             <Grid container spacing={2.5}>
-              {(activeStep!==2) && 
-              <Grid item>
-                <AnimateButton>
-                  <Button
-                    color="error"
-                    variant="contained"
-                    size="small"
-                    onClick={() => {
-                      handleClearClose();
-                    }}
-                    disabled={clicked}
-                    startIcon={<CancelIcon />}
-                  >
-                    {activeStep === 1 ? "Skip" : "Cancel"}
-                  </Button>
-                </AnimateButton>
-              </Grid>}
+              {activeStep !== 2 && (
+                <Grid item>
+                  <AnimateButton>
+                    <Button
+                      color="error"
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        handleClearClose();
+                      }}
+                      disabled={clicked}
+                      startIcon={<CancelIcon />}
+                    >
+                      {activeStep === 1 ? "Skip" : "Cancel"}
+                    </Button>
+                  </AnimateButton>
+                </Grid>
+              )}
               <Grid item>
                 <LoadingButton
                   color="primary"
@@ -474,16 +467,16 @@ const AddLedgerDialog = ({ open, handleClose }) => {
                   onClick={
                     activeStep === 0
                       ? handleSubmit
-                      : activeStep ===1? 
-                        newLedger?.maintain_billwise?
-                        handleSubmitBillwise
-                      : handleSubmitBalance
+                      : activeStep === 1
+                      ? newLedger?.maintain_billwise
+                        ? handleSubmitBillwise
+                        : handleSubmitBalance
                       : handleClearClose
                   }
                   loading={clicked}
                   startIcon={<SaveIcon />}
                 >
-                  {activeStep===2?"Okay":"Add"}
+                  {activeStep === 2 ? "Okay" : "Add"}
                 </LoadingButton>
               </Grid>
             </Grid>

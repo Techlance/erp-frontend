@@ -10,7 +10,7 @@ import {
   // Company Budgets
   getCompanyBudgetAsync,
   addCompanyBudgetAsync,
-  getBudgetPlDetailsAsync
+  getBudgetPlDetailsAsync,
 } from "../../api";
 
 export const Budget = createContext();
@@ -50,7 +50,7 @@ export const BudgetProvider = ({ children }) => {
         ...state,
         getCompanyBudget,
         addCompanyBudget,
-        getBudgetPlDetails
+        getBudgetPlDetails,
       }}
     >
       {children}

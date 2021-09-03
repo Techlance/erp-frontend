@@ -24,7 +24,7 @@ const SelectGroup = () => {
 
   const { company_budgets } = useSelector((state) => state.budget);
   const { company } = useSelector((state) => state.companyMaster);
-    console.log(company_budgets)
+  console.log(company_budgets);
   const { getCompanyBudget } = useBudget();
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -40,18 +40,17 @@ const SelectGroup = () => {
       headerAlign: "left",
       align: "left",
       sortable: false,
-      renderCell: (params) =>
-        (
-          <Button
-            variant="text"
-            color="primary"
-            aria-label="more-details"
-            href={`${pathname}/${params.value}`}
-          >
-            <Typography align="center">More </Typography>
-            <IconArrowRight sx={{ fontSize: "1.1rem" }} />
-          </Button>
-        ),
+      renderCell: (params) => (
+        <Button
+          variant="text"
+          color="primary"
+          aria-label="more-details"
+          href={`${pathname}/${params.value}`}
+        >
+          <Typography align="center">More </Typography>
+          <IconArrowRight sx={{ fontSize: "1.1rem" }} />
+        </Button>
+      ),
     },
     {
       field: "budget_name",
@@ -87,7 +86,7 @@ const SelectGroup = () => {
       field: "enforce_restrictions",
       headerName: "enforce_restrictions",
       flex: 0.3,
-      type:"boolean",
+      type: "boolean",
       headerAlign: "center",
       align: "center",
       valueFormatter: (params) => {

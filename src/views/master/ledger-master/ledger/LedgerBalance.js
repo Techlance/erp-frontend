@@ -129,29 +129,34 @@ const LedgerBalance = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              {(values.fc_name && values.fc_name?.id !== company.base_currency) &&
-              <TextField
-                fullWidth
-                id="fc_amount"
-                label="FC Amount"
-                value={
-                  values?.fc_name &&
-                  values?.fc_name?.id !== company.base_currency
-                    ? values?.fc_amount
-                    : 0
-                }
-                InputLabelProps={{ shrink: true }}
-                onChange={handleChange}
-                type="number"
-                inputProps={{
-                  min: "0",
-                  readOnly: !(
+              {values.fc_name && values.fc_name?.id !== company.base_currency && (
+                <TextField
+                  fullWidth
+                  id="fc_amount"
+                  label="FC Amount"
+                  value={
                     values?.fc_name &&
                     values?.fc_name?.id !== company.base_currency
-                  ),
-                }}
-                helperText={`FC Rate: ${Math.abs(((values.cr > 0 ? values.cr : values.dr)/values.fc_amount).toFixed(4))}`}
-              />}
+                      ? values?.fc_amount
+                      : 0
+                  }
+                  InputLabelProps={{ shrink: true }}
+                  onChange={handleChange}
+                  type="number"
+                  inputProps={{
+                    min: "0",
+                    readOnly: !(
+                      values?.fc_name &&
+                      values?.fc_name?.id !== company.base_currency
+                    ),
+                  }}
+                  helperText={`FC Rate: ${Math.abs(
+                    (
+                      (values.cr > 0 ? values.cr : values.dr) / values.fc_amount
+                    ).toFixed(4)
+                  )}`}
+                />
+              )}
             </Grid>
             <Grid item xs={12}>
               <Stack direction="row">

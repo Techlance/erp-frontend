@@ -13,7 +13,7 @@ const YearSelect = ({
   formState,
   selected,
   onChange,
-  disabled
+  disabled,
 }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;

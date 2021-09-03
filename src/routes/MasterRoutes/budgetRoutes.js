@@ -7,22 +7,20 @@ import Loadable from "../../ui-component/Loadable";
 import CompanyGuard from "../../utils/route-guard/CompanyGuard";
 
 // company page routing
-const BudgetList = Loadable(
-  lazy(() => import("../../views/master/budget"))
-);
+const BudgetList = Loadable(lazy(() => import("../../views/master/budget")));
 const BudgetPlDetails = Loadable(
-    lazy(() => import("../../views/master/budget/pl-budget/PlBudgetDetails"))
+  lazy(() => import("../../views/master/budget/pl-budget/PlBudgetDetails"))
 );
 
 const routes = [
-    {
-        url:"/pl/:bid",
-        component: BudgetPlDetails
-    },
-    {
-        url: "",
-        component: BudgetList,
-    },
+  {
+    url: "/pl/:bid",
+    component: BudgetPlDetails,
+  },
+  {
+    url: "",
+    component: BudgetList,
+  },
 ];
 
 //-----------------------|| Budget Routing ||-----------------------//

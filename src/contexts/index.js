@@ -9,7 +9,7 @@ import { MasterCompanyProvider } from "./master/MasterCompanyContext";
 import { VoucherTypeProvider } from "./master/VoucherTypesContext";
 import { BrsProvider } from "./master/BrsContext";
 import { LcProvider } from "./master/lcContext";
-import { BudgetProvider } from './master/BudgetContext'
+import { BudgetProvider } from "./master/BudgetContext";
 
 const AppContextProvider = ({ children }) => {
   return (

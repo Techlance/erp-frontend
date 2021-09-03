@@ -155,7 +155,7 @@ const AddBrsDialog = ({ open, handleClose }) => {
                 control={
                   <Radio
                     sx={{
-                      "color": theme.palette.primary.main,
+                      color: theme.palette.primary.main,
                       "&.Mui-checked": {
                         color: theme.palette.primary.main,
                       },
@@ -169,7 +169,7 @@ const AddBrsDialog = ({ open, handleClose }) => {
                 control={
                   <Radio
                     sx={{
-                      "color": theme.palette.primary.main,
+                      color: theme.palette.primary.main,
                       "&.Mui-checked": {
                         color: theme.palette.primary.main,
                       },

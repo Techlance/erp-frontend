@@ -29,12 +29,20 @@ const Ledger = () => {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const getBalAmt = (params,ind) => {
-    if(ind==="is_cr"){
-      return params.row.ledger_balance.length>0?params.row.ledger_balance[0].cr>0?"Credit":"Debit":""
+  const getBalAmt = (params, ind) => {
+    if (ind === "is_cr") {
+      return params.row.ledger_balance.length > 0
+        ? params.row.ledger_balance[0].cr > 0
+          ? "Credit"
+          : "Debit"
+        : "";
     }
-    return `${params.row.ledger_balance.length>0?params.row.ledger_balance[0][ind]:""}`;
-  }
+    return `${
+      params.row.ledger_balance.length > 0
+        ? params.row.ledger_balance[0][ind]
+        : ""
+    }`;
+  };
 
   const columns = [
     {
@@ -90,27 +98,39 @@ const Ledger = () => {
       headerName: "Cr/Dr",
       flex: 0.5,
       minWidth: 150,
-      valueGetter: (params)=>{return getBalAmt(params,"is_cr")},
+      valueGetter: (params) => {
+        return getBalAmt(params, "is_cr");
+      },
       sortComparator: (v1, v2, cellParams1, cellParams2) =>
-        getBalAmt(cellParams1,"is_cr").localeCompare(getBalAmt(cellParams2,"is_cr")),
+        getBalAmt(cellParams1, "is_cr").localeCompare(
+          getBalAmt(cellParams2, "is_cr")
+        ),
     },
     {
       field: "bal_amt",
       headerName: "Balance",
       flex: 0.5,
       minWidth: 150,
-      valueGetter: (params)=>{return getBalAmt(params,"balance")},
+      valueGetter: (params) => {
+        return getBalAmt(params, "balance");
+      },
       sortComparator: (v1, v2, cellParams1, cellParams2) =>
-        getBalAmt(cellParams1,"balance").localeCompare(getBalAmt(cellParams2,"balance")),
+        getBalAmt(cellParams1, "balance").localeCompare(
+          getBalAmt(cellParams2, "balance")
+        ),
     },
     {
       field: "bal_fc_amt",
       headerName: "FC Amount",
       flex: 0.5,
       minWidth: 150,
-      valueGetter: (params)=>{return getBalAmt(params,"fc_amount")},
+      valueGetter: (params) => {
+        return getBalAmt(params, "fc_amount");
+      },
       sortComparator: (v1, v2, cellParams1, cellParams2) =>
-        getBalAmt(cellParams1,"fc_amount").localeCompare(getBalAmt(cellParams2,"fc_amount")),
+        getBalAmt(cellParams1, "fc_amount").localeCompare(
+          getBalAmt(cellParams2, "fc_amount")
+        ),
     },
     {
       field: "maintain_billwise",
