@@ -10,7 +10,7 @@ import useVoucherTypes from "../../../hooks/useVoucherTypes";
 import MainCard from "../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../store/constant";
 import AddVoucherType from "../../../components/master/voucher-types/AddVoucherTypeDialog";
-import formatDate from "../../../utils/format-date";
+import { formatDate } from "../../../utils";
 
 // assets
 import AnimateButton from "../../../ui-component/extended/AnimateButton";

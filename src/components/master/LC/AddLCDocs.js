@@ -22,7 +22,7 @@ import { IconFileDownload } from "@tabler/icons";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
 // project imports
-import formatDate from "../../../utils/format-date";
+import { formatDate } from "../../../utils";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import useRequest from "../../../hooks/useRequest";
 import AddLCDocumentDialog from "./AddLCDocumentDialog";

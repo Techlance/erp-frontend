@@ -12,7 +12,7 @@ import MainCard from "../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../store/constant";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import SelectBankSelect from "../../../components/master/brs/SelectBankSelect";
-import formatDate from "../../../utils";
+import { formatDate } from "../../../utils";
 
 // assets
 import { IconArrowRight } from "@tabler/icons";

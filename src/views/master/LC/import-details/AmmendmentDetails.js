@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 
 // material-ui
 import { IconButton, Stack } from "@material-ui/core";
-import formatDate from "../../../../utils";
+import { formatDate } from "../../../../utils";
 import EditAmendDialog from "./EditAmendDialog";
 
 // project imports

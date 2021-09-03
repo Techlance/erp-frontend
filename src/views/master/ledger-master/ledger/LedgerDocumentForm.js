@@ -22,7 +22,7 @@ import { IconFileDownload } from "@tabler/icons";
 // project imports
 import { useSelector } from "react-redux";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
-import formatDate from "../../../../utils/format-date";
+import { formatDate } from "../../../../utils";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 
 const LedgerDocumentForm = () => {

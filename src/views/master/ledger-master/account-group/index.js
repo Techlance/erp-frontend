@@ -13,7 +13,7 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import formatDate from "../../../../utils/format-date";
+import { formatDate } from "../../../../utils";
 import AddAccountGroupDialog from "../../../../components/master/ledger-master/AddAccountGroupDialog";
 import { useLocation } from "react-router-dom";
 

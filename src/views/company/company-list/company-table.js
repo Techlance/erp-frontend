@@ -20,7 +20,7 @@ import { IconArrowRight } from "@tabler/icons";
 
 // project imports
 import config from "../../../config";
-import formatDate from "../../../utils/format-date";
+import { formatDate } from "../../../utils";
 
 //-----------------------|| Company List ||-----------------------//
 

@@ -15,7 +15,7 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 
 // import useCostCenter from "../../../../hooks/useCostCenter";
 import { useLocation } from "react-router";
-import formatDate from "../../../../utils/format-date";
+import { formatDate } from "../../../../utils";
 import useLC from "../../../../hooks/useLC";
 import AddLCDialogFinal from "../../../../components/company/AddLCDialogFinal";
 

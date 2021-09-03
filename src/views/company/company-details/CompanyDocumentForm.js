@@ -21,7 +21,7 @@ import { IconFileDownload } from "@tabler/icons";
 
 // project imports
 import useCompany from "../../../hooks/useCompany";
-import formatDate from "../../../utils/format-date";
+import { formatDate } from "../../../utils";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import { useSelector } from "react-redux";
 

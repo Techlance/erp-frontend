@@ -17,6 +17,4 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-export default formatDate;
-
 export { dataToForm, formatDate };

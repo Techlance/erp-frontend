@@ -23,7 +23,7 @@ import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
 // project imports
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
-import formatDate from "../../../../utils/format-date";
+import { formatDate } from "../../../../utils";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import AddDocumentDialog from "../AddDocumentDialog";
 import useRequest from "../../../../hooks/useRequest";
@@ -36,8 +36,8 @@ const useStyles = makeStyles({
 
 const LedgerDocumentForm = ({ newLedger }) => {
   const classes = useStyles();
-  //   const { lid } = useParams();
   const { deleteLedgerDoc } = useLedgerMaster();
+
   const [showDeleteModal, setShowDeleteModal] = useState(null);
   const [currentDocID, setCurrentDocID] = useState(0);
   const [newDocs, setNewDocs] = useState([]);
