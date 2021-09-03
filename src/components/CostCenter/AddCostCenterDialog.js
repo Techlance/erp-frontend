@@ -90,9 +90,13 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
   const createCostCenter = async () => {
     setClicked(true);
     let form = { ...values };
-    form.child_of = parseInt(form.child_of?.id);
-    form.cost_category_id = parseInt(form.cost_category_id.id);
     console.log(form);
+    if (form.child_of) {
+      form.child_of = parseInt(form.child_of?.id);
+    } else {
+      form.child_of = null;
+    }
+    form.cost_category_id = parseInt(form.cost_category_id.id);
     await addCostCenter(form);
     setClicked(false);
     setValues({

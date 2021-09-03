@@ -46,7 +46,7 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
 
   useEffect(() => {
     setValues({
-      // lc_amend_id:,
+      // amend_id: data.id,
       lc_id: data.lc_id,
       amendment_no: data.amendment_no,
       issue_date: data.issue_date,
@@ -79,7 +79,7 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
 
   const handleUpdateAmendment = async () => {
     setClicked(true);
-    await updateLCAmend(values, lc_id);
+    await updateLCAmend(values, data.id);
     // await getLCAmend(values);
 
     setClicked(false);

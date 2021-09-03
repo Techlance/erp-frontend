@@ -189,12 +189,9 @@ export const getLCAmendAsync = async (id, dispatch) => {
   }
 };
 
-export const updateLCAmendAsync = async (data, dispatch) => {
+export const updateLCAmendAsync = async (data, id, dispatch) => {
   const form = dataToForm(data);
-  const response = await instance.put(
-    `/lc/edit-lc-amend/${data.amendment_no}`,
-    form
-  );
+  const response = await instance.put(`/lc/edit-lc-amend/${id}`, form);
 
   sendNotification({
     dispatch,
