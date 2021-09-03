@@ -23,7 +23,6 @@ const SelectGroup = () => {
   const { mid } = useParams();
 
   const { company_budgets } = useSelector((state) => state.budget);
-  const { company } = useSelector((state) => state.companyMaster);
   const { getCompanyBudget } = useBudget();
 
   const [loading, setLoading] = useState(true);
@@ -128,9 +127,7 @@ const SelectGroup = () => {
           spacing={gridSpacing}
         >
           <Grid item>
-            <Typography variant="h3">
-              {`${company?.company_name}'s Budgets`}
-            </Typography>
+            <Typography variant="h3">Budgets</Typography>
           </Grid>
           <Grid item>
             <AnimateButton>

@@ -98,9 +98,7 @@ const SelectGroup = () => {
           spacing={gridSpacing}
         >
           <Grid item>
-            <Typography variant="h3">
-              {`${company?.company_name}'s Cost Category`}
-            </Typography>
+            <Typography variant="h3">Cost Category</Typography>
           </Grid>
           <Grid item>
             <AnimateButton>

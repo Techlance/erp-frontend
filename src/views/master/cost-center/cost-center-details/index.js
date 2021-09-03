@@ -6,22 +6,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Tab, Tabs } from "@material-ui/core";
 
 // project imports
-
-// import useCostCenter from "../../../../hooks/useCostCenter";
 import MainCard from "../../../../ui-component/cards/MainCard";
-// import CompanyForm from "./CompanyForm";
-// import CompanyDocumentForm from "./CompanyDocumentForm";
-// import AnimateButton from "../../../ui-component/extended/AnimateButton";
-// import AddDocumentDialog from "../../../components/company/AddDocumentDialog";
-
 import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
+
+// assets
 import CostCenterForm from "./CostCenterForm";
-// import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -68,7 +62,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -77,19 +71,8 @@ function a11yProps(index) {
 
 const CostCenterDetails = () => {
   const classes = useStyles();
-  //   const { cid } = useParams();
-
-  //   const { getSelectedCompany } = useCostCenter();
-
-  //   useEffect(() => {
-  //     if (!cid) return;
-  //     getSelectedCompany(cid);
-
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [cid]);
 
   const [value, setValue] = useState(0);
-  //   const [showAddModal, setShowAddModal] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

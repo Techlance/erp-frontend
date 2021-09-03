@@ -78,9 +78,6 @@ const AccountGroup = () => {
       headerName: "Account Head",
       flex: 0.5,
       minWidth: 300,
-      // valueFormatter: (params) => {
-      //   return params.value.acc_head_name;
-      // },
     },
     {
       field: "created_on",
@@ -119,9 +116,7 @@ const AccountGroup = () => {
           spacing={gridSpacing}
         >
           <Grid item>
-            <Typography variant="h3">
-              {`${company?.company_name}'s Account Groups`}
-            </Typography>
+            <Typography variant="h3">Account Groups</Typography>
           </Grid>
           <Grid item>
             <AnimateButton>

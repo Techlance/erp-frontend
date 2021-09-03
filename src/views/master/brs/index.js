@@ -174,9 +174,7 @@ const BRS = () => {
           spacing={gridSpacing}
         >
           <Grid item>
-            <Typography variant="h3">
-              {`${company?.company_name}'s BRS`}
-            </Typography>
+            <Typography variant="h3">BRS</Typography>
           </Grid>
           {brs_list && (
             <Grid item>

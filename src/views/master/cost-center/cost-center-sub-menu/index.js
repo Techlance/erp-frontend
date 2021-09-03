@@ -74,16 +74,6 @@ const SelectGroup = () => {
       headerName: "Created By",
       flex: 0.4,
     },
-    // {
-    //   field: "created_on",
-    //   headerName: "Created On",
-    //   flex: 0.3,
-    //   headerAlign: "center",
-    //   align: "center",
-    // valueFormatter: (params) => {
-    //     return formatDate(params.value);
-    //   },
-    // },
   ];
 
   useEffect(() => {
@@ -108,9 +98,7 @@ const SelectGroup = () => {
           spacing={gridSpacing}
         >
           <Grid item>
-            <Typography variant="h3">
-              {`${company.company_name}'s Cost Center`}
-            </Typography>
+            <Typography variant="h3">Cost Center</Typography>
           </Grid>
           <Grid item>
             <AnimateButton>

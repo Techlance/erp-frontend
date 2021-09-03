@@ -343,9 +343,7 @@ const Ledger = () => {
           spacing={gridSpacing}
         >
           <Grid item>
-            <Typography variant="h3">
-              {`${company?.company_name}'s Ledgers`}
-            </Typography>
+            <Typography variant="h3">Ledgers</Typography>
           </Grid>
           <Grid item>
             <AnimateButton>

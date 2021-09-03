@@ -3,7 +3,7 @@ import React from "react";
 
 // material-ui
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Box, Drawer, useMediaQuery } from "@material-ui/core";
+import { Box, Drawer, Typography, useMediaQuery } from "@material-ui/core";
 
 // third-party
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -13,6 +13,7 @@ import { BrowserView, MobileView } from "react-device-detect";
 import MenuList from "./MenuList";
 import LogoSection from "../LogoSection";
 import { drawerWidth } from "./../../../store/constant";
+import { useSelector } from "react-redux";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +55,8 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
   const theme = useTheme();
   const matchUpMd = useMediaQuery(theme.breakpoints.up("md"));
 
+  const { company } = useSelector((state) => state.companyMaster);
+
   const drawer = (
     <React.Fragment>
       <Box sx={{ display: { xs: "block", md: "none" } }}>
@@ -63,6 +66,9 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
       </Box>
       <BrowserView>
         <PerfectScrollbar component="div" className={classes.ScrollHeight}>
+          {company && (
+            <Typography variant="h1">{company.company_name}</Typography>
+          )}
           <MenuList />
         </PerfectScrollbar>
       </BrowserView>
