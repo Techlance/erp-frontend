@@ -174,7 +174,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
               fullWidth
               id="contact_no"
               label="Contact Number"
-              type="number"
+              type="tel"
               value={values.contact_no}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
