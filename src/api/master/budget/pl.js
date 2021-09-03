@@ -70,3 +70,41 @@ export const updateBudgetPlDetailsAsync = async (id, data, successFn, dispatch) 
   }
 };
 
+export const getBudgetPlReviseAsync = async (id, dispatch) => {
+  try {
+    if (!id) return;
+
+    const response = await instance.get(`/budget/get-revised-budget-details/${id}`);
+
+    dispatch({
+      type: budgetActions.GET_COMPANY_BUDGET_REVISE,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log("Error while getting");
+  }
+};
+
+export const updateBudgetPlReviseAsync = async (id, data, successFn, dispatch) => {
+  try {
+    if (!id) return;
+
+    const response = await instance.put(`/budget/edit-revised-budget-details/${id}`,data);
+
+    dispatch({
+      type: budgetActions.UPDATE_COMPANY_BUDGET_REVISE,
+    });
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    if(response.data.success)
+      successFn();
+
+  } catch (error) {
+    console.log("Error while getting");
+  }
+};
+

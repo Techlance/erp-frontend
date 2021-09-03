@@ -7,6 +7,7 @@ import { budgetActions } from "../../actions";
 const initialState = {
   company_budgets: [],
   company_budget_details: null,
+  company_budget_revise: null
 };
 
 const budgetReducer = (state = initialState, action) => {
@@ -23,6 +24,13 @@ const budgetReducer = (state = initialState, action) => {
       return {
         ...state,
         company_budget_details: action.payload,
+      };
+    }
+    case budgetActions.GET_COMPANY_BUDGET_REVISE: {
+      console.log(action.payload);
+      return {
+        ...state,
+        company_budget_revise: action.payload,
       };
     }
     default: {

@@ -76,13 +76,16 @@ const BudgetPlDetails = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [edited, setEdited] = useState([]);
+  const [revised, setRevised] = useState([]);
 
   const { 
     getBudgetPlDetails,
-    updateBudgetPlDetails
+    updateBudgetPlDetails,
+    getBudgetPlRevise,
+    updateBudgetPlRevise
   } = useBudget();
 
-  const { company_budget_details } = useSelector((state) => state.budget);
+  const { company_budget_details, company_budget_revise } = useSelector((state) => state.budget);
 
   const { bid } = useParams();
 
@@ -92,8 +95,8 @@ const BudgetPlDetails = () => {
 
   useEffect(() => {
     if (!company_budget_details) getBudgetPlDetails(bid);
-    console.log(company_budget_details);
-  }, [company_budget_details, getBudgetPlDetails, bid]);
+    if (!company_budget_revise) getBudgetPlRevise(bid);
+  }, [company_budget_details,company_budget_revise, getBudgetPlDetails, getBudgetPlRevise, bid]);
 
   const successFn = ()=>{
     setEdited([]);
@@ -101,12 +104,23 @@ const BudgetPlDetails = () => {
     console.log(edited)
   }
 
+  const successRevise = ()=>{
+    setRevised([]);
+    getBudgetPlDetails(bid);
+  }
+
   const handleUpdate = ()=>{
     let form = {
       "changed_budget_details":edited
     }
-    console.log("update")
     updateBudgetPlDetails(bid,form,successFn)
+  }
+
+  const handleRevise = ()=>{
+    let form = {
+      "changed_budget_details":revised
+    }
+    updateBudgetPlRevise(bid,form,successRevise)
   }
   return (
     <MainCard title="Company Details">
@@ -146,10 +160,10 @@ const BudgetPlDetails = () => {
         </TabPanel>
         <TabPanel value={value} index={1}>
         <PlGrid
-            rows={company_budget_details}
-            handleUpdate={handleUpdate}
-            edited={edited}
-            setEdited={setEdited}
+            rows={company_budget_revise}
+            handleUpdate={handleRevise}
+            edited={revised}
+            setEdited={setRevised}
           />
         </TabPanel>
       </div>
