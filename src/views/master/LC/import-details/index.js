@@ -9,7 +9,8 @@ import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 import useCompany from "../../../../hooks/useCompany";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import LcForm from "./lcForm";
+import LCForm from "./LCForm";
+import LCDocumentForm from "./LCDocumentForm";
 
 // assets
 import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
@@ -17,14 +18,13 @@ import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
 import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
 import DynamicFeedTwoToneIcon from "@material-ui/icons/DynamicFeedTwoTone";
 import AddAmendmentDialog from "../../../../components/master/LC/AddAmendmentDialog";
-import LCDocumentForm from "./LCDocumentForm";
 import AddLCDocumentDialog from "../../../../components/master/LC/AddLCDocumentDialog";
 import AmendmentDetails from "./AmmendmentDetails";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -71,7 +71,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -164,7 +164,7 @@ const LcDetails = () => {
           ) : null}
         </Tabs>
         <TabPanel value={value} index={0}>
-          <LcForm />
+          <LCForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <LCDocumentForm />

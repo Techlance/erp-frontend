@@ -5,16 +5,12 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import MainLayout from "../../layout/MainLayout";
 import Loadable from "../../ui-component/Loadable";
 import AuthGuard from "../../utils/route-guard/AuthGuard";
-// import CostCategoryDetails from "../../views/master/cost-center/cost-category-details";
 import CompanyGuard from "../../utils/route-guard/CompanyGuard";
 import LcDetails from "../../views/master/LC/import-details";
 
 // lc page routing
 
-const lc = Loadable(lazy(() => import("../../views/master/LC/Import")));
-// const Center = Loadable(
-//   lazy(() => import("../../views/master/cost-center/cost-center-sub-menu"))
-// );
+const lc = Loadable(lazy(() => import("../../views/master/LC/import")));
 
 //-----------------------|| LC Routing ||-----------------------//
 const LcRoutes = ({ match }) => {
