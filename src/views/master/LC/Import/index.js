@@ -30,7 +30,9 @@ const SelectGroup = () => {
 
   console.log(lc);
 
-  const { company } = useComapanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
+
+  // const { company } = useComapanyMaster();
 
   const { lc_import, lc_export } = lc;
 

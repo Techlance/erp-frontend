@@ -25,9 +25,7 @@ const SelectGroup = () => {
 
   const [costCenter] = useSelector((state) => [state.costCenter]);
 
-  const { company } = useComapanyMaster();
-
-  // const { company } = company;
+  const { company } = useSelector((state) => state.companyMaster);
 
   const { cost_category } = costCenter;
 

@@ -133,7 +133,7 @@ const LcForm = () => {
     form.cost_center = form.cost_center.id;
     form.party_code = form.party_code.id;
     form.bank_ac = form.bank_ac.id;
-    // form.base_currency = form.base_currency.id;
+    form.base_currency = form.base_currency.id;
     flag ? await updateImportLC(form) : await updateExportLC(form);
     setClicked(false);
     // history.replace("/company/9/master/lc/import/1");

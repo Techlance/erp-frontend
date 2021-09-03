@@ -31,9 +31,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
   const { pathname } = useLocation();
   const history = useHistory();
 
-  // const { company } = useSelector((state) => state.companyMaster);
-
-  const { company } = useCompanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
 
   let flag = true; // Show Payables for import
   if (pathname.includes("/export")) {
@@ -77,7 +75,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             id="trans_type"
             label="Transaction Type"
             disabled
-            value={values.trans_type}
+            value={flag ? "Import" : "Export"}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
           />
@@ -87,6 +85,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="lc_date"
             label="LC Date"
+            required
             InputLabelProps={{ shrink: true }}
             type="date"
             value={values.lc_date}
@@ -96,8 +95,9 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
         {flag ? (
           <Grid item xs={12} sm={6}>
             <PartyCodePaySelect
-              captionLabel="Party Code (Payables)"
+              captionLabel="Party Code (Payables)*"
               InputLabelProps={{ shrink: true }}
+              required
               selected={values.party_code}
               onChange={handleSelect}
             />
@@ -105,7 +105,8 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
         ) : (
           <Grid item xs={12} sm={6}>
             <PartyCodeRecSelect
-              captionLabel="Party Code (Receivables)"
+              captionLabel="Party Code (Receivables)*"
+              required
               InputLabelProps={{ shrink: true }}
               selected={values.party_code}
               onChange={handleSelect}
@@ -114,7 +115,8 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
         )}
         <Grid item xs={12} sm={6}>
           <CostCenterSelect
-            captionLabel="Cost Center"
+            captionLabel="Cost Center*"
+            required
             InputLabelProps={{ shrink: true }}
             selected={values.cost_center}
             onChange={handleSelect}
@@ -125,6 +127,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="applicant_bank"
             label="Applicant Bank"
+            required
             value={values.applicant_bank}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
@@ -135,6 +138,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="applicant_bank_lc_no"
             label="Applicant Bank LC No."
+            required
             value={values.applicant_bank_lc_no}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
@@ -145,6 +149,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="benificiary_bank"
             label="Beneficiary Bank"
+            required
             value={values.benificiary_bank}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
@@ -155,6 +160,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="benificiary_bank_lc_no"
             label="Beneficiary Bank LC No."
+            required
             value={values.benificiary_bank_lc_no}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
@@ -165,13 +171,14 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             control={
               <Switch
                 id="inspection"
+                required
                 checked={values.inspection}
                 onChange={handleChecked}
                 name="inspection"
                 color="primary"
               />
             }
-            label="Inspection Certificate"
+            label="Inspection Certificate*"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -179,6 +186,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="bank_ref"
             label="Bank Ref."
+            required
             InputLabelProps={{ shrink: true }}
             value={values.bank_ref}
             onChange={handleChange}
@@ -190,6 +198,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             id="days_for_submit_to_bank"
             label="Days Remaining To Return To Bank"
             type="number"
+            required
             value={values.days_for_submit_to_bank}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
@@ -200,6 +209,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="payment_terms"
             label="Payment Terms"
+            required
             value={values.payment_terms}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
@@ -210,6 +220,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="place_of_taking_incharge"
             label="Incharge Taking Place"
+            required
             value={values.place_of_taking_incharge}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
@@ -220,6 +231,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="final_destination_of_delivery"
             label="Final Delivery Destination"
+            required
             value={values.final_destination_of_delivery}
             InputLabelProps={{ shrink: true }}
             onChange={handleChange}
@@ -230,13 +242,14 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             control={
               <Switch
                 id="completed"
+                required
                 checked={values.completed}
                 onChange={handleChecked}
                 name="completed"
                 color="primary"
               />
             }
-            label="Completed"
+            label="Completed*"
           />
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -245,6 +258,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             multiline
             id="shipment_terms"
             label="Shipment Terms"
+            required
             InputLabelProps={{ shrink: true }}
             value={values.shipment_terms}
             onChange={handleChange}
@@ -256,6 +270,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             multiline
             id="goods_description"
             label="Goods Description"
+            required
             InputLabelProps={{ shrink: true }}
             value={values.goods_description}
             onChange={handleChange}
@@ -267,6 +282,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             multiline
             id="other_lc_terms"
             label="Other LC Terms"
+            required
             InputLabelProps={{ shrink: true }}
             value={values.other_lc_terms}
             onChange={handleChange}
@@ -274,7 +290,8 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <BankAcSelect
-            captionLabel="Bank A/C"
+            captionLabel="Bank A/C*"
+            required
             InputLabelProps={{ shrink: true }}
             selected={values.bank_ac}
             onChange={handleSelect}
@@ -285,6 +302,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             fullWidth
             id="expiry_date"
             label="Expiry Date"
+            required
             InputLabelProps={{ shrink: true }}
             type="date"
             InputProps={{ inputProps: { min: values.lc_date } }}
@@ -294,7 +312,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <FcNameSelect
-            captionLabel="Currency"
+            captionLabel="Currency*"
             InputLabelProps={{ shrink: true }}
             selected={values.base_currency}
             onChange={handleSelect}
@@ -307,6 +325,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             id="lc_amount"
             label="LC Amount"
             type="number"
+            required
             value={values.lc_amount}
             InputLabelProps={{ shrink: true }}
             InputProps={{ inputProps: { min: 1 } }}

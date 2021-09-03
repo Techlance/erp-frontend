@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CostCategoryForm = () => {
   const classes = useStyles();
-  const history = useHistory();
 
   const { cost_category } = useSelector((state) => state.costCenter);
   const { getCostCategory, updateCostCategory, deleteCostCategory } =
@@ -43,6 +42,8 @@ const CostCategoryForm = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [values, setValues] = useState({ ...cost_category });
+
+  const history = useHistory();
 
   const [clicked, setClicked] = useState(false);
 
@@ -79,6 +80,7 @@ const CostCategoryForm = () => {
   const handleUpdateCostCategory = async () => {
     setClicked(true);
     await updateCostCategory(values);
+    history.replace(`/company/${mid}/master/cost-center/category`);
     setClicked(false);
   };
 

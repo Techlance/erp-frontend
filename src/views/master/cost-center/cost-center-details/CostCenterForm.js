@@ -89,9 +89,10 @@ const CostCenterForm = () => {
   const handleUpdateCostCenter = async () => {
     setClicked(true);
     let form = { ...values };
+    console.log(form);
+
     form.cost_category_id = parseInt(form.cost_category_id.id);
     form.child_of = parseInt(form.child_of.id);
-    console.log(form);
     await updateCostCenter(form);
     setClicked(false);
   };

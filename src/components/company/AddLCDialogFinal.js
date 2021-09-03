@@ -69,9 +69,9 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { addImportLC, addExportLC, createLcDocs } = useLC();
   const { pathname } = useLocation();
-  // const { company } = useSelector((state) => state.companyMaster);
+  const { company } = useSelector((state) => state.companyMaster);
 
-  const { company } = useComapanyMaster();
+  // const { company } = useComapanyMaster();
 
   const history = useHistory();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -119,7 +119,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
     bank_ac: null,
     expiry_date: "",
     lc_amount: "",
-    base_currency: { id: company.base_currency },
+    base_currency: { id: company?.base_currency },
     company_master_id: mid,
     created_by: user.email,
   });

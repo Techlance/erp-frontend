@@ -46,6 +46,7 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
 
   useEffect(() => {
     setValues({
+      // lc_amend_id:,
       lc_id: data.lc_id,
       amendment_no: data.amendment_no,
       issue_date: data.issue_date,
@@ -53,7 +54,7 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
       expiry_date: data.expiry_date,
       lc_amount: data.lc_amount,
       remarks: data.remarks,
-      company_master_id: data.mid,
+      company_master_id: mid,
       created_by: user.email,
       //   id: data.id,
       //   created_by: data.created_by,
