@@ -83,6 +83,8 @@ const SelectGroup = () => {
   useEffect(() => {
     setLoading(true);
     getCostCategory(company?.company_id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company]);
 
   useEffect(() => {

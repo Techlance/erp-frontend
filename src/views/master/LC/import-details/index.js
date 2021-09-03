@@ -9,9 +9,7 @@ import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 import useCompany from "../../../../hooks/useCompany";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import AddDocumentDialog from "../../../../components/company/AddDocumentDialog";
 import LcForm from "./lcForm";
-import CompanyDocumentForm from "../../../company/company-details/CompanyDocumentForm";
 
 // assets
 import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
@@ -26,7 +24,7 @@ import AmendmentDetails from "./AmmendmentDetails";
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -73,7 +71,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }

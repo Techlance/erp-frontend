@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 
-import { IconButton, Grid, Stack } from "@material-ui/core";
-
-// assets
-
 // project imports
 import { gridSpacing } from "../../../store/constant";
 
@@ -13,15 +9,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
+  Grid,
   TextField,
   Typography,
 } from "@material-ui/core";
 
 // project imports
 import useAuth from "../../../hooks/useAuth";
-import useCompany from "../../../hooks/useCompany";
 import useLC from "../../../hooks/useLC";
 import { useParams } from "react-router";
 
@@ -31,7 +26,6 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
 
   const { addLCAmend } = useLC();
 
-  const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
   const [clicked, setClicked] = useState(false);
 
   const [values, setValues] = useState({
@@ -50,13 +44,6 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
     setValues({
       ...values,
       [event.target.id]: event.target.value,
-    });
-  };
-
-  const handleSelect = (key, value) => {
-    setValues({
-      ...values,
-      [key]: value,
     });
   };
 

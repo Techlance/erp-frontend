@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { IconButton, Grid, Stack } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 // assets
 
@@ -13,7 +13,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
   Typography,
@@ -55,11 +54,9 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
       remarks: data.remarks,
       company_master_id: data.mid,
       created_by: user.email,
-      //   id: data.id,
-      //   created_by: data.created_by,
-      //   currency_name: data.currency_name,
-      //   currency: data.currency,
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleChange = (event) => {
@@ -69,18 +66,9 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
     });
   };
 
-  const handleSelect = (key, value) => {
-    setValues({
-      ...values,
-      [key]: value,
-    });
-  };
-
   const handleUpdateAmendment = async () => {
     setClicked(true);
     await updateLCAmend(values, lc_id);
-    // await getLCAmend(values);
-
     setClicked(false);
     handleClose();
   };
@@ -93,14 +81,10 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
       fullWidth
       maxWidth="sm"
     >
-      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
       <DialogTitle id="form-dialog-title">
         <Typography variant="h4">Update Amendment</Typography>
       </DialogTitle>
       <DialogContent>
-        {/* <DialogContentText>
-          <Typography variant="body2">Create a new company.</Typography>
-        </DialogContentText> */}
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={6}>
             <TextField

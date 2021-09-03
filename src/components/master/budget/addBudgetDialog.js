@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // material-ui
 import {
@@ -33,11 +33,11 @@ const AddBudgetDialog = ({ open, handleClose }) => {
   const { addCompanyBudget } = useBudget();
   const { mid } = useParams();
   const [values, setValues] = useState({
-    budget_name:null,
-    budget_type:null,
-    year_id:null,
-    authoriser:null,
-    enforce_restrictions:false
+    budget_name: null,
+    budget_type: null,
+    year_id: null,
+    authoriser: null,
+    enforce_restrictions: false,
   });
 
   const [clicked, setClicked] = useState(false);
@@ -45,7 +45,7 @@ const AddBudgetDialog = ({ open, handleClose }) => {
   const handleChange = (event) => {
     setValues({
       ...values,
-      [event.target.id||"budget_type"]: event.target.value,
+      [event.target.id || "budget_type"]: event.target.value,
     });
   };
 
@@ -59,10 +59,10 @@ const AddBudgetDialog = ({ open, handleClose }) => {
   const handleSubmit = async () => {
     setClicked(true);
     let form = { ...values };
-    form.created_by = user.email
-    form.company_master_id = mid
-    form.year_id = form.year_id.id
-    form.authoriser = form.authoriser.id
+    form.created_by = user.email;
+    form.company_master_id = mid;
+    form.year_id = form.year_id.id;
+    form.authoriser = form.authoriser.id;
     await addCompanyBudget(form);
     setClicked(false);
     handleClose();
@@ -95,37 +95,37 @@ const AddBudgetDialog = ({ open, handleClose }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined">
-                    <TextField
-                        id="budget_type"
-                        select
-                        fullWidth
-                        label="Type"
-                        value={values.budget_type}
-                        onChange={handleChange}
-                        variant="outlined"
-                        InputLabelProps={{ shrink: true }}
-                    >
-                        <MenuItem value={"P&L"}>{"P&L"}</MenuItem>
-                        <MenuItem value={"Cashflow"}>{"Cashflow"}</MenuItem>
-                    </TextField>
-                </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <YearSelect
-                captionLabel="Budget Year"
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                id="budget_type"
+                select
+                fullWidth
+                label="Type"
+                value={values.budget_type}
+                onChange={handleChange}
+                variant="outlined"
                 InputLabelProps={{ shrink: true }}
-                selected={values.year_id}
-                onChange={handleSelect}
-                />
+              >
+                <MenuItem value={"P&L"}>{"P&L"}</MenuItem>
+                <MenuItem value={"Cashflow"}>{"Cashflow"}</MenuItem>
+              </TextField>
+            </FormControl>
           </Grid>
-            <Grid item xs={12} sm={6}>
-                <AuthoriserSelect
-                captionLabel="Authoriser"
-                InputLabelProps={{ shrink: true }}
-                selected={values.authoriser}
-                onChange={handleSelect}
-                />
+          <Grid item xs={12} sm={6}>
+            <YearSelect
+              captionLabel="Budget Year"
+              InputLabelProps={{ shrink: true }}
+              selected={values.year_id}
+              onChange={handleSelect}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <AuthoriserSelect
+              captionLabel="Authoriser"
+              InputLabelProps={{ shrink: true }}
+              selected={values.authoriser}
+              onChange={handleSelect}
+            />
           </Grid>
         </Grid>
       </DialogContent>

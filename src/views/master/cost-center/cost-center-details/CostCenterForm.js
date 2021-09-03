@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 // material-ui
-import { makeStyles } from "@material-ui/core/styles";
 import { Button, Grid, Stack, TextField } from "@material-ui/core";
 
 import { useHistory, useParams } from "react-router";
@@ -18,23 +17,11 @@ import { useSelector } from "react-redux";
 import CategorySelect from "../../../../components/CostCenter/CategorySelect";
 import ParentGroupSelect from "../../../../components/CostCenter/ParentGroupSelect";
 import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
-
-// style constant
-const useStyles = makeStyles((theme) => ({
-  accountAvatar: {
-    width: "100px",
-    height: "100px",
-    margin: "0 auto",
-  },
-  accountContent: {
-    textAlign: "center",
-  },
-}));
+import LoadingButton from "../../../../ui-component/LoadingButton";
 
 //-----------------------|| Cost Center Form ||-----------------------//
 
 const CostCenterForm = () => {
-  const classes = useStyles();
   const history = useHistory();
 
   const { cost_center_details, cost_center } = useSelector(
@@ -55,8 +42,6 @@ const CostCenterForm = () => {
   const [values, setValues] = useState(null);
   const [clicked, setClicked] = useState(false);
 
-  const [error, setError] = useState(false);
-  const [nameError, setNameError] = useState(false);
   const [checkList, setCheckList] = useState({});
 
   const handleChange = (event) => {
@@ -80,6 +65,8 @@ const CostCenterForm = () => {
       });
       setValues({ ...cost_center_details });
     } else getCostCenterDetails(cen_id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cost_center_details]);
 
   useEffect(() => {
@@ -149,18 +136,15 @@ const CostCenterForm = () => {
                       </AnimateButton>
                     </Grid>
                     <Grid item>
-                      <AnimateButton>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(e) => {
-                            handleUpdateCostCenter();
-                          }}
-                          startIcon={<SaveIcon />}
-                        >
-                          Update Details
-                        </Button>
-                      </AnimateButton>
+                      <LoadingButton
+                        variant="contained"
+                        color="primary"
+                        loading={clicked}
+                        onClick={handleUpdateCostCenter}
+                        startIcon={<SaveIcon />}
+                      >
+                        Update Details
+                      </LoadingButton>
                     </Grid>
                   </Grid>
                 </Stack>

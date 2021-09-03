@@ -1,11 +1,10 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // reducer - state management
 
 // project imports
 import Loader from "../../ui-component/Loader";
-import useAuth from "../../hooks/useAuth";
 
 import {
   // Company LC
@@ -29,11 +28,6 @@ import {
   getLCDetailAsync,
 } from "../../api";
 
-// constant
-const initialState = {
-  lc: [],
-};
-
 export const LC = createContext();
 
 export const LcProvider = ({ children }) => {
@@ -41,8 +35,6 @@ export const LcProvider = ({ children }) => {
   const state = useSelector((state) => state.lc);
 
   const [loading] = useState(false);
-
-  const { user } = useAuth();
 
   const getImportLC = async (id) => {
     await getImportLCAsync(id, dispatch);

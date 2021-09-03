@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
+import { Box, Tab, Tabs } from "@material-ui/core";
 
 // project imports
 
-import useCostCenter from "../../../../hooks/useCostCenter";
+// import useCostCenter from "../../../../hooks/useCostCenter";
 import MainCard from "../../../../ui-component/cards/MainCard";
 // import CompanyForm from "./CompanyForm";
 // import CompanyDocumentForm from "./CompanyDocumentForm";
@@ -21,7 +21,7 @@ import CostCategoryForm from "./CostCategoryForm";
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -68,7 +68,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }

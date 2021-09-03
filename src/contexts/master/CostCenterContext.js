@@ -1,11 +1,10 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // reducer - state management
 
 // project imports
 import Loader from "../../ui-component/Loader";
-import useAuth from "../../hooks/useAuth";
 
 import {
   // Company Cost Category
@@ -20,19 +19,12 @@ import {
   deleteCostCenterAsync,
 } from "../../api";
 
-// constant
-const initialState = {
-  cost_category: [],
-};
-
 export const CostCenter = createContext();
 
 export const CostCenterProvider = ({ children }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.costCenter);
   const [loading] = useState(false);
-
-  const { user } = useAuth();
 
   const getCostCategory = async (id) => {
     await getCostCategoryAsync(id, dispatch);

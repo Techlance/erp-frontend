@@ -1,50 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
-import { Grid, Stack, FormControlLabel, Switch } from "@material-ui/core";
-
-// assets
-import SaveIcon from "@material-ui/icons/SaveRounded";
+// material-ui
+import { TextField, Grid, FormControlLabel, Switch } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../store/constant";
-import CurrencySelect from "./CurrencySelect";
-
-// material-ui
-import { TextField } from "@material-ui/core";
-
-// project imports
-import useAuth from "../../hooks/useAuth";
-import useCompanyMaster from "../../hooks/useCompanyMaster";
-import useLC from "../../hooks/useLC";
-import { useLocation, useParams } from "react-router";
-import { useHistory } from "react-router";
 import CostCenterSelect from "../master/LC/CostCenterSelect";
 import PartyCodePaySelect from "../master/LC/PartyCodePaySelect";
 import PartyCodeRecSelect from "../master/LC/PartyCodeRecSelect";
 import BankAcSelect from "../master/LC/BankACSelect";
 import FcNameSelect from "../master/LC/FcNameSelect";
-import { useSelector } from "react-redux";
 
 const AddLCDialog = ({ open, handleClose, values, setValues }) => {
-  const { user } = useAuth();
-  const { addImportLC, addExportLC } = useLC();
   const { pathname } = useLocation();
-  const history = useHistory();
 
-  // const { company } = useSelector((state) => state.companyMaster);
-
-  const { company } = useCompanyMaster();
+  const { company } = useSelector((state) => state.companyMaster);
 
   let flag = true; // Show Payables for import
   if (pathname.includes("/export")) {
     // Show Receivables for export
     flag = false;
   }
-
-  const { mid } = useParams();
-
-  // const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
-  const [clicked, setClicked] = useState(false);
 
   const handleChange = (event) => {
     setValues({

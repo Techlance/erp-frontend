@@ -14,7 +14,6 @@ import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 
 // import useCostCenter from "../../../../hooks/useCostCenter";
-import useComapanyMaster from "../../../../hooks/useCompanyMaster";
 import { useLocation } from "react-router";
 import formatDate from "../../../../utils/format-date";
 import useLC from "../../../../hooks/useLC";
@@ -23,22 +22,14 @@ import AddLCDialogFinal from "../../../../components/company/AddLCDialogFinal";
 //-----------------------|| LC List ||-----------------------//
 
 const SelectGroup = () => {
-  const [showAddModal, setShowAddModal] = useState(false);
-
-  //   const [costCenter] = useSelector((state) => [state.costCenter]);
-  const lc = useSelector((state) => state.lc);
-
-  console.log(lc);
-
-  const { company } = useComapanyMaster();
-
-  const { lc_import, lc_export } = lc;
-
-  const { getLC, getImportLC, getExportLC } = useLC();
-
-  const [loading, setLoading] = useState(true);
-
   const { pathname } = useLocation();
+  const { company } = useSelector((state) => state.companyMaster);
+
+  const { lc_import, lc_export } = useSelector((state) => state.lc);
+  const { getImportLC, getExportLC } = useLC();
+
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   let flag = true;
   if (pathname.includes("/export")) {
@@ -256,7 +247,8 @@ const SelectGroup = () => {
   useEffect(() => {
     setLoading(true);
     flag ? getImportLC(company?.company_id) : getExportLC(company?.company_id);
-    // await getImportLC(company?.company_id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company]);
 
   useEffect(() => {
