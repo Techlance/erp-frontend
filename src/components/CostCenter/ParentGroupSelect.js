@@ -6,6 +6,7 @@ import { FormControl, MenuItem, TextField } from "@material-ui/core";
 
 // project import
 import useRequest from "../../hooks/useRequest";
+import { useParams } from "react-router";
 
 // assets
 import CachedIcon from "@material-ui/icons/Cached";
@@ -24,6 +25,8 @@ const ParentGroupSelect = ({
     return -1;
   });
   const errorState = formState === "error" ? true : false;
+
+  const { cen_id } = useParams();
 
   const [getCostCategory, loading, , data] = useRequest({
     url: `/company/get-cost-center-name/${cat_id}`,
@@ -48,7 +51,11 @@ const ParentGroupSelect = ({
   const handleChange = (event) => {
     const item = data.find((option) => option.id === event.target.value);
 
-    onChange("child_of", item);
+    // if (item.id !== cen_id) {
+    //   onChange("child_of", item);
+    // } else {
+    //   onChange("child_of", null);
+    // }
   };
 
   return (

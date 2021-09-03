@@ -79,7 +79,13 @@ const CostCenterForm = () => {
     console.log(form);
 
     form.cost_category_id = parseInt(form.cost_category_id.id);
-    form.child_of = parseInt(form.child_of.id);
+
+    if (form.child_of) {
+      form.child_of = parseInt(form.child_of?.id);
+    } else {
+      form.child_of = null;
+    }
+
     await updateCostCenter(form);
     setClicked(false);
   };
