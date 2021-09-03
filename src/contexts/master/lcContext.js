@@ -73,7 +73,7 @@ export const LcProvider = ({ children }) => {
   const addExportLC = async (data) => {
     return await addLCAsync(data, dispatch);
 
-    // await getImportLCAsync(data.company_master_id, dispatch);
+    // await getExportLCAsync(data.company_master_id, dispatch);
   };
 
   const updateImportLC = async (data) => {
@@ -99,14 +99,11 @@ export const LcProvider = ({ children }) => {
 
   const addLCAmend = async (data) => {
     await createLCAmendAsync(data, dispatch);
-    // console.log(data.lc_id);
-    // console.log("HELLO");
+
     await getLCAmendAsync(data.lc_id, dispatch);
   };
 
   const updateLCAmend = async (data, id) => {
-    console.log(data);
-    console.log("HI");
     await updateLCAmendAsync(data, id, dispatch);
 
     // await getLCAmendAsync(id, dispatch);
@@ -114,8 +111,6 @@ export const LcProvider = ({ children }) => {
 
   const deleteLCAmend = async (id, lc_id) => {
     await deleteLCAmendAsync(id, dispatch);
-    console.log(lc_id);
-    console.log("HELLO");
     await getLCAmendAsync(lc_id, dispatch);
   };
 
