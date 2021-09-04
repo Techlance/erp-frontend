@@ -1,66 +1,107 @@
-import React from "react";
+import React,{useEffect} from "react";
 
 // material-ui
-import { Grid, Stack } from "@material-ui/core";
+import { Grid, Stack, TextField } from "@material-ui/core";
 
 // project import
 import { gridSpacing } from "../../../../store/constant";
-// import useRequest from "../../../../hooks/useRequest";
+import useRequest from "../../../../hooks/useRequest";
 import CashFlowAutoSelect from "../../../../components/master/budget/CashFlowAutoSelect";
 
 // assets
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
+import CashflowTypeSelect from "../../../../components/master/budget/CashflowTypeSelect";
+
 
 //-----------------------|| CashFlow Grid ||-----------------------//
 
-const data = [
-  {
-    id: 1,
-    head: "receipt1",
-    created_by: "jainam@gmail.com",
-    created_on: "2021-09-02T14:28:48.181005Z",
-  },
-  {
-    id: 2,
-    head: "receipt2",
-    created_by: "jainam@gmail.com",
-    created_on: "2021-09-02T14:28:48.181005Z",
-  },
-  {
-    id: 3,
-    head: "payment1",
-    created_by: "jainam@gmail.com",
-    created_on: "2021-09-02T19:53:42.635736Z",
-  },
-  {
-    id: 5,
-    head: "payment2",
-    created_by: "jainam@gmail.com",
-    created_on: "2021-09-02T20:01:37.032799Z",
-  },
-  {
-    id: 6,
-    head: "payment3",
-    created_by: "jainam@gmail.com",
-    created_on: "2021-09-02T20:01:37.032799Z",
-  },
-];
+// const data = [
+//   {
+//     id: 1,
+//     head: "receipt1",
+//     created_by: "jainam@gmail.com",
+//     created_on: "2021-09-02T14:28:48.181005Z",
+//   },
+//   {
+//     id: 2,
+//     head: "receipt2",
+//     created_by: "jainam@gmail.com",
+//     created_on: "2021-09-02T14:28:48.181005Z",
+//   },
+//   {
+//     id: 3,
+//     head: "payment1",
+//     created_by: "jainam@gmail.com",
+//     created_on: "2021-09-02T19:53:42.635736Z",
+//   },
+//   {
+//     id: 5,
+//     head: "payment2",
+//     created_by: "jainam@gmail.com",
+//     created_on: "2021-09-02T20:01:37.032799Z",
+//   },
+//   {
+//     id: 6,
+//     head: "payment3",
+//     created_by: "jainam@gmail.com",
+//     created_on: "2021-09-02T20:01:37.032799Z",
+//   },
+// ];
 
-const CashFlowGrid = ({ rows, edited, loading, setEdited, handleUpdate }) => {
-  // const [getCashFlowHead, loading, , data] = useRequest({
-  //   url: "/budget/get-cashflow-head",
-  //   method: "GET",
-  //   initialState: [],
-  // });
+// function renderAuto(params) {
+//   return <TextField readOnly value={params.value} />;
+// }
 
-  // useEffect(() => {
-  //   getCashFlowHead();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+// function RatingEditInputCell({ id, value, api, field }) {
+
+//   const handleChange = (event) => {
+//     api.setEditCellValue({ id, field, value: Number(event.target.value) }, event);
+//     if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
+//       api.commitCellChange({ id, field });
+//       api.setCellMode(id, field, 'view');
+//     }
+//   };
+
+//   const handleRef = (element) => {
+//     if (element) {
+//       element.querySelector(`input[value="${value}"]`).focus();
+//     }
+//   };
+
+//   return (
+//     <div className={classes.root}>
+//       <Rating
+//         ref={handleRef}
+//         name="rating"
+//         precision={1}
+//         value={value}
+//         onChange={handleChange}
+//       />
+//     </div>
+//   );
+// }
+
+// function renderAutoEditInputCell(params) {
+//   return <RatingEditInputCell {...params} />;
+// }
+
+
+const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
+  const [getCashFlowHead, loading, , data] = useRequest({
+    url: "/budget/get-cashflow-head/",
+    method: "GET",
+    initialState: [],
+  });
+
+  useEffect(() => {
+    getCashFlowHead();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEdit = ({ id, field, value }) => {
+    console.log(id, field, value)
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
       return { ...e };
@@ -83,6 +124,21 @@ const CashFlowGrid = ({ rows, edited, loading, setEdited, handleUpdate }) => {
 
   const columns = [
     {
+      field: "budget_type",
+      headerName: "Budget Type",
+      flex: 0.3,
+      headerAlign: "left",
+      align: "left",
+      minWidth: 320,
+      renderCell: (params) => (
+        <CashflowTypeSelect
+          params={params}
+          options={["payment","receipt"]}
+          loading={loading}
+        />
+      ),
+    },
+    {
       field: "cashflow_head",
       headerName: "Cash Flow Head",
       flex: 0.3,
@@ -93,7 +149,7 @@ const CashFlowGrid = ({ rows, edited, loading, setEdited, handleUpdate }) => {
         <CashFlowAutoSelect
           params={params}
           options={data}
-          // loading={loading}
+          loading={loading}
         />
       ),
     },
