@@ -18,12 +18,13 @@ import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import HeadTitleSelect from "../../../../components/master/ledger-master/HeadTitleSelect";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
+import LoadingButton from "../../../../ui-component/LoadingButton";
 
 //-----------------------|| User Form ||-----------------------//
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 const UserForm = () => {
   const history = useHistory();
   const classes = useStyles();
+  const { aid, mid } = useParams();
 
   const { company_account_heads } = useSelector((state) => state.ledgerMaster);
 
@@ -64,16 +66,11 @@ const UserForm = () => {
     deleteCompanyAccountHead,
   } = useLedgerMaster();
 
-  const { aid, mid } = useParams();
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [values, setValues] = useState(null);
-
   const [clicked, setClicked] = useState(false);
-
   const [error, setError] = useState(false);
-
   const [checkList, setCheckList] = useState({});
 
   const handleChange = (event) => {
@@ -138,11 +135,11 @@ const UserForm = () => {
 
   return (
     values && (
-      <MainCard title="User Details">
+      <MainCard title="Account Head Details">
         <div className={classes.root}>
           <Grid container spacing={gridSpacing} justifyContent="center">
             <Grid item sm={12} md={8}>
-              <SubCard title="Edit User Details">
+              <SubCard title="Account Head Details">
                 <Grid container spacing={gridSpacing}>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -179,7 +176,7 @@ const UserForm = () => {
                     <Stack direction="row">
                       <Grid
                         container
-                        justifyContent="flex-end"
+                        justifyContent="space-between"
                         spacing={gridSpacing}
                       >
                         <Grid item>
@@ -189,23 +186,22 @@ const UserForm = () => {
                               color="error"
                               onClick={() => setShowDeleteModal(true)}
                               startIcon={<DeleteIcon />}
+                              disabled={clicked}
                             >
                               Delete
                             </Button>
                           </AnimateButton>
                         </Grid>
                         <Grid item>
-                          <AnimateButton>
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={handleUpdateAccountHead}
-                              startIcon={<SaveIcon />}
-                              disabled={clicked}
-                            >
-                              Save Details
-                            </Button>
-                          </AnimateButton>
+                          <LoadingButton
+                            variant="contained"
+                            color="primary"
+                            onClick={handleUpdateAccountHead}
+                            startIcon={<SaveIcon />}
+                            loading={clicked}
+                          >
+                            Save Details
+                          </LoadingButton>
                         </Grid>
                       </Grid>
                     </Stack>
@@ -217,7 +213,7 @@ const UserForm = () => {
               checkList={checkList}
               showDeleteModal={showDeleteModal}
               handleAgree={() => {
-                deleteCompanyAccountHead(values.id);
+                deleteCompanyAccountHead(values.id, mid);
                 history.replace(`/company/${mid}/master/ledger-master/head/`);
               }}
               handleClose={() => setShowDeleteModal(false)}

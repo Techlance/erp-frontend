@@ -63,10 +63,10 @@ export const LedgerMasterProvider = ({ children }) => {
     // await getSelectedCompanyAsync(data.id, dispatch);
   };
 
-  const deleteCompanyAccountHead = async (id) => {
+  const deleteCompanyAccountHead = async (id, mid) => {
     await deleteCompanyAccountHeadAsync(id, dispatch);
 
-    await getCompanyAccountHeadsAsync(id, dispatch);
+    await getCompanyAccountHeadsAsync(mid, dispatch);
   };
 
   const getCompanyAccountGroups = async (id) => {
