@@ -103,6 +103,7 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
                 <Button
                   onClick={handleClose}
                   variant="contained"
+                  size="small"
                   color="error"
                   startIcon={<CancelIcon />}
                 >
@@ -115,6 +116,7 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
                   onClick={handleAddCurrency}
                   variant="contained"
                   color="primary"
+                  size="small"
                   startIcon={<AddCircleIcon />}
                 >
                   Add
