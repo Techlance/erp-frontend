@@ -78,7 +78,7 @@ const LedgerBalance = () => {
       fc_amount:
         values.fc_name && values.fc_name?.id !== company.base_currency
           ? parseInt(values.fc_amount)
-          : parseInt(values.amt),
+          : parseInt(0),
       created_by: values.created_by,
     };
     await updateLedgerBalance(form);
@@ -136,12 +136,7 @@ const LedgerBalance = () => {
                   fullWidth
                   id="fc_amount"
                   label="FC Amount"
-                  value={
-                    values?.fc_name &&
-                    values?.fc_name?.id !== company.base_currency
-                      ? values?.fc_amount
-                      : 0
-                  }
+                  value={ values?.fc_amount }
                   InputLabelProps={{ shrink: true }}
                   onChange={handleChange}
                   type="number"
