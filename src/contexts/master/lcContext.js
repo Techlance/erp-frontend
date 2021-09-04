@@ -106,7 +106,7 @@ export const LcProvider = ({ children }) => {
   const updateLCAmend = async (data, id) => {
     await updateLCAmendAsync(data, id, dispatch);
 
-    // await getLCAmendAsync(id, dispatch);
+    await getLCAmendAsync(data.lc_id, dispatch);
   };
 
   const deleteLCAmend = async (id, lc_id) => {

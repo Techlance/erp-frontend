@@ -67,7 +67,7 @@ const PartyCodePaySelect = ({
       >
         {party_code_pay?.map((option, index) => (
           <MenuItem key={index} value={option.id}>
-            {option.ledger_name}
+            {`${option.ledger_id} - ${option.ledger_name}`}
           </MenuItem>
         ))}
       </TextField>

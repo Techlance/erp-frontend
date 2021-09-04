@@ -211,6 +211,7 @@ const UserForm = () => {
                         values?.acc_head_id === null || values?.is_fixed
                       }
                       head_id={values.acc_head_id?.id}
+                      avoid = {values.id}
                     />
                   </Grid>
                   <Grid item xs={12}>

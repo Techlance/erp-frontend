@@ -14,6 +14,7 @@ const ParentGroupSelect = ({
   onChange,
   disabled,
   head_id,
+  avoid
 }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
@@ -67,6 +68,7 @@ const ParentGroupSelect = ({
         helperText={loading && "Loading Data"}
       >
         {data?.map((option, index) => (
+          avoid===option.id?null:
           <MenuItem key={index} value={option.id}>
             {`${option.group_name}`.toUpperCase()}
           </MenuItem>
