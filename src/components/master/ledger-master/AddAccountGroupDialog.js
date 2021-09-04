@@ -135,6 +135,10 @@ const AddUserDialog = ({ open, handleClose }) => {
     form.acc_head_id = parseInt(form.acc_head_id.id);
     form.child_of = form.child_of ? parseInt(form.child_of.id) : null;
     await addCompanyAccountGroup(form);
+    handleClearClose();
+  };
+
+  const handleClearClose = () => {
     setValues({
       group_name: "",
       acc_head_id: null,
@@ -145,13 +149,15 @@ const AddUserDialog = ({ open, handleClose }) => {
       created_by: user.email,
     });
     setClicked(false);
+    setError(false);
+    setNameError(false);
     handleClose();
   };
 
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleClearClose}
       aria-labelledby="create-user"
       fullWidth
       maxWidth="sm"
@@ -214,18 +220,7 @@ const AddUserDialog = ({ open, handleClose }) => {
             color="error"
             variant="contained"
             size="small"
-            onClick={() => {
-              setValues({
-                group_name: "",
-                acc_head_id: null,
-                group_code: "",
-                child_of: null,
-                is_fixed: false,
-                company_master_id: parseInt(mid),
-                created_by: user.email,
-              });
-              handleClose();
-            }}
+            onClick={handleClearClose}
             disabled={clicked}
             startIcon={<CancelIcon />}
           >

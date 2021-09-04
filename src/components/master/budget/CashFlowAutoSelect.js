@@ -33,6 +33,33 @@ const CashFlowAutoSelect = ({ params, options, loading, err }) => {
         startAdornment: <> {loading && <CachedIcon />} </>,
       }}
       renderInput={(params) => <TextField {...params} variant="outlined" />}
+      // onChange={(event, newValue) => {
+      //   if (typeof newValue === 'string') {
+      //     setValue({
+      //       title: newValue,
+      //     });
+      //   } else if (newValue && newValue.inputValue) {
+      //     // Create a new value from the user input
+      //     setValue({
+      //       title: newValue.inputValue,
+      //     });
+      //   } else {
+      //     setValue(newValue);
+      //   }
+      // }}
+      // filterOptions={(options, params) => {
+      //   const filtered = filter(options, params);
+
+      //   // Suggest the creation of a new value
+      //   if (params.inputValue !== '') {
+      //     filtered.push({
+      //       inputValue: params.inputValue,
+      //       title: `Add "${params.inputValue}"`,
+      //     });
+      //   }
+
+      //   return filtered;
+      // }}
     />
   );
 };

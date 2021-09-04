@@ -83,6 +83,7 @@ const AddBrsDialog = ({ open, handleClose }) => {
   };
 
   const handleChange = (event) => {
+    console.log({ [event.target.id]: event.target.value });
     setValues({
       ...values,
       [event.target.id]: event.target.value,
@@ -93,7 +94,7 @@ const AddBrsDialog = ({ open, handleClose }) => {
     setClicked(true);
     await createBrs(values);
     setClicked(false);
-    handleClose();
+    // handleClose();
   };
 
   return (

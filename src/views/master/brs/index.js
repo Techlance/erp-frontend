@@ -8,14 +8,14 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // project imports
 import useBRS from "../../../hooks/useBrs";
-import MainCard from "../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../store/constant";
-import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import SelectBankSelect from "../../../components/master/brs/SelectBankSelect";
 import { formatDate } from "../../../utils";
 
 // assets
 import { IconArrowRight } from "@tabler/icons";
+import MainCard from "../../../ui-component/cards/MainCard";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import CustomDataGrid from "../../../ui-component/CustomDataGrid";
 import AddBrsDialog from "../../../components/master/brs/AddBrsDialog";
 

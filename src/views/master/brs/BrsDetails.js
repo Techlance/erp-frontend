@@ -38,11 +38,7 @@ const BrsDetails = () => {
 
   const { brs_detail } = useSelector((state) => state.brs);
 
-  const {
-    getBrsDetails,
-    updateBrs,
-    // deleteVoucherTypes
-  } = useBRS();
+  const { getBrsDetails, updateBrs, deleteBrs } = useBRS();
 
   const [values, setValues] = useState(null);
   const [clicked, setClicked] = useState(false);
@@ -77,7 +73,7 @@ const BrsDetails = () => {
   };
 
   const handleAgree = async () => {
-    // await deleteVoucherTypes(values.id);
+    await deleteBrs(values.id);
     history.replace(`/company/${mid}/master/op-bal-brs`);
   };
 
@@ -138,7 +134,11 @@ const BrsDetails = () => {
                 </Grid>
 
                 <Grid item sm={12}>
-                  <PaymentTypeTabs values={values} onChange={handleChange} />
+                  <PaymentTypeTabs
+                    editable
+                    values={values}
+                    onChange={handleChange}
+                  />
                 </Grid>
 
                 <Grid item sm={12}>

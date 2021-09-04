@@ -69,6 +69,21 @@ const AddUserDialog = ({ open, handleClose }) => {
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
 
+  const handleClearClose = () => {
+    setValues({
+      schedule_no: null,
+      acc_head_name: "",
+      title: "ASSETS",
+      bs: true,
+      company_master_id: parseInt(mid),
+      created_by: user.email,
+      is_fixed: false,
+    });
+    setClicked(false);
+    setError(false);
+    handleClose();
+  };
+
   const handleChange = (event) => {
     if (event.target.id === "schedule_no") {
       if (
@@ -101,13 +116,13 @@ const AddUserDialog = ({ open, handleClose }) => {
     form.bs = form.title === "ASSETS" || form.title === "EQUITY AND LIABLITIES";
     await addCompanyAccountHead(form);
     setClicked(false);
-    handleClose();
+    handleClearClose();
   };
 
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleClearClose}
       aria-labelledby="create-user"
       fullWidth
       maxWidth="sm"
@@ -159,7 +174,7 @@ const AddUserDialog = ({ open, handleClose }) => {
             color="error"
             variant="contained"
             size="small"
-            onClick={handleClose}
+            onClick={handleClearClose}
             disabled={clicked}
             startIcon={<CancelIcon />}
           >

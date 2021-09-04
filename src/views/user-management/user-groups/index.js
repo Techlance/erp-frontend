@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Button,
   CardActions,
   CardContent,
   Divider,
@@ -20,8 +19,7 @@ import {
 // assets
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import MainCard from "../../../ui-component/cards/MainCard";
-import GroupsProfile from "./GroupsProfile";
-import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import LoadingButton from "../../../ui-component/LoadingButton";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import AddIcon from "@material-ui/icons/AddCircleTwoTone";
@@ -29,9 +27,9 @@ import AddIcon from "@material-ui/icons/AddCircleTwoTone";
 // project import
 import useAuth from "../../../hooks/useAuth";
 import useUserPermissions from "../../../hooks/useUserPermissions";
+import GroupsProfile from "./GroupsProfile";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
 import { gridSpacing } from "../../../store/constant";
-import LoadingButton from "../../../ui-component/LoadingButton";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -178,6 +176,13 @@ const CompanyDetails = () => {
     setClicked(false);
   };
 
+  const handleAgree = async () => {
+    setClicked(true);
+    await deleteUserGroup(current_user_group.id);
+    setClicked(false);
+    setValue(0);
+  };
+
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
@@ -267,16 +272,15 @@ const CompanyDetails = () => {
                   >
                     {value !== 0 ? (
                       <Grid item>
-                        <AnimateButton>
-                          <Button
-                            variant="contained"
-                            color="error"
-                            onClick={() => setShowDeleteModal(true)}
-                            startIcon={<DeleteIcon />}
-                          >
-                            Delete
-                          </Button>
-                        </AnimateButton>
+                        <LoadingButton
+                          variant="contained"
+                          color="error"
+                          loading={clicked}
+                          onClick={() => setShowDeleteModal(true)}
+                          startIcon={<DeleteIcon />}
+                        >
+                          Delete
+                        </LoadingButton>
                       </Grid>
                     ) : null}
                     <Grid item>
@@ -297,7 +301,7 @@ const CompanyDetails = () => {
           </CardActions>
           <ConfirmDeleteDialog
             open={showDeleteModal}
-            handleAgree={() => deleteUserGroup(current_user_group.id)}
+            handleAgree={handleAgree}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
             body="Are you sure you want to delete this user records? Once deleted the data can not be retrived!"

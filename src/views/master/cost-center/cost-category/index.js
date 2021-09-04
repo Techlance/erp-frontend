@@ -10,7 +10,7 @@ import MainCard from "../../../../ui-component/cards/MainCard";
 import { gridSpacing } from "../../../../store/constant";
 import { formatDate } from "../../../../utils";
 import useCostCenter from "../../../../hooks/useCostCenter";
-import AddCostCategoryDialog from "../../../../components/CostCenter/AddCostCategoryDialog";
+import AddCostCategoryDialog from "../../../../components/cost-center/AddCostCategoryDialog";
 
 // assets
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";

@@ -79,7 +79,7 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={handleCloseModal}
       aria-labelledby="upload-document"
       fullWidth
       maxWidth="sm"
@@ -120,7 +120,7 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <Button
-          onClick={handleClose}
+          onClick={handleCloseModal}
           color="error"
           variant="contained"
           size="small"
