@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // material-ui
 import { Grid, Stack } from "@material-ui/core";
@@ -12,11 +12,10 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 //-----------------------|| Ledger Form ||-----------------------//
 
 const PLGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
-
-  const [sortModel, setSortModel] = React.useState([
+  const [sortModel] = useState([
     {
-      field: 'ledger_id',
-      sort: 'asc',
+      field: "ledger_id",
+      sort: "asc",
     },
   ]);
 
