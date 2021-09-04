@@ -108,7 +108,7 @@ const LedgerBillwise = () => {
         fc_amount:
           values.fc_name && values.fc_name?.id !== company.base_currency
             ? parseInt(val.fc_amount)
-            : parseInt(val.amt),
+            : parseInt(0),
         bill_date: val.bill_date,
         due_date: val.due_date,
         amount: parseInt(val.amt),
@@ -200,6 +200,7 @@ const LedgerBillwise = () => {
                   <LoadingButton
                     variant="contained"
                     color="primary"
+                    size="small"
                     onClick={handleUpdate}
                     startIcon={<SaveIcon />}
                     loading={clicked}

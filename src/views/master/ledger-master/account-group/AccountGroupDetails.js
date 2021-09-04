@@ -24,7 +24,7 @@ import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog"
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -130,7 +130,7 @@ const UserForm = () => {
   useEffect(() => {
     if (company_account_group_details) {
       setCheckList({
-        Ledgers: company_account_group_details.ledger_master,
+        "Ledgers": company_account_group_details.ledger_master,
         "Account Groups": company_account_group_details.child,
       });
       setValues({ ...company_account_group_details });
@@ -211,14 +211,14 @@ const UserForm = () => {
                         values?.acc_head_id === null || values?.is_fixed
                       }
                       head_id={values.acc_head_id?.id}
-                      avoid = {values.id}
+                      avoid={values.id}
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <Stack direction="row">
                       <Grid
                         container
-                        justifyContent="flex-end"
+                        justifyContent="space-between"
                         spacing={gridSpacing}
                       >
                         <Grid item>
@@ -226,9 +226,10 @@ const UserForm = () => {
                             <Button
                               variant="contained"
                               color="error"
+                              size="small"
                               onClick={() => setShowDeleteModal(true)}
                               startIcon={<DeleteIcon />}
-                              disabled={values.is_fixed}
+                              disabled={values.is_fixed || clicked}
                             >
                               Delete
                             </Button>
@@ -237,6 +238,7 @@ const UserForm = () => {
                         <Grid item>
                           <LoadingButton
                             variant="contained"
+                            size="small"
                             color="primary"
                             onClick={handleUpdateAccountGroup}
                             startIcon={<SaveIcon />}

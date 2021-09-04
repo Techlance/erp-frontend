@@ -65,6 +65,8 @@ const VoucherTypes = () => {
       headerName: "Voucher Class",
       flex: 0.5,
       minWidth: 300,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "authorization_id",
@@ -74,24 +76,34 @@ const VoucherTypes = () => {
         return params.value?.email || "No Auth Required";
       },
       minWidth: 200,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "auto_numbering",
       headerName: "Auto Numbering",
       flex: 0.2,
+      type: "boolean",
+
       minWidth: 300,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "prefix",
       headerName: "Prefix",
       flex: 0.2,
       minWidth: 150,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "restart",
       headerName: "Restart",
       flex: 0.2,
       minWidth: 150,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "created_on",
@@ -99,6 +111,8 @@ const VoucherTypes = () => {
       type: "date",
       flex: 0.5,
       minWidth: 150,
+      align: "center",
+      headerAlign: "center",
       valueFormatter: (params) => {
         return formatDate(params.value);
       },
@@ -108,6 +122,8 @@ const VoucherTypes = () => {
       headerName: "Created By",
       flex: 0.5,
       minWidth: 150,
+      align: "center",
+      headerAlign: "center",
     },
   ];
 

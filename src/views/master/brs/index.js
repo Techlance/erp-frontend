@@ -38,6 +38,7 @@ const BRS = () => {
 
   const { getBanks, getOpeningBalBRS, setBank } = useBRS();
   const [showAddModal, setShowAddModal] = useState(false);
+  const [rows, setRows] = useState(brs_list);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -59,6 +60,10 @@ const BRS = () => {
       setLoading(true);
     }
   }, [brs_list, company]);
+
+  useEffect(() => {
+    setRows(brs_list);
+  }, [brs_list]);
 
   const onChange = async (item) => {
     await setBank(item);
@@ -176,7 +181,7 @@ const BRS = () => {
           <Grid item>
             <Typography variant="h3">BRS</Typography>
           </Grid>
-          {brs_list && (
+          {brs_list && selected_bank && (
             <Grid item>
               <AnimateButton>
                 <Button
@@ -195,7 +200,7 @@ const BRS = () => {
       content={true}
     >
       <SelectBankSelect captionLabel="Select Bank" onChange={onChange} />
-      {brs_list && (
+      {brs_list && selected_bank && (
         <>
           <Divider
             variant="middle"
@@ -203,7 +208,7 @@ const BRS = () => {
             flexItem
             className={classes.divider}
           />
-          <CustomDataGrid columns={columns} rows={brs_list} loading={loading} />
+          <CustomDataGrid columns={columns} rows={rows} loading={loading} />
         </>
       )}
       <AddBrsDialog

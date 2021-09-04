@@ -23,13 +23,11 @@ const PartyCodePaySelect = ({
     return null;
   });
 
-  // const { currencies, getCurrency } = useCompany();
-  //   const { getCurrency } = useCompany();
-  const { getPartyCodePay } = useLC();
-  const lc = useSelector((state) => state.lc);
-  const { party_code_pay } = lc;
-  const errorState = formState === "error" ? true : false;
   const { mid } = useParams();
+  const { getPartyCodePay } = useLC();
+  const { party_code_pay } = useSelector((state) => state.lc);
+
+  const errorState = formState === "error" ? true : false;
 
   useEffect(() => {
     getPartyCodePay(mid);

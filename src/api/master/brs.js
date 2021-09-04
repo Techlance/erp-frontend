@@ -30,16 +30,21 @@ export const setBankAsync = async (bank, dispatch) => {
   }
 };
 
-export const getOpeningBalBRSAsync = async (id, dispatch) => {
+export const getOpeningBalBRSAsync = async (id, selected_bank, dispatch) => {
   try {
     const response = await instance(`/ledger-balance/get-op-bal-brs/${id}`);
 
+    const filteredList = response.data.data.filter(
+      (brs_item) => brs_item.bank_ledger_id.id === selected_bank.id
+    );
+
     dispatch({
       type: brsActions.GET_BRS,
-      payload: response.data.data,
+      payload: filteredList,
     });
   } catch (error) {
     console.log("Error getting opening balance brs.");
+    console.log(error);
   }
 };
 

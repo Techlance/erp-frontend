@@ -18,13 +18,13 @@ const BankAcSelect = ({ captionLabel, formState, selected, onChange }) => {
     return null;
   });
 
-  // const { currencies, getCurrency } = useCompany();
-  //   const { getCurrency } = useCompany();
-  const { getBankAc } = useLC();
-  const lc = useSelector((state) => state.lc);
-  const { bank_ac } = lc;
-  const errorState = formState === "error" ? true : false;
   const { mid } = useParams();
+  const { getBankAc } = useLC();
+
+  const { bank_ac } = useSelector((state) => state.lc);
+
+  const errorState = formState === "error" ? true : false;
+
   useEffect(() => {
     getBankAc(mid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,6 +41,7 @@ const BankAcSelect = ({ captionLabel, formState, selected, onChange }) => {
 
   const handleChange = (event) => {
     const item = bank_ac.find((option) => option.id === event.target.value);
+
     onChange("bank_ac", item);
   };
 

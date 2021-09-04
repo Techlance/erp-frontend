@@ -57,7 +57,7 @@ const VoucherClassSelect = ({
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
-        disabled={loading}
+        disabled={disabled || loading}
         InputProps={{
           startAdornment: <> {loading && <CachedIcon />} </>,
         }}

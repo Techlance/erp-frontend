@@ -10,12 +10,9 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
-  Stack,
   TextField,
   Typography,
 } from "@material-ui/core";
-
-import SaveIcon from "@material-ui/icons/SaveRounded";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
@@ -26,6 +23,9 @@ import CategorySelect from "../../components/cost-center/CategorySelect";
 
 // assets
 import LoadingButton from "../../ui-component/LoadingButton";
+import AnimateButton from "../../ui-component/extended/AnimateButton";
+import SaveIcon from "@material-ui/icons/SaveRounded";
+import CancelIcon from "@material-ui/icons/CancelTwoTone";
 
 const AddCostCenterDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -137,34 +137,28 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Grid item xs={11.7}>
-          <Stack direction="row">
-            <Grid container justifyContent="space-between">
-              <Grid item>
-                <Button
-                  onClick={handleClose}
-                  color="error"
-                  size="small"
-                  variant="contained"
-                >
-                  Cancel
-                </Button>
-              </Grid>
-              <Grid item>
-                <LoadingButton
-                  color="primary"
-                  variant="contained"
-                  size="small"
-                  onClick={createCostCenter}
-                  loading={clicked}
-                  startIcon={<SaveIcon />}
-                >
-                  Add
-                </LoadingButton>
-              </Grid>
-            </Grid>
-          </Stack>
-        </Grid>
+        <AnimateButton>
+          <Button
+            onClick={handleClose}
+            color="error"
+            size="small"
+            variant="contained"
+            disabled={clicked}
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
+        </AnimateButton>
+        <LoadingButton
+          color="primary"
+          variant="contained"
+          size="small"
+          onClick={createCostCenter}
+          loading={clicked}
+          startIcon={<SaveIcon />}
+        >
+          Add
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

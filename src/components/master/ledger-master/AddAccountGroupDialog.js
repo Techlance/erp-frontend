@@ -88,7 +88,8 @@ const AddUserDialog = ({ open, handleClose }) => {
     if (event.target.id === "group_code") {
       if (
         company_account_groups.find(
-          (acc) => acc.group_code === event.target.value
+          (acc) =>
+            acc.group_code.toUpperCase() === event.target.value.toUpperCase()
         )
       ) {
         setError(true);
@@ -131,11 +132,8 @@ const AddUserDialog = ({ open, handleClose }) => {
 
   const handleSubmit = async () => {
     setClicked(true);
-    let form = { ...values };
-    form.acc_head_id = parseInt(form.acc_head_id.id);
-    form.child_of = form.child_of ? parseInt(form.child_of.id) : null;
-    await addCompanyAccountGroup(form);
-    handleClearClose();
+    await addCompanyAccountGroup(values, () => handleClearClose());
+    setClicked(false);
   };
 
   const handleClearClose = () => {

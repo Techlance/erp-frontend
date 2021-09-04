@@ -52,7 +52,7 @@ const LCDocs = ({ newLC }) => {
   };
 
   const [getLCDocs, , , data] = useRequest({
-    url: `/lc/get-lc-document/${newLC.id}`,
+    url: `/lc/get-lc-document/${newLC?.id}`,
     initialState: [],
   });
 

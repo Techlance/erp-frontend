@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router";
 
 // material-ui
 import {
@@ -18,10 +19,13 @@ import {
 // project imports
 import useAuth from "../../../hooks/useAuth";
 import useLC from "../../../hooks/useLC";
+import { gridSpacing } from "../../../store/constant";
 
 // assets
-import { gridSpacing } from "../../../store/constant";
-import { useParams } from "react-router";
+import LoadingButton from "../../../ui-component/LoadingButton";
+import SaveIcon from "@material-ui/icons/SaveRounded";
+import CancelIcon from "@material-ui/icons/Cancel";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
 
 const AddLCDocumentDialog = ({ newLC, open, handleClose }) => {
   const { user } = useAuth();
@@ -124,25 +128,30 @@ const AddLCDocumentDialog = ({ newLC, open, handleClose }) => {
           <Stack direction="row">
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Button
-                  onClick={handleClose}
-                  color="error"
-                  variant="contained"
-                  size="medium"
-                >
-                  Cancel
-                </Button>
+                <AnimateButton>
+                  <Button
+                    onClick={handleClose}
+                    color="error"
+                    variant="contained"
+                    size="small"
+                    disabled={clicked}
+                    startIcon={<CancelIcon />}
+                  >
+                    Cancel
+                  </Button>
+                </AnimateButton>
               </Grid>
               <Grid item>
-                <Button
+                <LoadingButton
                   color="primary"
                   variant="contained"
-                  size="medium"
+                  size="small"
                   onClick={handleSubmit}
-                  disabled={clicked}
+                  loading={clicked}
+                  startIcon={<SaveIcon />}
                 >
                   Add
-                </Button>
+                </LoadingButton>
               </Grid>
             </Grid>
           </Stack>

@@ -43,7 +43,6 @@ const AccountGroup = () => {
           color="primary"
           aria-label="more-details"
           href={`${pathname}/${params.value}`}
-          // target="_blank"
         >
           <Typography align="center">Edit </Typography>
           <IconArrowRight sx={{ fontSize: "1.1rem" }} />
@@ -90,7 +89,7 @@ const AccountGroup = () => {
     },
     {
       field: "created_by",
-      headerName: "created By",
+      headerName: "Created By",
       flex: 0.3,
     },
   ];

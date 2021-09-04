@@ -1,90 +1,57 @@
-import React, { useEffect } from "react";
+import React,{useEffect} from "react";
 
 // material-ui
-import { Grid, Stack } from "@material-ui/core";
+import { Grid, Stack, TextField, Autocomplete } from "@material-ui/core";
 
 // project import
 import { gridSpacing } from "../../../../store/constant";
 import useRequest from "../../../../hooks/useRequest";
-import CashFlowAutoSelect from "../../../../components/master/budget/CashFlowAutoSelect";
 
 // assets
 import SaveIcon from "@material-ui/icons/SaveRounded";
+import CachedIcon from "@material-ui/icons/Cached";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import CashflowTypeSelect from "../../../../components/master/budget/CashflowTypeSelect";
+
 
 //-----------------------|| CashFlow Grid ||-----------------------//
 
-// const data = [
-//   {
-//     id: 1,
-//     head: "receipt1",
-//     created_by: "jainam@gmail.com",
-//     created_on: "2021-09-02T14:28:48.181005Z",
-//   },
-//   {
-//     id: 2,
-//     head: "receipt2",
-//     created_by: "jainam@gmail.com",
-//     created_on: "2021-09-02T14:28:48.181005Z",
-//   },
-//   {
-//     id: 3,
-//     head: "payment1",
-//     created_by: "jainam@gmail.com",
-//     created_on: "2021-09-02T19:53:42.635736Z",
-//   },
-//   {
-//     id: 5,
-//     head: "payment2",
-//     created_by: "jainam@gmail.com",
-//     created_on: "2021-09-02T20:01:37.032799Z",
-//   },
-//   {
-//     id: 6,
-//     head: "payment3",
-//     created_by: "jainam@gmail.com",
-//     created_on: "2021-09-02T20:01:37.032799Z",
-//   },
-// ];
+function renderAuto(params) {
+  return <TextField inputProps={{readOnly:true}} fullWidth value={params.value?.head} />;
+}
 
-// function renderAuto(params) {
-//   return <TextField readOnly value={params.value} />;
-// }
+function AutoEditInputCell({ id, value, api, field, data, loading }) {
 
-// function RatingEditInputCell({ id, value, api, field }) {
+  const handleChange = (event,newValue) => {
+    api.setEditCellValue({ id, field, value:newValue }, event);
+    if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
+      api.commitCellChange({ id, field });
+      api.setCellMode(id, field, 'view');
+    }
+  };
 
-//   const handleChange = (event) => {
-//     api.setEditCellValue({ id, field, value: Number(event.target.value) }, event);
-//     if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
-//       api.commitCellChange({ id, field });
-//       api.setCellMode(id, field, 'view');
-//     }
-//   };
+  return (
+      <Autocomplete
+        fullWidth
+        inputRef={input => input && input.focus()}
+        value={value}
+        onChange={handleChange}
+        id="cash-flow-cash-head"
+        options={data}
+        getOptionLabel={(option) => option.head}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
+        renderInput={(params) => <TextField fullWidth {...params} />}
+      />
+  );
+}
 
-//   const handleRef = (element) => {
-//     if (element) {
-//       element.querySelector(`input[value="${value}"]`).focus();
-//     }
-//   };
+function renderAutoEditInputCell(params,data,loading) {
+  return <AutoEditInputCell {...params} data={data} loading={loading} />;
+}
 
-//   return (
-//     <div className={classes.root}>
-//       <Rating
-//         ref={handleRef}
-//         name="rating"
-//         precision={1}
-//         value={value}
-//         onChange={handleChange}
-//       />
-//     </div>
-//   );
-// }
-
-// function renderAutoEditInputCell(params) {
-//   return <RatingEditInputCell {...params} />;
-// }
 
 const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   const [getCashFlowHead, loading, , data] = useRequest({
@@ -99,14 +66,14 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   }, []);
 
   const handleEdit = ({ id, field, value }) => {
-    console.log(id, field, value);
+    console.log(id, field, value)
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
       return { ...e };
     });
     let row = rows.find((row) => row.id === id);
     let edit = editedCopy.find((row) => row.id === id);
-    if (edit && row[field] === value) {
+    if (edit && (row[field] === value || (row[field].id===value.id))) {
       if (edit[field]) delete editedCopy[editedCopy.indexOf(edit)][field];
       else editedCopy[editedCopy.indexOf(edit)][field] = value;
     } else if (edit) {
@@ -125,16 +92,19 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       field: "budget_type",
       headerName: "Budget Type",
       flex: 0.3,
+      editable:true,
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      renderCell: (params) => (
-        <CashflowTypeSelect
-          params={params}
-          options={["payment", "receipt"]}
-          loading={loading}
-        />
-      ),
+      // renderCell: (params) => (
+      //   <CashflowTypeSelect
+      //     params={params}
+      //     options={["payment","receipt"]}
+      //     loading={loading}
+      //   />
+      // ),
+      // renderCell:renderAuto,
+      // renderEditCell:renderAutoEditInputCell
     },
     {
       field: "cashflow_head",
@@ -143,9 +113,11 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      renderCell: (params) => (
-        <CashFlowAutoSelect params={params} options={data} loading={loading} />
-      ),
+      editable:true,
+      renderCell:renderAuto,
+      renderEditCell: (params) => {
+        return(renderAutoEditInputCell(params,data,loading))
+    },
     },
     {
       field: "jan",
@@ -259,6 +231,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
+      <pre>{JSON.stringify(edited,null,2)}</pre>
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>

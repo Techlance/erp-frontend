@@ -242,7 +242,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
         balanceValues.fc_name &&
         balanceValues.fc_name?.id !== company.base_currency
           ? parseInt(balanceValues.fc_amount)
-          : parseInt(balanceValues.amt),
+          : parseInt(0),
       created_by: user.email,
     };
     await addLedgerBalance(form);
@@ -258,7 +258,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
           billwiseValues.fc_name &&
           billwiseValues.fc_name?.id !== company.base_currency
             ? parseInt(val.fc_amount)
-            : parseInt(val.amt),
+            : parseInt(0),
         bill_date: val.bill_date,
         due_date: val.due_date,
         amount: parseInt(val.amt),
@@ -374,7 +374,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
         </DialogContentText>
 
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-          {steps.map((label, index) => {
+          {steps?.map((label, index) => {
             const labelProps = {};
 
             if (index === errorIndex) {

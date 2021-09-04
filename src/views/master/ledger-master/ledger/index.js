@@ -65,7 +65,6 @@ const Ledger = () => {
             href={`${pathname}${pathname.endsWith("/") ? "" : "/"}${
               params.value
             }`}
-            // target="_blank"
           >
             <Typography align="center">More </Typography>
             <IconArrowRight sx={{ fontSize: "1.1rem" }} />
@@ -75,7 +74,6 @@ const Ledger = () => {
         ),
     },
     {
-      // id:"A",
       field: "ledger_id",
       headerName: "Ledger ID",
       flex: 0.2,
@@ -317,7 +315,7 @@ const Ledger = () => {
     {
       field: "created_by",
       minWidth: 200,
-      headerName: "created By",
+      headerName: "Created By",
       flex: 0.3,
     },
   ];

@@ -114,9 +114,8 @@ const AddUserDialog = ({ open, handleClose }) => {
     let form = { ...values };
     form.schedule_no = parseInt(values.schedule_no);
     form.bs = form.title === "ASSETS" || form.title === "EQUITY AND LIABLITIES";
-    await addCompanyAccountHead(form);
+    await addCompanyAccountHead(form, () => handleClearClose());
     setClicked(false);
-    handleClearClose();
   };
 
   return (

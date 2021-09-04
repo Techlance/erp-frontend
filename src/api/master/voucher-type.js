@@ -38,19 +38,37 @@ export const getVoucherTypesAsync = async (id, dispatch) => {
   }
 };
 
-export const createVoucherTypesAsync = async (data, dispatch) => {
+export const createVoucherTypesAsync = async (values, onSuccess, dispatch) => {
   try {
-    delete data.id;
+    delete values.id;
+    const data = { ...values };
+
+    if (data.authorization_id !== null) {
+      data.authorization_id = data.authorization_id.id;
+    } else {
+      data.authorization_id = "null";
+    }
+
     const response = await instance.post(
       "/company/add-vouchertype",
       dataToForm(data)
     );
+
+    if (response.data.success) {
+      onSuccess();
+    }
 
     sendNotification({
       dispatch,
       response,
     });
   } catch (error) {
+    sendNotification({
+      dispatch,
+      response: {
+        data: { success: false, message: "Error while creating voucher type." },
+      },
+    });
     console.log("Error while creating voucher type.");
   }
 };

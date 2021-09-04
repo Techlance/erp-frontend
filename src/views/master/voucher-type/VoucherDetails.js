@@ -34,7 +34,7 @@ import Loader from "../../../ui-component/Loader";
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -134,7 +134,7 @@ const VoucherTypeDetails = () => {
         <div className={classes.root}>
           <Grid container spacing={gridSpacing} justifyContent="center">
             <Grid item sm={12} md={8}>
-              <SubCard title="Voucher Type">
+              <SubCard title="Edit Voucher Type">
                 <Grid container spacing={2} mb={2}>
                   <Grid item sm={6}>
                     <TextField
@@ -145,6 +145,7 @@ const VoucherTypeDetails = () => {
                       InputLabelProps={{ shrink: true }}
                       onChange={handleChange}
                       type="text"
+                      disabled={values.is_fixed}
                     />
                   </Grid>
                   <Grid item sm={6}>
@@ -153,6 +154,7 @@ const VoucherTypeDetails = () => {
                       captionLabel="Voucher Class"
                       selected={values.voucher_class}
                       onChange={handleSelect}
+                      disabled={values.is_fixed}
                     />
                   </Grid>
                 </Grid>

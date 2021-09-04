@@ -73,15 +73,12 @@ const AddVoucherType = ({ open, handleClose }) => {
 
   const handleSubmit = async () => {
     setClicked(true);
-    if (values.authorization_id !== null) {
-      values.authorization_id = values.authorization_id.id;
-    } else {
-      values.authorization_id = "null";
-    }
-    await createVoucherTypes(mid, values);
-    setValues(setInitialValues);
+
+    await createVoucherTypes(mid, values, () => {
+      setValues(setInitialValues);
+      handleClose();
+    });
     setClicked(false);
-    handleClose();
   };
 
   return (
