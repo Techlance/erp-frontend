@@ -61,6 +61,13 @@ export const getBrsDetailsAsync = async (brs_id, dispatch) => {
 export const createBrsAsync = async (data, dispatch) => {
   try {
     data.acc_code = data.acc_code.id;
+    if (data.chq_no) {
+      delete data.transaction_no;
+      delete data.transaction_date;
+    } else {
+      delete data.chq_no;
+      delete data.chq_date;
+    }
 
     const response = await instance.post(
       `/ledger-balance/add-op-bal-brs`,
