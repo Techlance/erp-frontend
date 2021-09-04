@@ -70,26 +70,27 @@ const AddCompanyDialog = ({ open, handleClose }) => {
 
   const handleCreateCompany = async () => {
     setClicked(true);
-    await createCompany(values);
-    setClicked(false);
-    setValues({
-      company_name: "",
-      base_currency: { id: 0 },
-      address: "",
-      country: "",
-      state: "",
-      email: "",
-      website: "",
-      contact_no: "",
-      cr_no: "",
-      registration_no: "",
-      tax_id_no: "",
-      vat_id_no: "",
-      year_start_date: "",
-      year_end_date: "",
-      created_by: user.email,
+    await createCompany(values, () => {
+      setValues({
+        company_name: "",
+        base_currency: { id: 0 },
+        address: "",
+        country: "",
+        state: "",
+        email: "",
+        website: "",
+        contact_no: "",
+        cr_no: "",
+        registration_no: "",
+        tax_id_no: "",
+        vat_id_no: "",
+        year_start_date: "",
+        year_end_date: "",
+        created_by: user.email,
+      });
+      handleClose();
     });
-    handleClose();
+    setClicked(false);
   };
 
   return (

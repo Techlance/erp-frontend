@@ -27,19 +27,24 @@ const getUserCompaniesAsync = async (dispatch) => {
   }
 };
 
-const createCompanyAsync = async (data, dispatch) => {
+const createCompanyAsync = async (values, onSuccess, dispatch) => {
   try {
+    const data = { ...values };
     data.base_currency = data.base_currency.id;
-    const form = dataToForm(data);
-    const response = await instance.post("/company/create-company", form);
+    const response = await instance.post(
+      "/company/create-company",
+      dataToForm(data)
+    );
 
     sendNotification({
       dispatch,
       response,
     });
-  } catch (error) {
-    console.log(`Error in Creating Company: ${error}`);
 
+    if (response.data.success) {
+      onSuccess();
+    }
+  } catch (error) {
     sendNotification({
       dispatch,
       response: {
@@ -49,6 +54,8 @@ const createCompanyAsync = async (data, dispatch) => {
         },
       },
     });
+
+    console.log(`Error in Creating Company: ${error}`);
   }
 };
 
