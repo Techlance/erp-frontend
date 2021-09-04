@@ -106,6 +106,7 @@ const EditCurrenyDialog = ({ open, handleClose, data }) => {
                 onClick={handleClose}
                 variant="contained"
                 color="error"
+                size="small"
                 startIcon={<CancelIcon />}
               >
                 Cancel
@@ -117,6 +118,7 @@ const EditCurrenyDialog = ({ open, handleClose, data }) => {
                 onClick={handleUpdateCurrency}
                 variant="contained"
                 color="primary"
+                size="small"
                 startIcon={<SaveIcon />}
               >
                 Save

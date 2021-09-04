@@ -33,6 +33,8 @@ export const BrsProvider = ({ children }) => {
 
   const createBrs = async (data) => {
     await createBrsAsync(data, dispatch);
+
+    await getOpeningBalBRSAsync(data.company_master_id, dispatch);
   };
 
   const updateBrs = async (data) => {

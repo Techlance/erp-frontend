@@ -5,7 +5,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
-  Button,
   FormControl,
   FormHelperText,
   IconButton,
@@ -19,13 +18,13 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 
 // project imports
-import AnimateButton from "./../../../ui-component/extended/AnimateButton";
 import useAuth from "../../../hooks/useAuth";
 import useScriptRef from "../../../hooks/useScriptRef";
 
 // assets
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import LoadingButton from "../../../ui-component/LoadingButton";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -210,18 +209,16 @@ const JWTLogin = (props, { ...others }) => {
             </Box>
           )}
           <Box mt={2}>
-            <AnimateButton>
-              <Button
-                color="secondary"
-                disabled={isSubmitting}
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-              >
-                Sign In
-              </Button>
-            </AnimateButton>
+            <LoadingButton
+              color="secondary"
+              loading={isSubmitting}
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+            >
+              Sign In
+            </LoadingButton>
           </Box>
         </form>
       )}

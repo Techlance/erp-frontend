@@ -6,14 +6,12 @@ import { dataToForm } from "../utils";
 import instance from "../utils/axios";
 import sendNotification from "../utils/sendNotification";
 
-const addCurrencyAsync = async (data, dispatch, onSuccess) => {
+const addCurrencyAsync = async (data, dispatch) => {
   try {
-    const form = dataToForm(data);
-    const response = await instance.post("/company/add-currency", form);
-
-    if (response.data.success) {
-      onSuccess();
-    }
+    const response = await instance.post(
+      "/company/add-currency",
+      dataToForm(data)
+    );
 
     sendNotification({
       dispatch,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
 
 //  material-ui
@@ -32,6 +32,8 @@ TabPanel.propTypes = {
 
 const PaymentTypeTabs = ({ values, editable, onChange }) => {
   const [tabValue, setTabValue] = useState(0);
+  const [disableChq, setDisableChq] = useState(false);
+  const [disableTxn, setDisableTxn] = useState(false);
 
   const handleTabChange = (event, newValue) => {
     if (newValue === 0) {
@@ -70,6 +72,19 @@ const PaymentTypeTabs = ({ values, editable, onChange }) => {
     console.log(editable && !!values.transaction_no);
   }
 
+  useEffect(() => {
+    if (editable && !!values.chq_no) {
+      setTabValue(0);
+      setDisableTxn(true);
+    }
+    if (editable && !!values.transaction_no) {
+      setTabValue(1);
+      setDisableChq(true);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values]);
+
   return (
     <>
       <Tabs
@@ -80,66 +95,62 @@ const PaymentTypeTabs = ({ values, editable, onChange }) => {
         centered
         variant="fullWidth"
       >
-        {editable && !!values.chq_no && <Tab label="Cheque" />}
-        {editable && !!values.transaction_no && <Tab label="Online Transfer" />}
+        <Tab label="Cheque" disabled={disableChq} />
+        <Tab label="Online Transfer" disabled={disableTxn} />
       </Tabs>
+      <TabPanel value={tabValue} index={0}>
+        <Grid container spacing={2}>
+          <Grid item sm={6}>
+            <TextField
+              fullWidth
+              id="chq_no"
+              label="Cheque Number"
+              InputLabelProps={{ shrink: true }}
+              onChange={onChange}
+              value={values.chq_no}
+              type="text"
+            />
+          </Grid>
+          <Grid item sm={6}>
+            <TextField
+              fullWidth
+              id="chq_date"
+              label="Cheque Date"
+              InputLabelProps={{ shrink: true }}
+              value={values.chq_date}
+              onChange={onChange}
+              type="date"
+            />
+          </Grid>
+        </Grid>
+      </TabPanel>
 
-      {editable && !!values.chq_no && (
-        <TabPanel value={tabValue} index={0}>
-          <Grid container spacing={2}>
-            <Grid item sm={6}>
-              <TextField
-                fullWidth
-                id="chq_no"
-                label="Cheque Number"
-                InputLabelProps={{ shrink: true }}
-                onChange={onChange}
-                value={values.chq_no}
-                type="text"
-              />
-            </Grid>
-            <Grid item sm={6}>
-              <TextField
-                fullWidth
-                id="chq_date"
-                label="Cheque Date"
-                InputLabelProps={{ shrink: true }}
-                value={values.chq_date}
-                onChange={onChange}
-                type="date"
-              />
-            </Grid>
+      <TabPanel value={tabValue} index={1}>
+        <Grid container spacing={2}>
+          <Grid item sm={6}>
+            <TextField
+              fullWidth
+              id="transaction_no"
+              label="Transaction Number"
+              InputLabelProps={{ shrink: true }}
+              value={values.transaction_no}
+              onChange={onChange}
+              type="text"
+            />
           </Grid>
-        </TabPanel>
-      )}
-      {editable && !!values.transaction_no && (
-        <TabPanel value={tabValue} index={1}>
-          <Grid container spacing={2}>
-            <Grid item sm={6}>
-              <TextField
-                fullWidth
-                id="transaction_no"
-                label="Transaction Number"
-                InputLabelProps={{ shrink: true }}
-                value={values.transaction_no}
-                onChange={onChange}
-                type="text"
-              />
-            </Grid>
-            <Grid item sm={6}>
-              <TextField
-                fullWidth
-                id="transaction_date"
-                label="Transaction Date"
-                InputLabelProps={{ shrink: true }}
-                value={values.transaction_date}
-                onChange={onChange}
-                type="date"
-              />
-            </Grid>
+          <Grid item sm={6}>
+            <TextField
+              fullWidth
+              id="transaction_date"
+              label="Transaction Date"
+              InputLabelProps={{ shrink: true }}
+              value={values.transaction_date}
+              onChange={onChange}
+              type="date"
+            />
           </Grid>
-        </TabPanel>
-      )}
+        </Grid>
+      </TabPanel>
     </>
   );
 };
