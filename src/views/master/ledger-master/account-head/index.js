@@ -60,31 +60,37 @@ const SelectGroup = () => {
       headerName: "Schedule No.",
       flex: 0.3,
       type: "number",
-      headerAlign: "left",
-      align: "left",
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "acc_head_name",
       headerName: "Account Head Name",
       flex: 0.5,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "title",
       headerName: "Title",
       flex: 0.4,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "bs",
       headerName: "BS",
       type: "boolean",
       flex: 0.3,
-      headerAlign: "center",
       align: "center",
+      headerAlign: "center",
     },
     {
       field: "created_on",
       headerName: "Created On",
       type: "date",
+      align: "center",
+      headerAlign: "center",
       flex: 0.3,
       valueFormatter: (params) => {
         return formatDate(params.value);
@@ -92,8 +98,10 @@ const SelectGroup = () => {
     },
     {
       field: "created_by",
-      headerName: "created By",
+      headerName: "Created By",
       flex: 0.3,
+      align: "center",
+      headerAlign: "center",
     },
   ];
 

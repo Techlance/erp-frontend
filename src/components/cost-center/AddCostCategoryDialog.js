@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  Stack,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -23,6 +22,7 @@ import useCostCenter from "../../hooks/useCostCenter";
 import CancelIcon from "@material-ui/icons/CancelTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import LoadingButton from "../../ui-component/LoadingButton";
+import AnimateButton from "../../ui-component/extended/AnimateButton";
 
 const AddCostCategoryDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -93,39 +93,31 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Grid item xs={11.7}>
-          <Stack direction="row">
-            <Grid container justifyContent="space-between">
-              <Grid item>
-                <Button
-                  onClick={handleClose}
-                  color="error"
-                  size="small"
-                  variant="contained"
-                  disabled={clicked}
-                  startIcon={<CancelIcon />}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-              <Grid item>
-                <LoadingButton
-                  variant="contained"
-                  size="small"
-                  onClick={() => {
-                    createCostCategory();
-                    handleClose();
-                  }}
-                  color="primary"
-                  loading={clicked}
-                  startIcon={<SaveIcon />}
-                >
-                  Add
-                </LoadingButton>
-              </Grid>
-            </Grid>
-          </Stack>
-        </Grid>
+        <AnimateButton>
+          <Button
+            onClick={handleClose}
+            color="error"
+            size="small"
+            variant="contained"
+            disabled={clicked}
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
+        </AnimateButton>
+        <LoadingButton
+          variant="contained"
+          size="small"
+          onClick={() => {
+            createCostCategory();
+            handleClose();
+          }}
+          color="primary"
+          loading={clicked}
+          startIcon={<SaveIcon />}
+        >
+          Add
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );
