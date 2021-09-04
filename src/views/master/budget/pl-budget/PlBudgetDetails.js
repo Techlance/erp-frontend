@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Tab, Tabs } from "@material-ui/core";
 
 // project imports
+import PLGrid from "./PLGrid";
+import useBudget from "../../../../hooks/useBudget";
 import MainCard from "../../../../ui-component/cards/MainCard";
 
 // assets
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
-import { useSelector } from "react-redux";
-import useBudget from "../../../../hooks/useBudget";
-import PlGrid from "./PlGrid";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -65,7 +65,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -161,7 +161,7 @@ const BudgetPlDetails = () => {
         </Tabs>
         <TabPanel value={value} index={0}>
           {/* <LedgerForm /> */}
-          <PlGrid
+          <PLGrid
             rows={company_budget_details}
             loading={loading}
             handleUpdate={handleUpdate}
@@ -170,7 +170,7 @@ const BudgetPlDetails = () => {
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <PlGrid
+          <PLGrid
             rows={company_budget_revise}
             loading={loading}
             handleUpdate={handleRevise}

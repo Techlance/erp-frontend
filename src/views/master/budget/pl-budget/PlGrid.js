@@ -11,7 +11,7 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 
 //-----------------------|| Ledger Form ||-----------------------//
 
-const PlGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
+const PLGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
   const handleEdit = ({ id, field, value }) => {
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
@@ -186,4 +186,4 @@ const PlGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
   );
 };
 
-export default PlGrid;
+export default PLGrid;

@@ -8,8 +8,8 @@ import CompanyGuard from "../../utils/route-guard/CompanyGuard";
 
 // company page routing
 const BudgetList = Loadable(lazy(() => import("../../views/master/budget")));
-const BudgetPlDetails = Loadable(
-  lazy(() => import("../../views/master/budget/pl-budget/PlBudgetDetails"))
+const BudgetPLDetails = Loadable(
+  lazy(() => import("../../views/master/budget/pl-budget/PLBudgetDetails"))
 );
 const CashFlowDetails = Loadable(
   lazy(() => import("../../views/master/budget/cash-flow/CashFlowDetails"))
@@ -18,7 +18,7 @@ const CashFlowDetails = Loadable(
 const routes = [
   {
     url: "/pl/:bid",
-    component: BudgetPlDetails,
+    component: BudgetPLDetails,
   },
   {
     url: "/cashflow/:bid",
