@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
 // company provider
-import { LC } from "../contexts/master/lcContext";
+import { LCContext } from "../contexts/master/lcContext";
 
 //-----------------------|| LC HOOKS ||-----------------------//
 
-const useLC = () => useContext(LC);
+const useLC = () => useContext(LCContext);
 
 export default useLC;

@@ -113,50 +113,52 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
 
   const handleSubmit1 = async () => {
     setClicked(true);
-    let form = { ...values };
 
-    form.cost_center = form.cost_center.id;
-    form.party_code = form.party_code.id;
-    form.bank_ac = form.bank_ac.id;
-    form.base_currency = form.base_currency.id;
-    // handleNext();
+    const onSuccess = () => {
+      setValues({
+        trans_type: flag ? "import" : "export",
+        // year_id: 21,
+        lc_date: "",
+        party_code: null,
+        cost_center: null,
+        applicant_bank: "",
+        applicant_bank_lc_no: "",
+        benificiary_bank: "",
+        benificiary_bank_lc_no: "",
+        inspection: false,
+        bank_ref: "",
+        days_for_submit_to_bank: "",
+        payment_terms: "",
+        place_of_taking_incharge: "",
+        final_destination_of_delivery: "",
+        completed: false,
+        shipment_terms: "",
+        goods_description: "",
+        other_lc_terms: "",
+        bank_ac: null,
+        expiry_date: "",
+        lc_amount: "",
+        base_currency: { id: company.base_currency },
+        company_master_id: mid,
+        created_by: user.email,
+      });
+      handleNext();
+    };
 
     if (flag) {
-      let response = await addImportLC(form);
-      setNewLC(response);
+      let response = await addImportLC(values);
+      if (response.data.success) {
+        setNewLC(response.data.data);
+        onSuccess();
+      }
     } else {
-      let response = await addExportLC(form);
-      setNewLC(response);
+      let response = await addExportLC(values);
+      if (response.data.success) {
+        setNewLC(response.data.data);
+        onSuccess();
+      }
     }
 
-    setValues({
-      trans_type: flag ? "import" : "export",
-      // year_id: 21,
-      lc_date: "",
-      party_code: null,
-      cost_center: null,
-      applicant_bank: "",
-      applicant_bank_lc_no: "",
-      benificiary_bank: "",
-      benificiary_bank_lc_no: "",
-      inspection: false,
-      bank_ref: "",
-      days_for_submit_to_bank: "",
-      payment_terms: "",
-      place_of_taking_incharge: "",
-      final_destination_of_delivery: "",
-      completed: false,
-      shipment_terms: "",
-      goods_description: "",
-      other_lc_terms: "",
-      bank_ac: null,
-      expiry_date: "",
-      lc_amount: "",
-      base_currency: { id: company.base_currency },
-      company_master_id: mid,
-      created_by: user.email,
-    });
-    handleNext();
     setClicked(false);
   };
 
@@ -218,7 +220,9 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Create a new LC.</Typography>
+          <Typography variant="body2">
+            Create a new Letter of Credit.
+          </Typography>
         </DialogContentText>
 
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
