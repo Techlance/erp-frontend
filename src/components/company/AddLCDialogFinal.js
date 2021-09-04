@@ -85,7 +85,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
 
   const [values, setValues] = useState({
     trans_type: flag ? "import" : "export",
-    year_id: 21,
+    // year_id: 21,
     lc_date: "",
     party_code: null,
     cost_center: null,
@@ -133,7 +133,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
 
     setValues({
       trans_type: flag ? "import" : "export",
-      year_id: 21,
+      // year_id: 21,
       lc_date: "",
       party_code: null,
       cost_center: null,
@@ -168,7 +168,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const setDefault = () => {
     setValues({
       trans_type: flag ? "import" : "export",
-      year_id: 21,
+      // year_id: 21,
       lc_date: "",
       party_code: null,
       cost_center: null,
@@ -271,7 +271,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
                       onClick={() => {
                         setValues({
                           trans_type: flag ? "import" : "export",
-                          year_id: 21,
+                          // year_id: 21,
                           lc_date: "",
                           party_code: null,
                           cost_center: null,
