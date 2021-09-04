@@ -1,12 +1,17 @@
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { useParams } from "react-router";
 
 // material-ui
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
-import useRequest from "../../../hooks/useRequest";
-import { useParams } from "react-router";
 
-//-----------------------|| USRT GROUPS SELECT ||-----------------------//
+// import project
+import useRequest from "../../../hooks/useRequest";
+
+// assets
+import CachedIcon from "@material-ui/icons/Cached";
+
+//-----------------------|| ACCOUNT GROUP SELECT ||-----------------------//
 
 const AccountGroupSelect = ({
   captionLabel,
@@ -72,8 +77,10 @@ const AccountGroupSelect = ({
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
-        InputProps={{ readOnly: disabled || loading }}
-        helperText={loading && "Loading Data"}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
       >
         {data?.map((option, index) => (
           <MenuItem key={index} value={option.id}>

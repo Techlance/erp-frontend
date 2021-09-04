@@ -5,16 +5,18 @@ import React, { useEffect, useState } from "react";
 import { FormControl, MenuItem, TextField } from "@material-ui/core";
 import useRequest from "../../../hooks/useRequest";
 
-//-----------------------|| USRT GROUPS SELECT ||-----------------------//
+// assets
+import CachedIcon from "@material-ui/icons/Cached";
+
+//-----------------------|| PARENT GROUP SELECT ||-----------------------//
 
 const ParentGroupSelect = ({
   captionLabel,
   formState,
   selected,
   onChange,
-  disabled,
   head_id,
-  avoid
+  avoid,
 }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
@@ -64,15 +66,18 @@ const ParentGroupSelect = ({
         onChange={handleChange}
         variant="outlined"
         InputLabelProps={{ shrink: true }}
-        InputProps={{ readOnly: disabled || loading }}
-        helperText={loading && "Loading Data"}
+        disabled={loading}
+        InputProps={{
+          startAdornment: <> {loading && <CachedIcon />} </>,
+        }}
       >
-        {data?.map((option, index) => (
-          avoid===option.id?null:
-          <MenuItem key={index} value={option.id}>
-            {`${option.group_name}`.toUpperCase()}
-          </MenuItem>
-        ))}
+        {data?.map((option, index) =>
+          avoid === option.id ? null : (
+            <MenuItem key={index} value={option.id}>
+              {`${option.group_name}`.toUpperCase()}
+            </MenuItem>
+          )
+        )}
       </TextField>
     </FormControl>
   );

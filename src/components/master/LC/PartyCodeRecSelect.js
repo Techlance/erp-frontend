@@ -23,13 +23,11 @@ const PartyCodeRecSelect = ({
     return null;
   });
 
-  // const { currencies, getCurrency } = useCompany();
-  //   const { getCurrency } = useCompany();
-  const { getPartyCodeReceive } = useLC();
-  const lc = useSelector((state) => state.lc);
-  const { party_code_rec } = lc;
-  const errorState = formState === "error" ? true : false;
   const { mid } = useParams();
+  const { getPartyCodeReceive } = useLC();
+  const { party_code_rec } = useSelector((state) => state.lc);
+
+  const errorState = formState === "error" ? true : false;
 
   useEffect(() => {
     getPartyCodeReceive(mid);
@@ -49,6 +47,7 @@ const PartyCodeRecSelect = ({
     const item = party_code_rec.find(
       (option) => option.id === event.target.value
     );
+
     onChange("party_code", item);
   };
 

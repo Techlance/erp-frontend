@@ -18,13 +18,12 @@ const CostCenterSelect = ({ captionLabel, formState, selected, onChange }) => {
     return null;
   });
 
-  // const { currencies, getCurrency } = useCompany();
-  //   const { getCurrency } = useCompany();
-  const { getCostCenter } = useLC();
-  const lc = useSelector((state) => state.lc);
-  const { centeres } = lc;
-  const errorState = formState === "error" ? true : false;
   const { mid } = useParams();
+  const { getCostCenter } = useLC();
+  const { centeres } = useSelector((state) => state.lc);
+
+  const errorState = formState === "error" ? true : false;
+
   useEffect(() => {
     getCostCenter(mid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,6 +40,7 @@ const CostCenterSelect = ({ captionLabel, formState, selected, onChange }) => {
 
   const handleChange = (event) => {
     const item = centeres.find((option) => option.id === event.target.value);
+
     onChange("cost_center", item);
   };
 

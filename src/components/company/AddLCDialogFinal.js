@@ -222,7 +222,6 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
         <DialogContentText>
           <Typography variant="body2">Create a new LC.</Typography>
         </DialogContentText>
-        {/* <MainCard title="Validation"> */}
 
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
           {steps.map((label, index) => {
@@ -259,9 +258,6 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
         )}
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        {/* <Grid item>
-          <Grid container spacing={2.5}>
-            <Grid item> */}
         <Grid item xs={11.7}>
           <Stack direction="row">
             <Grid container justifyContent="space-between">
@@ -271,7 +267,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
                     <Button
                       color="error"
                       variant="contained"
-                      size="medium"
+                      size="small"
                       onClick={() => {
                         setValues({
                           trans_type: flag ? "import" : "export",
@@ -315,7 +311,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
                 <LoadingButton
                   color="primary"
                   variant="contained"
-                  size="medium"
+                  size="small"
                   onClick={activeStep === 0 ? handleSubmit1 : handleClearClose}
                   loading={clicked}
                   startIcon={<SaveIcon />}

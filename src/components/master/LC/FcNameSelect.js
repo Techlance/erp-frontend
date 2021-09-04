@@ -23,8 +23,8 @@ const FcNameSelect = ({
   });
 
   const { getCurrency } = useCompany();
-  const company = useSelector((state) => state.company);
-  const { currencies } = company;
+  const { currencies } = useSelector((state) => state.company);
+
   const errorState = formState === "error" ? true : false;
 
   useEffect(() => {
