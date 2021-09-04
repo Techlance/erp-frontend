@@ -69,7 +69,7 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
 
   const handleUpdateAmendment = async () => {
     setClicked(true);
-    await updateLCAmend(values, lc_id);
+    await updateLCAmend(values, data.id);
     setClicked(false);
     handleClose();
   };
