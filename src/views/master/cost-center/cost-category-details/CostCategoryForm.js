@@ -49,7 +49,7 @@ const CostCategoryForm = () => {
       if (category) {
         setValues(category);
         setCheckList({
-          cost_center: category.cost_center,
+          "Cost Center": category.cost_center,
         });
       } else {
         history.replace(config.defaultPath);
@@ -63,8 +63,9 @@ const CostCategoryForm = () => {
 
   const handleUpdateCostCategory = async () => {
     setClicked(true);
-    await updateCostCategory(values);
-    history.replace(`/company/${mid}/master/cost-center/category`);
+    await updateCostCategory(values, () =>
+      history.replace(`/company/${mid}/master/cost-center/category`)
+    );
     setClicked(false);
   };
 
@@ -91,10 +92,10 @@ const CostCategoryForm = () => {
                     <AnimateButton>
                       <Button
                         variant="contained"
+                        size="small"
                         color="error"
-                        onClick={() => {
-                          setShowDeleteModal(true);
-                        }}
+                        onClick={() => setShowDeleteModal(true)}
+                        loading={clicked}
                         startIcon={<DeleteIcon />}
                       >
                         Delete
@@ -105,6 +106,7 @@ const CostCategoryForm = () => {
                     <LoadingButton
                       variant="contained"
                       color="primary"
+                      size="small"
                       onClick={handleUpdateCostCategory}
                       loading={clicked}
                       startIcon={<SaveIcon />}

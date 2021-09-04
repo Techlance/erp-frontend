@@ -46,17 +46,18 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company]);
 
-  const createCostCategory = async () => {
+  const handleCreateCostCategory = async () => {
     setClicked(true);
-    let form = { ...values };
-    await addCostCategory(form);
-    setClicked(false);
-    setValues({
-      name: "",
-      company_master_id: company?.company_id,
-      created_by: user.email,
+    await addCostCategory(values, () => {
+      setValues({
+        name: "",
+        company_master_id: company?.company_id,
+        created_by: user.email,
+      });
+      handleClose();
     });
-    handleClose();
+
+    setClicked(false);
   };
 
   const handleChange = (event) => {
@@ -78,7 +79,6 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
         <Typography variant="h4">Add Cost Category</Typography>
       </DialogTitle>
       <DialogContent>
-        <pre>{JSON.stringify(values, null, 2)} </pre>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={12}>
             <TextField
@@ -108,10 +108,7 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
         <LoadingButton
           variant="contained"
           size="small"
-          onClick={() => {
-            createCostCategory();
-            handleClose();
-          }}
+          onClick={handleCreateCostCategory}
           color="primary"
           loading={clicked}
           startIcon={<SaveIcon />}

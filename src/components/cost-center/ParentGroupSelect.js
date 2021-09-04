@@ -52,17 +52,8 @@ const ParentGroupSelect = ({
     const item = data.find((option) => option.id === event.target.value);
 
     if (item?.id !== parseInt(cen_id)) {
-      console.log(cen_id);
-      console.log("cen_id");
-      console.log(item?.id);
       onChange("child_of", item);
     }
-    // else {
-    //   console.log("hehehe");
-    //   console.log("cen_id");
-    //   console.log(item?.id);
-    //   onChange("child_of", null);
-    // }
   };
 
   return (

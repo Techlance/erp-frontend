@@ -31,8 +31,9 @@ export const BudgetProvider = ({ children }) => {
     await getCompanyBudgetAsync(id, dispatch);
   };
 
-  const addCompanyBudget = async (data) => {
-    await addCompanyBudgetAsync(data, dispatch);
+  const addCompanyBudget = async (data, onSuccess) => {
+    await addCompanyBudgetAsync(data, onSuccess, dispatch);
+
     await getCompanyBudgetAsync(company.company_id, dispatch);
   };
 

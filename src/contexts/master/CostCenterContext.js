@@ -19,7 +19,7 @@ import {
   deleteCostCenterAsync,
 } from "../../api";
 
-export const CostCenter = createContext();
+export const CostCenterContext = createContext();
 
 export const CostCenterProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -30,8 +30,8 @@ export const CostCenterProvider = ({ children }) => {
     await getCostCategoryAsync(id, dispatch);
   };
 
-  const addCostCategory = async (data) => {
-    await addCostCategoryAsync(data, dispatch);
+  const addCostCategory = async (data, onSuccess) => {
+    await addCostCategoryAsync(data, onSuccess, dispatch);
 
     await getCostCategoryAsync(data.company_master_id, dispatch);
   };
@@ -40,7 +40,6 @@ export const CostCenterProvider = ({ children }) => {
     await updateCostCategoryAsync(data, dispatch);
 
     await getCostCategoryAsync(data.company_master_id, dispatch);
-    // await getSelectedCompanyAsync(data.id, dispatch);
   };
 
   const deleteCostCategory = async (id) => {
@@ -57,8 +56,8 @@ export const CostCenterProvider = ({ children }) => {
     await getCostCenterDetailsAsync(id, dispatch);
   };
 
-  const addCostCenter = async (data) => {
-    await addCostCenterAsync(data, dispatch);
+  const addCostCenter = async (data, onSuccess) => {
+    await addCostCenterAsync(data, onSuccess, dispatch);
 
     await getCostCenterAsync(data.company_master_id, dispatch);
   };
@@ -81,7 +80,7 @@ export const CostCenterProvider = ({ children }) => {
   }
 
   return (
-    <CostCenter.Provider
+    <CostCenterContext.Provider
       value={{
         ...state,
         getCostCategory,
@@ -96,6 +95,6 @@ export const CostCenterProvider = ({ children }) => {
       }}
     >
       {children}
-    </CostCenter.Provider>
+    </CostCenterContext.Provider>
   );
 };

@@ -65,26 +65,20 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
 
   const [clicked, setClicked] = useState(false);
 
-  const createCostCenter = async () => {
+  const handleCreateCostCenter = async () => {
     setClicked(true);
-    let form = { ...values };
-    console.log(form);
-    if (form.child_of) {
-      form.child_of = parseInt(form.child_of?.id);
-    } else {
-      form.child_of = null;
-    }
-    form.cost_category_id = parseInt(form.cost_category_id.id);
-    await addCostCenter(form);
-    setClicked(false);
-    setValues({
-      cost_center_name: "",
-      cost_category_id: null,
-      child_of: null,
-      company_master_id: mid,
-      created_by: user.email,
+
+    await addCostCenter(values, () => {
+      setValues({
+        cost_center_name: "",
+        cost_category_id: null,
+        child_of: null,
+        company_master_id: mid,
+        created_by: user.email,
+      });
+      handleClose();
     });
-    handleClose();
+    setClicked(false);
   };
 
   return (
@@ -103,7 +97,6 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
           <Typography variant="body2">Create a new cost center.</Typography>
         </DialogContentText>
         <Grid container spacing={gridSpacing}>
-          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
           <Grid item xs={12} sm={6}>
             <CategorySelect
               captionLabel="Cost Category"
@@ -153,7 +146,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
           color="primary"
           variant="contained"
           size="small"
-          onClick={createCostCenter}
+          onClick={handleCreateCostCenter}
           loading={clicked}
           startIcon={<SaveIcon />}
         >

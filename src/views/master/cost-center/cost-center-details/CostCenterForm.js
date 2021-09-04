@@ -75,18 +75,8 @@ const CostCenterForm = () => {
 
   const handleUpdateCostCenter = async () => {
     setClicked(true);
-    let form = { ...values };
-    console.log(form);
 
-    form.cost_category_id = parseInt(form.cost_category_id.id);
-
-    if (form.child_of) {
-      form.child_of = parseInt(form.child_of?.id);
-    } else {
-      form.child_of = null;
-    }
-
-    await updateCostCenter(form);
+    await updateCostCenter(values);
     setClicked(false);
   };
 
@@ -135,6 +125,7 @@ const CostCenterForm = () => {
                         <Button
                           variant="contained"
                           color="error"
+                          size="small"
                           onClick={() => setShowDeleteModal(true)}
                           startIcon={<DeleteIcon />}
                         >
@@ -146,6 +137,7 @@ const CostCenterForm = () => {
                       <LoadingButton
                         variant="contained"
                         color="primary"
+                        size="small"
                         loading={clicked}
                         onClick={handleUpdateCostCenter}
                         startIcon={<SaveIcon />}

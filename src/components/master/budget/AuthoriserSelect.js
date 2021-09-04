@@ -63,7 +63,7 @@ const AuthoriserSelect = ({ captionLabel, formState, selected, onChange }) => {
       >
         {data?.map((option, index) => (
           <MenuItem key={index} value={option.id}>
-            {`${option.email}`.toUpperCase()}
+            {option.email}
           </MenuItem>
         ))}
       </TextField>

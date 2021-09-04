@@ -38,6 +38,8 @@ const AddBudgetDialog = ({ open, handleClose }) => {
     year_id: null,
     authoriser: null,
     enforce_restrictions: false,
+    created_by: user.email,
+    company_master_id: mid,
   });
 
   const [clicked, setClicked] = useState(false);
@@ -58,14 +60,8 @@ const AddBudgetDialog = ({ open, handleClose }) => {
 
   const handleSubmit = async () => {
     setClicked(true);
-    let form = { ...values };
-    form.created_by = user.email;
-    form.company_master_id = mid;
-    form.year_id = form.year_id.id;
-    form.authoriser = form.authoriser.id;
-    await addCompanyBudget(form);
+    await addCompanyBudget(values, () => handleClose());
     setClicked(false);
-    handleClose();
   };
 
   return (
@@ -106,8 +102,12 @@ const AddBudgetDialog = ({ open, handleClose }) => {
                 variant="outlined"
                 InputLabelProps={{ shrink: true }}
               >
-                <MenuItem value={"P&L"}>{"P&L"}</MenuItem>
-                <MenuItem value={"Cashflow"}>{"Cashflow"}</MenuItem>
+                <MenuItem value="P&L">
+                  <Typography>P&L</Typography>
+                </MenuItem>
+                <MenuItem value="Cashflow">
+                  <Typography>Cashflow</Typography>
+                </MenuItem>
               </TextField>
             </FormControl>
           </Grid>

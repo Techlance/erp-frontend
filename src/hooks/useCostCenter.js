@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
 // user management provider
-import { CostCenter } from "../contexts/master/CostCenterContext";
+import { CostCenterContext } from "../contexts/master/CostCenterContext";
 
 //-----------------------|| COST CENTER HOOKS ||-----------------------//
 
-const useCostCenter = () => useContext(CostCenter);
+const useCostCenter = () => useContext(CostCenterContext);
 
 export default useCostCenter;
