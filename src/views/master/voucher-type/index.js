@@ -70,6 +70,9 @@ const VoucherTypes = () => {
       field: "authorization_id",
       headerName: "Authorization ID",
       flex: 0.5,
+      valueFormatter: (params) => {
+        return params.value?.email || "No Auth Required";
+      },
       minWidth: 200,
     },
     {

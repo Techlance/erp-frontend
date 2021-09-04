@@ -78,10 +78,10 @@ const AddVoucherType = ({ open, handleClose }) => {
     } else {
       values.authorization_id = "null";
     }
-    await createVoucherTypes(values);
-    // setValues(setInitialValues);
-    // handleClose();
+    await createVoucherTypes(mid,values);
+    setValues(setInitialValues);
     setClicked(false);
+    handleClose();
   };
 
   return (
