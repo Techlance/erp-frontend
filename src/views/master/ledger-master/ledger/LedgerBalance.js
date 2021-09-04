@@ -162,7 +162,11 @@ const LedgerBalance = () => {
             </Grid>
             <Grid item xs={12}>
               <Stack direction="row">
-                <Grid container justifyContent="flex-end" spacing={gridSpacing}>
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  spacing={gridSpacing}
+                >
                   <Grid item>
                     <LoadingButton
                       variant="contained"
