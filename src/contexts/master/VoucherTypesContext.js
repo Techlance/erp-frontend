@@ -31,8 +31,8 @@ export const VoucherTypeProvider = ({ children }) => {
     await updateVoucherTypesAsync(data, dispatch);
   };
 
-  const deleteVoucherTypes = async (id) => {
-    await deleteVoucherTypesAsync(id, dispatch);
+  const deleteVoucherTypes = async (id, onSuccess) => {
+    await deleteVoucherTypesAsync(id, onSuccess, dispatch);
   };
 
   return (

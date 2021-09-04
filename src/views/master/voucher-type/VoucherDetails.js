@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 // material-ui
 import {
-  Button,
   Collapse,
   Grid,
   Stack,
@@ -18,7 +17,6 @@ import { gridSpacing } from "../../../store/constant";
 import SubCard from "../../../ui-component/cards/SubCard";
 
 // assets
-import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import MainCard from "../../../ui-component/cards/MainCard";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
@@ -104,8 +102,11 @@ const VoucherTypeDetails = () => {
   }, [voucher_type_details]);
 
   const handleAgree = async () => {
-    await deleteVoucherTypes(values.id);
-    history.replace(`/company/${mid}/master/voucher-type`);
+    setClicked(true);
+    await deleteVoucherTypes(values.id, () =>
+      history.replace(`/company/${mid}/master/voucher-type`)
+    );
+    setClicked(false);
   };
 
   const handleChange = (event) => {
@@ -206,21 +207,22 @@ const VoucherTypeDetails = () => {
                   <Stack direction="row">
                     <Grid container justifyContent="space-between">
                       <Grid item>
-                        <AnimateButton>
-                          <Button
-                            variant="contained"
-                            color="error"
-                            onClick={() => setShowDeleteModal(true)}
-                            startIcon={<DeleteIcon />}
-                          >
-                            Delete
-                          </Button>
-                        </AnimateButton>
+                        <LoadingButton
+                          variant="contained"
+                          loading={clicked}
+                          color="error"
+                          size="small"
+                          onClick={() => setShowDeleteModal(true)}
+                          startIcon={<DeleteIcon />}
+                        >
+                          Delete
+                        </LoadingButton>
                       </Grid>
                       <Grid item>
                         <LoadingButton
                           variant="contained"
                           color="primary"
+                          size="small"
                           onClick={handleUpdateVoucherType}
                           startIcon={<SaveIcon />}
                           loading={clicked}

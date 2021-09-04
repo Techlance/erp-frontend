@@ -54,14 +54,14 @@ export const createVoucherTypesAsync = async (values, onSuccess, dispatch) => {
       dataToForm(data)
     );
 
-    if (response.data.success) {
-      onSuccess();
-    }
-
     sendNotification({
       dispatch,
       response,
     });
+
+    if (response.data.success) {
+      onSuccess();
+    }
   } catch (error) {
     sendNotification({
       dispatch,
@@ -89,7 +89,7 @@ export const updateVoucherTypesAsync = async (data, dispatch) => {
   }
 };
 
-export const deleteVoucherTypesAsync = async (id, dispatch) => {
+export const deleteVoucherTypesAsync = async (id, onSuccess, dispatch) => {
   try {
     const response = await instance.delete(`/company/delete-vouchertype/${id}`);
 
@@ -97,6 +97,10 @@ export const deleteVoucherTypesAsync = async (id, dispatch) => {
       dispatch,
       response,
     });
+
+    if (response.data.success) {
+      onSuccess();
+    }
   } catch (error) {
     console.log("Error while deleting voucher type.");
   }
