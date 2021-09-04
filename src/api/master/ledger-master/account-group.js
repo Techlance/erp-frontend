@@ -33,17 +33,43 @@ export const getCompanyAccountGroupDetailsAsync = async (id, dispatch) => {
   });
 };
 
-export const addCompanyAccountGroupAsync = async (data, dispatch) => {
-  delete data.id;
-  const response = await instance.post(
-    "/company/add-account-group",
-    dataToForm(data)
-  );
+export const addCompanyAccountGroupAsync = async (
+  values,
+  onSuccess,
+  dispatch
+) => {
+  try {
+    let data = { ...values };
+    delete data.id;
+    data.acc_head_id = parseInt(data.acc_head_id.id);
+    data.child_of = data.child_of ? parseInt(data.child_of.id) : null;
 
-  sendNotification({
-    dispatch,
-    response,
-  });
+    const response = await instance.post(
+      "/company/add-account-group",
+      dataToForm(data)
+    );
+
+    if (response.data.success) {
+      onSuccess();
+    }
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+  } catch (error) {
+    sendNotification({
+      dispatch,
+      response: {
+        data: {
+          success: false,
+          message: "Error while creating account group",
+        },
+      },
+    });
+
+    console.log("Error while creating account group.");
+  }
 };
 
 export const updateCompanyAccountGroupAsync = async (data, dispatch) => {

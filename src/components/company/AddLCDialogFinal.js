@@ -8,14 +8,12 @@ import {
   Step,
   Stepper,
   StepLabel,
-  Stack,
   Typography,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid,
 } from "@material-ui/core";
 
 // project imports
@@ -258,70 +256,61 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
         )}
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Grid item xs={11.7}>
-          <Stack direction="row">
-            <Grid container justifyContent="space-between">
-              <Grid item>
-                {activeStep === 0 && (
-                  <AnimateButton>
-                    <Button
-                      color="error"
-                      variant="contained"
-                      size="small"
-                      onClick={() => {
-                        setValues({
-                          trans_type: flag ? "import" : "export",
-                          // year_id: 21,
-                          lc_date: "",
-                          party_code: null,
-                          cost_center: null,
-                          applicant_bank: "",
-                          applicant_bank_lc_no: "",
-                          benificiary_bank: "",
-                          benificiary_bank_lc_no: "",
-                          inspection: false,
-                          bank_ref: "",
-                          days_for_submit_to_bank: "",
-                          payment_terms: "",
-                          place_of_taking_incharge: "",
-                          final_destination_of_delivery: "",
-                          completed: false,
-                          shipment_terms: "",
-                          goods_description: "",
-                          other_lc_terms: "",
-                          bank_ac: null,
-                          expiry_date: "",
-                          lc_amount: "",
-                          base_currency: { id: company.base_currency },
-                          company_master_id: mid,
-                          created_by: user.email,
-                        });
+        {activeStep === 0 && (
+          <AnimateButton>
+            <Button
+              color="error"
+              variant="contained"
+              size="small"
+              onClick={() => {
+                setValues({
+                  trans_type: flag ? "import" : "export",
+                  // year_id: 21,
+                  lc_date: "",
+                  party_code: null,
+                  cost_center: null,
+                  applicant_bank: "",
+                  applicant_bank_lc_no: "",
+                  benificiary_bank: "",
+                  benificiary_bank_lc_no: "",
+                  inspection: false,
+                  bank_ref: "",
+                  days_for_submit_to_bank: "",
+                  payment_terms: "",
+                  place_of_taking_incharge: "",
+                  final_destination_of_delivery: "",
+                  completed: false,
+                  shipment_terms: "",
+                  goods_description: "",
+                  other_lc_terms: "",
+                  bank_ac: null,
+                  expiry_date: "",
+                  lc_amount: "",
+                  base_currency: { id: company.base_currency },
+                  company_master_id: mid,
+                  created_by: user.email,
+                });
 
-                        handleClose();
-                      }}
-                      disabled={clicked}
-                      startIcon={<CancelIcon />}
-                    >
-                      Cancel
-                    </Button>
-                  </AnimateButton>
-                )}
-              </Grid>
-              <Grid item>
-                <LoadingButton
-                  color="primary"
-                  variant="contained"
-                  size="small"
-                  onClick={activeStep === 0 ? handleSubmit1 : handleClearClose}
-                  loading={clicked}
-                  startIcon={<SaveIcon />}
-                >
-                  {activeStep === 0 ? "Add" : "Okay"}
-                </LoadingButton>
-              </Grid>
-            </Grid>
-          </Stack>
-        </Grid>
+                handleClose();
+              }}
+              disabled={clicked}
+              startIcon={<CancelIcon />}
+            >
+              Cancel
+            </Button>
+          </AnimateButton>
+        )}
+
+        <LoadingButton
+          color="primary"
+          variant="contained"
+          size="small"
+          onClick={activeStep === 0 ? handleSubmit1 : handleClearClose}
+          loading={clicked}
+          startIcon={<SaveIcon />}
+        >
+          {activeStep === 0 ? "Add" : "Okay"}
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

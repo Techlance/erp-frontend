@@ -21,8 +21,9 @@ export const VoucherTypeProvider = ({ children }) => {
     await getVoucherTypesAsync(id, dispatch);
   };
 
-  const createVoucherTypes = async (mid, data) => {
-    await createVoucherTypesAsync(data, dispatch);
+  const createVoucherTypes = async (mid, data, onSuccess) => {
+    await createVoucherTypesAsync(data, onSuccess, dispatch);
+
     await getVoucherTypesAsync(mid, dispatch);
   };
 

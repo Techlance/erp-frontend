@@ -38,7 +38,7 @@ import {
   deleteLedgerBillAsync,
 } from "../../api";
 
-export const LedgerMaster = createContext();
+export const LedgerMasterContext = createContext();
 
 export const LedgerMasterProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -50,8 +50,8 @@ export const LedgerMasterProvider = ({ children }) => {
     await getCompanyAccountHeadsAsync(id, dispatch);
   };
 
-  const addCompanyAccountHead = async (data) => {
-    await addCompanyAccountHeadAsync(data, dispatch);
+  const addCompanyAccountHead = async (data, onSuccess) => {
+    await addCompanyAccountHeadAsync(data, onSuccess, dispatch);
 
     await getCompanyAccountHeadsAsync(data.company_master_id, dispatch);
   };
@@ -60,7 +60,6 @@ export const LedgerMasterProvider = ({ children }) => {
     await updateCompanyAccountHeadAsync(data, dispatch);
 
     await getCompanyAccountHeadsAsync(data.company_master_id, dispatch);
-    // await getSelectedCompanyAsync(data.id, dispatch);
   };
 
   const deleteCompanyAccountHead = async (id, mid) => {
@@ -77,8 +76,8 @@ export const LedgerMasterProvider = ({ children }) => {
     await getCompanyAccountGroupDetailsAsync(id, dispatch);
   };
 
-  const addCompanyAccountGroup = async (data) => {
-    await addCompanyAccountGroupAsync(data, dispatch);
+  const addCompanyAccountGroup = async (data, onSuccess) => {
+    await addCompanyAccountGroupAsync(data, onSuccess, dispatch);
 
     await getCompanyAccountGroupsAsync(data.company_master_id, dispatch);
   };
@@ -182,9 +181,8 @@ export const LedgerMasterProvider = ({ children }) => {
   }
 
   return (
-    <LedgerMaster.Provider
+    <LedgerMasterContext.Provider
       value={{
-        ...state,
         getCompanyAccountHeads,
         addCompanyAccountHead,
         updateCompanyAccountHead,
@@ -212,6 +210,6 @@ export const LedgerMasterProvider = ({ children }) => {
       }}
     >
       {children}
-    </LedgerMaster.Provider>
+    </LedgerMasterContext.Provider>
   );
 };

@@ -112,8 +112,8 @@ export const CompanyProvider = ({ children }) => {
     await getCurrencyAsync(dispatch);
   };
 
-  const addCurrency = async (data) => {
-    await addCurrencyAsync(data, dispatch);
+  const addCurrency = async (data, onSuccess) => {
+    await addCurrencyAsync(data, onSuccess, dispatch);
 
     await getCurrencyAsync(dispatch);
   };
@@ -158,7 +158,6 @@ export const CompanyProvider = ({ children }) => {
   return (
     <CompanyContext.Provider
       value={{
-        ...state,
         getUserCompanies,
         getSelectedCompany,
         createCompany,
