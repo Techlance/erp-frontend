@@ -150,9 +150,9 @@ const UserForm = () => {
     setClicked(false);
   };
 
-  const handleAgree = () => {
-    deleteCompanyAccountGroup(values.id);
-    history.replace(`/company/${mid}/master/ledger-master/group/`);
+  const handleAgree = async () => {
+    await deleteCompanyAccountGroup(values.id);
+    history.replace(`/company/${mid}/master/ledger-master/group`);
   };
 
   return (

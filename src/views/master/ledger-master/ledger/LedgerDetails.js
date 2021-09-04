@@ -10,7 +10,7 @@ import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import LedgerForm from "./LedgerForm";
 import LedgerBalance from "./LedgerBalance";
-import LedgerBillwise from "./LederBillwise";
+import LedgerBillwise from "./LedgerBillwise";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import LedgerDocumentForm from "./LedgerDocumentForm";
 import AddDocumentDialog from "../../../../components/master/ledger-master/AddDocumentDialog";

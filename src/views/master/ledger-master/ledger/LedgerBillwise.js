@@ -33,7 +33,7 @@ const LedgerBillwise = () => {
 
   const { lid } = useParams();
 
-  const [values, setValues] = useState({ is_cr: false });
+  const [values, setValues] = useState({ is_cr: false, billwise: [] });
   const [clicked, setClicked] = useState(false);
   const { company } = useSelector((state) => state.companyMaster);
   const [existingBills, setExistingBills] = useState([]);
@@ -43,7 +43,7 @@ const LedgerBillwise = () => {
   const addShortcut = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      addBill();
+      handleAddBill();
     }
   };
 
@@ -70,7 +70,7 @@ const LedgerBillwise = () => {
     });
   };
 
-  const addBill = () => {
+  const handleAddBill = () => {
     setValues({
       ...values,
       billwise: [
@@ -118,6 +118,7 @@ const LedgerBillwise = () => {
       };
     });
   };
+
   const handleUpdate = async () => {
     setClicked(true);
     let bills = makeBillwise();
@@ -158,6 +159,7 @@ const LedgerBillwise = () => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
+      <pre>{JSON.stringify(values, null, 2)}</pre>
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={6}>
@@ -176,7 +178,7 @@ const LedgerBillwise = () => {
                 fullWidth
                 // variant="contained"
                 size="large"
-                onClick={addBill}
+                onClick={handleAddBill}
               >
                 Add Bill
               </Button>
