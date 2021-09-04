@@ -67,7 +67,7 @@ export const updateBudgetPlReviseAsync = async (
   onSuccess,
   dispatch
 ) => {
-  try {
+  // try {
     if (!id) return;
 
     const response = await instance.put(
@@ -85,7 +85,7 @@ export const updateBudgetPlReviseAsync = async (
     });
 
     if (response.data.success) onSuccess();
-  } catch (error) {
-    console.log("Error while getting");
-  }
+  // } catch (error) {
+  //   console.log("Error while submitting");
+  // }
 };

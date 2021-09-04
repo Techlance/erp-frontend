@@ -12,6 +12,14 @@ import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 //-----------------------|| Ledger Form ||-----------------------//
 
 const PLGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
+
+  const [sortModel, setSortModel] = React.useState([
+    {
+      field: 'ledger_id',
+      sort: 'asc',
+    },
+  ]);
+
   const handleEdit = ({ id, field, value }) => {
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
@@ -161,6 +169,7 @@ const PLGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
               rows={rows}
               loading={loading}
               onCellEditCommit={handleEdit}
+              sortModel={sortModel}
             />
           </Grid>
           <Grid item xs={12}>
