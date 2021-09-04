@@ -196,6 +196,7 @@ const BillwiseTable = ({
                 id="due_date"
                 label="Due Date"
                 value={row.due_date}
+                InputProps={{ inputProps: { min: row.bill_date } }}
                 InputLabelProps={{ shrink: true }}
                 onChange={(e) => {
                   setBillwise(index, e);

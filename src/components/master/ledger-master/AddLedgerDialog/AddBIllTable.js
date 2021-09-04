@@ -139,6 +139,7 @@ const AddBillTable = ({
                 fullWidth
                 id="due_date"
                 label="Due Date"
+                InputProps={{ inputProps: { min: row.bill_date } }}
                 value={row.due_date}
                 InputLabelProps={{ shrink: true }}
                 onChange={(e) => {

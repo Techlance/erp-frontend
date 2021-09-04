@@ -111,6 +111,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
+              required
               id="company_name"
               label="Company Name"
               value={values.company_name}
@@ -121,6 +122,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
+              required
               id="address"
               label="Address"
               value={values.address}
@@ -131,6 +133,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
+              required
               id="country"
               label="Country"
               value={values.country}
@@ -141,6 +144,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
+              required
               id="state"
               label="State"
               value={values.state}
@@ -151,6 +155,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
+              required
               id="email"
               InputLabelProps={{ shrink: true }}
               label="Email"
@@ -161,6 +166,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               id="website"
               label="Website"
@@ -171,6 +177,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               id="contact_no"
               label="Contact Number"
@@ -183,7 +190,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <Stack direction="row">
               <CurrencySelect
-                captionLabel="Base Currency"
+                captionLabel="Base Currency*"
                 InputLabelProps={{ shrink: true }}
                 selected={values.base_currency}
                 onChange={handleSelect}
@@ -205,6 +212,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               id="cr_no"
               label="CR. No."
@@ -215,6 +223,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               id="registration_no"
               label="Registration No."
@@ -225,6 +234,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               id="tax_id_no"
               label="Tax ID No."
@@ -235,6 +245,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               id="vat_id_no"
               label="VAT ID No."
@@ -245,6 +256,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               id="year_start_date"
               label="Year Start Date"
@@ -256,6 +268,7 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               id="year_end_date"
               label="Year End Date"

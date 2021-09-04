@@ -374,7 +374,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
         </DialogContentText>
 
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-          {steps.map((label, index) => {
+          {steps?.map((label, index) => {
             const labelProps = {};
 
             if (index === errorIndex) {
