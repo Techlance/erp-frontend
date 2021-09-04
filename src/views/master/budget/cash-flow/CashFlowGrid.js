@@ -1,7 +1,7 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 
 // material-ui
-import { Grid, Stack, TextField } from "@material-ui/core";
+import { Grid, Stack } from "@material-ui/core";
 
 // project import
 import { gridSpacing } from "../../../../store/constant";
@@ -13,7 +13,6 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import CashflowTypeSelect from "../../../../components/master/budget/CashflowTypeSelect";
-
 
 //-----------------------|| CashFlow Grid ||-----------------------//
 
@@ -87,7 +86,6 @@ import CashflowTypeSelect from "../../../../components/master/budget/CashflowTyp
 //   return <RatingEditInputCell {...params} />;
 // }
 
-
 const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   const [getCashFlowHead, loading, , data] = useRequest({
     url: "/budget/get-cashflow-head/",
@@ -101,7 +99,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   }, []);
 
   const handleEdit = ({ id, field, value }) => {
-    console.log(id, field, value)
+    console.log(id, field, value);
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
       return { ...e };
@@ -133,7 +131,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       renderCell: (params) => (
         <CashflowTypeSelect
           params={params}
-          options={["payment","receipt"]}
+          options={["payment", "receipt"]}
           loading={loading}
         />
       ),
@@ -146,11 +144,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       align: "left",
       minWidth: 320,
       renderCell: (params) => (
-        <CashFlowAutoSelect
-          params={params}
-          options={data}
-          loading={loading}
-        />
+        <CashFlowAutoSelect params={params} options={data} loading={loading} />
       ),
     },
     {

@@ -69,7 +69,7 @@ const AddUserDialog = ({ open, handleClose }) => {
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleClearClose = ()=>{
+  const handleClearClose = () => {
     setValues({
       schedule_no: null,
       acc_head_name: "",
@@ -78,11 +78,11 @@ const AddUserDialog = ({ open, handleClose }) => {
       company_master_id: parseInt(mid),
       created_by: user.email,
       is_fixed: false,
-    })
-    setClicked(false)
-    setError(false)
-    handleClose()
-  }
+    });
+    setClicked(false);
+    setError(false);
+    handleClose();
+  };
 
   const handleChange = (event) => {
     if (event.target.id === "schedule_no") {

@@ -135,10 +135,10 @@ const AddUserDialog = ({ open, handleClose }) => {
     form.acc_head_id = parseInt(form.acc_head_id.id);
     form.child_of = form.child_of ? parseInt(form.child_of.id) : null;
     await addCompanyAccountGroup(form);
-    handleClearClose()
+    handleClearClose();
   };
 
-  const handleClearClose = ()=>{
+  const handleClearClose = () => {
     setValues({
       group_name: "",
       acc_head_id: null,
@@ -147,12 +147,12 @@ const AddUserDialog = ({ open, handleClose }) => {
       is_fixed: false,
       company_master_id: parseInt(mid),
       created_by: user.email,
-    })
-    setClicked(false)
-    setError(false)
-    setNameError(false)
-    handleClose()
-  }
+    });
+    setClicked(false);
+    setError(false);
+    setNameError(false);
+    handleClose();
+  };
 
   return (
     <Dialog
