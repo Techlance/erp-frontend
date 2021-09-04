@@ -101,7 +101,7 @@ const LedgerDetails = () => {
   }, [company_ledger_details, getCompanyLedgerDetails, lid]);
 
   return (
-    <MainCard title="Company Details">
+    <MainCard title="Ledger Details">
       <div className={classes.root}>
         <Tabs
           value={value}

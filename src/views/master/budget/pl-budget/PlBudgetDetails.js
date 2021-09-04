@@ -70,7 +70,7 @@ function a11yProps(index) {
   };
 }
 
-//-----------------------|| Company Details ||-----------------------//
+//-----------------------|| Budget Details ||-----------------------//
 
 const BudgetPlDetails = () => {
   const classes = useStyles();
@@ -133,7 +133,7 @@ const BudgetPlDetails = () => {
   };
 
   return (
-    <MainCard title="Company Details">
+    <MainCard title="Budget Details">
       <div className={classes.root}>
         <Tabs
           value={value}
