@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
+import { useSelector } from "react-redux";
 
 // material-ui
 import { Button, Grid, Stack, TextField } from "@material-ui/core";
@@ -13,7 +14,6 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 
 // project imports
 import useCostCenter from "../../../../hooks/useCostCenter";
-import { useSelector } from "react-redux";
 import config from "../../../../config";
 import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 import LoadingButton from "../../../../ui-component/LoadingButton";

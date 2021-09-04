@@ -19,12 +19,12 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 
 // project imports
 import useAuth from "../../hooks/useAuth";
+import useCostCenter from "../../hooks/useCostCenter";
 import { gridSpacing } from "../../store/constant";
 import ParentGroupSelect from "./ParentGroupSelect";
-import useCostCenter from "../../hooks/useCostCenter";
+import CategorySelect from "../../components/cost-center/CategorySelect";
 
 // assets
-import CategorySelect from "../../components/CostCenter/CategorySelect";
 import LoadingButton from "../../ui-component/LoadingButton";
 
 const AddCostCenterDialog = ({ open, handleClose }) => {

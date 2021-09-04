@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
+
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -11,13 +14,11 @@ import {
   IconButton,
 } from "@material-ui/core";
 
-import { useHistory } from "react-router";
-
 // assets
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import { gridSpacing } from "../../../store/constant";
 import SubCard from "../../../ui-component/cards/SubCard";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import LoadingButton from "../../../ui-component/LoadingButton";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
@@ -25,11 +26,10 @@ import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
 // project imports
 import useCompany from "../../../hooks/useCompany";
 import CurrencySelect from "../../../components/company/CurrencySelect";
+import { gridSpacing } from "../../../store/constant";
 import AddCurrenyDialog from "../../../components/company/AddCurrencyDialog";
 import ImageUpdateDialog from "../../../components/company/ImageUpdateDialog";
 import ConfirmDeleteDialog from "../../../components/ConfirmDeleteDialog";
-import { useSelector } from "react-redux";
-import LoadingButton from "../../../ui-component/LoadingButton";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
