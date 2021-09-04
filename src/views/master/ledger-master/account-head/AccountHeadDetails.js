@@ -183,6 +183,7 @@ const UserForm = () => {
                           <AnimateButton>
                             <Button
                               variant="contained"
+                              size="small"
                               color="error"
                               onClick={() => setShowDeleteModal(true)}
                               startIcon={<DeleteIcon />}
@@ -195,6 +196,7 @@ const UserForm = () => {
                         <Grid item>
                           <LoadingButton
                             variant="contained"
+                            size="small"
                             color="primary"
                             onClick={handleUpdateAccountHead}
                             startIcon={<SaveIcon />}

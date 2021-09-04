@@ -88,7 +88,8 @@ const AddUserDialog = ({ open, handleClose }) => {
     if (event.target.id === "group_code") {
       if (
         company_account_groups.find(
-          (acc) => acc.group_code === event.target.value
+          (acc) =>
+            acc.group_code.toUpperCase() === event.target.value.toUpperCase()
         )
       ) {
         setError(true);

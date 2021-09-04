@@ -200,6 +200,7 @@ const LedgerBillwise = () => {
                   <LoadingButton
                     variant="contained"
                     color="primary"
+                    size="small"
                     onClick={handleUpdate}
                     startIcon={<SaveIcon />}
                     loading={clicked}

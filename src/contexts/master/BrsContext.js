@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   createBrsAsync,
   deleteBrsAsync,
@@ -14,6 +14,7 @@ export const BrsContext = createContext();
 
 export const BrsProvider = ({ children }) => {
   const dispatch = useDispatch();
+  const { selected_bank } = useSelector((state) => state.brs);
 
   const getBanks = async (id) => {
     await getBanksAsync(id, dispatch);
@@ -24,7 +25,7 @@ export const BrsProvider = ({ children }) => {
   };
 
   const getOpeningBalBRS = async (id) => {
-    await getOpeningBalBRSAsync(id, dispatch);
+    await getOpeningBalBRSAsync(id, selected_bank, dispatch);
   };
 
   const getBrsDetails = async (id) => {
@@ -34,7 +35,11 @@ export const BrsProvider = ({ children }) => {
   const createBrs = async (data) => {
     await createBrsAsync(data, dispatch);
 
-    await getOpeningBalBRSAsync(data.company_master_id, dispatch);
+    await getOpeningBalBRSAsync(
+      data.company_master_id,
+      selected_bank,
+      dispatch
+    );
   };
 
   const updateBrs = async (data) => {

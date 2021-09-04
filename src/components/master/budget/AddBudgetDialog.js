@@ -77,7 +77,7 @@ const AddBudgetDialog = ({ open, handleClose }) => {
       maxWidth="sm"
     >
       <DialogTitle id="form-dialog-title">
-        <Typography variant="h4">Create Account Head</Typography>
+        <Typography variant="h4">Create Budget</Typography>
       </DialogTitle>
       <DialogContent>
         <DialogContentText>

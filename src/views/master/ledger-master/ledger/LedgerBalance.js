@@ -94,7 +94,7 @@ const LedgerBalance = () => {
               <TextField
                 fullWidth
                 id="amt"
-                label="amt"
+                label="Amount"
                 value={values?.amt}
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}

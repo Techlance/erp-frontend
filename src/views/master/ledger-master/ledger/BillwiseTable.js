@@ -259,6 +259,7 @@ const BillwiseTable = ({
               >
                 <Button
                   variant="text"
+                  size="small"
                   color="error"
                   aria-label="delete"
                   onClick={() => {

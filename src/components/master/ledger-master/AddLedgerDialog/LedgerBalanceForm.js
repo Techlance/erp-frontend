@@ -54,7 +54,7 @@ const LedgerBalanceForm = ({ values, setValues }) => {
         <TextField
           fullWidth
           id="amt"
-          label="amt"
+          label="Amount"
           value={values.amt}
           InputLabelProps={{ shrink: true }}
           onChange={handleChange}
@@ -81,7 +81,15 @@ const LedgerBalanceForm = ({ values, setValues }) => {
           </TextField>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid
+        item
+        xs={12}
+        sm={
+          values.fc_name && values.fc_name?.id !== company.base_currency
+            ? 6
+            : 12
+        }
+      >
         <FcNameSelect
           captionLabel="Currency"
           InputLabelProps={{ shrink: true }}

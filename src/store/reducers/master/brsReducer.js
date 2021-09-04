@@ -21,6 +21,7 @@ const brsReducer = (state = initialState, action) => {
     }
 
     case brsActions.GET_BRS: {
+      console.log(action.payload);
       return {
         ...state,
         brs_list: action.payload,
