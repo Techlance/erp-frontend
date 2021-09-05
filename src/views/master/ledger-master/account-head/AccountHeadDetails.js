@@ -24,7 +24,7 @@ import LoadingButton from "../../../../ui-component/LoadingButton";
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -133,6 +133,11 @@ const UserForm = () => {
     setClicked(false);
   };
 
+  const handleAgree = async () => {
+    await deleteCompanyAccountHead(values.id, mid);
+    history.replace(`/company/${mid}/master/ledger-master/head/`);
+  };
+
   return (
     values && (
       <MainCard title="Account Head Details">
@@ -214,10 +219,7 @@ const UserForm = () => {
             <ProtectedDeleteDialog
               checkList={checkList}
               showDeleteModal={showDeleteModal}
-              handleAgree={() => {
-                deleteCompanyAccountHead(values.id, mid);
-                history.replace(`/company/${mid}/master/ledger-master/head/`);
-              }}
+              handleAgree={handleAgree}
               handleClose={() => setShowDeleteModal(false)}
               title="Are you sure?"
               body="Are you sure you want to delete this Account Head? Once deleted the data can not be retrived!"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // material-ui
-import { Button, Grid, Stack } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 
 // project imports
 import { useParams } from "react-router";
@@ -190,33 +190,29 @@ const LedgerBillwise = () => {
               </Button>
             </AnimateButton>
           </Grid>
-          <BillwiseTable
-            billwise={values.billwise}
-            setBillwise={setBillwise}
-            deleteBill={deleteBill}
-            addShortcut={addShortcut}
-            deleteExistingBill={deleteExistingBill}
-            is_fc={
-              values.fc_name && values.fc_name?.id !== company.base_currency
-            }
-          />
           <Grid item xs={12}>
-            <Stack direction="row">
-              <Grid container justifyContent="flex-end" spacing={gridSpacing}>
-                <Grid item>
-                  <LoadingButton
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    onClick={handleUpdate}
-                    startIcon={<SaveIcon />}
-                    loading={clicked}
-                  >
-                    Save Details
-                  </LoadingButton>
-                </Grid>
-              </Grid>
-            </Stack>
+            <BillwiseTable
+              billwise={values.billwise}
+              setBillwise={setBillwise}
+              deleteBill={deleteBill}
+              addShortcut={addShortcut}
+              deleteExistingBill={deleteExistingBill}
+              is_fc={
+                values.fc_name && values.fc_name?.id !== company.base_currency
+              }
+            />
+          </Grid>
+          <Grid item xs={12} display="flex" justifyContent="flex-end">
+            <LoadingButton
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={handleUpdate}
+              startIcon={<SaveIcon />}
+              loading={clicked}
+            >
+              Save Details
+            </LoadingButton>
           </Grid>
         </Grid>
       </Grid>

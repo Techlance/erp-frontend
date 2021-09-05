@@ -95,10 +95,10 @@ const LCForm = () => {
     // history.replace("/company/9/master/lc/import/1");
   };
 
-  // const handleAgree = () => {
-  //   deleteLC(values.id);
-  //   history.replace(`/company/${mid}/master/lc/import`);
-  // };
+  const handleAgree = async () => {
+    await deleteLC(values.id);
+    history.replace(`/company/${mid}/master/lc/import`);
+  };
 
   return (
     values && (
@@ -389,10 +389,7 @@ const LCForm = () => {
           </Grid>
           <ConfirmDeleteDialog
             open={showDeleteModal}
-            handleAgree={() => {
-              deleteLC(values.id);
-              history.replace(`/company/${mid}/master/lc/import`);
-            }}
+            handleAgree={handleAgree}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
             body="Are you sure you want to delete this LC records? Once deleted the data can not be retrived!"

@@ -128,8 +128,8 @@ const LedgerForm = () => {
     setClicked(false);
   };
 
-  const handleAgree = () => {
-    deleteCompanyLedger(values?.id);
+  const handleAgree = async () => {
+    await deleteCompanyLedger(values.id);
     history.replace(`/company/${mid}/master/ledger-master/ledger`);
   };
 

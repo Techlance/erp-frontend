@@ -26,7 +26,7 @@ import Loader from "../../../../ui-component/Loader";
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -73,7 +73,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": index,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -113,29 +113,6 @@ const LedgerDetails = () => {
           aria-label="simple tabs example"
           variant="scrollable"
         >
-          <Tab
-            component={Link}
-            to="#"
-            label="Ledger"
-            icon={<MenuBookIcon sx={{ fontSize: "1.3rem" }} />}
-            {...a11yProps(0)}
-          />
-          {company_ledger_details.maintain_billwise && (
-            <Tab
-              component={Link}
-              to="#"
-              label="Balances"
-              icon={<AccountBalanceWalletIcon sx={{ fontSize: "1.3rem" }} />}
-              {...a11yProps(1)}
-            />
-          )}
-          <Tab
-            component={Link}
-            to="#"
-            label="Docs"
-            icon={<DescriptionTwoToneIcon sx={{ fontSize: "1.3rem" }} />}
-            {...a11yProps(2)}
-          />
           {value === 2 ? (
             <div style={{ position: "absolute", right: 0 }}>
               <AnimateButton>
@@ -151,12 +128,39 @@ const LedgerDetails = () => {
               </AnimateButton>
             </div>
           ) : null}
+          <Tab
+            component={Link}
+            to="#"
+            label="Ledger"
+            value={0}
+            icon={<MenuBookIcon sx={{ fontSize: "1.3rem" }} />}
+            {...a11yProps(0)}
+          />
+          {company_ledger_details.maintain_billwise && (
+            <Tab
+              component={Link}
+              to="#"
+              label="Balances"
+              value={1}
+              icon={<AccountBalanceWalletIcon sx={{ fontSize: "1.3rem" }} />}
+              {...a11yProps(1)}
+            />
+          )}
+          <Tab
+            component={Link}
+            to="#"
+            label="Docs"
+            value={2}
+            icon={<DescriptionTwoToneIcon sx={{ fontSize: "1.3rem" }} />}
+            {...a11yProps(2)}
+          />
         </Tabs>
+
         <TabPanel value={value} index={0}>
           <LedgerForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {company_ledger_details?.maintain_billwise ? (
+          {company_ledger_details.maintain_billwise ? (
             <LedgerBillwise />
           ) : (
             <LedgerBalance />

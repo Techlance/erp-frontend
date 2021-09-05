@@ -65,6 +65,10 @@ const CompanyDetails = () => {
     setValue(value);
   };
 
+  const handleAgree = async () => {
+    await deleteUserRights(value);
+  };
+
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
@@ -98,7 +102,7 @@ const CompanyDetails = () => {
           </CardActions>
           <ConfirmDeleteDialog
             open={showDeleteModal}
-            handleAgree={() => deleteUserRights(value)}
+            handleAgree={handleAgree}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
             body="Are you sure you want to delete this User Rights record? Once deleted the data can not be retrived!"

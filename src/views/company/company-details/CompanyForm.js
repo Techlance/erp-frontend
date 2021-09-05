@@ -90,6 +90,11 @@ const CompanyForm = () => {
     setClicked(false);
   };
 
+  const handleAgree = async () => {
+    await deleteCompany(values.id);
+    history.replace("/admin/companies");
+  };
+
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
       <Grid item sm={6} md={4}>
@@ -328,10 +333,7 @@ const CompanyForm = () => {
       </Grid>
       <ConfirmDeleteDialog
         open={showDeleteModal}
-        handleAgree={() => {
-          deleteCompany(values.id);
-          history.replace("/admin/companies");
-        }}
+        handleAgree={handleAgree}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"
         body="Are you sure you want to delete this Company records? Once deleted the data can not be retrived!"

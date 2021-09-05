@@ -68,6 +68,10 @@ const LedgerDocumentForm = ({ newLedger }) => {
     setNewDocs(data);
   }, [data]);
 
+  const handleAgree = async () => {
+    await deleteLedgerDoc(currentDocID);
+  };
+
   return (
     <Grid container className={classes.root}>
       <Grid item md={12}>
@@ -160,7 +164,7 @@ const LedgerDocumentForm = ({ newLedger }) => {
           </TableBody>
           <ConfirmDeleteDialog
             open={showDeleteModal}
-            handleAgree={() => deleteLedgerDoc(currentDocID)}
+            handleAgree={handleAgree}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
             body="Are you sure you want to delete this Document? Once deleted the data can not be retrived!"
