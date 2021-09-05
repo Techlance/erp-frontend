@@ -172,8 +172,8 @@ const AddLedgerDialog = ({ open, handleClose }) => {
   const handleSubmit = async () => {
     setClicked(true);
     let form = { ...values };
-    form.acc_group_id = parseInt(form.acc_group_id.id);
-    form.credit_days = parseInt(form.credit_days);
+    form.acc_group_id = parseInt(form.acc_group_id?.id);
+    form.credit_days = parseInt(form?.credit_days);
     if (!(receivable || payable)) {
       form = {
         ...form,
@@ -222,7 +222,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
         setActiveStep(2);
       }
     } else {
-      handleClearClose();
+      // handleClearClose();
     }
   };
 
@@ -231,10 +231,10 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     let form = {
       company_master_id: mid,
       ledger_id: newLedger.id,
-      cr: balanceValues.is_cr ? balanceValues.amt : 0,
-      dr: balanceValues.is_cr ? 0 : balanceValues.amt,
-      total_cr: balanceValues.is_cr ? balanceValues.amt : 0,
-      total_dr: balanceValues.is_cr ? 0 : balanceValues.amt,
+      cr: balanceValues.is_cr ? balanceValues.amt : null,
+      dr: balanceValues.is_cr ? null : balanceValues.amt,
+      total_cr: balanceValues.is_cr ? balanceValues.amt : null,
+      total_dr: balanceValues.is_cr ? null : balanceValues.amt,
       fc_name: balanceValues.fc_name
         ? balanceValues.fc_name.id
         : company.base_currency,
@@ -245,10 +245,12 @@ const AddLedgerDialog = ({ open, handleClose }) => {
           : parseInt(0),
       created_by: user.email,
     };
-    await addLedgerBalance(form);
-    setClicked(false);
-    // handleClearClose();
-    handleNext();
+    await addLedgerBalance(form,()=>{
+      setClicked(false);
+      // handleClearClose();
+      handleNext();
+    });
+
   };
   const makeBillwise = () => {
     return billwiseValues.billwise.map((val) => {
@@ -279,10 +281,11 @@ const AddLedgerDialog = ({ open, handleClose }) => {
         : company.base_currency,
       billwise: bills,
     };
-    await addLedgerBillwise(form);
-    setClicked(false);
-    // handleClearClose();
-    handleNext();
+    await addLedgerBillwise(form,()=>{
+      setClicked(false);
+      // handleClearClose();
+      handleNext();
+    });
   };
 
   const handleChecked = (event) => {
@@ -318,7 +321,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
       email: null,
       tel: null,
       address: null,
-      maintain_billwise: null,
+      maintain_billwise: false,
       acc_group_id: null,
       is_fixed: false,
       company_master_id: parseInt(mid),
@@ -351,6 +354,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
       fc_name: null,
     });
     setErrorIndex(null);
+    setClicked(false);
   };
   const handleClearClose = () => {
     setDefault();

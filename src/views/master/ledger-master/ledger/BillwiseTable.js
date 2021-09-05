@@ -34,7 +34,6 @@ const useStyles = makeStyles({
 
 const BillwiseTable = ({
   deleteExistingBill,
-  existingBills,
   billwise,
   setBillwise,
   deleteBill,
@@ -84,7 +83,7 @@ const BillwiseTable = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {existingBills?.map((row, index) => (
+        {/* {existingBills?.map((row, index) => (
           <TableRow hover key={index}>
             <TableCell>
               <Typography align="center">{row.ref_no}</Typography>
@@ -138,7 +137,7 @@ const BillwiseTable = ({
               </Stack>
             </TableCell>
           </TableRow>
-        ))}
+        ))} */}
         {billwise?.map((row, index) => (
           <TableRow hover key={index} alignItems="top">
             <TableCell>
