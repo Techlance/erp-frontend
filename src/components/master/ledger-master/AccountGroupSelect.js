@@ -56,7 +56,9 @@ const AccountGroupSelect = ({
       setPayable(item?.is_payables);
       if (setBs) setBs(item?.is_bs);
     }
-  }, [data, setReceivable, setPayable, setBs, selected]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, selected]);
 
   const handleChange = (event) => {
     const item = data.find((option) => option.id === event.target.value);

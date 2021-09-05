@@ -79,8 +79,18 @@ const LedgerBillwise = () => {
   };
 
   const deleteBill = (index) => {
+    if (!values.billwise[index].created) {
+      deleteExistingBill(values.billwise[index].id);
+      return;
+    }
+
     let billwiseCopy = [...values.billwise];
     delete billwiseCopy[index];
+
+    billwiseCopy = billwiseCopy.filter((x) => x !== null);
+
+    console.log(billwiseCopy);
+
     setValues({
       ...values,
       billwise: billwiseCopy,
@@ -121,9 +131,11 @@ const LedgerBillwise = () => {
       ledger_master_id: lid,
     };
 
-    await addLedgerBillwise(form);
-    if (ledger_balance.id) await getLedgerBillwise(ledger_balance?.id);
-    else {
+    await addLedgerBillwise(form, () => {});
+
+    if (ledger_balance?.id) {
+      await getLedgerBillwise(ledger_balance.id);
+    } else {
       await getLedgerBalance(lid);
       await getLedgerBillwise(ledger_balance?.id);
     }
