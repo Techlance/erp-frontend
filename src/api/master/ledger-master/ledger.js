@@ -37,17 +37,35 @@ export const getCompanyLedgerDetailsAsync = async (id, dispatch) => {
 };
 
 export const addCompanyLedgerAsync = async (data, dispatch) => {
-  delete data.id;
-  const response = await instance.post(
-    "/company/add-ledger-master",
-    dataToForm(data)
-  );
+  try {
+    delete data.id;
+    const response = await instance.post(
+      "/company/add-ledger-master",
+      dataToForm(data)
+    );
 
-  sendNotification({
-    dispatch,
-    response,
-  });
-  return response.data;
+    sendNotification({
+      dispatch,
+      response,
+    });
+    return response.data;
+  } catch (error) {
+    const response = {
+      data: {
+        success: false,
+        message: "Error while creating ledger.",
+      },
+    };
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    console.log("Error while creating ledger.");
+
+    return response;
+  }
 };
 
 export const updateCompanyLedgerAsync = async (data, dispatch) => {
@@ -123,34 +141,63 @@ export const deleteLedgerDocAsync = async (id, dispatch) => {
   });
 };
 
-export const addLedgerBalanceAsync = async (data,successFn, dispatch) => {
-  const response = await instance.post(
-    "/ledger-balance/add-ledger-balance",
-    dataToForm(data)
-  );
+export const addLedgerBalanceAsync = async (data, onSuccess, dispatch) => {
+  try {
+    const response = await instance.post(
+      "/ledger-balance/add-ledger-balance",
+      dataToForm(data)
+    );
 
-    console.log(response.data.success)
-  if(response.data.success){
-    console.log("hi")
-    successFn()
+    if (response.data.success) onSuccess();
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+  } catch (error) {
+    const response = {
+      data: {
+        success: false,
+        message: "Error while creating ledger balance.",
+      },
+    };
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    console.log("Error while creating ledger balance.");
   }
-  sendNotification({
-    dispatch,
-    response,
-  });
 };
 
-export const addLedgerBillwiseAsync = async (data,successFn, dispatch) => {
-  const response = await instance.post(
-    "/ledger-balance/add-all-ledger-bal-billwise",
-    data
-  );
-  sendNotification({
-    dispatch,
-    response,
-  });
-  if(response.data.success)
-  successFn()
+export const addLedgerBillwiseAsync = async (data, onSuccess, dispatch) => {
+  try {
+    const response = await instance.post(
+      "/ledger-balance/add-all-ledger-bal-billwise",
+      data
+    );
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    if (response.data.success) onSuccess();
+  } catch (error) {
+    const response = {
+      data: {
+        success: false,
+        message: "Error while creating ledger billwise.",
+      },
+    };
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    console.log("Error while creating ledger billwise.");
+  }
 };
 
 export const getLedgerBalanceAsync = async (id, dispatch) => {

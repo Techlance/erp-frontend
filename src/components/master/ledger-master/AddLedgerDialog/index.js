@@ -214,9 +214,9 @@ const AddLedgerDialog = ({ open, handleClose }) => {
     }
     let response = await addCompanyLedger(form);
     setClicked(false);
-    if (response.success) {
+    if (response.data.success) {
       if (bs) {
-        setNewLedger(response.data);
+        setNewLedger(response.data.data);
         handleNext();
       } else {
         setActiveStep(2);
@@ -245,12 +245,10 @@ const AddLedgerDialog = ({ open, handleClose }) => {
           : parseInt(0),
       created_by: user.email,
     };
-    await addLedgerBalance(form,()=>{
+    await addLedgerBalance(form, () => {
       setClicked(false);
-      // handleClearClose();
       handleNext();
     });
-
   };
   const makeBillwise = () => {
     return billwiseValues.billwise.map((val) => {
@@ -281,7 +279,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
         : company.base_currency,
       billwise: bills,
     };
-    await addLedgerBillwise(form,()=>{
+    await addLedgerBillwise(form, () => {
       setClicked(false);
       // handleClearClose();
       handleNext();

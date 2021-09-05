@@ -68,23 +68,23 @@ export const updateBudgetPlReviseAsync = async (
   dispatch
 ) => {
   // try {
-    if (!id) return;
+  if (!id) return;
 
-    const response = await instance.put(
-      `/budget/edit-revised-budget-details/${id}`,
-      data
-    );
+  const response = await instance.put(
+    `/budget/edit-revised-budget-details/${id}`,
+    data
+  );
 
-    dispatch({
-      type: budgetActions.UPDATE_COMPANY_BUDGET_REVISE,
-    });
+  dispatch({
+    type: budgetActions.UPDATE_COMPANY_BUDGET_REVISE,
+  });
 
-    sendNotification({
-      dispatch,
-      response,
-    });
+  sendNotification({
+    dispatch,
+    response,
+  });
 
-    if (response.data.success) onSuccess();
+  if (response.data.success) onSuccess();
   // } catch (error) {
   //   console.log("Error while submitting");
   // }

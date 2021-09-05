@@ -136,7 +136,7 @@ const LedgerBalance = () => {
                   fullWidth
                   id="fc_amount"
                   label="FC Amount"
-                  value={ values?.fc_amount }
+                  value={values?.fc_amount}
                   InputLabelProps={{ shrink: true }}
                   onChange={handleChange}
                   type="number"

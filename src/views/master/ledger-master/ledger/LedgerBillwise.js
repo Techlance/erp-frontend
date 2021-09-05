@@ -72,7 +72,7 @@ const LedgerBillwise = () => {
           fc_amount: 0,
           bill_date: null,
           due_date: null,
-          created:true
+          created: true,
         },
       ],
     });
@@ -95,7 +95,7 @@ const LedgerBillwise = () => {
   const makeBillwise = () => {
     return values.billwise.map((val) => {
       return {
-        id:val.id?val.id:null,
+        id: val.id ? val.id : null,
         ref_no: val.ref_no,
         fc_amount:
           values.fc_name && values.fc_name?.id !== company.base_currency
@@ -105,7 +105,7 @@ const LedgerBillwise = () => {
         due_date: val.due_date,
         cr: val.is_cr ? parseInt(val.amt) : null,
         dr: val.is_cr ? null : parseInt(val.amt),
-        amount:val.amt,
+        amount: val.amt,
         created_by: user.email,
       };
     });
@@ -115,17 +115,16 @@ const LedgerBillwise = () => {
     setClicked(true);
     let bills = makeBillwise();
     let form = {
-      fc_name: values.fc_name?.id?values.fc_name.id:company.base_currency,
+      fc_name: values.fc_name?.id ? values.fc_name.id : company.base_currency,
       billwise: bills,
-      company_master_id:mid,
-      ledger_master_id:lid
+      company_master_id: mid,
+      ledger_master_id: lid,
     };
 
     await addLedgerBillwise(form);
-    if(ledger_balance.id)
-      await getLedgerBillwise(ledger_balance?.id);
-    else{
-      await getLedgerBalance(lid)
+    if (ledger_balance.id) await getLedgerBillwise(ledger_balance?.id);
+    else {
+      await getLedgerBalance(lid);
       await getLedgerBillwise(ledger_balance?.id);
     }
     setValues({
@@ -139,18 +138,20 @@ const LedgerBillwise = () => {
     if (ledger_balance) {
       if (ledger_billwise) {
         // setExistingBills(ledger_billwise);
-        let ledger_billwise_copy = [...ledger_billwise]
-        ledger_billwise_copy = ledger_billwise_copy.map((ledger)=>
-        {
-          return({...ledger,
-          is_cr:ledger.cr>0?true:false,
-          amt:ledger.cr>0?ledger.cr:ledger.dr
-        })
-        })
+        let ledger_billwise_copy = [...ledger_billwise];
+        ledger_billwise_copy = ledger_billwise_copy.map((ledger) => {
+          return {
+            ...ledger,
+            is_cr: ledger.cr > 0 ? true : false,
+            amt: ledger.cr > 0 ? ledger.cr : ledger.dr,
+          };
+        });
         setValues({
           company_master_id: ledger_balance.company_master_id,
           ledger_master_id: lid,
-          fc_name: ledger_balance.fc_name?ledger_balance.fc_name:company.base_currency,
+          fc_name: ledger_balance.fc_name
+            ? ledger_balance.fc_name
+            : company.base_currency,
           billwise: ledger_billwise_copy,
         });
       } else {

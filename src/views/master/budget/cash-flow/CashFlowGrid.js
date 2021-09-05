@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 
 // material-ui
 import { Grid, Stack, TextField, Autocomplete } from "@material-ui/core";
@@ -13,45 +13,48 @@ import CachedIcon from "@material-ui/icons/Cached";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 
-
 //-----------------------|| CashFlow Grid ||-----------------------//
 
 function renderAuto(params) {
-  return <TextField inputProps={{readOnly:true}} fullWidth value={params.value?.head} />;
+  return (
+    <TextField
+      inputProps={{ readOnly: true }}
+      fullWidth
+      value={params.value?.head}
+    />
+  );
 }
 
 function AutoEditInputCell({ id, value, api, field, data, loading }) {
-
-  const handleChange = (event,newValue) => {
-    api.setEditCellValue({ id, field, value:newValue }, event);
+  const handleChange = (event, newValue) => {
+    api.setEditCellValue({ id, field, value: newValue }, event);
     if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
       api.commitCellChange({ id, field });
-      api.setCellMode(id, field, 'view');
+      api.setCellMode(id, field, "view");
     }
   };
 
   return (
-      <Autocomplete
-        fullWidth
-        inputRef={input => input && input.focus()}
-        value={value}
-        onChange={handleChange}
-        id="cash-flow-cash-head"
-        options={data}
-        getOptionLabel={(option) => option.head}
-        disabled={loading}
-        InputProps={{
-          startAdornment: <> {loading && <CachedIcon />} </>,
-        }}
-        renderInput={(params) => <TextField fullWidth {...params} />}
-      />
+    <Autocomplete
+      fullWidth
+      inputRef={(input) => input && input.focus()}
+      value={value}
+      onChange={handleChange}
+      id="cash-flow-cash-head"
+      options={data}
+      getOptionLabel={(option) => option.head}
+      disabled={loading}
+      InputProps={{
+        startAdornment: <> {loading && <CachedIcon />} </>,
+      }}
+      renderInput={(params) => <TextField fullWidth {...params} />}
+    />
   );
 }
 
-function renderAutoEditInputCell(params,data,loading) {
+function renderAutoEditInputCell(params, data, loading) {
   return <AutoEditInputCell {...params} data={data} loading={loading} />;
 }
-
 
 const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   const [getCashFlowHead, loading, , data] = useRequest({
@@ -66,14 +69,14 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   }, []);
 
   const handleEdit = ({ id, field, value }) => {
-    console.log(id, field, value)
+    console.log(id, field, value);
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
       return { ...e };
     });
     let row = rows.find((row) => row.id === id);
     let edit = editedCopy.find((row) => row.id === id);
-    if (edit && (row[field] === value || (row[field].id===value.id))) {
+    if (edit && (row[field] === value || row[field].id === value.id)) {
       if (edit[field]) delete editedCopy[editedCopy.indexOf(edit)][field];
       else editedCopy[editedCopy.indexOf(edit)][field] = value;
     } else if (edit) {
@@ -92,7 +95,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       field: "budget_type",
       headerName: "Budget Type",
       flex: 0.3,
-      editable:true,
+      editable: true,
       headerAlign: "left",
       align: "left",
       minWidth: 320,
@@ -113,11 +116,11 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      editable:true,
-      renderCell:renderAuto,
+      editable: true,
+      renderCell: renderAuto,
       renderEditCell: (params) => {
-        return(renderAutoEditInputCell(params,data,loading))
-    },
+        return renderAutoEditInputCell(params, data, loading);
+      },
     },
     {
       field: "jan",
@@ -231,7 +234,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      <pre>{JSON.stringify(edited,null,2)}</pre>
+      <pre>{JSON.stringify(edited, null, 2)}</pre>
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
