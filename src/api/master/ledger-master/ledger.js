@@ -123,19 +123,24 @@ export const deleteLedgerDocAsync = async (id, dispatch) => {
   });
 };
 
-export const addLedgerBalanceAsync = async (data, dispatch) => {
+export const addLedgerBalanceAsync = async (data,successFn, dispatch) => {
   const response = await instance.post(
     "/ledger-balance/add-ledger-balance",
     dataToForm(data)
   );
 
+    console.log(response.data.success)
+  if(response.data.success){
+    console.log("hi")
+    successFn()
+  }
   sendNotification({
     dispatch,
     response,
   });
 };
 
-export const addLedgerBillwiseAsync = async (data, dispatch) => {
+export const addLedgerBillwiseAsync = async (data,successFn, dispatch) => {
   const response = await instance.post(
     "/ledger-balance/add-all-ledger-bal-billwise",
     data
@@ -144,6 +149,8 @@ export const addLedgerBillwiseAsync = async (data, dispatch) => {
     dispatch,
     response,
   });
+  if(response.data.success)
+  successFn()
 };
 
 export const getLedgerBalanceAsync = async (id, dispatch) => {

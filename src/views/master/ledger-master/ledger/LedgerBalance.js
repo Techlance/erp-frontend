@@ -70,10 +70,10 @@ const LedgerBalance = () => {
       id: values.id,
       company_master_id: values.company_master_id,
       ledger_id: values.ledger_id,
-      cr: values.is_cr ? values.amt : 0,
-      dr: values.is_cr ? 0 : values.amt,
-      total_cr: values.is_cr ? values.amt : 0,
-      total_dr: values.is_cr ? 0 : values.amt,
+      cr: values.is_cr ? values.amt : null,
+      dr: values.is_cr ? null : values.amt,
+      total_cr: values.is_cr ? values.amt : null,
+      total_dr: values.is_cr ? null : values.amt,
       fc_name: values.fc_name ? values.fc_name.id : company.base_currency,
       fc_amount:
         values.fc_name && values.fc_name?.id !== company.base_currency
