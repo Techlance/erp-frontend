@@ -30,7 +30,7 @@ import AccountGroupSelect from "../../../../components/master/ledger-master/Acco
 
 //-----------------------|| Ledger Form ||-----------------------//
 
-const LedgerForm = () => {
+const LedgerForm = ({ setBs }) => {
   const history = useHistory();
 
   const { company_ledger_details, company_ledgers } = useSelector(
@@ -168,6 +168,7 @@ const LedgerForm = () => {
                 onChange={handleSelect}
                 setReceivable={setReceivable}
                 setPayable={setPayable}
+                setBs={setBs}
               />
             </Grid>
             <Grid item sm={12}>

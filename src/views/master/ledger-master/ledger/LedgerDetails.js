@@ -85,6 +85,7 @@ const LedgerDetails = () => {
   const { lid } = useParams();
   const [value, setValue] = useState(0);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [bs, setBs] = useState();
 
   const { getCompanyLedgerDetails } = useLedgerMaster();
 
@@ -136,7 +137,7 @@ const LedgerDetails = () => {
             icon={<MenuBookIcon sx={{ fontSize: "1.3rem" }} />}
             {...a11yProps(0)}
           />
-          {company_ledger_details.maintain_billwise && (
+          {bs && (
             <Tab
               component={Link}
               to="#"
@@ -157,7 +158,7 @@ const LedgerDetails = () => {
         </Tabs>
 
         <TabPanel value={value} index={0}>
-          <LedgerForm />
+          <LedgerForm setBs={setBs} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           {company_ledger_details.maintain_billwise ? (
