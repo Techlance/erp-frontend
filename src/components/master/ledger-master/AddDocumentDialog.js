@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 // material-ui
@@ -16,16 +17,18 @@ import {
 
 // project imports
 import useAuth from "../../../hooks/useAuth";
+import useLedgerMaster from "../../../hooks/useLedgerMaster";
+import { gridSpacing } from "../../../store/constant";
 
 // assets
-import { gridSpacing } from "../../../store/constant";
-import useLedgerMaster from "../../../hooks/useLedgerMaster";
-import { useParams } from "react-router";
+import LoadingButton from "../../../ui-component/LoadingButton";
+import AnimateButton from "../../../ui-component/extended/AnimateButton";
 
 const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
   const { user } = useAuth();
-  const { createLedgerDoc } = useLedgerMaster();
   const { mid } = useParams();
+
+  const { createLedgerDoc } = useLedgerMaster();
 
   const { company_ledger_details } = useSelector((state) => state.ledgerMaster);
 
@@ -71,9 +74,8 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
   const handleSubmit = async () => {
     if (!values.file) return;
     setClicked(true);
-    await createLedgerDoc(values);
+    await createLedgerDoc(values, () => handleCloseModal());
     setClicked(false);
-    handleCloseModal();
   };
 
   return (
@@ -119,15 +121,17 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button
-          onClick={handleCloseModal}
-          color="error"
-          variant="contained"
-          size="small"
-        >
-          Cancel
-        </Button>
-        <Button
+        <AnimateButton>
+          <Button
+            onClick={handleCloseModal}
+            color="error"
+            variant="contained"
+            size="small"
+          >
+            Cancel
+          </Button>
+        </AnimateButton>
+        <LoadingButton
           color="primary"
           variant="contained"
           size="small"
@@ -135,7 +139,7 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
           disabled={clicked}
         >
           Add
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

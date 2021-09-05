@@ -142,7 +142,7 @@ const CostCenterForm = () => {
                         onClick={handleUpdateCostCenter}
                         startIcon={<SaveIcon />}
                       >
-                        Update Details
+                        Save
                       </LoadingButton>
                     </Grid>
                   </Grid>

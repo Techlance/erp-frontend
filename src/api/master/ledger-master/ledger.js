@@ -82,14 +82,34 @@ export const getLedgerDocsAsync = async (id, dispatch) => {
   }
 };
 
-export const createLedgerDocAsync = async (data, dispatch) => {
-  const form = dataToForm(data);
-  const response = await instance.post("/company/add-ledger-document", form);
+export const createLedgerDocAsync = async (data, onSuccess, dispatch) => {
+  try {
+    const response = await instance.post(
+      "/company/add-ledger-document",
+      dataToForm(data)
+    );
 
-  sendNotification({
-    dispatch,
-    response,
-  });
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    if (response.data.success) {
+      onSuccess();
+    }
+  } catch (error) {
+    sendNotification({
+      dispatch,
+      response: {
+        data: {
+          success: false,
+          message: "Error while creating ledger document.",
+        },
+      },
+    });
+
+    console.log("Error while creating ledger document.");
+  }
 };
 
 export const deleteLedgerDocAsync = async (id, dispatch) => {

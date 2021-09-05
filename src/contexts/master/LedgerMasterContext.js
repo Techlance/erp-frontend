@@ -128,8 +128,8 @@ export const LedgerMasterProvider = ({ children }) => {
     await getLedgerDocsAsync(id, dispatch);
   };
 
-  const createLedgerDoc = async (data) => {
-    await createLedgerDocAsync(data, dispatch);
+  const createLedgerDoc = async (data, onSuccess) => {
+    await createLedgerDocAsync(data, onSuccess, dispatch);
 
     await getLedgerDocsAsync(state.company_ledger_details?.id, dispatch);
   };
