@@ -162,6 +162,7 @@ const LedgerForm = ({ setBs }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <AccountGroupSelect
+                viewOnly
                 captionLabel="Account Group"
                 InputLabelProps={{ shrink: true }}
                 selected={values?.acc_group_id}
