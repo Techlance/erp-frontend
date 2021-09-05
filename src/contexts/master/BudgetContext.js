@@ -61,8 +61,10 @@ export const BudgetProvider = ({ children }) => {
     await getBudgetCashflowReviseAsync(id, dispatch);
   };
 
-  const updateBudgetCashflowDetails = async (id, data, onSuccess) => {
-    await updateBudgetCashflowDetailsAsync(id, data, onSuccess, dispatch);
+  const updateBudgetCashflowDetails = async (data, onSuccess) => {
+  // const updateBudgetCashflowDetails = async (id, data, onSuccess) => {
+    // await updateBudgetCashflowDetailsAsync(id, data, onSuccess, dispatch);
+    await updateBudgetCashflowDetailsAsync(data, onSuccess, dispatch);
   };
 
   const updateBudgetCashflowRevise = async (id, data, onSuccess) => {

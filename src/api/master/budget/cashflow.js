@@ -22,16 +22,17 @@ export const getBudgetCashflowDetailsAsync = async (id, dispatch) => {
 };
 
 export const updateBudgetCashflowDetailsAsync = async (
-  id,
+  // id,
   data,
   onSuccess,
   dispatch
 ) => {
   try {
-    if (!id) return;
+    // if (!id) return;
 
-    const response = await instance.put(
-      `/budget/create-edit-budget-cashflow-detail/${id}`,
+    const response = await instance.post(
+      `/budget/create-edit-budget-cashflow-detail/`,
+      // `/budget/create-edit-budget-cashflow-detail/${id}`,
       data
     );
 

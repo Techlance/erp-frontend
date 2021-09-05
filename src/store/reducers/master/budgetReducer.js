@@ -8,8 +8,8 @@ const initialState = {
   company_budgets: [],
   company_budget_details: null,
   company_budget_revise: null,
-  company_budget_cashflow_details: null,
-  company_budget_cashflow_revise: null,
+  company_budget_cashflow_details: [],
+  company_budget_cashflow_revise: [],
 };
 
 const budgetReducer = (state = initialState, action) => {

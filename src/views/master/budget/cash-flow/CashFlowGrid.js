@@ -56,6 +56,43 @@ function renderAutoEditInputCell(params, data, loading) {
   return <AutoEditInputCell {...params} data={data} loading={loading} />;
 }
 
+function renderAutoType(params) {
+  return (
+    <TextField
+      inputProps={{ readOnly: true }}
+      fullWidth
+      value={params.value}
+    />
+  );
+}
+
+function AutoEditInputCellType({ id, value, api, field }) {
+  const handleChange = (event, newValue) => {
+    api.setEditCellValue({ id, field, value: newValue }, event);
+    if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
+      api.commitCellChange({ id, field });
+      api.setCellMode(id, field, "view");
+    }
+  };
+
+  return (
+    <Autocomplete
+      fullWidth
+      inputRef={(input) => input && input.focus()}
+      value={value}
+      onChange={handleChange}
+      id="cash-flow-cash-head"
+      options={["Receipt","Payment"]}
+      getOptionLabel={(option) => option}
+      renderInput={(params) => <TextField fullWidth {...params} />}
+    />
+  );
+}
+
+function renderAutoEditInputCellType(params) {
+  return <AutoEditInputCellType {...params} />;
+}
+
 const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   const [getCashFlowHead, loading, , data] = useRequest({
     url: "/budget/get-cashflow-head/",
@@ -69,14 +106,13 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
   }, []);
 
   const handleEdit = ({ id, field, value }) => {
-    console.log(id, field, value);
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
       return { ...e };
     });
     let row = rows.find((row) => row.id === id);
     let edit = editedCopy.find((row) => row.id === id);
-    if (edit && (row[field] === value || row[field].id === value.id)) {
+    if (edit && (row[field] === value || row[field]?.id === value?.id)) {
       if (edit[field]) delete editedCopy[editedCopy.indexOf(edit)][field];
       else editedCopy[editedCopy.indexOf(edit)][field] = value;
     } else if (edit) {
@@ -99,15 +135,10 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      // renderCell: (params) => (
-      //   <CashflowTypeSelect
-      //     params={params}
-      //     options={["payment","receipt"]}
-      //     loading={loading}
-      //   />
-      // ),
-      // renderCell:renderAuto,
-      // renderEditCell:renderAutoEditInputCell
+      renderCell: renderAutoType,
+      renderEditCell: (params) => {
+        return renderAutoEditInputCellType(params);
+      },
     },
     {
       field: "cashflow_head",
@@ -234,7 +265,8 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      <pre>{JSON.stringify(edited, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(edited, null, 2)}</pre>
+      <pre>{JSON.stringify(rows, null, 2)}</pre> */}
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>

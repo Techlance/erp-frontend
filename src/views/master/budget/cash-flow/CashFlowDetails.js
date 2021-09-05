@@ -3,17 +3,21 @@ import { Link, useParams } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Tab, Tabs } from "@material-ui/core";
+import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 
 // project imports
 import MainCard from "../../../../ui-component/cards/MainCard";
 
 // assets
+import useAuth from "../../../../hooks/useAuth";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import { useSelector } from "react-redux";
 import useBudget from "../../../../hooks/useBudget";
 import CashFlowGrid from "./CashFlowGrid";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
+
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -74,10 +78,12 @@ function a11yProps(index) {
 
 const BudgetPlDetails = () => {
   const classes = useStyles();
+  const [values,setValues] = useState([]);
+  const [count,setCount] = useState(-1);
   const [value, setValue] = useState(0);
   const [edited, setEdited] = useState([]);
   const [revised, setRevised] = useState([]);
-
+  const { user } = useAuth();
   const {
     getBudgetCashFlowDetails,
     updateBudgetCashflowDetails,
@@ -88,18 +94,70 @@ const BudgetPlDetails = () => {
   const { company_budget_cashflow_details, company_budget_cashflow_revise } =
     useSelector((state) => state.budget);
 
-  const { bid } = useParams();
+  const {mid, bid } = useParams();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    if (!company_budget_cashflow_details) getBudgetCashFlowDetails(bid);
-    if (!company_budget_cashflow_revise) getBudgetCashflowRevise(bid);
+  const addRow = ()=>{
+    setValues([
+      ...values,
+      {
+        id:count,
+        budget_type:null,
+        cashflow_head:null,
+        jan:0,
+        feb:0,
+        mar:0,
+        apr:0,
+        may:0,
+        jun:0,
+        jul:0,
+        aug:0,
+        sep:0,
+        octo:0,
+        nov:0,
+        dec:0,
+        created_by:user.email
+      }
+    ])
+    setEdited([
+      ...edited,
+      {
+        id:count,
+        budget_type:null,
+        cashflow_head:null,
+        jan:0,
+        feb:0,
+        mar:0,
+        apr:0,
+        may:0,
+        jun:0,
+        jul:0,
+        aug:0,
+        sep:0,
+        octo:0,
+        nov:0,
+        dec:0,
+        created_by:user.email
+      }
+    ])
+    setCount(count-1);
+  }
 
+  useEffect(() => {
+    // if (!company_budget_cashflow_details) getBudgetCashFlowDetails(bid);
+    // if (!company_budget_cashflow_revise) getBudgetCashflowRevise(bid);
+    getBudgetCashFlowDetails(bid);
+    getBudgetCashflowRevise(bid);
+    // if()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [company_budget_cashflow_details, bid]);
+  }, [bid]);
+
+  useEffect(()=>{
+    setValues([...company_budget_cashflow_details])
+  },[company_budget_cashflow_details])
 
   const onSuccess = async () => {
     setEdited([]);
@@ -112,10 +170,23 @@ const BudgetPlDetails = () => {
   };
 
   const handleUpdate = async () => {
+    let editCopy = [...edited].map((ed)=>{
+      if(ed.id<0){
+        delete ed.id
+        ed.budget_id = bid
+        ed.company_master_id = mid
+      }
+      ed.cashflow_head = ed.cashflow_head?.id
+      return(ed)
+    })
     let form = {
-      changed_budget_details: edited,
+      company_master_id:parseInt(mid),
+      changed_budget_details: editCopy,
+      
     };
-    await updateBudgetCashflowDetails(bid, form, onSuccess);
+    // await updateBudgetCashflowDetails(bid, form, onSuccess);
+    await updateBudgetCashflowDetails(form, onSuccess);
+    console.log(form)
   };
 
   const handleRevise = async () => {
@@ -151,10 +222,26 @@ const BudgetPlDetails = () => {
             icon={<AccountBalanceWalletIcon sx={{ fontSize: "1.3rem" }} />}
             {...a11yProps(1)}
           />
+          {value === 0 ? (
+            <div style={{ position: "absolute", right: 0 }}>
+              <AnimateButton>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  onClick={addRow}
+                  startIcon={<CloudUploadIcon />}
+                >
+                  <Typography>Add Row</Typography>
+                </Button>
+              </AnimateButton>
+            </div>
+          ) : null}
         </Tabs>
         <TabPanel value={value} index={0}>
+        {/* <pre>{JSON.stringify(company_budget_cashflow_details)}</pre> */}
           <CashFlowGrid
-            rows={company_budget_cashflow_details}
+            rows={values}
             handleUpdate={handleUpdate}
             edited={edited}
             setEdited={setEdited}
