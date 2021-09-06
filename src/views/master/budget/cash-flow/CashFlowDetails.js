@@ -253,6 +253,7 @@ const BudgetPlDetails = () => {
             handleUpdate={handleRevise}
             edited={revised}
             setEdited={setRevised}
+            revise
           />
         </TabPanel>
       </div>
