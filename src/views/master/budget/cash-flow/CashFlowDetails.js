@@ -97,6 +97,10 @@ const BudgetPlDetails = () => {
     useSelector((state) => state.budget);
 
   const handleChange = (event, newValue) => {
+    if(newValue===0)
+      getBudgetCashFlowDetails(bid);
+    else
+      getBudgetCashflowRevise(bid);
     setValue(newValue);
   };
 

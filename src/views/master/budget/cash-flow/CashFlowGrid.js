@@ -183,6 +183,13 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
     initialState: [],
   });
 
+  const [sortModel] = useState([
+    {
+      field: "cashflow_head",
+      sort: "asc",
+    },
+  ]);
+
   const { user } = useAuth();
   const [clicked, setClicked] = useState(false);
 
@@ -382,6 +389,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
               rows={rows}
               loading={loading}
               onCellEditCommit={handleEdit}
+              sortModel={sortModel}
             />
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="flex-end">
