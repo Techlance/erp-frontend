@@ -82,7 +82,7 @@ function AutoEditInputCell({ id, value, api, field, data, loading, handleAddCash
           return option;
         }
         if (option.inputValue) {
-          return option.inputValue;
+          return option.head;
         }
         return option.head;
       }}
