@@ -162,7 +162,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
 
   const [sortModel] = useState([
     {
-      field: "cashflow_head",
+      field: "id",
       sort: "asc",
     },
   ]);
@@ -208,6 +208,12 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
   };
 
   const columns = [
+    {
+      field:"id",
+      headerName:"ID",
+      width:30,
+      hide:true
+    },
     {
       field: "budget_type",
       headerName: "Budget Type",
