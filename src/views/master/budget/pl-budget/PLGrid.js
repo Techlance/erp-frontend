@@ -179,7 +179,6 @@ const PLGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
               color="primary"
               onClick={() => setOpenSave(true)}
               startIcon={<CheckIcon />}
-              disabled={edited.length === 0}
             >
               Save
             </Button>
