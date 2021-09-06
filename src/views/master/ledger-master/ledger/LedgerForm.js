@@ -30,7 +30,7 @@ import AccountGroupSelect from "../../../../components/master/ledger-master/Acco
 
 //-----------------------|| Ledger Form ||-----------------------//
 
-const LedgerForm = () => {
+const LedgerForm = ({ setBs }) => {
   const history = useHistory();
 
   const { company_ledger_details, company_ledgers } = useSelector(
@@ -128,8 +128,8 @@ const LedgerForm = () => {
     setClicked(false);
   };
 
-  const handleAgree = () => {
-    deleteCompanyLedger(values?.id);
+  const handleAgree = async () => {
+    await deleteCompanyLedger(values.id);
     history.replace(`/company/${mid}/master/ledger-master/ledger`);
   };
 
@@ -162,12 +162,14 @@ const LedgerForm = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <AccountGroupSelect
+                viewOnly
                 captionLabel="Account Group"
                 InputLabelProps={{ shrink: true }}
                 selected={values?.acc_group_id}
                 onChange={handleSelect}
                 setReceivable={setReceivable}
                 setPayable={setPayable}
+                setBs={setBs}
               />
             </Grid>
             <Grid item sm={12}>

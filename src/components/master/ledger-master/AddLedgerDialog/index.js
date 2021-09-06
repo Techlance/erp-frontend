@@ -212,17 +212,17 @@ const AddLedgerDialog = ({ open, handleClose }) => {
         bank_ac_no: null,
       };
     }
-    let response = await addCompanyLedger(form);
+
+    const response = await addCompanyLedger(form);
+
     setClicked(false);
-    if (response.data.success) {
+    if (response.success) {
       if (bs) {
-        setNewLedger(response.data.data);
+        setNewLedger(response.data);
         handleNext();
       } else {
         setActiveStep(2);
       }
-    } else {
-      // handleClearClose();
     }
   };
 
@@ -418,7 +418,7 @@ const AddLedgerDialog = ({ open, handleClose }) => {
           )}
         </React.Fragment>
       </DialogContent>
-      <DialogActions sx={{ pr: 2.5 }}>
+      <DialogActions sx={{ px: 2.5 }}>
         <Grid container justifyContent="space-between">
           <Grid item>
             {activeStep === 0 && (

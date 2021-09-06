@@ -69,6 +69,11 @@ const CostCategoryForm = () => {
     setClicked(false);
   };
 
+  const handleAgree = async () => {
+    await deleteCostCategory(values.id);
+    history.replace(`/company/${mid}/master/cost-center/category`);
+  };
+
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
       <Grid item sm={6} md={8}>
@@ -123,10 +128,7 @@ const CostCategoryForm = () => {
       <ProtectedDeleteDialog
         checkList={checkList}
         showDeleteModal={showDeleteModal}
-        handleAgree={() => {
-          deleteCostCategory(values.id);
-          history.replace(`/company/${mid}/master/cost-center/category`);
-        }}
+        handleAgree={handleAgree}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"
         body="Are you sure you want to delete this Cost Category records? Once deleted the data can not be retrived!"

@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // material-ui
-import {
-  Grid,
-  Stack,
-  TextField,
-  FormControl,
-  MenuItem,
-} from "@material-ui/core";
+import { Grid, TextField, FormControl, MenuItem } from "@material-ui/core";
 
 // project imports
 import { useParams } from "react-router";
@@ -66,22 +60,26 @@ const LedgerBalance = () => {
 
   const handleUpdate = async () => {
     setClicked(true);
-    let form = {
-      id: values.id,
-      company_master_id: values.company_master_id,
-      ledger_id: values.ledger_id,
-      cr: values.is_cr ? values.amt : null,
-      dr: values.is_cr ? null : values.amt,
-      total_cr: values.is_cr ? values.amt : null,
-      total_dr: values.is_cr ? null : values.amt,
-      fc_name: values.fc_name ? values.fc_name.id : company.base_currency,
-      fc_amount:
-        values.fc_name && values.fc_name?.id !== company.base_currency
-          ? parseInt(values.fc_amount)
-          : parseInt(0),
-      created_by: values.created_by,
-    };
-    await updateLedgerBalance(form);
+    try {
+      let form = {
+        id: values.id,
+        company_master_id: values.company_master_id,
+        ledger_id: values.ledger_id,
+        cr: values.is_cr ? values.amt : null,
+        dr: values.is_cr ? null : values.amt,
+        total_cr: values.is_cr ? values.amt : null,
+        total_dr: values.is_cr ? null : values.amt,
+        fc_name: values.fc_name ? values.fc_name.id : company.base_currency,
+        fc_amount:
+          values.fc_name && values.fc_name?.id !== company.base_currency
+            ? parseInt(values.fc_amount)
+            : parseInt(0),
+        created_by: values.created_by,
+      };
+      await updateLedgerBalance(form);
+    } catch {
+      console.log("Error while adding ledger balance.");
+    }
     setClicked(false);
   };
 
@@ -155,26 +153,16 @@ const LedgerBalance = () => {
                 />
               )}
             </Grid>
-            <Grid item xs={12}>
-              <Stack direction="row">
-                <Grid
-                  container
-                  justifyContent="space-between"
-                  spacing={gridSpacing}
-                >
-                  <Grid item>
-                    <LoadingButton
-                      variant="contained"
-                      color="primary"
-                      onClick={handleUpdate}
-                      startIcon={<SaveIcon />}
-                      loading={clicked}
-                    >
-                      Save Details
-                    </LoadingButton>
-                  </Grid>
-                </Grid>
-              </Stack>
+            <Grid item xs={12} display="flex" justifyContent="flex-end">
+              <LoadingButton
+                variant="contained"
+                color="primary"
+                onClick={handleUpdate}
+                startIcon={<SaveIcon />}
+                loading={clicked}
+              >
+                Save Details
+              </LoadingButton>
             </Grid>
           </Grid>
         </SubCard>

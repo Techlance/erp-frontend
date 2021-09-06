@@ -22,6 +22,7 @@ const AccountGroupSelect = ({
   setReceivable,
   setPayable,
   setBs,
+  viewOnly,
 }) => {
   const [current, setCurrent] = useState(() => {
     if (selected) return selected.id;
@@ -56,13 +57,15 @@ const AccountGroupSelect = ({
       setPayable(item?.is_payables);
       if (setBs) setBs(item?.is_bs);
     }
-  }, [data, setReceivable, setPayable, setBs, selected]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const handleChange = (event) => {
     const item = data.find((option) => option.id === event.target.value);
     setReceivable(item.is_Receivables);
     setPayable(item.is_payables);
-    if (setBs) setBs(item?.is_bs);
+    if (!viewOnly) setBs(item?.is_bs);
     onChange("acc_group_id", item);
   };
 

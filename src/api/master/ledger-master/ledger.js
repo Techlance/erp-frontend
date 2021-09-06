@@ -227,15 +227,19 @@ export const getLedgerBillwiseAsync = async (id, dispatch) => {
 };
 
 export const updateLedgerBalanceAsync = async (data, dispatch) => {
-  const response = await instance.put(
-    `/ledger-balance/edit-ledger-balance/${data.id}`,
-    dataToForm(data)
-  );
+  try {
+    const response = await instance.put(
+      `/ledger-balance/edit-ledger-balance/${data.id}`,
+      dataToForm(data)
+    );
 
-  sendNotification({
-    dispatch,
-    response,
-  });
+    sendNotification({
+      dispatch,
+      response,
+    });
+  } catch (error) {
+    console.log("Error while updating ledger balance.");
+  }
 };
 
 export const updateLedgerBillwiseAsync = async (data, dispatch) => {

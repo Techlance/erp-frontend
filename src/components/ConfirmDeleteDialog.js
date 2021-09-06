@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // material-ui
 import {
@@ -13,6 +13,9 @@ import {
 
 // assets
 import DeleteIcon from "@material-ui/icons/DeleteForever";
+import CancelIcon from "@material-ui/icons/CancelTwoTone";
+import LoadingButton from "../ui-component/LoadingButton";
+import AnimateButton from "../ui-component/extended/AnimateButton";
 
 const ConfirmDeleteDialog = ({
   open,
@@ -21,6 +24,15 @@ const ConfirmDeleteDialog = ({
   title,
   body,
 }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    await handleAgree();
+    setLoading(false);
+    handleClose();
+  };
+
   return (
     <Dialog
       open={open}
@@ -38,21 +50,28 @@ const ConfirmDeleteDialog = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Button onClick={handleClose} color="primary">
-          Cancel
-        </Button>
-        <Button
+        <AnimateButton>
+          <Button
+            onClick={handleClose}
+            disabled={loading}
+            color="primary"
+            variant="contained"
+            size="small"
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
+        </AnimateButton>{" "}
+        <LoadingButton
           variant="contained"
           size="small"
-          onClick={() => {
-            handleAgree();
-            handleClose();
-          }}
+          onClick={handleClick}
+          loading={loading}
           startIcon={<DeleteIcon />}
           color="error"
         >
           Delete
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

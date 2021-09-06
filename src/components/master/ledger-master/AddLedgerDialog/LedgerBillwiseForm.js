@@ -77,36 +77,42 @@ const LedgerBillwiseForm = ({ values, setValues }) => {
 
   return (
     <Grid container spacing={gridSpacing}>
-      <Grid item xs={12} sm={6}>
-        <FcNameSelect
-          captionLabel="Currency"
-          InputLabelProps={{ shrink: true }}
-          selected={values.fc_name}
-          onChange={handleSelect}
-          baseCurrency={company.base_currency}
+      <Grid item xs={12}>
+        <Grid container spacing={gridSpacing}>
+          <Grid item xs={12} sm={6}>
+            <FcNameSelect
+              captionLabel="Currency"
+              InputLabelProps={{ shrink: true }}
+              selected={values.fc_name}
+              onChange={handleSelect}
+              baseCurrency={company.base_currency}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <AnimateButton>
+              <Button
+                color="primary"
+                fullWidth
+                // variant="contained"
+                size="large"
+                onClick={addBill}
+              >
+                Add Bill
+              </Button>
+            </AnimateButton>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <AddBillTable
+          billwise={values.billwise}
+          setBillwise={setBillwise}
+          deleteBill={deleteBill}
+          addShortcut={addShortcut}
+          fcName={values.fc_name}
+          base_currency={company.base_currency}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <AnimateButton>
-          <Button
-            color="primary"
-            fullWidth
-            // variant="contained"
-            size="large"
-            onClick={addBill}
-          >
-            Add Bill
-          </Button>
-        </AnimateButton>
-      </Grid>
-      <AddBillTable
-        billwise={values.billwise}
-        setBillwise={setBillwise}
-        deleteBill={deleteBill}
-        addShortcut={addShortcut}
-        fcName={values.fc_name}
-        base_currency={company.base_currency}
-      />
     </Grid>
   );
 };

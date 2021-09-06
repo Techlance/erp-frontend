@@ -75,9 +75,13 @@ const CostCenterForm = () => {
 
   const handleUpdateCostCenter = async () => {
     setClicked(true);
-
     await updateCostCenter(values);
     setClicked(false);
+  };
+
+  const handleAgree = async () => {
+    await deleteCostCenter(values.id);
+    history.replace(`/company/${mid}/master/cost-center/center`);
   };
 
   return (
@@ -154,10 +158,7 @@ const CostCenterForm = () => {
         <ProtectedDeleteDialog
           checkList={checkList}
           showDeleteModal={showDeleteModal}
-          handleAgree={() => {
-            deleteCostCenter(values.id);
-            history.replace(`/company/${mid}/master/cost-center/center`);
-          }}
+          handleAgree={handleAgree}
           handleClose={() => setShowDeleteModal(false)}
           title="Are you sure?"
           body="Are you sure you want to delete this Cost Center records? Once deleted the data can not be retrived!"

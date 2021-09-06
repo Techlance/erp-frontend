@@ -48,6 +48,10 @@ const LCDocumentForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleAgree = async () => {
+    await deleteLcDoc(currentDocID, lc_id);
+  };
+
   return (
     <div>
       <Table>
@@ -140,7 +144,7 @@ const LCDocumentForm = () => {
         </TableBody>
         <ConfirmDeleteDialog
           open={showDeleteModal}
-          handleAgree={() => deleteLcDoc(currentDocID, lc_id)}
+          handleAgree={handleAgree}
           handleClose={() => setShowDeleteModal(false)}
           title="Are you sure?"
           body="Are you sure you want to delete this Document? Once deleted the data can not be retrived!"

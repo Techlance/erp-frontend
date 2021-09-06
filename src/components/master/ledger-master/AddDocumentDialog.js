@@ -23,6 +23,8 @@ import { gridSpacing } from "../../../store/constant";
 // assets
 import LoadingButton from "../../../ui-component/LoadingButton";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
+import AddIcon from "@material-ui/icons/AddCircleTwoTone";
+import CancelIcon from "@material-ui/icons/CancelTwoTone";
 
 const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
   const { user } = useAuth();
@@ -127,6 +129,8 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
             color="error"
             variant="contained"
             size="small"
+            disabled={clicked}
+            startIcon={<CancelIcon />}
           >
             Cancel
           </Button>
@@ -136,9 +140,10 @@ const AddDocumentDialog = ({ open, handleClose, newLedger }) => {
           variant="contained"
           size="small"
           onClick={handleSubmit}
-          disabled={clicked}
+          loading={clicked}
+          startIcon={<AddIcon />}
         >
-          Add
+          {clicked ? "Uploading" : "Add"}
         </LoadingButton>
       </DialogActions>
     </Dialog>
