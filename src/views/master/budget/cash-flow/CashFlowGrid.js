@@ -373,7 +373,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      {JSON.stringify(edited,null,2)}
+      {/* {JSON.stringify(edited,null,2)} */}
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
