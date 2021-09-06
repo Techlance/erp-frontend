@@ -177,7 +177,7 @@ function renderAutoEditInputCellType(params) {
   return <AutoEditInputCellType {...params} />;
 }
 
-const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
+const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
   const [getCashFlowHead, loading, , data] = useRequest({
     url: "/budget/get-cashflow-head/",
     method: "GET",
@@ -228,7 +228,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       field: "budget_type",
       headerName: "Budget Type",
       flex: 0.3,
-      editable: true,
+      editable: (!revise),
       headerAlign: "left",
       align: "left",
       minWidth: 320,
@@ -244,7 +244,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      editable: true,
+      editable: (!revise),
       renderCell: renderAuto,
       renderEditCell: (params) => {
         return renderAutoEditInputCell(
