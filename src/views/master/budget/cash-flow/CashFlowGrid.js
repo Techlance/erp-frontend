@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 // material-ui
 import {
   Grid,
-  Stack,
   TextField,
   Autocomplete,
   createFilterOptions,
@@ -228,7 +227,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
       field: "budget_type",
       headerName: "Budget Type",
       flex: 0.3,
-      editable: (!revise),
+      editable: !revise,
       headerAlign: "left",
       align: "left",
       minWidth: 320,
@@ -244,7 +243,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      editable: (!revise),
+      editable: !revise,
       renderCell: renderAuto,
       renderEditCell: (params) => {
         return renderAutoEditInputCell(
