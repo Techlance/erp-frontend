@@ -18,11 +18,10 @@ import CashFlowGrid from "./CashFlowGrid";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
 
-
 // style constant
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -69,7 +68,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
@@ -78,12 +77,15 @@ function a11yProps(index) {
 
 const BudgetPlDetails = () => {
   const classes = useStyles();
-  const [values,setValues] = useState([]);
-  const [count,setCount] = useState(-1);
+  const { user } = useAuth();
+  const { mid, bid } = useParams();
+
+  const [values, setValues] = useState([]);
+  const [count, setCount] = useState(-1);
   const [value, setValue] = useState(0);
   const [edited, setEdited] = useState([]);
   const [revised, setRevised] = useState([]);
-  const { user } = useAuth();
+
   const {
     getBudgetCashFlowDetails,
     updateBudgetCashflowDetails,
@@ -94,70 +96,66 @@ const BudgetPlDetails = () => {
   const { company_budget_cashflow_details, company_budget_cashflow_revise } =
     useSelector((state) => state.budget);
 
-  const {mid, bid } = useParams();
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const addRow = ()=>{
+  const addRow = () => {
     setValues([
       ...values,
       {
-        id:count,
-        budget_type:null,
-        cashflow_head:null,
-        jan:0,
-        feb:0,
-        mar:0,
-        apr:0,
-        may:0,
-        jun:0,
-        jul:0,
-        aug:0,
-        sep:0,
-        octo:0,
-        nov:0,
-        dec:0,
-        created_by:user.email
-      }
-    ])
+        id: count,
+        budget_type: null,
+        cashflow_head: null,
+        jan: 0,
+        feb: 0,
+        mar: 0,
+        apr: 0,
+        may: 0,
+        jun: 0,
+        jul: 0,
+        aug: 0,
+        sep: 0,
+        octo: 0,
+        nov: 0,
+        dec: 0,
+        created_by: user.email,
+      },
+    ]);
     setEdited([
       ...edited,
       {
-        id:count,
-        budget_type:null,
-        cashflow_head:null,
-        jan:0,
-        feb:0,
-        mar:0,
-        apr:0,
-        may:0,
-        jun:0,
-        jul:0,
-        aug:0,
-        sep:0,
-        octo:0,
-        nov:0,
-        dec:0,
-        created_by:user.email
-      }
-    ])
-    setCount(count-1);
-  }
+        id: count,
+        budget_type: null,
+        cashflow_head: null,
+        jan: 0,
+        feb: 0,
+        mar: 0,
+        apr: 0,
+        may: 0,
+        jun: 0,
+        jul: 0,
+        aug: 0,
+        sep: 0,
+        octo: 0,
+        nov: 0,
+        dec: 0,
+        created_by: user.email,
+      },
+    ]);
+    setCount(count - 1);
+  };
 
   useEffect(() => {
-    // if (!company_budget_cashflow_details) getBudgetCashFlowDetails(bid);
-    // if (!company_budget_cashflow_revise) getBudgetCashflowRevise(bid);
     getBudgetCashFlowDetails(bid);
     getBudgetCashflowRevise(bid);
-    // if()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bid]);
 
-  useEffect(()=>{
-    setValues([...company_budget_cashflow_details])
-  },[company_budget_cashflow_details])
+  useEffect(() => {
+    setValues([...company_budget_cashflow_details]);
+  }, [company_budget_cashflow_details]);
 
   const onSuccess = async () => {
     setEdited([]);
@@ -166,33 +164,36 @@ const BudgetPlDetails = () => {
 
   const onSuccessRevise = async () => {
     setRevised([]);
-    await getBudgetCashFlowDetails(bid);
+
+    await getBudgetCashflowRevise(bid);
   };
 
   const handleUpdate = async () => {
-    let editCopy = [...edited].map((ed)=>{
-      if(ed.id<0){
-        delete ed.id
-        ed.budget_id = bid
-        ed.company_master_id = mid
+    let editCopy = [...edited].map((ed) => {
+      if (ed.id < 0) {
+        delete ed.id;
+        ed.budget_id = bid;
+        ed.company_master_id = mid;
       }
-      ed.cashflow_head = ed.cashflow_head?.id
-      return(ed)
-    })
+      ed.cashflow_head = ed.cashflow_head?.id;
+      return ed;
+    });
+
     let form = {
-      company_master_id:parseInt(mid),
+      company_master_id: parseInt(mid),
       changed_budget_details: editCopy,
-      
     };
-    // await updateBudgetCashflowDetails(bid, form, onSuccess);
+
     await updateBudgetCashflowDetails(form, onSuccess);
-    console.log(form)
+    console.log(form);
   };
 
   const handleRevise = async () => {
     let form = {
+      company_master_id: parseInt(mid),
       changed_budget_details: revised,
     };
+
     await updateBudgetCashflowRevise(bid, form, onSuccessRevise);
   };
 
@@ -239,7 +240,6 @@ const BudgetPlDetails = () => {
           ) : null}
         </Tabs>
         <TabPanel value={value} index={0}>
-        {/* <pre>{JSON.stringify(company_budget_cashflow_details)}</pre> */}
           <CashFlowGrid
             rows={values}
             handleUpdate={handleUpdate}
@@ -251,8 +251,8 @@ const BudgetPlDetails = () => {
           <CashFlowGrid
             rows={company_budget_cashflow_revise}
             handleUpdate={handleRevise}
-            edited={edited}
-            setEdited={setEdited}
+            edited={revised}
+            setEdited={setRevised}
           />
         </TabPanel>
       </div>

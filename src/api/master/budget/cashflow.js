@@ -32,7 +32,6 @@ export const updateBudgetCashflowDetailsAsync = async (
 
     const response = await instance.post(
       `/budget/create-edit-budget-cashflow-detail/`,
-      // `/budget/create-edit-budget-cashflow-detail/${id}`,
       data
     );
 
@@ -73,8 +72,8 @@ export const updateBudgetCashflowReviseAsync = async (
   try {
     if (!id) return;
 
-    const response = await instance.put(
-      `/budget/create-edit-revised-budget-cashflow-detail/${id}`,
+    const response = await instance.post(
+      `/budget/create-edit-revised-budget-cashflow-detail/`,
       data
     );
 
