@@ -172,9 +172,9 @@ const BudgetPlDetails = () => {
     let editCopy = [...edited].map((ed) => {
       if (ed.id < 0) {
         delete ed.id;
-        ed.budget_id = bid;
-        ed.company_master_id = mid;
       }
+      ed.budget_id = bid;
+      ed.company_master_id = mid;
       ed.cashflow_head = ed.cashflow_head?.id;
       return ed;
     });
