@@ -92,3 +92,30 @@ export const updateBudgetCashflowReviseAsync = async (
     console.log("Error while getting");
   }
 };
+
+export const addCashflowHeadAsync = async (
+  data,
+  onSuccess,
+  dispatch
+) => {
+  try {
+    const response = await instance.post(
+      `/budget/create-cashflow-head`,
+      data
+    );
+
+    dispatch({
+      type: budgetActions.ADD_BUDGET_CASHFLOW_DETAILS
+    });
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    if (response.data.success) onSuccess(response.data.data);
+  } catch (error) {
+    console.log("Error while getting");
+  }
+};
+

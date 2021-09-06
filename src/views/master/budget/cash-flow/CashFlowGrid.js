@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 // material-ui
-import { Grid, Stack, TextField, Autocomplete } from "@material-ui/core";
+import { Grid, Stack, TextField, Autocomplete, createFilterOptions, Typography } from "@material-ui/core";
 
 // project import
 import { gridSpacing } from "../../../../store/constant";
@@ -12,26 +12,60 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 import CachedIcon from "@material-ui/icons/Cached";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
+import useBudget from "../../../../hooks/useBudget";
+import useAuth from "../../../../hooks/useAuth";
 
 //-----------------------|| CashFlow Grid ||-----------------------//
+const filter = createFilterOptions();
 
 function renderAuto(params) {
   return (
-    <TextField
-      inputProps={{ readOnly: true }}
-      fullWidth
-      value={params.value?.head}
-    />
+    <Typography>
+      {params.value?.head}
+    </Typography>
   );
 }
 
-function AutoEditInputCell({ id, value, api, field, data, loading }) {
+const handleSave = (id,field,event,newValue,api)=>{
+  api.setEditCellValue({ id, field, value: newValue }, event);
+  if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
+    api.commitCellChange({ id, field });
+    api.setCellMode(id, field, "view");
+  }
+}
+
+function AutoEditInputCell({ id, value, api, field, data, loading, handleAddCashflowHead, getCashFlowHead }) {
   const handleChange = (event, newValue) => {
-    api.setEditCellValue({ id, field, value: newValue }, event);
-    if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
-      api.commitCellChange({ id, field });
-      api.setCellMode(id, field, "view");
-    }
+    if (typeof newValue === 'string') {
+        // toggleOpen(true);
+        // setDialogValue({
+        //   title: newValue,
+        //   year: '',
+        // });
+        console.log("1 "+newValue)
+        handleAddCashflowHead(newValue,async (data)=>{
+          await getCashFlowHead()
+          handleSave(id,field,event,data,api)
+        })
+        
+    } else if (newValue && newValue.inputValue) {
+      // toggleOpen(true);
+      // setDialogValue({
+      //   title: newValue.inputValue,
+      //   year: '',
+      // });
+      console.log("2 "+newValue.inputValue)
+      handleAddCashflowHead(newValue.inputValue,async (data)=>{
+        await getCashFlowHead();
+        handleSave(id,field,event,data,api)
+      })
+    } else 
+      {
+  //     setValue(newValue);
+        handleSave(id,field,event,newValue,api)
+      }
+  // }
+    
   };
 
   return (
@@ -42,37 +76,56 @@ function AutoEditInputCell({ id, value, api, field, data, loading }) {
       onChange={handleChange}
       id="cash-flow-cash-head"
       options={data}
-      getOptionLabel={(option) => option.head}
+      getOptionLabel={(option) => {
+        // e.g value selected with enter, right from the input
+        if (typeof option === 'string') {
+          return option;
+        }
+        if (option.inputValue) {
+          return option.inputValue;
+        }
+        return option.head;
+      }}
       disabled={loading}
       InputProps={{
         startAdornment: <> {loading && <CachedIcon />} </>,
       }}
       renderInput={(params) => <TextField fullWidth {...params} />}
+      filterOptions={(options, params) => {
+        const filtered = filter(options, params);
+
+        if (params.inputValue !== '') {
+          filtered.push({
+          inputValue: params.inputValue,
+          head: `Add "${params.inputValue}"`,
+        });
+      }
+
+      return filtered;
+    }}
+    selectOnFocus
+    clearOnBlur
+    handleHomeEndKeys
+
     />
   );
 }
 
-function renderAutoEditInputCell(params, data, loading) {
-  return <AutoEditInputCell {...params} data={data} loading={loading} />;
+function renderAutoEditInputCell(params, data, loading, handleAddCashflowHead, getCashFlowHead) {
+  return <AutoEditInputCell {...params} data={data} loading={loading} handleAddCashflowHead={handleAddCashflowHead} getCashFlowHead={getCashFlowHead}/>;
 }
 
 function renderAutoType(params) {
   return (
-    <TextField
-      inputProps={{ readOnly: true }}
-      fullWidth
-      value={params.value}
-    />
+    <Typography>
+    {params.value}
+  </Typography>
   );
 }
 
 function AutoEditInputCellType({ id, value, api, field }) {
   const handleChange = (event, newValue) => {
-    api.setEditCellValue({ id, field, value: newValue }, event);
-    if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
-      api.commitCellChange({ id, field });
-      api.setCellMode(id, field, "view");
-    }
+    handleSave(id,field,event,newValue,api)
   };
 
   return (
@@ -85,6 +138,19 @@ function AutoEditInputCellType({ id, value, api, field }) {
       options={["Receipt","Payment"]}
       getOptionLabel={(option) => option}
       renderInput={(params) => <TextField fullWidth {...params} />}
+  // getOptionLabel={(option) => {
+  //   // e.g value selected with enter, right from the input
+  //   if (typeof option === 'string') {
+  //     return option;
+  //   }
+  //   if (option.inputValue) {
+  //     return option.inputValue;
+  //   }
+  //   return option.title;
+  // }}
+  // selectOnFocus
+  // clearOnBlur
+  // handleHomeEndKeys
     />
   );
 }
@@ -100,10 +166,21 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
     initialState: [],
   });
 
+  const {user} = useAuth();
+
   useEffect(() => {
     getCashFlowHead();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const { addCashflowHead } = useBudget();
+  const handleAddCashflowHead = (head,successFn)=>{
+    let data = {
+      head:head,
+      created_by:user.email
+    }
+    addCashflowHead(data,successFn)
+  }
 
   const handleEdit = ({ id, field, value }) => {
     let editedCopy = [...edited];
@@ -150,7 +227,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       editable: true,
       renderCell: renderAuto,
       renderEditCell: (params) => {
-        return renderAutoEditInputCell(params, data, loading);
+        return renderAutoEditInputCell(params, data, loading, handleAddCashflowHead, getCashFlowHead);
       },
     },
     {
@@ -265,8 +342,8 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      {/* <pre>{JSON.stringify(edited, null, 2)}</pre>
-      <pre>{JSON.stringify(rows, null, 2)}</pre> */}
+      <pre>{JSON.stringify(edited, null, 2)}</pre>
+      <pre>{JSON.stringify(rows, null, 2)}</pre>
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>

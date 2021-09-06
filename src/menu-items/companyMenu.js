@@ -96,24 +96,25 @@ export const company_menu = {
         {
           id: "budget",
           title: <FormattedMessage id="menu.budget" />,
-          type: "collapse",
+          type: "item",
+          url: "/company/:mid/master/budget",
           // url: "/company/:mid/master/budget",
-          children: [
-            {
-              id: "pl-budget",
-              title: <FormattedMessage id="menu.pl-budget" />,
-              type: "item",
-              // url: "/company/:mid/master/budget/pl/:bid",
-              url: "/company/:mid/master/budget",
-            },
-            {
-              id: "cash-flow-budget",
-              title: <FormattedMessage id="menu.cash-flow-budget" />,
-              type: "item",
-              // url: "/company/:mid/master/budget/cashflow/:bid",
-              url: "/company/:mid/master/budget",
-            },
-          ],
+          // children: [
+          //   {
+          //     id: "pl-budget",
+          //     title: <FormattedMessage id="menu.pl-budget" />,
+          //     type: "item",
+          //     // url: "/company/:mid/master/budget/pl/:bid",
+          //     url: "/company/:mid/master/budget",
+          //   },
+          //   {
+          //     id: "cash-flow-budget",
+          //     title: <FormattedMessage id="menu.cash-flow-budget" />,
+          //     type: "item",
+          //     // url: "/company/:mid/master/budget/cashflow/:bid",
+          //     url: "/company/:mid/master/budget",
+          //   },
+          // ],
         },
         {
           id: "voucher-types",
