@@ -3,13 +3,7 @@ import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 // material-ui
-import {
-  Collapse,
-  Grid,
-  Stack,
-  TextField,
-  makeStyles,
-} from "@material-ui/core";
+import { Collapse, Grid, TextField, makeStyles } from "@material-ui/core";
 
 // project imports
 import useVoucherTypes from "../../../hooks/useVoucherTypes";
@@ -32,7 +26,7 @@ import Loader from "../../../ui-component/Loader";
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    marginBottom: "24px",
+    "marginBottom": "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -203,35 +197,33 @@ const VoucherTypeDetails = () => {
                   </Grid>
                 </Collapse>
 
-                <Grid item xs={12}>
-                  <Stack direction="row">
-                    <Grid container justifyContent="space-between">
-                      <Grid item>
-                        <LoadingButton
-                          variant="contained"
-                          loading={clicked}
-                          color="error"
-                          size="small"
-                          onClick={() => setShowDeleteModal(true)}
-                          startIcon={<DeleteIcon />}
-                        >
-                          Delete
-                        </LoadingButton>
-                      </Grid>
-                      <Grid item>
-                        <LoadingButton
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          onClick={handleUpdateVoucherType}
-                          startIcon={<SaveIcon />}
-                          loading={clicked}
-                        >
-                          Save Details
-                        </LoadingButton>
-                      </Grid>
-                    </Grid>
-                  </Stack>
+                <Grid
+                  item
+                  xs={12}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <LoadingButton
+                    variant="contained"
+                    loading={clicked}
+                    color="error"
+                    size="small"
+                    onClick={() => setShowDeleteModal(true)}
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
+                  </LoadingButton>
+
+                  <LoadingButton
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={handleUpdateVoucherType}
+                    startIcon={<SaveIcon />}
+                    loading={clicked}
+                  >
+                    Save Details
+                  </LoadingButton>
                 </Grid>
               </SubCard>
             </Grid>

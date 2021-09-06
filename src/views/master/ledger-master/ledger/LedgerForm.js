@@ -6,7 +6,6 @@ import {
   Collapse,
   Fade,
   Grid,
-  Stack,
   TextField,
   Typography,
   FormControlLabel,
@@ -439,39 +438,28 @@ const LedgerForm = ({ setBs }) => {
               </Collapse>
             </Grid>
 
-            <Grid item xs={12}>
-              <Stack direction="row">
-                <Grid
-                  container
-                  justifyContent="space-between"
-                  spacing={gridSpacing}
+            <Grid item xs={12} display="flex" justifyContent="space-between">
+              <AnimateButton>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => setShowDeleteModal(true)}
+                  startIcon={<DeleteIcon />}
+                  disabled={values?.is_fixed}
                 >
-                  <Grid item>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        onClick={() => setShowDeleteModal(true)}
-                        startIcon={<DeleteIcon />}
-                        disabled={values?.is_fixed}
-                      >
-                        Delete
-                      </Button>
-                    </AnimateButton>
-                  </Grid>
-                  <Grid item>
-                    <LoadingButton
-                      variant="contained"
-                      color="primary"
-                      onClick={handleUpdateLedger}
-                      startIcon={<SaveIcon />}
-                      loading={clicked}
-                    >
-                      Save Details
-                    </LoadingButton>
-                  </Grid>
-                </Grid>
-              </Stack>
+                  Delete
+                </Button>
+              </AnimateButton>
+
+              <LoadingButton
+                variant="contained"
+                color="primary"
+                onClick={handleUpdateLedger}
+                startIcon={<SaveIcon />}
+                loading={clicked}
+              >
+                Save Details
+              </LoadingButton>
             </Grid>
           </Grid>
         </SubCard>
