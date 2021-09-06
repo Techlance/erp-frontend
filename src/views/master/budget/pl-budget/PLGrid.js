@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 
 // material-ui
-import { Grid, Stack } from "@material-ui/core";
+import { gridSpacing } from "../../../../store/constant";
+import { Button, Grid } from "@material-ui/core";
 
 // assets
-import { gridSpacing } from "../../../../store/constant";
-import SaveIcon from "@material-ui/icons/SaveRounded";
-import LoadingButton from "../../../../ui-component/LoadingButton";
+import CheckIcon from "@material-ui/icons/CheckCircleTwoTone";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
+import ConfirmSaveDialog from "../../../../components/ConfirmSaveDialog";
 
 //-----------------------|| Ledger Form ||-----------------------//
 
 const PLGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
+  const [openSave, setOpenSave] = useState(false);
+
   const [sortModel] = useState([
     {
       field: "ledger_id",
@@ -171,25 +173,25 @@ const PLGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
               sortModel={sortModel}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Stack direction="row">
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <LoadingButton
-                    variant="contained"
-                    color="primary"
-                    onClick={handleUpdate}
-                    startIcon={<SaveIcon />}
-                    loading={loading}
-                  >
-                    Save Details
-                  </LoadingButton>
-                </Grid>
-              </Grid>
-            </Stack>
+          <Grid item xs={12} display="flex" justifyContent="flex-end">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setOpenSave(true)}
+              startIcon={<CheckIcon />}
+              disabled={edited.length === 0}
+            >
+              Save
+            </Button>
           </Grid>
         </Grid>
       </Grid>
+      <ConfirmSaveDialog
+        open={openSave}
+        title="Are you sure you want to save?"
+        handleAgree={handleUpdate}
+        handleClose={() => setOpenSave(false)}
+      />
     </Grid>
   );
 };

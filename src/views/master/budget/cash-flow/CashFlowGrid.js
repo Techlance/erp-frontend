@@ -7,19 +7,20 @@ import {
   Autocomplete,
   createFilterOptions,
   Typography,
+  Button,
 } from "@material-ui/core";
 
 // project import
 import { gridSpacing } from "../../../../store/constant";
+import useAuth from "../../../../hooks/useAuth";
 import useRequest from "../../../../hooks/useRequest";
+import useBudget from "../../../../hooks/useBudget";
+import ConfirmSaveDialog from "../../../../components/ConfirmSaveDialog";
 
 // assets
-import SaveIcon from "@material-ui/icons/SaveRounded";
 import CachedIcon from "@material-ui/icons/Cached";
-import LoadingButton from "../../../../ui-component/LoadingButton";
+import CheckIcon from "@material-ui/icons/CheckCircleTwoTone";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import useBudget from "../../../../hooks/useBudget";
-import useAuth from "../../../../hooks/useAuth";
 
 //-----------------------|| CashFlow Grid ||-----------------------//
 const filter = createFilterOptions();
@@ -48,32 +49,20 @@ function AutoEditInputCell({
 }) {
   const handleChange = (event, newValue) => {
     if (typeof newValue === "string") {
-      // toggleOpen(true);
-      // setDialogValue({
-      //   title: newValue,
-      //   year: '',
-      // });
       console.log("1 " + newValue);
       handleAddCashflowHead(newValue, async (data) => {
         await getCashFlowHead();
         handleSave(id, field, event, data, api);
       });
     } else if (newValue && newValue.inputValue) {
-      // toggleOpen(true);
-      // setDialogValue({
-      //   title: newValue.inputValue,
-      //   year: '',
-      // });
       console.log("2 " + newValue.inputValue);
       handleAddCashflowHead(newValue.inputValue, async (data) => {
         await getCashFlowHead();
         handleSave(id, field, event, data, api);
       });
     } else {
-      //     setValue(newValue);
       handleSave(id, field, event, newValue, api);
     }
-    // }
   };
 
   return (
@@ -155,19 +144,6 @@ function AutoEditInputCellType({ id, value, api, field }) {
       options={["Receipt", "Payment"]}
       getOptionLabel={(option) => option}
       renderInput={(params) => <TextField fullWidth {...params} />}
-      // getOptionLabel={(option) => {
-      //   // e.g value selected with enter, right from the input
-      //   if (typeof option === 'string') {
-      //     return option;
-      //   }
-      //   if (option.inputValue) {
-      //     return option.inputValue;
-      //   }
-      //   return option.title;
-      // }}
-      // selectOnFocus
-      // clearOnBlur
-      // handleHomeEndKeys
     />
   );
 }
@@ -191,7 +167,7 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
   ]);
 
   const { user } = useAuth();
-  const [clicked, setClicked] = useState(false);
+  const [openSave, setOpenSave] = useState(false);
 
   useEffect(() => {
     getCashFlowHead();
@@ -372,15 +348,8 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
     },
   ];
 
-  const onClick = async () => {
-    setClicked(true);
-    await handleUpdate();
-    setClicked(false);
-  };
-
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      {/* {JSON.stringify(edited,null,2)} */}
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
@@ -393,18 +362,24 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
             />
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="flex-end">
-            <LoadingButton
+            <Button
               variant="contained"
               color="primary"
-              onClick={onClick}
-              startIcon={<SaveIcon />}
-              loading={loading || clicked}
+              onClick={() => setOpenSave(true)}
+              startIcon={<CheckIcon />}
+              disabled={edited.length === 0}
             >
               Save
-            </LoadingButton>
+            </Button>
           </Grid>
         </Grid>
       </Grid>
+      <ConfirmSaveDialog
+        open={openSave}
+        title="Are you sure you want to save?"
+        handleAgree={handleUpdate}
+        handleClose={() => setOpenSave(false)}
+      />
     </Grid>
   );
 };

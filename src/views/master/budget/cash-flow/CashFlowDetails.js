@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Tab, Tabs, Button, Typography } from "@material-ui/core";
 
 // project imports
-import MainCard from "../../../../ui-component/cards/MainCard";
-
-// assets
 import useAuth from "../../../../hooks/useAuth";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
-import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
-import { useSelector } from "react-redux";
 import useBudget from "../../../../hooks/useBudget";
 import CashFlowGrid from "./CashFlowGrid";
+
+// assets
+import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import MainCard from "../../../../ui-component/cards/MainCard";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import CloudUploadIcon from "@material-ui/icons/CloudUploadTwoTone";
+import AddIcon from "@material-ui/icons/AddCircleTwoTone";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -97,10 +97,8 @@ const BudgetPlDetails = () => {
     useSelector((state) => state.budget);
 
   const handleChange = (event, newValue) => {
-    if(newValue===0)
-      getBudgetCashFlowDetails(bid);
-    else
-      getBudgetCashflowRevise(bid);
+    if (newValue === 0) getBudgetCashFlowDetails(bid);
+    else getBudgetCashflowRevise(bid);
     setValue(newValue);
   };
 
@@ -213,20 +211,6 @@ const BudgetPlDetails = () => {
           aria-label="cash-flow-tabs"
           variant="scrollable"
         >
-          <Tab
-            component={Link}
-            to="#"
-            label="Budget"
-            icon={<MenuBookIcon sx={{ fontSize: "1.3rem" }} />}
-            {...a11yProps(0)}
-          />
-          <Tab
-            component={Link}
-            to="#"
-            label="Revised"
-            icon={<AccountBalanceWalletIcon sx={{ fontSize: "1.3rem" }} />}
-            {...a11yProps(1)}
-          />
           {value === 0 ? (
             <div style={{ position: "absolute", right: 0 }}>
               <AnimateButton>
@@ -235,13 +219,29 @@ const BudgetPlDetails = () => {
                   size="large"
                   color="primary"
                   onClick={addRow}
-                  startIcon={<CloudUploadIcon />}
+                  startIcon={<AddIcon />}
                 >
                   <Typography>Add Row</Typography>
                 </Button>
               </AnimateButton>
             </div>
           ) : null}
+          <Tab
+            component={Link}
+            to="#"
+            label="Budget"
+            value={0}
+            icon={<MenuBookIcon sx={{ fontSize: "1.3rem" }} />}
+            {...a11yProps(0)}
+          />
+          <Tab
+            component={Link}
+            to="#"
+            label="Revised"
+            value={1}
+            icon={<AccountBalanceWalletIcon sx={{ fontSize: "1.3rem" }} />}
+            {...a11yProps(1)}
+          />
         </Tabs>
         <TabPanel value={value} index={0}>
           <CashFlowGrid
