@@ -7,7 +7,7 @@ import {
   Autocomplete,
   createFilterOptions,
   Typography,
-  // Button,
+  Button,
 } from "@material-ui/core";
 
 // project import
@@ -15,13 +15,13 @@ import { gridSpacing } from "../../../../store/constant";
 import useAuth from "../../../../hooks/useAuth";
 import useRequest from "../../../../hooks/useRequest";
 import useBudget from "../../../../hooks/useBudget";
-// import ConfirmSaveDialog from "../../../../components/ConfirmSaveDialog";
+import ConfirmSaveDialog from "../../../../components/ConfirmSaveDialog";
 
 // assets
 import CachedIcon from "@material-ui/icons/Cached";
 import CheckIcon from "@material-ui/icons/CheckCircleTwoTone";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-import LoadingButton from "../../../../ui-component/LoadingButton";
+// import LoadingButton from "../../../../ui-component/LoadingButton";
 
 //-----------------------|| CashFlow Grid ||-----------------------//
 const filter = createFilterOptions();
@@ -168,8 +168,8 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
   ]);
 
   const { user } = useAuth();
-  // const [openSave, setOpenSave] = useState(false);
-  const [clicked, setClicked] = useState(false);
+  const [openSave, setOpenSave] = useState(false);
+  // const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     getCashFlowHead();
@@ -350,11 +350,11 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
     },
   ];
 
-  const onClick = async () => {
-    setClicked(true);
-    await handleUpdate();
-    setClicked(false);
-  };
+  // const onClick = async () => {
+  //   setClicked(true);
+  //   await handleUpdate();
+  //   setClicked(false);
+  // };
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
@@ -370,25 +370,23 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
             />
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="flex-end">
-            <LoadingButton
+            <Button
               variant="contained"
               color="primary"
-              onClick={onClick}
+              onClick={() => setOpenSave(true)}
               startIcon={<CheckIcon />}
-              loading={clicked}
-              disabled={edited.length === 0}
             >
               Save
-            </LoadingButton>
+            </Button>
           </Grid>
         </Grid>
       </Grid>
-      {/* <ConfirmSaveDialog
+      <ConfirmSaveDialog
         open={openSave}
         title="Are you sure you want to save?"
         handleAgree={handleUpdate}
         handleClose={() => setOpenSave(false)}
-      /> */}
+      />
     </Grid>
   );
 };
