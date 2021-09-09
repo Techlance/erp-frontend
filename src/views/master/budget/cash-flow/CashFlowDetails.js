@@ -187,7 +187,6 @@ const BudgetPlDetails = () => {
     };
 
     await updateBudgetCashflowDetails(form, onSuccess);
-    console.log(form);
   };
 
   const handleRevise = async () => {

@@ -64,7 +64,6 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
 
   const [clicked, setClicked] = useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
-  console.log(activeStep === 0);
 
   let flag = true; // Show Payables for import
   if (pathname.includes("/export")) {

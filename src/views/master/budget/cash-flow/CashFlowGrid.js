@@ -50,13 +50,11 @@ function AutoEditInputCell({
 }) {
   const handleChange = (event, newValue) => {
     if (typeof newValue === "string") {
-      console.log("1 " + newValue);
       handleAddCashflowHead(newValue, async (data) => {
         await getCashFlowHead();
         handleSave(id, field, event, data, api);
       });
     } else if (newValue && newValue.inputValue) {
-      console.log("2 " + newValue.inputValue);
       handleAddCashflowHead(newValue.inputValue, async (data) => {
         await getCashFlowHead();
         handleSave(id, field, event, data, api);
@@ -209,10 +207,10 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
 
   const columns = [
     {
-      field:"id",
-      headerName:"ID",
-      width:30,
-      hide:true
+      field: "id",
+      headerName: "ID",
+      width: 30,
+      hide: true,
     },
     {
       field: "budget_type",

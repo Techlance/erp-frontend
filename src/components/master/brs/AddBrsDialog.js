@@ -83,7 +83,6 @@ const AddBrsDialog = ({ open, handleClose }) => {
   };
 
   const handleChange = (event) => {
-    console.log({ [event.target.id]: event.target.value });
     setValues({
       ...values,
       [event.target.id]: event.target.value,
@@ -158,7 +157,7 @@ const AddBrsDialog = ({ open, handleClose }) => {
                 control={
                   <Radio
                     sx={{
-                      color: theme.palette.primary.main,
+                      "color": theme.palette.primary.main,
                       "&.Mui-checked": {
                         color: theme.palette.primary.main,
                       },
@@ -172,7 +171,7 @@ const AddBrsDialog = ({ open, handleClose }) => {
                 control={
                   <Radio
                     sx={{
-                      color: theme.palette.primary.main,
+                      "color": theme.palette.primary.main,
                       "&.Mui-checked": {
                         color: theme.palette.primary.main,
                       },

@@ -254,15 +254,11 @@ const SelectGroup = () => {
   }, [company]);
 
   useEffect(() => {
-    console.log(lc_import);
-    console.log("lc_import");
-
     if (lc_import) setLoading(false);
     else setLoading(true);
   }, [lc_import]);
 
   useEffect(() => {
-    // console.log(company_account_heads);
     if (lc_export) setLoading(false);
     else setLoading(true);
   }, [lc_export]);

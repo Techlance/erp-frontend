@@ -89,8 +89,6 @@ const LedgerBillwise = () => {
 
     billwiseCopy = billwiseCopy.filter((x) => x !== null);
 
-    console.log(billwiseCopy);
-
     setValues({
       ...values,
       billwise: billwiseCopy,

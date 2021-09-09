@@ -64,7 +64,6 @@ const LedgerDocumentForm = ({ newLedger }) => {
   }, [showAddModal]);
 
   useEffect(() => {
-    console.log(data);
     setNewDocs(data);
   }, [data]);
 

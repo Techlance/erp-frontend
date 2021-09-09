@@ -29,7 +29,6 @@ const budgetReducer = (state = initialState, action) => {
     }
 
     case budgetActions.GET_COMPANY_BUDGET_REVISE: {
-      console.log(action.payload);
       return {
         ...state,
         company_budget_revise: action.payload,

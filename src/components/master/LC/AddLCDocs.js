@@ -63,7 +63,6 @@ const LCDocs = ({ newLC }) => {
   }, [showAddModal, deleteLcDoc]);
 
   useEffect(() => {
-    console.log(data);
     setNewDocs(data);
   }, [data]);
 
