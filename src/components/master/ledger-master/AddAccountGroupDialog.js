@@ -174,6 +174,7 @@ const AddUserDialog = ({ open, handleClose }) => {
             <TextField
               fullWidth
               id="group_name"
+              required
               label="Group Name"
               value={values.group_name}
               InputLabelProps={{ shrink: true }}
@@ -186,6 +187,7 @@ const AddUserDialog = ({ open, handleClose }) => {
             <TextField
               fullWidth
               id="group_code"
+              required
               label="Group Code"
               value={values.group_code}
               InputLabelProps={{ shrink: true }}
@@ -196,7 +198,7 @@ const AddUserDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <AccountHeadSelect
-              captionLabel="Account Head"
+              captionLabel="Account Head*"
               InputLabelProps={{ shrink: true }}
               selected={values.acc_head_id}
               onChange={handleSelect}

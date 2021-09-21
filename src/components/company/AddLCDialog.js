@@ -18,6 +18,11 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
 
   const { company } = useSelector((state) => state.companyMaster);
 
+  let day_reg = false;
+  let lc_amount_reg = false;
+  const lcAmountRegex = new RegExp("^[0-9.]+$");
+  const dayRegex = new RegExp("^[0-9]+$");
+
   let flag = true; // Show Payables for import
   if (pathname.includes("/export")) {
     // Show Receivables for export
@@ -95,7 +100,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
         )}
         <Grid item xs={12} sm={6}>
           <CostCenterSelect
-            captionLabel="Cost Center*"
+            captionLabel="Cost Center"
             required
             InputLabelProps={{ shrink: true }}
             selected={values.cost_center}
@@ -158,7 +163,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
                 color="primary"
               />
             }
-            label="Inspection Certificate*"
+            label="Inspection Certificate"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -181,8 +186,34 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             required
             value={values.days_for_submit_to_bank}
             InputLabelProps={{ shrink: true }}
+            InputProps={{
+              color:
+                dayRegex.test(values.days_for_submit_to_bank) ||
+                values.days_for_submit_to_bank.length == 0
+                  ? "primary"
+                  : "error",
+            }}
+            helperText={
+              dayRegex.test(values.days_for_submit_to_bank) ||
+              values.days_for_submit_to_bank.length == 0
+                ? ""
+                : "Days cannot be negative and can only be integer."
+            }
+            error={
+              dayRegex.test(values.days_for_submit_to_bank) ||
+              values.days_for_submit_to_bank.length == 0
+                ? false
+                : true
+            }
             onChange={handleChange}
           />
+          {
+            (day_reg =
+              dayRegex.test(values.days_for_submit_to_bank) ||
+              values.days_for_submit_to_bank.length == 0
+                ? true
+                : false)
+          }
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -270,7 +301,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <BankAcSelect
-            captionLabel="Bank A/C*"
+            captionLabel="Bank A/C"
             required
             InputLabelProps={{ shrink: true }}
             selected={values.bank_ac}
@@ -308,9 +339,29 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             required
             value={values.lc_amount}
             InputLabelProps={{ shrink: true }}
-            InputProps={{ inputProps: { min: 1 } }}
+            InputProps={{
+              color:
+                lcAmountRegex.test(values.lc_amount) || values.lc_amount == 0
+                  ? "primary"
+                  : "error",
+            }}
+            helperText={
+              lcAmountRegex.test(values.lc_amount) || values.lc_amount == 0
+                ? ""
+                : "LC Amount cannot be negative and can only be number."
+            }
+            error={
+              lcAmountRegex.test(values.lc_amount) || values.lc_amount == 0
+                ? false
+                : true
+            }
             onChange={handleChange}
           />
+          {
+            (lc_amount_reg = lcAmountRegex.test(values.lc_amount)
+              ? true
+              : false)
+          }
         </Grid>
       </Grid>
     </>

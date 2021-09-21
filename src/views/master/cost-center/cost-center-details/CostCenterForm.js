@@ -98,7 +98,7 @@ const CostCenterForm = () => {
             <Grid container spacing={gridSpacing}>
               <Grid item xs={12} sm={6}>
                 <CategorySelect
-                  captionLabel="Cost Category"
+                  captionLabel="Cost Category*"
                   InputLabelProps={{ shrink: true }}
                   selected={values.cost_category_id}
                   onChange={handleSelect}
@@ -108,7 +108,7 @@ const CostCenterForm = () => {
                 <ParentGroupSelect
                   fullWidth
                   id="child_of"
-                  captionLabel="Child Of"
+                  captionLabel="Child Of*"
                   selected={values.child_of}
                   InputLabelProps={{ shrink: true }}
                   onChange={handleSelect}
@@ -120,6 +120,7 @@ const CostCenterForm = () => {
                 <TextField
                   fullWidth
                   id="cost_center_name"
+                  required
                   label="Cost Center Name"
                   value={values.cost_center_name}
                   InputLabelProps={{ shrink: true }}

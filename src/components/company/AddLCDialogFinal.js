@@ -24,6 +24,7 @@ import LoadingButton from "../../ui-component/LoadingButton";
 import AddLCDialog from "./AddLCDialog";
 import AddLCDocs from "../master/LC/AddLCDocs";
 import useLC from "../../hooks/useLC";
+import ValidationDialog from "../../components/ValidationDialog";
 
 // assets
 import AnimateButton from "../../ui-component/extended/AnimateButton";
@@ -61,6 +62,8 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const { mid } = useParams();
   const { pathname } = useLocation();
 
+  const [showValidationModal, setShowValidationModal] = useState(false);
+
   const { addImportLC, addExportLC, getImportLC, getExportLC } = useLC();
   const { company } = useSelector((state) => state.companyMaster);
 
@@ -73,6 +76,9 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
     // Show Receivables for export
     flag = false;
   }
+
+  const lcAmountRegex = new RegExp("^[0-9.]+$");
+  const dayRegex = new RegExp("^[0-9]+$");
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -114,52 +120,59 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const [newLC, setNewLC] = useState(null);
 
   const handleSubmit1 = async () => {
-    setClicked(true);
-    let form = { ...values };
+    if (
+      lcAmountRegex.test(values.lc_amount) &&
+      dayRegex.test(values.days_for_submit_to_bank)
+    ) {
+      setClicked(true);
+      let form = { ...values };
 
-    form.cost_center = form.cost_center.id;
-    form.party_code = form.party_code.id;
-    form.bank_ac = form.bank_ac.id;
-    form.base_currency = form.base_currency.id;
-    // handleNext();
+      form.cost_center = form.cost_center.id;
+      form.party_code = form.party_code.id;
+      form.bank_ac = form.bank_ac.id;
+      form.base_currency = form.base_currency.id;
+      // handleNext();
 
-    if (flag) {
-      let response = await addImportLC(form);
-      setNewLC(response);
+      if (flag) {
+        let response = await addImportLC(form);
+        setNewLC(response);
+      } else {
+        let response = await addExportLC(form);
+        setNewLC(response);
+      }
+
+      setValues({
+        trans_type: flag ? "import" : "export",
+        // year_id: 21,
+        lc_date: "",
+        party_code: null,
+        cost_center: null,
+        applicant_bank: "",
+        applicant_bank_lc_no: "",
+        benificiary_bank: "",
+        benificiary_bank_lc_no: "",
+        inspection: false,
+        bank_ref: "",
+        days_for_submit_to_bank: "",
+        payment_terms: "",
+        place_of_taking_incharge: "",
+        final_destination_of_delivery: "",
+        completed: false,
+        shipment_terms: "",
+        goods_description: "",
+        other_lc_terms: "",
+        bank_ac: null,
+        expiry_date: "",
+        lc_amount: "",
+        base_currency: { id: company.base_currency },
+        company_master_id: mid,
+        created_by: user.email,
+      });
+      handleNext();
+      setClicked(false);
     } else {
-      let response = await addExportLC(form);
-      setNewLC(response);
+      setShowValidationModal(true);
     }
-
-    setValues({
-      trans_type: flag ? "import" : "export",
-      // year_id: 21,
-      lc_date: "",
-      party_code: null,
-      cost_center: null,
-      applicant_bank: "",
-      applicant_bank_lc_no: "",
-      benificiary_bank: "",
-      benificiary_bank_lc_no: "",
-      inspection: false,
-      bank_ref: "",
-      days_for_submit_to_bank: "",
-      payment_terms: "",
-      place_of_taking_incharge: "",
-      final_destination_of_delivery: "",
-      completed: false,
-      shipment_terms: "",
-      goods_description: "",
-      other_lc_terms: "",
-      bank_ac: null,
-      expiry_date: "",
-      lc_amount: "",
-      base_currency: { id: company.base_currency },
-      company_master_id: mid,
-      created_by: user.email,
-    });
-    handleNext();
-    setClicked(false);
   };
 
   const [paymentData, setPaymentData] = React.useState({});
@@ -321,6 +334,16 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
               </Grid>
             </Grid>
           </Stack>
+          <ValidationDialog
+            open={showValidationModal}
+            handleAgree={() => {
+              // deleteCompany(values.id);
+              // history.replace("/admin/companies");
+            }}
+            handleClose={() => setShowValidationModal(false)}
+            title="Mistakenly entered wrong values?"
+            body="Please enter valid values to save the changes !"
+          />
         </Grid>
       </DialogActions>
     </Dialog>

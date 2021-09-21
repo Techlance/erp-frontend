@@ -21,6 +21,7 @@ import PartyCodeRecSelect from "../../../../components/master/LC/PartyCodeRecSel
 import BankAcSelect from "../../../../components/master/LC/BankACSelect";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import CurrencySelect from "../../../../components/company/CurrencySelect";
+import ValidationDialog from "../../../../components/ValidationDialog";
 
 // assets
 import SubCard from "../../../../ui-component/cards/SubCard";
@@ -41,6 +42,11 @@ const LCForm = () => {
     flag = false;
   }
 
+  let lc_amount_reg = false;
+  let day_reg = false;
+  const lcAmountRegex = new RegExp("^[0-9.]+$");
+  const dayRegex = new RegExp("^[0-9]+$");
+
   const history = useHistory();
 
   const { lc_detail } = useSelector((state) => state.lc);
@@ -50,6 +56,7 @@ const LCForm = () => {
   const { lc_id, mid } = useParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showValidationModal, setShowValidationModal] = useState(false);
 
   const [values, setValues] = useState(null);
   const [clicked, setClicked] = useState(false);
@@ -84,14 +91,18 @@ const LCForm = () => {
   }, [lc_detail]);
 
   const handleUpdateLC = async () => {
-    setClicked(true);
-    let form = { ...values };
-    form.cost_center = form.cost_center.id;
-    form.party_code = form.party_code.id;
-    form.bank_ac = form.bank_ac.id;
-    form.base_currency = form.base_currency.id;
-    flag ? await updateImportLC(form) : await updateExportLC(form);
-    setClicked(false);
+    if (lc_amount_reg && day_reg) {
+      setClicked(true);
+      let form = { ...values };
+      form.cost_center = form.cost_center.id;
+      form.party_code = form.party_code.id;
+      form.bank_ac = form.bank_ac.id;
+      form.base_currency = form.base_currency.id;
+      flag ? await updateImportLC(form) : await updateExportLC(form);
+      setClicked(false);
+    } else {
+      setShowValidationModal(true);
+    }
     // history.replace("/company/9/master/lc/import/1");
   };
 
@@ -122,6 +133,7 @@ const LCForm = () => {
                   <TextField
                     fullWidth
                     id="lc_date"
+                    required
                     label="LC Date"
                     InputLabelProps={{ shrink: true }}
                     type="date"
@@ -132,7 +144,7 @@ const LCForm = () => {
                 {flag ? (
                   <Grid item xs={12} sm={6}>
                     <PartyCodePaySelect
-                      captionLabel="Party Code(Payables)"
+                      captionLabel="Party Code(Payables)*"
                       InputLabelProps={{ shrink: true }}
                       selected={values.party_code}
                       onChange={handleSelect}
@@ -141,7 +153,7 @@ const LCForm = () => {
                 ) : (
                   <Grid item xs={12} sm={6}>
                     <PartyCodeRecSelect
-                      captionLabel="Party Code(Receivables)"
+                      captionLabel="Party Code(Receivables)*"
                       InputLabelProps={{ shrink: true }}
                       selected={values.party_code}
                       onChange={handleSelect}
@@ -160,6 +172,7 @@ const LCForm = () => {
                   <TextField
                     fullWidth
                     id="applicant_bank"
+                    required
                     label="Applicant Bank"
                     value={values.applicant_bank}
                     InputLabelProps={{ shrink: true }}
@@ -169,6 +182,7 @@ const LCForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    required
                     id="applicant_bank_lc_no"
                     label="Applicant Bank LC No."
                     value={values.applicant_bank_lc_no}
@@ -179,6 +193,7 @@ const LCForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    required
                     id="benificiary_bank"
                     label="Beneficiary Bank"
                     value={values.benificiary_bank}
@@ -189,6 +204,7 @@ const LCForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    required
                     id="benificiary_bank_lc_no"
                     label="Beneficiary Bank LC No."
                     value={values.benificiary_bank_lc_no}
@@ -214,6 +230,7 @@ const LCForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    required
                     id="bank_ref"
                     label="Bank Ref."
                     InputLabelProps={{ shrink: true }}
@@ -223,17 +240,45 @@ const LCForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    required
                     fullWidth
                     id="days_for_submit_to_bank"
                     label="Days Remaining To Return To Bank"
                     type="number"
                     value={values.days_for_submit_to_bank}
                     InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      color:
+                        dayRegex.test(values.days_for_submit_to_bank) ||
+                        values.days_for_submit_to_bank.length == 0
+                          ? "primary"
+                          : "error",
+                    }}
+                    helperText={
+                      dayRegex.test(values.days_for_submit_to_bank) ||
+                      values.days_for_submit_to_bank.length == 0
+                        ? ""
+                        : "Days cannot be negative and can only be integer."
+                    }
+                    error={
+                      dayRegex.test(values.days_for_submit_to_bank) ||
+                      values.days_for_submit_to_bank.length == 0
+                        ? false
+                        : true
+                    }
                     onChange={handleChange}
                   />
+                  {
+                    (day_reg =
+                      dayRegex.test(values.days_for_submit_to_bank) ||
+                      values.days_for_submit_to_bank.length == 0
+                        ? true
+                        : false)
+                  }
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    required
                     fullWidth
                     id="payment_terms"
                     label="Payment Terms"
@@ -244,6 +289,7 @@ const LCForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    required
                     fullWidth
                     id="place_of_taking_incharge"
                     label="Incharge Taking Place"
@@ -254,6 +300,7 @@ const LCForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                    required
                     fullWidth
                     id="final_destination_of_delivery"
                     label="Final Delivery Destination"
@@ -273,12 +320,13 @@ const LCForm = () => {
                         color="primary"
                       />
                     }
-                    label="Completed"
+                    label="Completed*"
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
                   <TextField
+                    required
                     fullWidth
                     multiline
                     id="shipment_terms"
@@ -291,6 +339,7 @@ const LCForm = () => {
                 <Grid item xs={12} sm={12}>
                   <TextField
                     fullWidth
+                    required
                     multiline
                     id="goods_description"
                     label="Goods Description"
@@ -302,6 +351,7 @@ const LCForm = () => {
                 <Grid item xs={12} sm={12}>
                   <TextField
                     fullWidth
+                    required
                     multiline
                     id="other_lc_terms"
                     label="Other LC Terms"
@@ -322,6 +372,7 @@ const LCForm = () => {
                   <TextField
                     fullWidth
                     id="expiry_date"
+                    required
                     label="Expiry Date"
                     InputLabelProps={{ shrink: true }}
                     type="date"
@@ -332,7 +383,7 @@ const LCForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <CurrencySelect
-                    captionLabel="Currency"
+                    captionLabel="Currency*"
                     InputLabelProps={{ shrink: true }}
                     selected={values.base_currency}
                     onChange={handleSelect}
@@ -343,15 +394,38 @@ const LCForm = () => {
                     fullWidth
                     id="lc_amount"
                     label="LC Amount"
+                    required
                     type="tel"
                     value={values.lc_amount}
                     InputLabelProps={{ shrink: true }}
-                    InputProps={{ inputProps: { max: 1 } }}
-                    // inputProps={{
-                    //   pattern: "[0-9]*",
-                    // }}
+                    InputProps={{
+                      color:
+                        lcAmountRegex.test(values.lc_amount) ||
+                        values.lc_amount.length == 0
+                          ? "primary"
+                          : "error",
+                    }}
+                    helperText={
+                      values.lc_amount.length == 0 ||
+                      lcAmountRegex.test(values.lc_amount)
+                        ? ""
+                        : "LC Amount cannot be negative and can only be number."
+                    }
+                    error={
+                      lcAmountRegex.test(values.lc_amount) ||
+                      values.lc_amount.length == 0
+                        ? false
+                        : true
+                    }
                     onChange={handleChange}
                   />
+                  {
+                    (lc_amount_reg =
+                      lcAmountRegex.test(values.lc_amount) ||
+                      values.lc_amount.length == 0
+                        ? true
+                        : false)
+                  }
                 </Grid>
 
                 <Grid item xs={12}>
@@ -397,6 +471,17 @@ const LCForm = () => {
             title="Are you sure?"
             body="Are you sure you want to delete this LC records? Once deleted the data can not be retrived!"
           />
+          <ValidationDialog
+            open={showValidationModal}
+            handleAgree={() => {
+              // deleteCompany(values.id);
+              // history.replace("/admin/companies");
+            }}
+            handleClose={() => setShowValidationModal(false)}
+            title="Mistakenly entered wrong values?"
+            body="Please enter valid values to save the changes !"
+          />
+          ;
         </Grid>
       </MainCard>
     )

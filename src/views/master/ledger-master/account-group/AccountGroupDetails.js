@@ -167,6 +167,7 @@ const UserForm = () => {
                     <TextField
                       fullWidth
                       id="group_name"
+                      required
                       label="Group Name"
                       value={values.group_name}
                       InputLabelProps={{ shrink: true }}
@@ -184,6 +185,7 @@ const UserForm = () => {
                     <TextField
                       fullWidth
                       id="group_code"
+                      required
                       label="Group Code"
                       value={values.group_code}
                       InputLabelProps={{ shrink: true }}
@@ -194,7 +196,7 @@ const UserForm = () => {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <AccountHeadSelect
-                      captionLabel="Account Head"
+                      captionLabel="Account Head*"
                       InputLabelProps={{ shrink: true }}
                       selected={values.acc_head_id}
                       onChange={handleSelect}
@@ -211,7 +213,7 @@ const UserForm = () => {
                         values?.acc_head_id === null || values?.is_fixed
                       }
                       head_id={values.acc_head_id?.id}
-                      avoid = {values.id}
+                      avoid={values.id}
                     />
                   </Grid>
                   <Grid item xs={12}>

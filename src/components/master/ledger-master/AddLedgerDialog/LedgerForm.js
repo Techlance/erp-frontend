@@ -61,10 +61,18 @@ const LedgerForm = ({
       <Grid item xs={12} sm={12}>
         <TextField
           fullWidth
+          required
           id="ledger_name"
           label="Ledger Name"
           value={values.ledger_name}
           InputLabelProps={{ shrink: true }}
+          InputProps={{
+            color: values.ledger_name.length == 0 ? "error" : "primary",
+          }}
+          helperText={
+            values.ledger_name.length == 0 ? "This field is required." : ""
+          }
+          error={values.ledger_name.length == 0 ? true : false}
           onChange={handleChange}
         />
       </Grid>
@@ -80,7 +88,7 @@ const LedgerForm = ({
       </Grid>
       <Grid item xs={12} sm={6}>
         <AccountGroupSelect
-          captionLabel="Account Group"
+          captionLabel="Account Group*"
           InputLabelProps={{ shrink: true }}
           selected={values.acc_group_id}
           onChange={handleSelect}
@@ -102,10 +110,18 @@ const LedgerForm = ({
               <Grid item xs={12} sm={12}>
                 <TextField
                   fullWidth
+                  required
                   id="address"
                   label="Address"
                   value={values.address}
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    color: values.address.length == 0 ? "error" : "primary",
+                  }}
+                  helperText={
+                    values.address.length == 0 ? "This field is required." : ""
+                  }
+                  error={values.address.length == 0 ? true : false}
                   onChange={handleChange}
                 />
               </Grid>
