@@ -55,6 +55,15 @@ const LedgerForm = ({
       [event.target.name]: event.target.checked,
     });
   };
+  let emailreg = false;
+  let phonereg = false;
+  let day_reg = false;
+
+  const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
+  const phoneRegex = new RegExp(
+    "^[+]?[0-9]{3}?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$"
+  );
+  const dayRegex = new RegExp("^[0-9]{0,2}$");
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -66,13 +75,6 @@ const LedgerForm = ({
           label="Ledger Name"
           value={values.ledger_name}
           InputLabelProps={{ shrink: true }}
-          InputProps={{
-            color: values.ledger_name.length == 0 ? "error" : "primary",
-          }}
-          helperText={
-            values.ledger_name.length == 0 ? "This field is required." : ""
-          }
-          error={values.ledger_name.length == 0 ? true : false}
           onChange={handleChange}
         />
       </Grid>
@@ -115,13 +117,13 @@ const LedgerForm = ({
                   label="Address"
                   value={values.address}
                   InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    color: values.address.length == 0 ? "error" : "primary",
-                  }}
-                  helperText={
-                    values.address.length == 0 ? "This field is required." : ""
-                  }
-                  error={values.address.length == 0 ? true : false}
+                  // InputProps={{
+                  //   color: values.address == null ? "error" : "primary",
+                  // }}
+                  // helperText={
+                  //   values.address == null ? "This field is required." : ""
+                  // }
+                  // error={values.address == null ? true : false}
                   onChange={handleChange}
                 />
               </Grid>
@@ -132,8 +134,31 @@ const LedgerForm = ({
                   label="Telephone No."
                   value={values.tel}
                   InputLabelProps={{ shrink: true }}
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    color:
+                      phoneRegex.test(values?.tel) || values?.tel == null
+                        ? "primary"
+                        : "error",
+                  }}
+                  helperText={
+                    phoneRegex.test(values?.tel) || values?.tel == null
+                      ? ""
+                      : "Please enter a valid Contact No."
+                  }
+                  error={
+                    phoneRegex.test(values?.tel) || values?.tel == null
+                      ? false
+                      : true
+                  }
                   onChange={handleChange}
                 />
+                {
+                  (phonereg =
+                    phoneRegex.test(values?.tel) || values?.tel == null
+                      ? true
+                      : false)
+                }
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -143,8 +168,30 @@ const LedgerForm = ({
                   value={values.email}
                   type="email"
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    color:
+                      emailRegex.test(values?.email) || values?.email == null
+                        ? "primary"
+                        : "error",
+                  }}
+                  helperText={
+                    emailRegex.test(values?.email) || values?.email == null
+                      ? ""
+                      : "Please enter a valid email."
+                  }
+                  error={
+                    emailRegex.test(values?.email) || values?.email == null
+                      ? false
+                      : true
+                  }
                   onChange={handleChange}
                 />
+                {
+                  (emailreg =
+                    emailRegex.test(values?.email) || values?.email == null
+                      ? true
+                      : false)
+                }
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -268,7 +315,33 @@ const LedgerForm = ({
                   InputLabelProps={{ shrink: true }}
                   onChange={handleChange}
                   type="number"
+                  InputProps={{
+                    color:
+                      dayRegex.test(values?.credit_days) ||
+                      values?.credit_days == null
+                        ? "primary"
+                        : "error",
+                  }}
+                  helperText={
+                    dayRegex.test(values?.credit_days) ||
+                    values?.credit_days == null
+                      ? ""
+                      : "Days cannot be negative and can only be 2 digit integer."
+                  }
+                  error={
+                    dayRegex.test(values?.credit_days) ||
+                    values?.credit_days == null
+                      ? false
+                      : true
+                  }
                 />
+                {
+                  (day_reg =
+                    dayRegex.test(values?.credit_days) ||
+                    values?.credit_days == null
+                      ? true
+                      : false)
+                }
               </Grid>
             </Grid>
           </Fade>

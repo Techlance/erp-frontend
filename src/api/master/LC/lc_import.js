@@ -121,7 +121,7 @@ export const addLCAsync = async (data, dispatch) => {
 
 export const updateLCAsync = async (data, dispatch) => {
   const form = dataToForm(data);
-  const response = await instance.put(`/lc/edit-lc/${data.id}`, form);
+  const response = await instance.put(`/lc/edit-lc/${data.lc_no}`, form);
 
   sendNotification({
     dispatch,

@@ -33,6 +33,8 @@ const PLGrid = ({ rows, loading, edited, setEdited, handleUpdate }) => {
     setEdited(editedCopy);
   };
 
+  const AmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+
   const columns = [
     {
       field: "ledger_id",

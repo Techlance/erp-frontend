@@ -23,6 +23,7 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import SaveIcon from "@material-ui/icons/SaveRounded";
 import LoadingButton from "../../../../ui-component/LoadingButton";
+import ValidationDialog from "../../../../components/ValidationDialog";
 
 //-----------------------|| User Form ||-----------------------//
 
@@ -34,6 +35,7 @@ const UserForm = () => {
 
   const { updateUser, deleteUser } = useUserPermissions();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showValidationModal, setShowValidationModal] = useState(false);
 
   const [values, setValues] = useState({
     ...current_user_account,
@@ -61,10 +63,17 @@ const UserForm = () => {
   }, [current_user_account]);
 
   const handleUpdateUser = async () => {
-    setClicked(true);
-    await updateUser(values);
-    setClicked(false);
+    if (emailreg) {
+      setClicked(true);
+      await updateUser(values);
+      setClicked(false);
+    } else {
+      setShowValidationModal(true);
+    }
   };
+
+  const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
+  let emailreg = false;
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
@@ -74,6 +83,7 @@ const UserForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                required
                 id="name"
                 label="User Name"
                 value={values.name}
@@ -85,18 +95,30 @@ const UserForm = () => {
               <TextField
                 fullWidth
                 type="email"
+                required
                 id="email"
                 label="E-mail"
                 value={values.email}
                 InputLabelProps={{ shrink: true }}
+                InputProps={{
+                  color: emailRegex.test(values.email) ? "primary" : "error",
+                }}
+                helperText={
+                  emailRegex.test(values.email)
+                    ? ""
+                    : "Please enter a valid email."
+                }
+                error={emailRegex.test(values.email) ? false : true}
                 onChange={handleChange}
               />
+              {(emailreg = emailRegex.test(values.email) ? true : false)}
             </Grid>
 
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 id="password"
+                required
                 label="Password"
                 type="password"
                 value={values.password}
@@ -152,6 +174,13 @@ const UserForm = () => {
           </Grid>
         </SubCard>
       </Grid>
+      <ValidationDialog
+        open={showValidationModal}
+        handleAgree={() => {}}
+        handleClose={() => setShowValidationModal(false)}
+        title="Mistakenly entered wrong values?"
+        body="Please enter valid values to save the changes !"
+      />
       <ConfirmDeleteDialog
         open={showDeleteModal}
         handleAgree={() => {

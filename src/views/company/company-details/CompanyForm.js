@@ -64,9 +64,11 @@ const CompanyForm = () => {
   let emailreg = false;
   let urlreg = false;
   let phonereg = false;
+  let cr_no_reg = false;
   const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
+  const crNoRegex = new RegExp("^[^!@#$%^&*()]+$");
   const phoneRegex = new RegExp(
-    "^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$"
+    "^[+]?[0-9]{3}?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$"
   );
   const urlRegex = new RegExp(
     "^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?"
@@ -98,7 +100,7 @@ const CompanyForm = () => {
   }, [current_company]);
 
   const handleUpdateDetails = async () => {
-    if (urlreg && emailreg && phonereg) {
+    if (urlreg && emailreg && phonereg && cr_no_reg) {
       setClicked(true);
       await updateCompany(values);
       setClicked(false);
@@ -359,8 +361,30 @@ const CompanyForm = () => {
                 label="CR. No."
                 InputLabelProps={{ shrink: true }}
                 value={values.cr_no}
+                InputProps={{
+                  color:
+                    crNoRegex.test(values.cr_no) || values.cr_no.length == 0
+                      ? "primary"
+                      : "error",
+                }}
+                helperText={
+                  crNoRegex.test(values.cr_no) || values.cr_no.length == 0
+                    ? ""
+                    : "CR No. should not contain any symbols."
+                }
+                error={
+                  crNoRegex.test(values.cr_no) || values.cr_no.length == 0
+                    ? false
+                    : true
+                }
                 onChange={handleChange}
               />
+              {
+                (cr_no_reg =
+                  crNoRegex.test(values.cr_no) || values.cr_no.length == 0
+                    ? true
+                    : false)
+              }
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -369,8 +393,34 @@ const CompanyForm = () => {
                 label="Registration No."
                 value={values.registration_no}
                 InputLabelProps={{ shrink: true }}
+                InputProps={{
+                  color:
+                    crNoRegex.test(values.registration_no) ||
+                    values.registration_no.length === 0
+                      ? "primary"
+                      : "error",
+                }}
+                helperText={
+                  crNoRegex.test(values.registration_no) ||
+                  values.registration_no.length === 0
+                    ? ""
+                    : "Registration No. should not contain any symbols."
+                }
+                error={
+                  crNoRegex.test(values.registration_no) ||
+                  values.registration_no.length === 0
+                    ? false
+                    : true
+                }
                 onChange={handleChange}
               />
+              {
+                (cr_no_reg =
+                  crNoRegex.test(values.registration_no) ||
+                  values.registration_no.length === 0
+                    ? true
+                    : false)
+              }
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -379,8 +429,34 @@ const CompanyForm = () => {
                 label="Tax ID No."
                 InputLabelProps={{ shrink: true }}
                 value={values.tax_id_no}
+                InputProps={{
+                  color:
+                    crNoRegex.test(values.tax_id_no) ||
+                    values.tax_id_no.length == 0
+                      ? "primary"
+                      : "error",
+                }}
+                helperText={
+                  crNoRegex.test(values.tax_id_no) ||
+                  values.tax_id_no.length == 0
+                    ? ""
+                    : "TAX ID No. should not contain any symbols."
+                }
+                error={
+                  crNoRegex.test(values.tax_id_no) ||
+                  values.tax_id_no.length == 0
+                    ? false
+                    : true
+                }
                 onChange={handleChange}
               />
+              {
+                (cr_no_reg =
+                  crNoRegex.test(values.tax_id_no) ||
+                  values.tax_id_no.length == 0
+                    ? true
+                    : false)
+              }
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -389,8 +465,34 @@ const CompanyForm = () => {
                 label="VAT ID No."
                 InputLabelProps={{ shrink: true }}
                 value={values.vat_id_no}
+                InputProps={{
+                  color:
+                    crNoRegex.test(values.vat_id_no) ||
+                    values.vat_id_no.length == 0
+                      ? "primary"
+                      : "error",
+                }}
+                helperText={
+                  crNoRegex.test(values.vat_id_no) ||
+                  values.vat_id_no.length == 0
+                    ? ""
+                    : "VAT ID No. should not contain any symbols."
+                }
+                error={
+                  crNoRegex.test(values.vat_id_no) ||
+                  values.vat_id_no.length == 0
+                    ? false
+                    : true
+                }
                 onChange={handleChange}
               />
+              {
+                (cr_no_reg =
+                  crNoRegex.test(values.vat_id_no) ||
+                  values.vat_id_no.length == 0
+                    ? true
+                    : false)
+              }
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField

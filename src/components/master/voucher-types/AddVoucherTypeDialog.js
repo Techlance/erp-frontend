@@ -107,6 +107,7 @@ const AddVoucherType = ({ open, handleClose }) => {
               fullWidth
               id="voucher_name"
               label="Voucher Name"
+              required
               value={values.voucher_name}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
@@ -116,7 +117,7 @@ const AddVoucherType = ({ open, handleClose }) => {
           <Grid item sm={6}>
             <VoucherClassSelect
               fullWidth
-              captionLabel="Voucher Class"
+              captionLabel="Voucher Class*"
               selected={values.voucher_class}
               onChange={handleSelect}
             />

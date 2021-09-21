@@ -20,8 +20,8 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
 
   let day_reg = false;
   let lc_amount_reg = false;
-  const lcAmountRegex = new RegExp("^[0-9.]+$");
-  const dayRegex = new RegExp("^[0-9]+$");
+  const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+  const dayRegex = new RegExp("^[0-9]{0,2}$");
 
   let flag = true; // Show Payables for import
   if (pathname.includes("/export")) {

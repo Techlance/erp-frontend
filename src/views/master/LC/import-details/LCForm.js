@@ -44,8 +44,8 @@ const LCForm = () => {
 
   let lc_amount_reg = false;
   let day_reg = false;
-  const lcAmountRegex = new RegExp("^[0-9.]+$");
-  const dayRegex = new RegExp("^[0-9]+$");
+  const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+  const dayRegex = new RegExp("^[0-9]{0,2}$");
 
   const history = useHistory();
 
@@ -94,6 +94,8 @@ const LCForm = () => {
     if (lc_amount_reg && day_reg) {
       setClicked(true);
       let form = { ...values };
+      form.id = null;
+      // form.year_id = null;
       form.cost_center = form.cost_center.id;
       form.party_code = form.party_code.id;
       form.bank_ac = form.bank_ac.id;
@@ -258,7 +260,7 @@ const LCForm = () => {
                       dayRegex.test(values.days_for_submit_to_bank) ||
                       values.days_for_submit_to_bank.length == 0
                         ? ""
-                        : "Days cannot be negative and can only be integer."
+                        : "Days cannot be negative and can only be 2 digit integer."
                     }
                     error={
                       dayRegex.test(values.days_for_submit_to_bank) ||
