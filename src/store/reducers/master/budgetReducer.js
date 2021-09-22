@@ -8,8 +8,8 @@ const initialState = {
   company_budgets: [],
   company_budget_details: null,
   company_budget_revise: null,
-  company_budget_cashflow_details: null,
-  company_budget_cashflow_revise: null,
+  company_budget_cashflow_details: [],
+  company_budget_cashflow_revise: [],
 };
 
 const budgetReducer = (state = initialState, action) => {
@@ -29,7 +29,6 @@ const budgetReducer = (state = initialState, action) => {
     }
 
     case budgetActions.GET_COMPANY_BUDGET_REVISE: {
-      console.log(action.payload);
       return {
         ...state,
         company_budget_revise: action.payload,

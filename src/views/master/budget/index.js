@@ -16,6 +16,7 @@ import AddBudgetDialog from "../../../components/master/budget/AddBudgetDialog";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../ui-component/CustomDataGrid";
+import AddIcon from "@material-ui/icons/AddCircleTwoTone";
 
 //-----------------------|| Budget List ||-----------------------//
 const SelectGroup = () => {
@@ -83,7 +84,7 @@ const SelectGroup = () => {
     },
     {
       field: "enforce_restrictions",
-      headerName: "enforce_restrictions",
+      headerName: "Enforce Restrictions",
       flex: 0.3,
       type: "boolean",
       headerAlign: "center",
@@ -138,6 +139,7 @@ const SelectGroup = () => {
                 size="large"
                 color="primary"
                 onClick={() => setShowAddModal(true)}
+                startIcon={<AddIcon />}
               >
                 Add Budget
               </Button>

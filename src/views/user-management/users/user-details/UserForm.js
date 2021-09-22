@@ -75,6 +75,11 @@ const UserForm = () => {
   const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
   let emailreg = false;
 
+  const handleAgree = async () => {
+    await deleteUser(values.id);
+    history.replace("/admin/user-manager/users");
+  };
+
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
       <Grid item sm={12} md={8}>
@@ -183,10 +188,7 @@ const UserForm = () => {
       />
       <ConfirmDeleteDialog
         open={showDeleteModal}
-        handleAgree={() => {
-          deleteUser(values.id);
-          history.replace("/admin/user-manager/users");
-        }}
+        handleAgree={handleAgree}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"
         body="Are you sure you want to delete this Company records? Once deleted the data can not be retrived!"

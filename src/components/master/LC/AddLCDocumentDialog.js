@@ -13,7 +13,6 @@ import {
   TextField,
   Typography,
   Grid,
-  Stack,
 } from "@material-ui/core";
 
 // project imports
@@ -95,7 +94,6 @@ const AddLCDocumentDialog = ({ newLC, open, handleClose }) => {
         <Typography variant="h4">Upload Document</Typography>
       </DialogTitle>
       <DialogContent>
-        {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
         <DialogContentText>
           <Typography variant="body2">
             Upload A {current_lc ? current_lc?.lc_name : newLC?.lc_name} related
@@ -124,38 +122,29 @@ const AddLCDocumentDialog = ({ newLC, open, handleClose }) => {
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
-        <Grid item xs={11.7}>
-          <Stack direction="row">
-            <Grid container justifyContent="space-between">
-              <Grid item>
-                <AnimateButton>
-                  <Button
-                    onClick={handleClose}
-                    color="error"
-                    variant="contained"
-                    size="small"
-                    disabled={clicked}
-                    startIcon={<CancelIcon />}
-                  >
-                    Cancel
-                  </Button>
-                </AnimateButton>
-              </Grid>
-              <Grid item>
-                <LoadingButton
-                  color="primary"
-                  variant="contained"
-                  size="small"
-                  onClick={handleSubmit}
-                  loading={clicked}
-                  startIcon={<SaveIcon />}
-                >
-                  Add
-                </LoadingButton>
-              </Grid>
-            </Grid>
-          </Stack>
-        </Grid>
+        <AnimateButton>
+          <Button
+            onClick={handleClose}
+            color="error"
+            variant="contained"
+            size="small"
+            disabled={clicked}
+            startIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
+        </AnimateButton>
+
+        <LoadingButton
+          color="primary"
+          variant="contained"
+          size="small"
+          onClick={handleSubmit}
+          loading={clicked}
+          startIcon={<SaveIcon />}
+        >
+          Add
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

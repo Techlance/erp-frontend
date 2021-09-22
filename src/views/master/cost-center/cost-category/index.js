@@ -83,7 +83,6 @@ const SelectGroup = () => {
   }, [company]);
 
   useEffect(() => {
-    // console.log(company_account_heads);
     if (cost_category) setLoading(false);
     else setLoading(true);
   }, [cost_category]);

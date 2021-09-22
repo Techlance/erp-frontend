@@ -224,8 +224,8 @@ const AddBillTable = ({
                   variant="text"
                   color="error"
                   aria-label="delete"
-                  onClick={() => {
-                    deleteBill(index);
+                  onClick={async () => {
+                    await deleteBill(index);
                   }}
                 >
                   <DeleteIcon sx={{ fontSize: "1.3rem" }} />

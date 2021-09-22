@@ -109,6 +109,7 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
             color="error"
             variant="contained"
             startIcon={<CancelIcon />}
+            disabled={clicked}
           >
             Cancel
           </Button>

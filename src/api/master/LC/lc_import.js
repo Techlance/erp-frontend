@@ -61,7 +61,6 @@ export const getCostCenterAsync = async (id, dispatch) => {
   }
   const response = await instance.get(`/company/get-cost-center/${id}`);
 
-  console.log(response.data.data);
   dispatch({
     type: GET_COST_CENTER,
     payload: response.data.data,
@@ -74,7 +73,6 @@ export const getPartyCodePayAsync = async (id, dispatch) => {
   }
   const response = await instance.get(`/company/get-ledger-payables/${id}`);
 
-  console.log(response.data.data);
   dispatch({
     type: GET_PARTY_CODE_PAY,
     payload: response.data.data,
@@ -87,7 +85,6 @@ export const getPartyCodeReceiveAsync = async (id, dispatch) => {
   }
   const response = await instance.get(`/company/get-ledger-receivables/${id}`);
 
-  console.log(response.data.data);
   dispatch({
     type: GET_PARTY_CODE_RECEIVE,
     payload: response.data.data,
@@ -100,23 +97,47 @@ export const getBankAcAsync = async (id, dispatch) => {
   }
   const response = await instance.get(`/company/get-ledger-cash-bank/${id}`);
 
-  console.log(response.data.data);
   dispatch({
     type: GET_BANK_AC,
     payload: response.data.data,
   });
 };
 
-export const addLCAsync = async (data, dispatch) => {
-  delete data.id;
-  const form = dataToForm(data);
-  const response = await instance.post("/lc/add-lc", form);
+export const addLCAsync = async (values, dispatch) => {
+  try {
+    let data = { ...values };
+    delete data.id;
 
-  sendNotification({
-    dispatch,
-    response,
-  });
-  return response.data.data;
+    data.cost_center = data.cost_center.id;
+    data.party_code = data.party_code.id;
+    data.bank_ac = data.bank_ac.id;
+    data.base_currency = data.base_currency.id;
+
+    const response = await instance.post("/lc/add-lc", dataToForm(data));
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    return response;
+  } catch (error) {
+    const response = {
+      data: {
+        success: false,
+        message: "Error while creating Lettor of Credit.",
+      },
+    };
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    console.log("Error while creating Lettor of Credit.");
+
+    return response;
+  }
 };
 
 export const updateLCAsync = async (data, dispatch) => {

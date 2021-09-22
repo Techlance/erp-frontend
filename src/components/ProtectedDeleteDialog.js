@@ -12,11 +12,11 @@ const ProtectedDeleteDialog = ({
 }) => {
   let check = { ...checkList };
   Object.keys(check).forEach((key) => {
-    if (check[key]) {
-      if (!check[key].length > 0) delete check[key];
-    }
+    if (check[key] && !check[key].length > 0) delete check[key];
   });
+
   let keys = Object.keys(check);
+
   return keys.length > 0 ? (
     <PreventDeleteDialog
       open={showDeleteModal}

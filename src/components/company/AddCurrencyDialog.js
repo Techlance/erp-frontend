@@ -21,7 +21,6 @@ import LoadingButton from "../../ui-component/LoadingButton";
 // project imports
 import useAuth from "../../hooks/useAuth";
 import useCompany from "../../hooks/useCompany";
-import LoadingButton from "../../ui-component/LoadingButton";
 import ValidationDialog from "../ValidationDialog";
 
 const AddCurrenyDialog = ({ open, handleClose }) => {

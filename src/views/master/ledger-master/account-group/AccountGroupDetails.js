@@ -24,7 +24,7 @@ import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog"
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    "marginBottom": "24px",
+    marginBottom: "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -130,7 +130,7 @@ const UserForm = () => {
   useEffect(() => {
     if (company_account_group_details) {
       setCheckList({
-        "Ledgers": company_account_group_details.ledger_master,
+        Ledgers: company_account_group_details.ledger_master,
         "Account Groups": company_account_group_details.child,
       });
       setValues({ ...company_account_group_details });
@@ -150,9 +150,9 @@ const UserForm = () => {
     setClicked(false);
   };
 
-  const handleAgree = () => {
-    deleteCompanyAccountGroup(values.id);
-    history.replace(`/company/${mid}/master/ledger-master/group/`);
+  const handleAgree = async () => {
+    await deleteCompanyAccountGroup(values.id);
+    history.replace(`/company/${mid}/master/ledger-master/group`);
   };
 
   return (

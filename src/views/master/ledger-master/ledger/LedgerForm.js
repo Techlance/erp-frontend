@@ -6,7 +6,6 @@ import {
   Collapse,
   Fade,
   Grid,
-  Stack,
   TextField,
   Typography,
   FormControlLabel,
@@ -31,7 +30,7 @@ import ValidationDialog from "../../../../components/ValidationDialog";
 
 //-----------------------|| Ledger Form ||-----------------------//
 
-const LedgerForm = () => {
+const LedgerForm = ({ setBs }) => {
   const history = useHistory();
 
   const { company_ledger_details, company_ledgers } = useSelector(
@@ -144,8 +143,8 @@ const LedgerForm = () => {
     }
   };
 
-  const handleAgree = () => {
-    deleteCompanyLedger(values?.id);
+  const handleAgree = async () => {
+    await deleteCompanyLedger(values.id);
     history.replace(`/company/${mid}/master/ledger-master/ledger`);
   };
 
@@ -194,6 +193,7 @@ const LedgerForm = () => {
                 onChange={handleSelect}
                 setReceivable={setReceivable}
                 setPayable={setPayable}
+                setBs={setBs}
               />
             </Grid>
             <Grid item sm={12}>
@@ -537,39 +537,28 @@ const LedgerForm = () => {
               </Collapse>
             </Grid>
 
-            <Grid item xs={12}>
-              <Stack direction="row">
-                <Grid
-                  container
-                  justifyContent="space-between"
-                  spacing={gridSpacing}
+            <Grid item xs={12} display="flex" justifyContent="space-between">
+              <AnimateButton>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => setShowDeleteModal(true)}
+                  startIcon={<DeleteIcon />}
+                  disabled={values?.is_fixed}
                 >
-                  <Grid item>
-                    <AnimateButton>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        onClick={() => setShowDeleteModal(true)}
-                        startIcon={<DeleteIcon />}
-                        disabled={values?.is_fixed}
-                      >
-                        Delete
-                      </Button>
-                    </AnimateButton>
-                  </Grid>
-                  <Grid item>
-                    <LoadingButton
-                      variant="contained"
-                      color="primary"
-                      onClick={handleUpdateLedger}
-                      startIcon={<SaveIcon />}
-                      loading={clicked}
-                    >
-                      Save Details
-                    </LoadingButton>
-                  </Grid>
-                </Grid>
-              </Stack>
+                  Delete
+                </Button>
+              </AnimateButton>
+
+              <LoadingButton
+                variant="contained"
+                color="primary"
+                onClick={handleUpdateLedger}
+                startIcon={<SaveIcon />}
+                loading={clicked}
+              >
+                Save Details
+              </LoadingButton>
             </Grid>
           </Grid>
         </SubCard>

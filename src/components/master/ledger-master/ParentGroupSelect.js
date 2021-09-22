@@ -71,9 +71,12 @@ const ParentGroupSelect = ({
           startAdornment: <> {loading && <CachedIcon />} </>,
         }}
       >
+        <MenuItem key={0} value={null}>
+          {"No Parent Group".toUpperCase()}
+        </MenuItem>
         {data?.map((option, index) =>
           avoid === option.id ? null : (
-            <MenuItem key={index} value={option.id}>
+            <MenuItem key={index + 1} value={option.id}>
               {`${option.group_name}`.toUpperCase()}
             </MenuItem>
           )

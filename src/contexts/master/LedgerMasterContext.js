@@ -128,8 +128,8 @@ export const LedgerMasterProvider = ({ children }) => {
     await getLedgerDocsAsync(id, dispatch);
   };
 
-  const createLedgerDoc = async (data) => {
-    await createLedgerDocAsync(data, dispatch);
+  const createLedgerDoc = async (data, onSuccess) => {
+    await createLedgerDocAsync(data, onSuccess, dispatch);
 
     await getLedgerDocsAsync(state.company_ledger_details?.id, dispatch);
   };
@@ -140,12 +140,12 @@ export const LedgerMasterProvider = ({ children }) => {
     await getLedgerDocsAsync(lid, dispatch);
   };
 
-  const addLedgerBalance = async (data) => {
-    await addLedgerBalanceAsync(data, dispatch);
+  const addLedgerBalance = async (data, successFn) => {
+    await addLedgerBalanceAsync(data, successFn, dispatch);
   };
 
-  const addLedgerBillwise = async (data) => {
-    await addLedgerBillwiseAsync(data, dispatch);
+  const addLedgerBillwise = async (data, onSuccess) => {
+    await addLedgerBillwiseAsync(data, onSuccess, dispatch);
   };
 
   const getLedgerBalance = async (id) => {

@@ -83,7 +83,6 @@ const AddBrsDialog = ({ open, handleClose }) => {
   };
 
   const handleChange = (event) => {
-    console.log({ [event.target.id]: event.target.value });
     setValues({
       ...values,
       [event.target.id]: event.target.value,

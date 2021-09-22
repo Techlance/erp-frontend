@@ -87,8 +87,8 @@ export const CompanyProvider = ({ children }) => {
     await getSelectedCompanyAsync(id, dispatch);
   };
 
-  const createCompany = async (data) => {
-    await createCompanyAsync(data, dispatch);
+  const createCompany = async (data, onSuccess) => {
+    await createCompanyAsync(data, onSuccess, dispatch);
 
     await getUserCompaniesAsync(dispatch);
   };

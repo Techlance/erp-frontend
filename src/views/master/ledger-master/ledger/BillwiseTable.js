@@ -9,7 +9,6 @@ import {
   FormHelperText,
   makeStyles,
   MenuItem,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -34,7 +33,6 @@ const useStyles = makeStyles({
 
 const BillwiseTable = ({
   deleteExistingBill,
-  existingBills,
   billwise,
   setBillwise,
   deleteBill,
@@ -42,6 +40,7 @@ const BillwiseTable = ({
   is_fc,
 }) => {
   const classes = useStyles();
+
   return (
     <Table size="medium">
       <TableHead>
@@ -84,7 +83,7 @@ const BillwiseTable = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {existingBills?.map((row, index) => (
+        {/* {existingBills?.map((row, index) => (
           <TableRow hover key={index}>
             <TableCell>
               <Typography align="center">{row.ref_no}</Typography>
@@ -138,7 +137,7 @@ const BillwiseTable = ({
               </Stack>
             </TableCell>
           </TableRow>
-        ))}
+        ))} */}
         {billwise?.map((row, index) => (
           <TableRow hover key={index} alignItems="top">
             <TableCell>
@@ -252,23 +251,17 @@ const BillwiseTable = ({
             )}
 
             <TableCell align="center">
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
+              <Button
+                variant="text"
+                size="small"
+                color="error"
+                aria-label="delete"
+                onClick={() => {
+                  deleteBill(index);
+                }}
               >
-                <Button
-                  variant="text"
-                  size="small"
-                  color="error"
-                  aria-label="delete"
-                  onClick={() => {
-                    deleteBill(index);
-                  }}
-                >
-                  <DeleteIcon sx={{ fontSize: "1.3rem" }} />
-                </Button>
-              </Stack>
+                <DeleteIcon sx={{ fontSize: "1.3rem" }} />
+              </Button>
             </TableCell>
           </TableRow>
         ))}

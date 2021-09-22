@@ -180,6 +180,7 @@ const AddUserDialog = ({ open, handleClose }) => {
             size="small"
             onClick={handleClose}
             startIcon={<CancelIcon />}
+            disabled={clicked}
           >
             Cancel
           </Button>

@@ -78,8 +78,6 @@ const Ledger = () => {
       headerName: "Ledger ID",
       flex: 0.2,
       minWidth: 200,
-      align: "center",
-      headerAlign: "center",
     },
     {
       field: "ledger_name",
@@ -144,16 +142,12 @@ const Ledger = () => {
       headerName: "Current Balance",
       flex: 0.3,
       minWidth: 200,
-      align: "center",
-      headerAlign: "center",
     },
     {
       field: "old_ledger_id",
       headerName: "Old Ledger ID",
       flex: 0.2,
       minWidth: 100,
-      align: "center",
-      headerAlign: "center",
     },
     {
       field: "address",
@@ -196,8 +190,6 @@ const Ledger = () => {
       headerName: "CR expiry Date",
       flex: 0.5,
       minWidth: 300,
-      align: "",
-      headerAlign: "",
       valueFormatter: (params) => {
         return params.value ? formatDate(params.value) : null;
       },
@@ -299,6 +291,7 @@ const Ledger = () => {
     {
       field: "block_ac",
       headerName: "Block A/C",
+      type: "boolean",
       flex: 0.3,
       minWidth: 200,
     },

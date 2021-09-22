@@ -63,9 +63,12 @@ const LCDocs = ({ newLC }) => {
   }, [showAddModal, deleteLcDoc]);
 
   useEffect(() => {
-    console.log(data);
     setNewDocs(data);
   }, [data]);
+
+  const handleAgree = async () => {
+    await deleteLcDoc(currentDocID, newLC.id);
+  };
 
   return (
     <Grid container className={classes.root}>
@@ -159,7 +162,7 @@ const LCDocs = ({ newLC }) => {
           </TableBody>
           <ConfirmDeleteDialog
             open={showDeleteModal}
-            handleAgree={() => deleteLcDoc(currentDocID, newLC.id)}
+            handleAgree={handleAgree}
             handleClose={() => setShowDeleteModal(false)}
             title="Are you sure?"
             body="Are you sure you want to delete this Document? Once deleted the data can not be retrived!"

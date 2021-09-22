@@ -1,79 +1,196 @@
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 
 // material-ui
-import { Grid, Stack, TextField, Autocomplete } from "@material-ui/core";
+import {
+  Grid,
+  TextField,
+  Autocomplete,
+  createFilterOptions,
+  Typography,
+  Button,
+} from "@material-ui/core";
 
 // project import
 import { gridSpacing } from "../../../../store/constant";
+import useAuth from "../../../../hooks/useAuth";
 import useRequest from "../../../../hooks/useRequest";
+import useBudget from "../../../../hooks/useBudget";
+import ConfirmSaveDialog from "../../../../components/ConfirmSaveDialog";
 
 // assets
-import SaveIcon from "@material-ui/icons/SaveRounded";
 import CachedIcon from "@material-ui/icons/Cached";
-import LoadingButton from "../../../../ui-component/LoadingButton";
+import CheckIcon from "@material-ui/icons/CheckCircleTwoTone";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
-
+// import LoadingButton from "../../../../ui-component/LoadingButton";
 
 //-----------------------|| CashFlow Grid ||-----------------------//
+const filter = createFilterOptions();
 
 function renderAuto(params) {
-  return <TextField inputProps={{readOnly:true}} fullWidth value={params.value?.head} />;
+  return <Typography>{params.value?.head}</Typography>;
 }
 
-function AutoEditInputCell({ id, value, api, field, data, loading }) {
+const handleSave = (id, field, event, newValue, api) => {
+  api.setEditCellValue({ id, field, value: newValue }, event);
+  if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
+    api.commitCellChange({ id, field });
+    api.setCellMode(id, field, "view");
+  }
+};
 
-  const handleChange = (event,newValue) => {
-    api.setEditCellValue({ id, field, value:newValue }, event);
-    if (event.nativeEvent.clientX !== 0 && event.nativeEvent.clientY !== 0) {
-      api.commitCellChange({ id, field });
-      api.setCellMode(id, field, 'view');
+function AutoEditInputCell({
+  id,
+  value,
+  api,
+  field,
+  data,
+  loading,
+  handleAddCashflowHead,
+  getCashFlowHead,
+}) {
+  const handleChange = (event, newValue) => {
+    if (typeof newValue === "string") {
+      handleAddCashflowHead(newValue, async (data) => {
+        await getCashFlowHead();
+        handleSave(id, field, event, data, api);
+      });
+    } else if (newValue && newValue.inputValue) {
+      handleAddCashflowHead(newValue.inputValue, async (data) => {
+        await getCashFlowHead();
+        handleSave(id, field, event, data, api);
+      });
+    } else {
+      handleSave(id, field, event, newValue, api);
     }
   };
 
   return (
-      <Autocomplete
-        fullWidth
-        inputRef={input => input && input.focus()}
-        value={value}
-        onChange={handleChange}
-        id="cash-flow-cash-head"
-        options={data}
-        getOptionLabel={(option) => option.head}
-        disabled={loading}
-        InputProps={{
-          startAdornment: <> {loading && <CachedIcon />} </>,
-        }}
-        renderInput={(params) => <TextField fullWidth {...params} />}
-      />
+    <Autocomplete
+      fullWidth
+      inputRef={(input) => input && input.focus()}
+      value={value}
+      onChange={handleChange}
+      id="cash-flow-cash-head"
+      options={data}
+      getOptionLabel={(option) => {
+        // e.g value selected with enter, right from the input
+        if (typeof option === "string") {
+          return option;
+        }
+        if (option.inputValue) {
+          return option.head;
+        }
+        return option.head;
+      }}
+      disabled={loading}
+      InputProps={{
+        startAdornment: <> {loading && <CachedIcon />} </>,
+      }}
+      renderInput={(params) => <TextField fullWidth {...params} />}
+      filterOptions={(options, params) => {
+        const filtered = filter(options, params);
+
+        if (params.inputValue !== "") {
+          filtered.push({
+            inputValue: params.inputValue,
+            head: `Add "${params.inputValue}"`,
+          });
+        }
+
+        return filtered;
+      }}
+      selectOnFocus
+      clearOnBlur
+      handleHomeEndKeys
+    />
   );
 }
 
-function renderAutoEditInputCell(params,data,loading) {
-  return <AutoEditInputCell {...params} data={data} loading={loading} />;
+function renderAutoEditInputCell(
+  params,
+  data,
+  loading,
+  handleAddCashflowHead,
+  getCashFlowHead
+) {
+  return (
+    <AutoEditInputCell
+      {...params}
+      data={data}
+      loading={loading}
+      handleAddCashflowHead={handleAddCashflowHead}
+      getCashFlowHead={getCashFlowHead}
+    />
+  );
 }
 
+function renderAutoType(params) {
+  return <Typography>{params.value}</Typography>;
+}
 
-const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
+function AutoEditInputCellType({ id, value, api, field }) {
+  const handleChange = (event, newValue) => {
+    handleSave(id, field, event, newValue, api);
+  };
+
+  return (
+    <Autocomplete
+      fullWidth
+      inputRef={(input) => input && input.focus()}
+      value={value}
+      onChange={handleChange}
+      id="cash-flow-cash-head"
+      options={["Receipt", "Payment"]}
+      getOptionLabel={(option) => option}
+      renderInput={(params) => <TextField fullWidth {...params} />}
+    />
+  );
+}
+
+function renderAutoEditInputCellType(params) {
+  return <AutoEditInputCellType {...params} />;
+}
+
+const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate, revise }) => {
   const [getCashFlowHead, loading, , data] = useRequest({
     url: "/budget/get-cashflow-head/",
     method: "GET",
     initialState: [],
   });
 
+  const [sortModel] = useState([
+    {
+      field: "id",
+      sort: "asc",
+    },
+  ]);
+
+  const { user } = useAuth();
+  const [openSave, setOpenSave] = useState(false);
+  // const [clicked, setClicked] = useState(false);
+
   useEffect(() => {
     getCashFlowHead();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { addCashflowHead } = useBudget();
+  const handleAddCashflowHead = (head, successFn) => {
+    let data = {
+      head: head,
+      created_by: user.email,
+    };
+    addCashflowHead(data, successFn);
+  };
+
   const handleEdit = ({ id, field, value }) => {
-    console.log(id, field, value)
     let editedCopy = [...edited];
     editedCopy = editedCopy.map((e) => {
       return { ...e };
     });
     let row = rows.find((row) => row.id === id);
     let edit = editedCopy.find((row) => row.id === id);
-    if (edit && (row[field] === value || (row[field].id===value.id))) {
+    if (edit && (row[field] === value || row[field]?.id === value?.id)) {
       if (edit[field]) delete editedCopy[editedCopy.indexOf(edit)][field];
       else editedCopy[editedCopy.indexOf(edit)][field] = value;
     } else if (edit) {
@@ -84,27 +201,29 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
         [field]: value,
       });
     }
+
     setEdited(editedCopy);
   };
 
   const columns = [
     {
+      field: "id",
+      headerName: "ID",
+      width: 30,
+      hide: true,
+    },
+    {
       field: "budget_type",
       headerName: "Budget Type",
       flex: 0.3,
-      editable:true,
+      editable: !revise,
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      // renderCell: (params) => (
-      //   <CashflowTypeSelect
-      //     params={params}
-      //     options={["payment","receipt"]}
-      //     loading={loading}
-      //   />
-      // ),
-      // renderCell:renderAuto,
-      // renderEditCell:renderAutoEditInputCell
+      renderCell: renderAutoType,
+      renderEditCell: (params) => {
+        return renderAutoEditInputCellType(params);
+      },
     },
     {
       field: "cashflow_head",
@@ -113,11 +232,17 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
       headerAlign: "left",
       align: "left",
       minWidth: 320,
-      editable:true,
-      renderCell:renderAuto,
+      editable: !revise,
+      renderCell: renderAuto,
       renderEditCell: (params) => {
-        return(renderAutoEditInputCell(params,data,loading))
-    },
+        return renderAutoEditInputCell(
+          params,
+          data,
+          loading,
+          handleAddCashflowHead,
+          getCashFlowHead
+        );
+      },
     },
     {
       field: "jan",
@@ -229,9 +354,14 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
     },
   ];
 
+  // const onClick = async () => {
+  //   setClicked(true);
+  //   await handleUpdate();
+  //   setClicked(false);
+  // };
+
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      <pre>{JSON.stringify(edited,null,2)}</pre>
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
@@ -240,27 +370,27 @@ const CashFlowGrid = ({ rows, edited, setEdited, handleUpdate }) => {
               rows={rows}
               loading={loading}
               onCellEditCommit={handleEdit}
+              sortModel={sortModel}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Stack direction="row">
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <LoadingButton
-                    variant="contained"
-                    color="primary"
-                    onClick={handleUpdate}
-                    startIcon={<SaveIcon />}
-                    loading={loading}
-                  >
-                    Save Details
-                  </LoadingButton>
-                </Grid>
-              </Grid>
-            </Stack>
+          <Grid item xs={12} display="flex" justifyContent="flex-end">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setOpenSave(true)}
+              startIcon={<CheckIcon />}
+            >
+              Save
+            </Button>
           </Grid>
         </Grid>
       </Grid>
+      <ConfirmSaveDialog
+        open={openSave}
+        title="Are you sure you want to save?"
+        handleAgree={handleUpdate}
+        handleClose={() => setOpenSave(false)}
+      />
     </Grid>
   );
 };

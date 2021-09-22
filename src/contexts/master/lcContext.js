@@ -8,7 +8,6 @@ import Loader from "../../ui-component/Loader";
 
 import {
   // Company LC
-
   getImportLCAsync,
   getExportLCAsync,
   addLCAsync,
@@ -28,7 +27,7 @@ import {
   getLCDetailAsync,
 } from "../../api";
 
-export const LC = createContext();
+export const LCContext = createContext();
 
 export const LcProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -124,10 +123,14 @@ export const LcProvider = ({ children }) => {
     await getSelectedLCDocsAsync(data.lc_no, dispatch);
   };
 
+<<<<<<< HEAD
   const deleteLcDoc = async (id, lc_no) => {
     console.log(lc_no);
     console.log("lc_no");
 
+=======
+  const deleteLcDoc = async (id, lc_id) => {
+>>>>>>> main
     await deleteLCDocAsync(id, dispatch);
 
     await getSelectedLCDocsAsync(lc_no, dispatch);
@@ -138,7 +141,7 @@ export const LcProvider = ({ children }) => {
   }
 
   return (
-    <LC.Provider
+    <LCContext.Provider
       value={{
         ...state,
         getImportLC,
@@ -163,6 +166,6 @@ export const LcProvider = ({ children }) => {
       }}
     >
       {children}
-    </LC.Provider>
+    </LCContext.Provider>
   );
 };

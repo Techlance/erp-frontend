@@ -324,6 +324,17 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
         >
           {activeStep === 0 ? "Add" : "Okay"}
         </LoadingButton>
+
+        <ValidationDialog
+          open={showValidationModal}
+          handleAgree={() => {
+            // deleteCompany(values.id);
+            // history.replace("/admin/companies");
+          }}
+          handleClose={() => setShowValidationModal(false)}
+          title="Mistakenly entered wrong values?"
+          body="Please enter valid values to save the changes !"
+        />
       </DialogActions>
     </Dialog>
   );

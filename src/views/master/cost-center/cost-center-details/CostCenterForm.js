@@ -75,19 +75,13 @@ const CostCenterForm = () => {
 
   const handleUpdateCostCenter = async () => {
     setClicked(true);
-    let form = { ...values };
-    console.log(form);
-
-    form.cost_category_id = parseInt(form.cost_category_id.id);
-
-    if (form.child_of) {
-      form.child_of = parseInt(form.child_of?.id);
-    } else {
-      form.child_of = null;
-    }
-
-    await updateCostCenter(form);
+    await updateCostCenter(values);
     setClicked(false);
+  };
+
+  const handleAgree = async () => {
+    await deleteCostCenter(values.id);
+    history.replace(`/company/${mid}/master/cost-center/center`);
   };
 
   return (
@@ -136,6 +130,7 @@ const CostCenterForm = () => {
                         <Button
                           variant="contained"
                           color="error"
+                          size="small"
                           onClick={() => setShowDeleteModal(true)}
                           startIcon={<DeleteIcon />}
                         >
@@ -147,11 +142,12 @@ const CostCenterForm = () => {
                       <LoadingButton
                         variant="contained"
                         color="primary"
+                        size="small"
                         loading={clicked}
                         onClick={handleUpdateCostCenter}
                         startIcon={<SaveIcon />}
                       >
-                        Update Details
+                        Save
                       </LoadingButton>
                     </Grid>
                   </Grid>
@@ -163,10 +159,7 @@ const CostCenterForm = () => {
         <ProtectedDeleteDialog
           checkList={checkList}
           showDeleteModal={showDeleteModal}
-          handleAgree={() => {
-            deleteCostCenter(values.id);
-            history.replace(`/company/${mid}/master/cost-center/center`);
-          }}
+          handleAgree={handleAgree}
           handleClose={() => setShowDeleteModal(false)}
           title="Are you sure?"
           body="Are you sure you want to delete this Cost Center records? Once deleted the data can not be retrived!"

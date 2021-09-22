@@ -49,7 +49,7 @@ const CostCategoryForm = () => {
       if (category) {
         setValues(category);
         setCheckList({
-          cost_center: category.cost_center,
+          "Cost Center": category.cost_center,
         });
       } else {
         history.replace(config.defaultPath);
@@ -63,9 +63,15 @@ const CostCategoryForm = () => {
 
   const handleUpdateCostCategory = async () => {
     setClicked(true);
-    await updateCostCategory(values);
-    history.replace(`/company/${mid}/master/cost-center/category`);
+    await updateCostCategory(values, () =>
+      history.replace(`/company/${mid}/master/cost-center/category`)
+    );
     setClicked(false);
+  };
+
+  const handleAgree = async () => {
+    await deleteCostCategory(values.id);
+    history.replace(`/company/${mid}/master/cost-center/category`);
   };
 
   return (
@@ -92,10 +98,10 @@ const CostCategoryForm = () => {
                     <AnimateButton>
                       <Button
                         variant="contained"
+                        size="small"
                         color="error"
-                        onClick={() => {
-                          setShowDeleteModal(true);
-                        }}
+                        onClick={() => setShowDeleteModal(true)}
+                        loading={clicked}
                         startIcon={<DeleteIcon />}
                       >
                         Delete
@@ -106,6 +112,7 @@ const CostCategoryForm = () => {
                     <LoadingButton
                       variant="contained"
                       color="primary"
+                      size="small"
                       onClick={handleUpdateCostCategory}
                       loading={clicked}
                       startIcon={<SaveIcon />}
@@ -122,10 +129,7 @@ const CostCategoryForm = () => {
       <ProtectedDeleteDialog
         checkList={checkList}
         showDeleteModal={showDeleteModal}
-        handleAgree={() => {
-          deleteCostCategory(values.id);
-          history.replace(`/company/${mid}/master/cost-center/category`);
-        }}
+        handleAgree={handleAgree}
         handleClose={() => setShowDeleteModal(false)}
         title="Are you sure?"
         body="Are you sure you want to delete this Cost Category records? Once deleted the data can not be retrived!"

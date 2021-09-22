@@ -67,11 +67,6 @@ const PaymentTypeTabs = ({ values, editable, onChange }) => {
     setTabValue(newValue);
   };
 
-  if (editable) {
-    console.log(editable && values.chq_no);
-    console.log(editable && !!values.transaction_no);
-  }
-
   useEffect(() => {
     if (editable && !!values.chq_no) {
       setTabValue(0);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // material-ui
-import { Button, Grid, Stack } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 
 // project imports
 import { useParams } from "react-router";
@@ -27,32 +27,22 @@ const LedgerBillwise = () => {
   const {
     getLedgerBillwise,
     getLedgerBalance,
-    updateLedgerBillwise,
+    addLedgerBillwise,
     deleteLedgerBill,
   } = useLedgerMaster();
 
-  const { lid } = useParams();
+  const { mid, lid } = useParams();
 
-  const [values, setValues] = useState({ is_cr: false });
+  const [values, setValues] = useState({ is_cr: false, billwise: [] });
   const [clicked, setClicked] = useState(false);
   const { company } = useSelector((state) => state.companyMaster);
-  const [existingBills, setExistingBills] = useState([]);
-
   const { user } = useAuth();
-
   const addShortcut = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      addBill();
+      handleAddBill();
     }
   };
-
-  // const handleChange = (event) => {
-  //   setValues({
-  //     ...values,
-  //     [event.target.id]: event.target.value,
-  //   });
-  // };
 
   const handleSelect = (key, value) => {
     setValues({
@@ -70,7 +60,7 @@ const LedgerBillwise = () => {
     });
   };
 
-  const addBill = () => {
+  const handleAddBill = () => {
     setValues({
       ...values,
       billwise: [
@@ -82,14 +72,23 @@ const LedgerBillwise = () => {
           fc_amount: 0,
           bill_date: null,
           due_date: null,
+          created: true,
         },
       ],
     });
   };
 
   const deleteBill = (index) => {
+    if (!values.billwise[index].created) {
+      deleteExistingBill(values.billwise[index].id);
+      return;
+    }
+
     let billwiseCopy = [...values.billwise];
     delete billwiseCopy[index];
+
+    billwiseCopy = billwiseCopy.filter((x) => x !== null);
+
     setValues({
       ...values,
       billwise: billwiseCopy,
@@ -104,6 +103,7 @@ const LedgerBillwise = () => {
   const makeBillwise = () => {
     return values.billwise.map((val) => {
       return {
+        id: val.id ? val.id : null,
         ref_no: val.ref_no,
         fc_amount:
           values.fc_name && values.fc_name?.id !== company.base_currency
@@ -111,24 +111,32 @@ const LedgerBillwise = () => {
             : parseInt(0),
         bill_date: val.bill_date,
         due_date: val.due_date,
-        amount: parseInt(val.amt),
-        cr: val.is_cr ? parseInt(val.amt) : 0,
-        dr: val.is_cr ? 0 : parseInt(val.amt),
+        cr: val.is_cr ? parseInt(val.amt) : null,
+        dr: val.is_cr ? null : parseInt(val.amt),
+        amount: val.amt,
         created_by: user.email,
       };
     });
   };
+
   const handleUpdate = async () => {
     setClicked(true);
     let bills = makeBillwise();
     let form = {
-      ...values,
-      fc_name: values.fc_name?.id,
+      fc_name: values.fc_name?.id ? values.fc_name.id : company.base_currency,
       billwise: bills,
+      company_master_id: mid,
+      ledger_master_id: lid,
     };
 
-    await updateLedgerBillwise(form);
-    await getLedgerBillwise(ledger_balance?.id);
+    await addLedgerBillwise(form, () => {});
+
+    if (ledger_balance?.id) {
+      await getLedgerBillwise(ledger_balance.id);
+    } else {
+      await getLedgerBalance(lid);
+      await getLedgerBillwise(ledger_balance?.id);
+    }
     setValues({
       ...values,
       billwise: [],
@@ -139,12 +147,22 @@ const LedgerBillwise = () => {
   useEffect(() => {
     if (ledger_balance) {
       if (ledger_billwise) {
-        setExistingBills(ledger_billwise);
+        // setExistingBills(ledger_billwise);
+        let ledger_billwise_copy = [...ledger_billwise];
+        ledger_billwise_copy = ledger_billwise_copy.map((ledger) => {
+          return {
+            ...ledger,
+            is_cr: ledger.cr > 0 ? true : false,
+            amt: ledger.cr > 0 ? ledger.cr : ledger.dr,
+          };
+        });
         setValues({
           company_master_id: ledger_balance.company_master_id,
-          ledger_bal_id: ledger_balance.id,
-          fc_name: ledger_balance.fc_name,
-          billwise: [],
+          ledger_master_id: lid,
+          fc_name: ledger_balance.fc_name
+            ? ledger_balance.fc_name
+            : company.base_currency,
+          billwise: ledger_billwise_copy,
         });
       } else {
         getLedgerBillwise(ledger_balance?.id);
@@ -158,6 +176,7 @@ const LedgerBillwise = () => {
 
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
+      {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
       <Grid item sm={12} md={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={6}>
@@ -174,42 +193,36 @@ const LedgerBillwise = () => {
               <Button
                 color="primary"
                 fullWidth
-                // variant="contained"
                 size="large"
-                onClick={addBill}
+                onClick={handleAddBill}
               >
                 Add Bill
               </Button>
             </AnimateButton>
           </Grid>
-          <BillwiseTable
-            existingBills={existingBills}
-            billwise={values.billwise}
-            setBillwise={setBillwise}
-            deleteBill={deleteBill}
-            addShortcut={addShortcut}
-            deleteExistingBill={deleteExistingBill}
-            is_fc={
-              values.fc_name && values.fc_name?.id !== company.base_currency
-            }
-          />
           <Grid item xs={12}>
-            <Stack direction="row">
-              <Grid container justifyContent="flex-end" spacing={gridSpacing}>
-                <Grid item>
-                  <LoadingButton
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    onClick={handleUpdate}
-                    startIcon={<SaveIcon />}
-                    loading={clicked}
-                  >
-                    Save Details
-                  </LoadingButton>
-                </Grid>
-              </Grid>
-            </Stack>
+            <BillwiseTable
+              billwise={values.billwise}
+              setBillwise={setBillwise}
+              deleteBill={deleteBill}
+              addShortcut={addShortcut}
+              deleteExistingBill={deleteExistingBill}
+              is_fc={
+                values.fc_name && values.fc_name?.id !== company.base_currency
+              }
+            />
+          </Grid>
+          <Grid item xs={12} display="flex" justifyContent="flex-end">
+            <LoadingButton
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={handleUpdate}
+              startIcon={<SaveIcon />}
+              loading={clicked}
+            >
+              Save Details
+            </LoadingButton>
           </Grid>
         </Grid>
       </Grid>

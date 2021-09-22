@@ -22,16 +22,16 @@ export const getBudgetCashflowDetailsAsync = async (id, dispatch) => {
 };
 
 export const updateBudgetCashflowDetailsAsync = async (
-  id,
+  // id,
   data,
   onSuccess,
   dispatch
 ) => {
   try {
-    if (!id) return;
+    // if (!id) return;
 
-    const response = await instance.put(
-      `/budget/create-edit-budget-cashflow-detail/${id}`,
+    const response = await instance.post(
+      `/budget/create-edit-budget-cashflow-detail/`,
       data
     );
 
@@ -72,8 +72,8 @@ export const updateBudgetCashflowReviseAsync = async (
   try {
     if (!id) return;
 
-    const response = await instance.put(
-      `/budget/create-edit-revised-budget-cashflow-detail/${id}`,
+    const response = await instance.post(
+      `/budget/create-edit-revised-budget-cashflow-detail/`,
       data
     );
 
@@ -91,3 +91,30 @@ export const updateBudgetCashflowReviseAsync = async (
     console.log("Error while getting");
   }
 };
+
+export const addCashflowHeadAsync = async (
+  data,
+  onSuccess,
+  dispatch
+) => {
+  try {
+    const response = await instance.post(
+      `/budget/create-cashflow-head`,
+      data
+    );
+
+    dispatch({
+      type: budgetActions.ADD_BUDGET_CASHFLOW_DETAILS
+    });
+
+    sendNotification({
+      dispatch,
+      response,
+    });
+
+    if (response.data.success) onSuccess(response.data.data);
+  } catch (error) {
+    console.log("Error while getting");
+  }
+};
+
