@@ -87,14 +87,14 @@ const AddUserCompanyGroup = ({ open, handleClose, user_id }) => {
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <UserCompanySelect
-              captionLabel="Select Company"
+              captionLabel="Select Company*"
               selected={values.company_master_id}
               onChange={handleSelect}
             />
           </Grid>
           <Grid item xs={12}>
             <UserGroupsSelect
-              captionLabel="Select User Group"
+              captionLabel="Select User Group*"
               selected={values.user_group_id}
               onChange={handleSelect}
             />

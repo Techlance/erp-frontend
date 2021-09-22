@@ -22,6 +22,7 @@ import AnimateButton from "../../ui-component/extended/AnimateButton";
 import { gridSpacing } from "../../store/constant";
 import AddCurrenyDialog from "./AddCurrencyDialog";
 import CurrencySelect from "../../components/company/CurrencySelect";
+import ValidationDialog from "../../components/ValidationDialog";
 
 // assets
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -34,7 +35,20 @@ const AddCompanyDialog = ({ open, handleClose }) => {
   const { createCompany } = useCompany();
 
   const [showAddCurrencyModal, setShowAddCurrencyModal] = useState(false);
+  const [showValidationModal, setShowValidationModal] = useState(false);
+
   const [clicked, setClicked] = useState(false);
+
+  let emailreg = false;
+  let urlreg = false;
+  let phonereg = false;
+  const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
+  const urlRegex = new RegExp(
+    "^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?"
+  );
+  const phoneRegex = new RegExp(
+    "^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$"
+  );
 
   const [values, setValues] = useState({
     company_name: "",
@@ -69,8 +83,10 @@ const AddCompanyDialog = ({ open, handleClose }) => {
   };
 
   const handleCreateCompany = async () => {
-    setClicked(true);
-    await createCompany(values, () => {
+    if (urlreg && emailreg && phonereg) {
+      setClicked(true);
+      await createCompany(values);
+      setClicked(false);
       setValues({
         company_name: "",
         base_currency: { id: 0 },
@@ -89,8 +105,9 @@ const AddCompanyDialog = ({ open, handleClose }) => {
         created_by: user.email,
       });
       handleClose();
-    });
-    setClicked(false);
+    } else {
+      setShowValidationModal(true);
+    }
   };
 
   return (
@@ -156,37 +173,104 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              required
               id="email"
               InputLabelProps={{ shrink: true }}
+              InputProps={{
+                color:
+                  emailRegex.test(values.email) || values.email.length == 0
+                    ? "primary"
+                    : "error",
+              }}
+              helperText={
+                emailRegex.test(values.email) || values.email.length == 0
+                  ? ""
+                  : "Please enter a valid email."
+              }
               label="Email"
               type="email"
               value={values.email}
+              error={
+                emailRegex.test(values.email) || values.email.length == 0
+                  ? false
+                  : true
+              }
               onChange={handleChange}
             />
+            {
+              (emailreg =
+                emailRegex.test(values.email) || values.email.length == 0
+                  ? true
+                  : false)
+            }
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               id="website"
               label="Website"
               InputLabelProps={{ shrink: true }}
+              InputProps={{
+                color:
+                  urlRegex.test(values.website) || values.website.length == 0
+                    ? "primary"
+                    : "error",
+              }}
+              helperText={
+                urlRegex.test(values.website) || values.website.length == 0
+                  ? ""
+                  : "Please enter a valid URL."
+              }
               value={values.website}
+              error={
+                urlRegex.test(values.website) || values.website.length == 0
+                  ? false
+                  : true
+              }
               onChange={handleChange}
             />
+            {
+              (urlreg =
+                urlRegex.test(values.website) || values.website.length == 0
+                  ? true
+                  : false)
+            }
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               id="contact_no"
               label="Contact Number"
               type="tel"
               value={values.contact_no}
               InputLabelProps={{ shrink: true }}
+              InputProps={{
+                color:
+                  phoneRegex.test(values.contact_no) ||
+                  values.contact_no.length == 0
+                    ? "primary"
+                    : "error",
+              }}
+              helperText={
+                phoneRegex.test(values.contact_no) ||
+                values.contact_no.length == 0
+                  ? ""
+                  : "Please enter a valid Contact No."
+              }
+              error={
+                phoneRegex.test(values.contact_no) ||
+                values.contact_no.length == 0
+                  ? false
+                  : true
+              }
               onChange={handleChange}
             />
+            {
+              (phonereg =
+                phoneRegex.test(values.contact_no) ||
+                values.contact_no.length == 0
+                  ? true
+                  : false)
+            }
           </Grid>
           <Grid item xs={12} sm={6}>
             <Stack direction="row">
@@ -210,10 +294,8 @@ const AddCompanyDialog = ({ open, handleClose }) => {
               />
             </Stack>
           </Grid>
-
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               id="cr_no"
               label="CR. No."
@@ -224,7 +306,6 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               id="registration_no"
               label="Registration No."
@@ -235,7 +316,6 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               id="tax_id_no"
               label="Tax ID No."
@@ -246,7 +326,6 @@ const AddCompanyDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               fullWidth
               id="vat_id_no"
               label="VAT ID No."
@@ -280,6 +359,17 @@ const AddCompanyDialog = ({ open, handleClose }) => {
               onChange={handleChange}
             />
           </Grid>
+          <ValidationDialog
+            open={showValidationModal}
+            handleAgree={() => {
+              // deleteCompany(values.id);
+              // history.replace("/admin/companies");
+            }}
+            handleClose={() => setShowValidationModal(false)}
+            title="Mistakenly entered wrong values?"
+            body="Please enter valid values to save the changes !"
+          />
+          ;
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>

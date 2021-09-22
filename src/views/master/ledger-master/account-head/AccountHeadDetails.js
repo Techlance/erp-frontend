@@ -24,7 +24,7 @@ import LoadingButton from "../../../../ui-component/LoadingButton";
 
 const useStyles = makeStyles((theme) => ({
   accountTab: {
-    "marginBottom": "24px",
+    marginBottom: "24px",
     "& a": {
       minHeight: "auto",
       minWidth: "10px",
@@ -149,6 +149,7 @@ const UserForm = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       id="schedule_no"
                       label="Schedule Number"
                       value={values.schedule_no}
@@ -161,7 +162,7 @@ const UserForm = () => {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <HeadTitleSelect
-                      captionLabel="Title"
+                      captionLabel="Title*"
                       InputLabelProps={{ shrink: true }}
                       selected={values.title}
                       onChange={handleSelect}
@@ -170,6 +171,7 @@ const UserForm = () => {
                   <Grid item xs={12} sm={12}>
                     <TextField
                       fullWidth
+                      required
                       id="acc_head_name"
                       label="Accound Head Name"
                       value={values.acc_head_name}

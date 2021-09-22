@@ -26,6 +26,7 @@ import useLedgerMaster from "../../../../hooks/useLedgerMaster";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import ProtectedDeleteDialog from "../../../../components/ProtectedDeleteDialog";
 import AccountGroupSelect from "../../../../components/master/ledger-master/AccountGroupSelect";
+import ValidationDialog from "../../../../components/ValidationDialog";
 
 //-----------------------|| Ledger Form ||-----------------------//
 
@@ -42,6 +43,7 @@ const LedgerForm = ({ setBs }) => {
   const { mid } = useParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showValidationModal, setShowValidationModal] = useState(false);
 
   const [values, setValues] = useState(null);
   const [clicked, setClicked] = useState(false);
@@ -70,6 +72,16 @@ const LedgerForm = ({ setBs }) => {
     });
   };
 
+  let emailreg = false;
+  let phonereg = false;
+  let day_reg = false;
+
+  const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
+  const phoneRegex = new RegExp(
+    "^[+]?[0-9]{3}?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$"
+  );
+  const dayRegex = new RegExp("^[0-9]{0,2}$");
+
   useEffect(() => {
     if (company_ledger_details) {
       setValues({ ...company_ledger_details });
@@ -81,50 +93,54 @@ const LedgerForm = ({ setBs }) => {
   });
 
   const handleUpdateLedger = async () => {
-    setClicked(true);
-    let form = { ...values };
-    form.acc_group_id = parseInt(form.acc_group_id.id);
-    // form.bank_ac_no = parseInt(form.bank_ac_no);
-    // form.credit_limit = parseFloat(form.credit_limit);
-    form.credit_days = parseInt(form.credit_days);
-    if (!(receivable || payable)) {
-      form = {
-        ...form,
-        payment_terms: null,
-        delivery_terms: null,
-        vat_no: null,
-        cc_exp_date: null,
-        cc_no: null,
-        id_exp_date: null,
-        id_no: null,
-        cr_exp_date: null,
-        cr_no: null,
-        tax_reg_no: null,
-        contact_person: null,
-        email: null,
-        tel: null,
-        address: null,
-      };
+    if (emailreg && phonereg && day_reg) {
+      setClicked(true);
+      let form = { ...values };
+      form.acc_group_id = parseInt(form.acc_group_id.id);
+      // form.bank_ac_no = parseInt(form.bank_ac_no);
+      // form.credit_limit = parseFloat(form.credit_limit);
+      form.credit_days = parseInt(form.credit_days);
+      if (!(receivable || payable)) {
+        form = {
+          ...form,
+          payment_terms: null,
+          delivery_terms: null,
+          vat_no: null,
+          cc_exp_date: null,
+          cc_no: null,
+          id_exp_date: null,
+          id_no: null,
+          cr_exp_date: null,
+          cr_no: null,
+          tax_reg_no: null,
+          contact_person: null,
+          email: null,
+          tel: null,
+          address: null,
+        };
+      }
+      if (!receivable) {
+        form = {
+          ...form,
+          credit_limit: null,
+          credit_days: null,
+          credit_rating: null,
+          block_ac: null,
+        };
+      } else if (!payable) {
+        form = {
+          ...form,
+          bank_name: null,
+          bank_code: null,
+          branch_name: null,
+          bank_ac_no: null,
+        };
+      }
+      await updateCompanyLedger(form);
+      setClicked(false);
+    } else {
+      setShowValidationModal(true);
     }
-    if (!receivable) {
-      form = {
-        ...form,
-        credit_limit: null,
-        credit_days: null,
-        credit_rating: null,
-        block_ac: null,
-      };
-    } else if (!payable) {
-      form = {
-        ...form,
-        bank_name: null,
-        bank_code: null,
-        branch_name: null,
-        bank_ac_no: null,
-      };
-    }
-    await updateCompanyLedger(form);
-    setClicked(false);
   };
 
   const handleAgree = async () => {
@@ -140,10 +156,20 @@ const LedgerForm = ({ setBs }) => {
             <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
+                required
                 id="ledger_name"
                 label="Ledger Name"
                 value={values?.ledger_name}
                 InputLabelProps={{ shrink: true }}
+                InputProps={{
+                  color: values?.ledger_name.length == 0 ? "error" : "primary",
+                }}
+                helperText={
+                  values?.ledger_name.length == 0
+                    ? "This field is required."
+                    : ""
+                }
+                error={values?.ledger_name.length == 0 ? true : false}
                 onChange={handleChange}
               />
             </Grid>
@@ -161,8 +187,7 @@ const LedgerForm = ({ setBs }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <AccountGroupSelect
-                viewOnly
-                captionLabel="Account Group"
+                captionLabel="Account Group*"
                 InputLabelProps={{ shrink: true }}
                 selected={values?.acc_group_id}
                 onChange={handleSelect}
@@ -197,8 +222,30 @@ const LedgerForm = ({ setBs }) => {
                         label="Telephone No."
                         value={values?.tel}
                         InputLabelProps={{ shrink: true }}
+                        InputProps={{
+                          color:
+                            phoneRegex.test(values?.tel) || values?.tel == null
+                              ? "primary"
+                              : "error",
+                        }}
+                        helperText={
+                          phoneRegex.test(values?.tel) || values?.tel == null
+                            ? ""
+                            : "Please enter a valid Contact No."
+                        }
+                        error={
+                          phoneRegex.test(values?.tel) || values?.tel == null
+                            ? false
+                            : true
+                        }
                         onChange={handleChange}
                       />
+                      {
+                        (phonereg =
+                          phoneRegex.test(values?.tel) || values?.tel == null
+                            ? true
+                            : false)
+                      }
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -208,8 +255,34 @@ const LedgerForm = ({ setBs }) => {
                         value={values?.email}
                         type="email"
                         InputLabelProps={{ shrink: true }}
+                        InputProps={{
+                          color:
+                            emailRegex.test(values?.email) ||
+                            values?.email == null
+                              ? "primary"
+                              : "error",
+                        }}
+                        helperText={
+                          emailRegex.test(values?.email) ||
+                          values?.email == null
+                            ? ""
+                            : "Please enter a valid email."
+                        }
+                        error={
+                          emailRegex.test(values?.email) ||
+                          values?.email == null
+                            ? false
+                            : true
+                        }
                         onChange={handleChange}
                       />
+                      {
+                        (emailreg =
+                          emailRegex.test(values?.email) ||
+                          values?.email == null
+                            ? true
+                            : false)
+                      }
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -405,9 +478,35 @@ const LedgerForm = ({ setBs }) => {
                         label="Credit Days"
                         value={values?.credit_days}
                         InputLabelProps={{ shrink: true }}
-                        onChange={handleChange}
                         type="number"
+                        InputProps={{
+                          color:
+                            dayRegex.test(values?.credit_days) ||
+                            values?.credit_days == null
+                              ? "primary"
+                              : "error",
+                        }}
+                        helperText={
+                          dayRegex.test(values?.credit_days) ||
+                          values?.credit_days == null
+                            ? ""
+                            : "Days cannot be negative and can only be 2 digit integer."
+                        }
+                        error={
+                          dayRegex.test(values?.credit_days) ||
+                          values?.credit_days == null
+                            ? false
+                            : true
+                        }
+                        onChange={handleChange}
                       />
+                      {
+                        (day_reg =
+                          dayRegex.test(values?.credit_days) ||
+                          values?.credit_days == null
+                            ? true
+                            : false)
+                      }
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -472,6 +571,17 @@ const LedgerForm = ({ setBs }) => {
         title="Are you sure?"
         body="Are you sure you want to delete this Ledgers? Once deleted the data can not be retrived!"
       />
+      <ValidationDialog
+        open={showValidationModal}
+        handleAgree={() => {
+          // deleteCompany(values.id);
+          // history.replace("/admin/companies");
+        }}
+        handleClose={() => setShowValidationModal(false)}
+        title="Mistakenly entered wrong values?"
+        body="Please enter valid values to save the changes !"
+      />
+      ;
     </Grid>
   );
 };

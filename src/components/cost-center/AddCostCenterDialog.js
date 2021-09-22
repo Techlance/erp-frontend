@@ -99,7 +99,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={6}>
             <CategorySelect
-              captionLabel="Cost Category"
+              captionLabel="Cost Category*"
               InputLabelProps={{ shrink: true }}
               selected={values.cost_category_id}
               onChange={handleSelect}
@@ -109,7 +109,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
             <ParentGroupSelect
               fullWidth
               id="child_of"
-              captionLabel="Child Of"
+              captionLabel="Child Of*"
               selected={values.child_of}
               InputLabelProps={{ shrink: true }}
               onChange={handleSelect}
@@ -122,6 +122,7 @@ const AddCostCenterDialog = ({ open, handleClose }) => {
               fullWidth
               id="cost_center_name"
               label="Cost Center Name"
+              required
               value={values.cost_center_name}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}

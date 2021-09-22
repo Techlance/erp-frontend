@@ -21,10 +21,12 @@ import LoadingButton from "../../ui-component/LoadingButton";
 // project imports
 import useAuth from "../../hooks/useAuth";
 import useCompany from "../../hooks/useCompany";
+import ValidationDialog from "../ValidationDialog";
 
 const AddCurrenyDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { addCurrency } = useCompany();
+  const [showValidationModal, setShowValidationModal] = useState(false);
 
   const [values, setValues] = useState({
     created_by: user.email,
@@ -51,11 +53,18 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
   };
 
   const handleAddCurrency = async () => {
-    setClicked(true);
-    await addCurrency(values, () => handleCloseModal());
-    setClicked(false);
+    if (code_reg) {
+      setClicked(true);
+      await addCurrency(values);
+      handleCloseModal();
+      setClicked(false);
+    } else {
+      setShowValidationModal(true);
+    }
   };
 
+  const codeRegex = new RegExp("^([A-Z]){3}$");
+  let code_reg = false;
   return (
     <Dialog
       open={open}
@@ -74,24 +83,46 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
 
         <TextField
           autoFocus
+          required
           margin="dense"
           id="currency_name"
           label="Currency Name"
           fullWidth
+          InputLabelProps={{ shrink: true }}
           value={values.currency_name}
           onChange={handleChange}
         />
         <TextField
           margin="dense"
           id="currency"
+          required
           label="Currency Code"
           fullWidth
+          InputLabelProps={{ shrink: true }}
           value={values.currency}
+          InputLabelProps={{ shrink: true }}
+          InputProps={{
+            color:
+              codeRegex.test(values.currency) || values.currency == 0
+                ? "primary"
+                : "error",
+          }}
+          helperText={
+            codeRegex.test(values.currency) || values.currency == 0
+              ? ""
+              : "Code length should be equals to 3."
+          }
+          error={
+            codeRegex.test(values.currency) || values.currency == 0
+              ? false
+              : true
+          }
           onChange={(event) => {
             event.target.value = event.target.value.toUpperCase();
             handleChange(event);
           }}
         />
+        {(code_reg = codeRegex.test(values.currency) ? true : false)}
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <AnimateButton>
@@ -100,12 +131,12 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
             variant="contained"
             size="small"
             color="error"
-            disabled={clicked}
             startIcon={<CancelIcon />}
           >
             Cancel
           </Button>
         </AnimateButton>
+
         <LoadingButton
           loading={clicked}
           onClick={handleAddCurrency}
@@ -116,6 +147,17 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
         >
           Add
         </LoadingButton>
+
+        <ValidationDialog
+          open={showValidationModal}
+          handleAgree={() => {
+            // deleteCompany(values.id);
+            // history.replace("/admin/companies");
+          }}
+          handleClose={() => setShowValidationModal(false)}
+          title="Mistakenly entered wrong values?"
+          body="Please enter valid values to save the changes !"
+        />
       </DialogActions>
     </Dialog>
   );

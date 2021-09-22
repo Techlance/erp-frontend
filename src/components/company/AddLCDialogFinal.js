@@ -22,6 +22,7 @@ import LoadingButton from "../../ui-component/LoadingButton";
 import AddLCDialog from "./AddLCDialog";
 import AddLCDocs from "../master/LC/AddLCDocs";
 import useLC from "../../hooks/useLC";
+import ValidationDialog from "../../components/ValidationDialog";
 
 // assets
 import AnimateButton from "../../ui-component/extended/AnimateButton";
@@ -59,17 +60,23 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const { mid } = useParams();
   const { pathname } = useLocation();
 
+  const [showValidationModal, setShowValidationModal] = useState(false);
+
   const { addImportLC, addExportLC, getImportLC, getExportLC } = useLC();
   const { company } = useSelector((state) => state.companyMaster);
 
   const [clicked, setClicked] = useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
+  console.log(activeStep === 0);
 
   let flag = true; // Show Payables for import
   if (pathname.includes("/export")) {
     // Show Receivables for export
     flag = false;
   }
+
+  const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+  const dayRegex = new RegExp("^[0-9]+$");
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -111,9 +118,27 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
   const [newLC, setNewLC] = useState(null);
 
   const handleSubmit1 = async () => {
-    setClicked(true);
+    if (
+      lcAmountRegex.test(values.lc_amount) &&
+      dayRegex.test(values.days_for_submit_to_bank)
+    ) {
+      setClicked(true);
+      let form = { ...values };
 
-    const onSuccess = () => {
+      form.cost_center = form.cost_center.id;
+      form.party_code = form.party_code.id;
+      form.bank_ac = form.bank_ac.id;
+      form.base_currency = form.base_currency.id;
+      // handleNext();
+
+      if (flag) {
+        let response = await addImportLC(form);
+        setNewLC(response);
+      } else {
+        let response = await addExportLC(form);
+        setNewLC(response);
+      }
+
       setValues({
         trans_type: flag ? "import" : "export",
         // year_id: 21,
@@ -142,23 +167,10 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
         created_by: user.email,
       });
       handleNext();
-    };
-
-    if (flag) {
-      let response = await addImportLC(values);
-      if (response.data.success) {
-        setNewLC(response.data.data);
-        onSuccess();
-      }
+      setClicked(false);
     } else {
-      let response = await addExportLC(values);
-      if (response.data.success) {
-        setNewLC(response.data.data);
-        onSuccess();
-      }
+      setShowValidationModal(true);
     }
-
-    setClicked(false);
   };
 
   const [paymentData, setPaymentData] = React.useState({});
@@ -219,9 +231,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">
-            Create a new Letter of Credit.
-          </Typography>
+          <Typography variant="body2">Create a new LC.</Typography>
         </DialogContentText>
 
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
@@ -314,6 +324,17 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
         >
           {activeStep === 0 ? "Add" : "Okay"}
         </LoadingButton>
+
+        <ValidationDialog
+          open={showValidationModal}
+          handleAgree={() => {
+            // deleteCompany(values.id);
+            // history.replace("/admin/companies");
+          }}
+          handleClose={() => setShowValidationModal(false)}
+          title="Mistakenly entered wrong values?"
+          body="Please enter valid values to save the changes !"
+        />
       </DialogActions>
     </Dialog>
   );
