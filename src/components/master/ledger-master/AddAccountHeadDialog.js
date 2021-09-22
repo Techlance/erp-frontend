@@ -137,6 +137,7 @@ const AddUserDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
+              required
               id="schedule_no"
               label="Schedule Number"
               value={values.schedule_no}
@@ -149,7 +150,7 @@ const AddUserDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <HeadTitleSelect
-              captionLabel="Title"
+              captionLabel="Title*"
               InputLabelProps={{ shrink: true }}
               selected={values.title}
               onChange={handleSelect}
@@ -158,6 +159,7 @@ const AddUserDialog = ({ open, handleClose }) => {
           <Grid item xs={12} sm={12}>
             <TextField
               fullWidth
+              required
               id="acc_head_name"
               label="Accound Head Name"
               value={values.acc_head_name}

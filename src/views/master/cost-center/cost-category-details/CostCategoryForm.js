@@ -77,6 +77,7 @@ const CostCategoryForm = () => {
               <TextField
                 fullWidth
                 id="name"
+                required
                 label="Cost Category Name"
                 value={values.name}
                 InputLabelProps={{ shrink: true }}

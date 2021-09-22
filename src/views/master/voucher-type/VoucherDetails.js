@@ -139,6 +139,7 @@ const VoucherTypeDetails = () => {
                   <Grid item sm={6}>
                     <TextField
                       fullWidth
+                      required
                       id="voucher_name"
                       label="Voucher Name"
                       value={values.voucher_name}
@@ -151,7 +152,7 @@ const VoucherTypeDetails = () => {
                   <Grid item sm={6}>
                     <VoucherClassSelect
                       fullWidth
-                      captionLabel="Voucher Class"
+                      captionLabel="Voucher Class*"
                       selected={values.voucher_class}
                       onChange={handleSelect}
                       disabled={values.is_fixed}

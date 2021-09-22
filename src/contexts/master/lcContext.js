@@ -79,12 +79,12 @@ export const LcProvider = ({ children }) => {
   const updateImportLC = async (data) => {
     await updateLCAsync(data, dispatch);
 
-    await getImportLCAsync(data.lc_id, dispatch);
+    await getImportLCAsync(data.lc_no, dispatch);
   };
   const updateExportLC = async (data) => {
     await updateLCAsync(data, dispatch);
 
-    await getExportLCAsync(data.lc_id, dispatch);
+    await getExportLCAsync(data.lc_no, dispatch);
   };
 
   const deleteLC = async (id) => {
@@ -100,18 +100,18 @@ export const LcProvider = ({ children }) => {
   const addLCAmend = async (data) => {
     await createLCAmendAsync(data, dispatch);
 
-    await getLCAmendAsync(data.lc_id, dispatch);
+    await getLCAmendAsync(data.lc_no, dispatch);
   };
 
   const updateLCAmend = async (data, id) => {
     await updateLCAmendAsync(data, id, dispatch);
 
-    await getLCAmendAsync(data.lc_id, dispatch);
+    await getLCAmendAsync(data.lc_no, dispatch);
   };
 
-  const deleteLCAmend = async (id, lc_id) => {
+  const deleteLCAmend = async (id, lc_no) => {
     await deleteLCAmendAsync(id, dispatch);
-    await getLCAmendAsync(lc_id, dispatch);
+    await getLCAmendAsync(lc_no, dispatch);
   };
 
   const getSelectedLcDocs = async (id) => {
@@ -121,16 +121,16 @@ export const LcProvider = ({ children }) => {
   const createLcDocs = async (data) => {
     await createLCDocAsync(data, dispatch);
 
-    await getSelectedLCDocsAsync(data.lc_id, dispatch);
+    await getSelectedLCDocsAsync(data.lc_no, dispatch);
   };
 
-  const deleteLcDoc = async (id, lc_id) => {
-    console.log(lc_id);
-    console.log("lc_id");
+  const deleteLcDoc = async (id, lc_no) => {
+    console.log(lc_no);
+    console.log("lc_no");
 
     await deleteLCDocAsync(id, dispatch);
 
-    await getSelectedLCDocsAsync(lc_id, dispatch);
+    await getSelectedLCDocsAsync(lc_no, dispatch);
   };
 
   if (loading) {

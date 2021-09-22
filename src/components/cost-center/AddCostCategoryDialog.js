@@ -78,12 +78,12 @@ const AddCostCategoryDialog = ({ open, handleClose }) => {
         <Typography variant="h4">Add Cost Category</Typography>
       </DialogTitle>
       <DialogContent>
-        <pre>{JSON.stringify(values, null, 2)} </pre>
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} sm={12}>
             <TextField
               fullWidth
               id="name"
+              required
               label="Cost Category Name"
               value={values.name}
               InputLabelProps={{ shrink: true }}

@@ -88,6 +88,7 @@ const AddBudgetDialog = ({ open, handleClose }) => {
             <TextField
               fullWidth
               id="budget_name"
+              required
               label="Budget Name"
               value={values.budget_name}
               InputLabelProps={{ shrink: true }}
@@ -99,6 +100,7 @@ const AddBudgetDialog = ({ open, handleClose }) => {
               <TextField
                 id="budget_type"
                 select
+                required
                 fullWidth
                 label="Type"
                 value={values.budget_type}
@@ -113,7 +115,7 @@ const AddBudgetDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <YearSelect
-              captionLabel="Budget Year"
+              captionLabel="Budget Year*"
               InputLabelProps={{ shrink: true }}
               selected={values.year_id}
               onChange={handleSelect}
@@ -121,7 +123,7 @@ const AddBudgetDialog = ({ open, handleClose }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <AuthoriserSelect
-              captionLabel="Authoriser"
+              captionLabel="Authoriser*"
               InputLabelProps={{ shrink: true }}
               selected={values.authoriser}
               onChange={handleSelect}

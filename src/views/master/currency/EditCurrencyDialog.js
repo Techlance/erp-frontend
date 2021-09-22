@@ -21,11 +21,13 @@ import CancelIcon from "@material-ui/icons/CancelTwoTone";
 // project imports
 import useCompany from "../../../hooks/useCompany";
 import LoadingButton from "../../../ui-component/LoadingButton";
+import ValidationDialog from "../../../components/ValidationDialog";
 
 const EditCurrenyDialog = ({ open, handleClose, data }) => {
   const { updateCurrency } = useCompany();
 
   const [clicked, setClicked] = useState(false);
+  const [showValidationModal, setShowValidationModal] = useState(false);
 
   const [values, setValues] = useState({
     id: data.id,
@@ -55,11 +57,18 @@ const EditCurrenyDialog = ({ open, handleClose, data }) => {
   };
 
   const handleUpdateCurrency = async () => {
-    setClicked(true);
-    await updateCurrency(values);
-    handleCloseModal();
-    setClicked(false);
+    if (code_reg) {
+      setClicked(true);
+      await updateCurrency(values);
+      handleCloseModal();
+      setClicked(false);
+    } else {
+      setShowValidationModal(true);
+    }
   };
+
+  const codeRegex = new RegExp("^([A-Z]){3}$");
+  let code_reg = false;
 
   return (
     <Dialog
@@ -82,6 +91,7 @@ const EditCurrenyDialog = ({ open, handleClose, data }) => {
           margin="dense"
           id="currency_name"
           label="Currency Name"
+          required
           fullWidth
           value={values.currency_name}
           onChange={handleChange}
@@ -90,13 +100,32 @@ const EditCurrenyDialog = ({ open, handleClose, data }) => {
           margin="dense"
           id="currency"
           label="Currency Code"
+          required
           fullWidth
           value={values.currency}
+          InputLabelProps={{ shrink: true }}
+          InputProps={{
+            color:
+              codeRegex.test(values.currency) || values.currency == 0
+                ? "primary"
+                : "error",
+          }}
+          helperText={
+            codeRegex.test(values.currency) || values.currency == 0
+              ? ""
+              : "Code length should be equals to 3."
+          }
+          error={
+            codeRegex.test(values.currency) || values.currency == 0
+              ? false
+              : true
+          }
           onChange={(event) => {
             event.target.value = event.target.value.toUpperCase();
             handleChange(event);
           }}
         />
+        {(code_reg = codeRegex.test(values.currency) ? true : false)}
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
         <Stack direction="row">
@@ -124,6 +153,17 @@ const EditCurrenyDialog = ({ open, handleClose, data }) => {
                 Save
               </LoadingButton>
             </Grid>
+            <ValidationDialog
+              open={showValidationModal}
+              handleAgree={() => {
+                // deleteCompany(values.id);
+                // history.replace("/admin/companies");
+              }}
+              handleClose={() => setShowValidationModal(false)}
+              title="Mistakenly entered wrong values?"
+              body="Please enter valid values to save the changes !"
+            />
+            ;
           </Grid>
         </Stack>
       </DialogActions>

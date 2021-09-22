@@ -23,6 +23,7 @@ import { gridSpacing } from "../../store/constant";
 import useUserPermissions from "../../hooks/useUserPermissions";
 import LoadingButton from "../../ui-component/LoadingButton";
 import AnimateButton from "../../ui-component/extended/AnimateButton";
+import ValidationDialog from "../ValidationDialog";
 
 const AddUserDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
@@ -51,18 +52,27 @@ const AddUserDialog = ({ open, handleClose }) => {
     });
   };
 
+  const [showValidationModal, setShowValidationModal] = useState(false);
+
   const handleCreateUser = async () => {
-    setClicked(true);
-    await createUser(values);
-    setClicked(false);
-    setValues({
-      name: "",
-      email: "",
-      is_superuser: false,
-      created_by: user.email,
-    });
-    handleClose();
+    if (emailreg) {
+      setClicked(true);
+      await createUser(values);
+      setClicked(false);
+      setValues({
+        name: "",
+        email: "",
+        is_superuser: false,
+        created_by: user.email,
+      });
+      handleClose();
+    } else {
+      setShowValidationModal(true);
+    }
   };
+
+  const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
+  let emailreg = false;
 
   return (
     <Dialog
@@ -84,6 +94,7 @@ const AddUserDialog = ({ open, handleClose }) => {
             <TextField
               fullWidth
               id="name"
+              required
               label="User Name"
               value={values.name}
               InputLabelProps={{ shrink: true }}
@@ -94,12 +105,35 @@ const AddUserDialog = ({ open, handleClose }) => {
             <TextField
               fullWidth
               type="email"
+              required
               id="email"
               label="E-mail"
               value={values.email}
               InputLabelProps={{ shrink: true }}
+              InputProps={{
+                color:
+                  emailRegex.test(values.email) || values.email.length == 0
+                    ? "primary"
+                    : "error",
+              }}
+              helperText={
+                emailRegex.test(values.email) || values.email.length == 0
+                  ? ""
+                  : "Please enter a valid email."
+              }
+              error={
+                emailRegex.test(values.email) || values.email.length == 0
+                  ? false
+                  : true
+              }
               onChange={handleChange}
             />
+            {
+              (emailreg =
+                emailRegex.test(values.email) || values.email.length == 0
+                  ? true
+                  : false)
+            }
           </Grid>
 
           <Grid item xs={12}>
@@ -107,6 +141,7 @@ const AddUserDialog = ({ open, handleClose }) => {
               fullWidth
               id="password"
               label="Password"
+              required
               type="password"
               value={values.password}
               InputLabelProps={{ shrink: true }}
@@ -128,6 +163,13 @@ const AddUserDialog = ({ open, handleClose }) => {
               label="Super User"
             />
           </Grid>
+          <ValidationDialog
+            open={showValidationModal}
+            handleAgree={() => {}}
+            handleClose={() => setShowValidationModal(false)}
+            title="Mistakenly entered wrong values?"
+            body="Please enter valid values to save the changes !"
+          />
         </Grid>
       </DialogContent>
       <DialogActions sx={{ pr: 2.5 }}>
