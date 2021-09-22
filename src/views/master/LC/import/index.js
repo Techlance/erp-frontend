@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 // material-ui
 import { Button, Grid, Typography } from "@material-ui/core";
@@ -14,7 +15,6 @@ import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 
 // import useCostCenter from "../../../../hooks/useCostCenter";
-import { useLocation } from "react-router";
 import { formatDate } from "../../../../utils";
 import useLC from "../../../../hooks/useLC";
 import AddLCDialogFinal from "../../../../components/company/AddLCDialogFinal";

@@ -134,7 +134,6 @@ const LedgerForm = ({
                   label="Telephone No."
                   value={values.tel}
                   InputLabelProps={{ shrink: true }}
-                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     color:
                       phoneRegex.test(values?.tel) || values?.tel == null

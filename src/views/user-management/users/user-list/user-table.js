@@ -2,12 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 // material-ui
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import CancelIcon from "@material-ui/icons/Cancel";
-
 import {
   Button,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -18,6 +14,8 @@ import {
 
 // assets
 import { IconArrowRight } from "@tabler/icons";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 //-----------------------|| Company List ||-----------------------//
 
@@ -69,22 +67,16 @@ const UserTable = () => {
               </Typography>
             </TableCell>
             <TableCell align="center">
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
+              <Button
+                variant="outlined"
+                color="primary"
+                aria-label="more-details"
+                href={`/admin/user-manager/users/${row.id}`}
+                target="_blank"
+                endIcon={<IconArrowRight sx={{ fontSize: "1.1rem" }} />}
               >
-                <Button
-                  variant="text"
-                  color="primary"
-                  aria-label="more-details"
-                  href={`/admin/user-manager/users/${row.id}`}
-                  target="_blank"
-                >
-                  <Typography align="center">More </Typography>
-                  <IconArrowRight sx={{ fontSize: "1.1rem" }} />
-                </Button>
-              </Stack>
+                <Typography>More</Typography>
+              </Button>
             </TableCell>
           </TableRow>
         ))}

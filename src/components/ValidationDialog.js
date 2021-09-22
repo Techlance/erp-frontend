@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 // material-ui
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,7 +12,6 @@ import {
 
 // assets
 import LoadingButton from "../ui-component/LoadingButton";
-import AnimateButton from "../ui-component/extended/AnimateButton";
 
 const ValidationDialog = ({ open, handleClose, handleAgree, title, body }) => {
   const [loading, setLoading] = useState(false);
@@ -49,7 +47,7 @@ const ValidationDialog = ({ open, handleClose, handleAgree, title, body }) => {
           loading={loading}
           color="error"
         >
-          OKAY
+          Okay
         </LoadingButton>
       </DialogActions>
     </Dialog>

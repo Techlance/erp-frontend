@@ -8,7 +8,7 @@ import { CostCenterProvider } from "./master/CostCenterContext";
 import { MasterCompanyProvider } from "./master/MasterCompanyContext";
 import { VoucherTypeProvider } from "./master/VoucherTypesContext";
 import { BrsProvider } from "./master/BrsContext";
-import { LcProvider } from "./master/lcContext";
+import { LcProvider } from "./master/LCContext";
 import { BudgetProvider } from "./master/BudgetContext";
 
 const AppContextProvider = ({ children }) => {
