@@ -56,7 +56,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
   const matchUpMd = useMediaQuery(theme.breakpoints.up("md"));
 
   const { company } = useSelector((state) => state.companyMaster);
-
+  console.log(company)
   const drawer = (
     <React.Fragment>
       <Box sx={{ display: { xs: "block", md: "none" } }}>
@@ -67,7 +67,10 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
       <BrowserView>
         <PerfectScrollbar component="div" className={classes.ScrollHeight}>
           {company && (
+            <div>
             <Typography variant="h1">{company.company_name}</Typography>
+            <Typography variant="p">{company.current_year.start_date+ ' - ' + company.current_year.end_date}</Typography>
+            </div>
           )}
           <MenuList />
         </PerfectScrollbar>

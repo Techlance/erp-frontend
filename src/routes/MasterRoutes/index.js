@@ -14,39 +14,39 @@ import BudgetRoutes from "./budgetRoutes";
 
 const MasterRoutes = () => {
   return (
-    <Route path={["/company/:mid/master/*"]}>
+    <Route path={["/company/:mid/:year_id/master/*"]}>
       <React.Fragment>
         {/* Routes for Master Ledger */}
         {/* <Route path="/master/ledger-master" component={LedgerRoutes} /> */}
         {/* <Route path="/master/cost-center" component={CostCenterRoutes} /> */}
         <Route
-          path="/company/:mid/master/ledger-master"
+          path="/company/:mid/:year_id/master/ledger-master"
           component={LedgerRoutes}
         />
         <Route
-          path="/company/:mid/master/cost-center"
+          path="/company/:mid/:year_id/master/cost-center"
           component={CostCenterRoutes}
         />
 
-        <Route path="/company/:mid/master/lc" component={LcRoutes} />
+        <Route path="/company/:mid/:year_id/master/lc" component={LcRoutes} />
 
         {/* Routes for Currency */}
         <Route
-          path="/company/:mid/master/currency"
+          path="/company/:mid/:year_id/master/currency"
           component={CurrencyRoutes}
         />
 
         {/* Routes for Voucher Types */}
         <Route
-          path="/company/:mid/master/voucher-type"
+          path="/company/:mid/:year_id/master/voucher-type"
           component={VoucherTypeRoutes}
         />
 
         {/* Routes for BRS */}
-        <Route path="/company/:mid/master/op-bal-brs" component={BrsRoutes} />
+        <Route path="/company/:mid/:year_id/master/op-bal-brs" component={BrsRoutes} />
 
         {/* Routes for Budget */}
-        <Route path="/company/:mid/master/budget" component={BudgetRoutes} />
+        <Route path="/company/:mid/:year_id/master/budget" component={BudgetRoutes} />
       </React.Fragment>
     </Route>
   );

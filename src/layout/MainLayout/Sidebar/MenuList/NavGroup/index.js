@@ -9,6 +9,8 @@ import { Divider, List, Typography } from "@material-ui/core";
 import NavItem from "./../NavItem";
 import NavCollapse from "./../NavCollapse";
 import useAuth from "../../../../../hooks/useAuth";
+// import { FormattedMessage } from "react-intl";
+// import { IconDashboard } from "@tabler/icons";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const NavGroup = ({ item }) => {
   const classes = useStyles();
   const { user } = useAuth();
+  
 
   const filteredMenuItems = item.children.filter((item) => {
     if (item.admin && user?.is_superuser) {
@@ -54,6 +57,19 @@ const NavGroup = ({ item }) => {
         );
     }
   });
+
+  // items.unshift([
+  //   <NavItem key={-1} item={
+  //     {
+  //       id: "company-management",
+  //       title: <FormattedMessage id="company-management" />,
+  //       type: "item",
+  //       url: "/admin/companies",
+  //       icon: IconDashboard,
+  //       breadcrumbs: true,
+  //     }
+  //   } level={0} />
+  // ])
 
   return (
     <React.Fragment>
