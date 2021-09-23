@@ -9,8 +9,6 @@ import { Divider, List, Typography } from "@material-ui/core";
 import NavItem from "./../NavItem";
 import NavCollapse from "./../NavCollapse";
 import useAuth from "../../../../../hooks/useAuth";
-// import { FormattedMessage } from "react-intl";
-// import { IconDashboard } from "@tabler/icons";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
