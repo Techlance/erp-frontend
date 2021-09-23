@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const NavGroup = ({ item }) => {
   const classes = useStyles();
   const { user } = useAuth();
+  
 
   const filteredMenuItems = item.children.filter((item) => {
     if (item.admin && user?.is_superuser) {

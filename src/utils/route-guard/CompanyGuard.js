@@ -16,7 +16,7 @@ import Loader from "../../ui-component/Loader";
  */
 
 const CompanyGuard = ({ children }) => {
-  const { mid } = useParams();
+  const { mid, year_id } = useParams();
   const { setMasterCompany } = useCompanyMaster();
 
   const [loading, setLoading] = useState(true);
@@ -40,14 +40,18 @@ const CompanyGuard = ({ children }) => {
     if (loading || loadingCompanies) {
       setForward(0);
     } else {
-      function isPresent({ company_id }) {
-        return company_id === parseInt(mid);
+      function isPresent({ company_id, years }) {
+        return (company_id === parseInt(mid)) && ( years.find((year)=>{ return parseInt(year.year_id) === parseInt(year_id) }));
       }
 
       const company = companies.find(isPresent);
 
       if (company) {
-        setMasterCompany(company);
+        let year = company.years.find((year)=>{ return parseInt(year.year_id) === parseInt(year_id) })
+        setMasterCompany({
+          ...company,
+          current_year:year
+        });
 
         setForward(1);
       } else {
