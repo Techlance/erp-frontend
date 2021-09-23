@@ -56,19 +56,6 @@ const NavGroup = ({ item }) => {
     }
   });
 
-  // items.unshift([
-  //   <NavItem key={-1} item={
-  //     {
-  //       id: "company-management",
-  //       title: <FormattedMessage id="company-management" />,
-  //       type: "item",
-  //       url: "/admin/companies",
-  //       icon: IconDashboard,
-  //       breadcrumbs: true,
-  //     }
-  //   } level={0} />
-  // ])
-
   return (
     <React.Fragment>
       <List
