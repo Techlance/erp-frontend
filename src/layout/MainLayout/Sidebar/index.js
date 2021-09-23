@@ -1,5 +1,6 @@
-import PropTypes from "prop-types";
 import React from "react";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 // material-ui
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -13,7 +14,7 @@ import { BrowserView, MobileView } from "react-device-detect";
 import MenuList from "./MenuList";
 import LogoSection from "../LogoSection";
 import { drawerWidth } from "./../../../store/constant";
-import { useSelector } from "react-redux";
+
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +57,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
   const matchUpMd = useMediaQuery(theme.breakpoints.up("md"));
 
   const { company } = useSelector((state) => state.companyMaster);
-  console.log(company)
+
   const drawer = (
     <React.Fragment>
       <Box sx={{ display: { xs: "block", md: "none" } }}>
@@ -68,8 +69,8 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
         <PerfectScrollbar component="div" className={classes.ScrollHeight}>
           {company && (
             <div>
-            <Typography variant="h1">{company.company_name}</Typography>
-            <Typography variant="p">{company.current_year.start_date+ ' - ' + company.current_year.end_date}</Typography>
+              <Typography variant="h1">{company.company_name}</Typography>
+              <Typography variant="p">{company.current_year.start_date+ ' - ' + company.current_year.end_date}</Typography>
             </div>
           )}
           <MenuList />
