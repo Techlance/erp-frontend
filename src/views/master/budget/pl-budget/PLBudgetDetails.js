@@ -93,10 +93,8 @@ const BudgetPlDetails = () => {
   const { bid } = useParams();
 
   const handleChange = (event, newValue) => {
-    if(newValue===0)
-      getBudgetPlDetails(bid)
-    else
-      getBudgetPlRevise(bid)
+    if (newValue === 0) getBudgetPlDetails(bid);
+    else getBudgetPlRevise(bid);
     setValue(newValue);
   };
 

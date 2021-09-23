@@ -17,7 +17,7 @@ const GroupsProfile = ({ values, setValues }) => {
   };
 
   const dayRegex = new RegExp("^[0-9]{0,2}$");
-  let day_reg = false;
+
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12} sm={12}>
@@ -51,7 +51,7 @@ const GroupsProfile = ({ values, setValues }) => {
           error={dayRegex.test(values.backdated_days) ? false : true}
           onChange={handleChange}
         />
-        {(day_reg = dayRegex.test(values.backdated_days) ? true : false)}
+        {dayRegex.test(values.backdated_days) ? true : false}
       </Grid>
     </Grid>
   );

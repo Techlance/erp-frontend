@@ -41,16 +41,23 @@ const CompanyGuard = ({ children }) => {
       setForward(0);
     } else {
       function isPresent({ company_id, years }) {
-        return (company_id === parseInt(mid)) && ( years.find((year)=>{ return parseInt(year.year_id) === parseInt(year_id) }));
+        return (
+          company_id === parseInt(mid) &&
+          years.find((year) => {
+            return parseInt(year.year_id) === parseInt(year_id);
+          })
+        );
       }
 
       const company = companies.find(isPresent);
 
       if (company) {
-        let year = company.years.find((year)=>{ return parseInt(year.year_id) === parseInt(year_id) })
+        let year = company.years.find((year) => {
+          return parseInt(year.year_id) === parseInt(year_id);
+        });
         setMasterCompany({
           ...company,
-          current_year:year
+          current_year: year,
         });
 
         setForward(1);

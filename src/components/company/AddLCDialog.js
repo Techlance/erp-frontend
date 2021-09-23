@@ -18,8 +18,6 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
 
   const { company } = useSelector((state) => state.companyMaster);
 
-  let day_reg = false;
-  let lc_amount_reg = false;
   const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
   const dayRegex = new RegExp("^[0-9]{0,2}$");
 
@@ -207,13 +205,10 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             }
             onChange={handleChange}
           />
-          {
-            (day_reg =
-              dayRegex.test(values.days_for_submit_to_bank) ||
-              values.days_for_submit_to_bank.length == 0
-                ? true
-                : false)
-          }
+          {dayRegex.test(values.days_for_submit_to_bank) ||
+          values.days_for_submit_to_bank.length == 0
+            ? true
+            : false}
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -357,11 +352,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             }
             onChange={handleChange}
           />
-          {
-            (lc_amount_reg = lcAmountRegex.test(values.lc_amount)
-              ? true
-              : false)
-          }
+          {lcAmountRegex.test(values.lc_amount) ? true : false}
         </Grid>
       </Grid>
     </>

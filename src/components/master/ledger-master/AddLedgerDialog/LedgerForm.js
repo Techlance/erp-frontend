@@ -55,9 +55,6 @@ const LedgerForm = ({
       [event.target.name]: event.target.checked,
     });
   };
-  let emailreg = false;
-  let phonereg = false;
-  let day_reg = false;
 
   const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
   const phoneRegex = new RegExp(
@@ -134,7 +131,6 @@ const LedgerForm = ({
                   label="Telephone No."
                   value={values.tel}
                   InputLabelProps={{ shrink: true }}
-                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     color:
                       phoneRegex.test(values?.tel) || values?.tel == null
@@ -153,12 +149,9 @@ const LedgerForm = ({
                   }
                   onChange={handleChange}
                 />
-                {
-                  (phonereg =
-                    phoneRegex.test(values?.tel) || values?.tel == null
-                      ? true
-                      : false)
-                }
+                {phoneRegex.test(values?.tel) || values?.tel == null
+                  ? true
+                  : false}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -186,12 +179,9 @@ const LedgerForm = ({
                   }
                   onChange={handleChange}
                 />
-                {
-                  (emailreg =
-                    emailRegex.test(values?.email) || values?.email == null
-                      ? true
-                      : false)
-                }
+                {emailRegex.test(values?.email) || values?.email == null
+                  ? true
+                  : false}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -335,13 +325,10 @@ const LedgerForm = ({
                       : true
                   }
                 />
-                {
-                  (day_reg =
-                    dayRegex.test(values?.credit_days) ||
-                    values?.credit_days == null
-                      ? true
-                      : false)
-                }
+                {dayRegex.test(values?.credit_days) ||
+                values?.credit_days == null
+                  ? true
+                  : false}
               </Grid>
             </Grid>
           </Fade>

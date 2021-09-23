@@ -15,7 +15,7 @@ export const MasterCompanyProvider = ({ children }) => {
 
   const setMasterCompany = (item) => {
     if (item === null) return;
-    
+
     // setCompanySession(item);
     dispatch({
       type: SELECT_COMPANY,

@@ -15,7 +15,6 @@ import MenuList from "./MenuList";
 import LogoSection from "../LogoSection";
 import { drawerWidth } from "./../../../store/constant";
 
-
 // style constant
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -70,7 +69,11 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
           {company && (
             <div>
               <Typography variant="h1">{company.company_name}</Typography>
-              <Typography variant="p">{company.current_year.start_date+ ' - ' + company.current_year.end_date}</Typography>
+              <Typography variant="p">
+                {company.current_year.start_date +
+                  " - " +
+                  company.current_year.end_date}
+              </Typography>
             </div>
           )}
           <MenuList />

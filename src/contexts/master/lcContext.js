@@ -123,14 +123,7 @@ export const LcProvider = ({ children }) => {
     await getSelectedLCDocsAsync(data.lc_no, dispatch);
   };
 
-<<<<<<< HEAD
   const deleteLcDoc = async (id, lc_no) => {
-    console.log(lc_no);
-    console.log("lc_no");
-
-=======
-  const deleteLcDoc = async (id, lc_id) => {
->>>>>>> main
     await deleteLCDocAsync(id, dispatch);
 
     await getSelectedLCDocsAsync(lc_no, dispatch);

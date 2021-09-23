@@ -18,7 +18,7 @@ import {
   getBudgetCashflowReviseAsync,
   updateBudgetCashflowReviseAsync,
   updateBudgetCashflowDetailsAsync,
-  addCashflowHeadAsync
+  addCashflowHeadAsync,
 } from "../../api";
 
 export const BudgetContext = createContext();
@@ -97,7 +97,7 @@ export const BudgetProvider = ({ children }) => {
         updateBudgetCashflowDetails,
         getBudgetCashflowRevise,
         updateBudgetCashflowRevise,
-        addCashflowHead
+        addCashflowHead,
       }}
     >
       {children}

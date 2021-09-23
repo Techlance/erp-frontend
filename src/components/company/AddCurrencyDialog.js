@@ -100,7 +100,6 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
           fullWidth
           InputLabelProps={{ shrink: true }}
           value={values.currency}
-          InputLabelProps={{ shrink: true }}
           InputProps={{
             color:
               codeRegex.test(values.currency) || values.currency == 0

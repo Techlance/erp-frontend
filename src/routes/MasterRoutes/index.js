@@ -43,10 +43,16 @@ const MasterRoutes = () => {
         />
 
         {/* Routes for BRS */}
-        <Route path="/company/:mid/:year_id/master/op-bal-brs" component={BrsRoutes} />
+        <Route
+          path="/company/:mid/:year_id/master/op-bal-brs"
+          component={BrsRoutes}
+        />
 
         {/* Routes for Budget */}
-        <Route path="/company/:mid/:year_id/master/budget" component={BudgetRoutes} />
+        <Route
+          path="/company/:mid/:year_id/master/budget"
+          component={BudgetRoutes}
+        />
       </React.Fragment>
     </Route>
   );

@@ -2,7 +2,14 @@ import React, { useEffect } from "react";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { CardContent, Grid, IconButton, Menu, MenuItem, Typography } from "@material-ui/core";
+import {
+  CardContent,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 // project imports
@@ -39,21 +46,23 @@ const SelectCompany = ({ title }) => {
   // const { setMasterCompany } = useComapanyMaster();
   const { companies } = company;
 
-  const [anchorEl, setAnchorEl] = React.useState([null*companies?.length]);
-  const open = anchorEl.map((anc)=>{return  Boolean(anc)})
-  const handleClick = (event,index) => {
-    console.log(index)
-    let copy = [...anchorEl]
+  const [anchorEl, setAnchorEl] = React.useState([null * companies?.length]);
+  const open = anchorEl.map((anc) => {
+    return Boolean(anc);
+  });
+  const handleClick = (event, index) => {
+    console.log(index);
+    let copy = [...anchorEl];
     copy[index] = event.currentTarget;
     setAnchorEl(copy);
   };
   const handleClose = () => {
-    setAnchorEl([null*companies?.length]);
+    setAnchorEl([null * companies?.length]);
   };
 
-  useEffect(()=>{
-    setAnchorEl([null*companies?.length])
-  },[companies])
+  useEffect(() => {
+    setAnchorEl([null * companies?.length]);
+  }, [companies]);
 
   // useEffect(() => {
   //   setMasterCompany(master_company);
@@ -64,7 +73,7 @@ const SelectCompany = ({ title }) => {
   // const handleSelectCompanyMaster = (index) => {
   //   setMasterCompany(companies[index]);
   // };
-  const handleSelectCompanyMaster = (id,year) => {
+  const handleSelectCompanyMaster = (id, year) => {
     const newWindow = window.open(
       // `/company/${companies[index].company_id}/master/ledger-master/head`,
       `/company/${id}/${year}/master/ledger-master/head`,
@@ -107,26 +116,41 @@ const SelectCompany = ({ title }) => {
                   </Grid>
 
                   <Grid item xs={2} zeroMinWidth flexGrow>
-                  <IconButton color="primary" aria-label="Select Year">
-                    <ArrowForwardIcon onClick={(e)=>{handleClick(e,index)}}/>
-                  </IconButton>
-                  <Menu
-                    id="demo-positioned-menu"
-                    aria-labelledby="demo-positioned-button"
-                    anchorEl={anchorEl[index]}
-                    open={open[index]}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}
-                  >
-                    {company.years.map((year)=>(<MenuItem onClick={()=>{handleSelectCompanyMaster(company.company_id,year.year_id)}}>{year.start_date + ' - ' + year.end_date}</MenuItem>))}
-                  </Menu> 
+                    <IconButton color="primary" aria-label="Select Year">
+                      <ArrowForwardIcon
+                        onClick={(e) => {
+                          handleClick(e, index);
+                        }}
+                      />
+                    </IconButton>
+                    <Menu
+                      id="demo-positioned-menu"
+                      aria-labelledby="demo-positioned-button"
+                      anchorEl={anchorEl[index]}
+                      open={open[index]}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "left",
+                      }}
+                    >
+                      {company.years.map((year) => (
+                        <MenuItem
+                          onClick={() => {
+                            handleSelectCompanyMaster(
+                              company.company_id,
+                              year.year_id
+                            );
+                          }}
+                        >
+                          {year.start_date + " - " + year.end_date}
+                        </MenuItem>
+                      ))}
+                    </Menu>
                   </Grid>
                 </Grid>
               ))}

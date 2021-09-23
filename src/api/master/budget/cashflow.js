@@ -92,19 +92,12 @@ export const updateBudgetCashflowReviseAsync = async (
   }
 };
 
-export const addCashflowHeadAsync = async (
-  data,
-  onSuccess,
-  dispatch
-) => {
+export const addCashflowHeadAsync = async (data, onSuccess, dispatch) => {
   try {
-    const response = await instance.post(
-      `/budget/create-cashflow-head`,
-      data
-    );
+    const response = await instance.post(`/budget/create-cashflow-head`, data);
 
     dispatch({
-      type: budgetActions.ADD_BUDGET_CASHFLOW_DETAILS
+      type: budgetActions.ADD_BUDGET_CASHFLOW_DETAILS,
     });
 
     sendNotification({
@@ -117,4 +110,3 @@ export const addCashflowHeadAsync = async (
     console.log("Error while getting");
   }
 };
-

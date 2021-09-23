@@ -491,13 +491,9 @@ const CompanyForm = () => {
                 }
                 onChange={handleChange}
               />
-              {
-                (cr_no_reg =
-                  crNoRegex.test(values.vat_id_no) ||
-                  values.vat_id_no.length == 0
-                    ? true
-                    : false)
-              }
+              {crNoRegex.test(values.vat_id_no) || values.vat_id_no.length == 0
+                ? true
+                : false}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -529,7 +525,6 @@ const CompanyForm = () => {
                 label="Year End Date"
                 InputLabelProps={{ shrink: true }}
                 type="date"
-                InputProps={{ inputProps: { min: values.year_end_date } }}
                 value={values.year_end_date}
                 InputProps={{
                   color: values.year_end_date.length == 0 ? "error" : "primary",
