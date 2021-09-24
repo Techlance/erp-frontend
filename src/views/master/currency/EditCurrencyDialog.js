@@ -67,7 +67,7 @@ const EditCurrenyDialog = ({ open, handleClose, data }) => {
     }
   };
 
-  const codeRegex = new RegExp("^([A-Z]){3}$");
+  const codeRegex = new RegExp("[A-Z]{3}");
   let code_reg = false;
 
   return (
@@ -106,17 +106,17 @@ const EditCurrenyDialog = ({ open, handleClose, data }) => {
           InputLabelProps={{ shrink: true }}
           InputProps={{
             color:
-              codeRegex.test(values.currency) || values.currency == 0
+              codeRegex.test(values.currency) || values.currency.length == 0
                 ? "primary"
                 : "error",
           }}
           helperText={
-            codeRegex.test(values.currency) || values.currency == 0
+            codeRegex.test(values.currency) || values.currency.length == 0
               ? ""
               : "Code length should be equals to 3."
           }
           error={
-            codeRegex.test(values.currency) || values.currency == 0
+            codeRegex.test(values.currency) || values.currency.length == 0
               ? false
               : true
           }

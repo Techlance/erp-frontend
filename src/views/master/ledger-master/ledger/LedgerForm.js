@@ -162,14 +162,14 @@ const LedgerForm = ({ setBs }) => {
                 value={values?.ledger_name}
                 InputLabelProps={{ shrink: true }}
                 InputProps={{
-                  color: values?.ledger_name.length == 0 ? "error" : "primary",
+                  color: values?.ledger_name.length === 0 ? "error" : "primary",
                 }}
                 helperText={
-                  values?.ledger_name.length == 0
+                  values?.ledger_name.length === 0
                     ? "This field is required."
                     : ""
                 }
-                error={values?.ledger_name.length == 0 ? true : false}
+                error={values?.ledger_name.length === 0 ? true : false}
                 onChange={handleChange}
               />
             </Grid>

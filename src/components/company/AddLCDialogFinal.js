@@ -75,7 +75,7 @@ const AddLCDialogFinal = ({ open, handleClose }) => {
     flag = false;
   }
 
-  const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+  const lcAmountRegex = new RegExp("^[0-9]+$");
   const dayRegex = new RegExp("^[0-9]+$");
 
   const handleNext = () => {

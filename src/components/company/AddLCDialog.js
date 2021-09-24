@@ -18,7 +18,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
 
   const { company } = useSelector((state) => state.companyMaster);
 
-  const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+  const lcAmountRegex = new RegExp("^[0-9]+$");
   const dayRegex = new RegExp("^[0-9]{0,2}$");
 
   let flag = true; // Show Payables for import

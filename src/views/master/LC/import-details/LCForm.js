@@ -44,7 +44,7 @@ const LCForm = () => {
 
   let lc_amount_reg = false;
   let day_reg = false;
-  const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+  const lcAmountRegex = new RegExp("^[0-9]+$");
   const dayRegex = new RegExp("^[0-9]{1,2}$");
 
   const history = useHistory();
@@ -397,7 +397,7 @@ const LCForm = () => {
                     id="lc_amount"
                     label="LC Amount"
                     required
-                    type="tel"
+                    type="number"
                     value={values.lc_amount}
                     InputLabelProps={{ shrink: true }}
                     InputProps={{

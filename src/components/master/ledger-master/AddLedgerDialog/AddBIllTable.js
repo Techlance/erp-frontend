@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 let amount_reg = false;
-const AmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+const AmountRegex = new RegExp("^[0-9]+$");
 
 const AddBillTable = ({
   fcName,
