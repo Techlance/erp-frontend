@@ -40,7 +40,7 @@ const LedgerForm = ({ setBs }) => {
   const { getCompanyLedgers, updateCompanyLedger, deleteCompanyLedger } =
     useLedgerMaster();
 
-  const { mid } = useParams();
+  const { mid, year_id } = useParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showValidationModal, setShowValidationModal] = useState(false);
@@ -145,7 +145,7 @@ const LedgerForm = ({ setBs }) => {
 
   const handleAgree = async () => {
     await deleteCompanyLedger(values.id);
-    history.replace(`/company/${mid}/master/ledger-master/ledger`);
+    history.replace(`/company/${mid}/${year_id}/master/ledger-master/ledger`);
   };
 
   return (

@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Tab, Tabs } from "@material-ui/core";
 
 // project imports
-import PLGrid from "./PLGrid";
+import PlGrid from "./PlGrid";
 import useBudget from "../../../../hooks/useBudget";
 import MainCard from "../../../../ui-component/cards/MainCard";
 
@@ -163,7 +163,7 @@ const BudgetPlDetails = () => {
         </Tabs>
         <TabPanel value={value} index={0}>
           {/* <LedgerForm /> */}
-          <PLGrid
+          <PlGrid
             rows={company_budget_details}
             loading={loading}
             handleUpdate={handleUpdate}
@@ -172,7 +172,7 @@ const BudgetPlDetails = () => {
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <PLGrid
+          <PlGrid
             rows={company_budget_revise}
             loading={loading}
             handleUpdate={handleRevise}

@@ -64,7 +64,7 @@ const VoucherTypeDetails = () => {
   const { getVoucherTypesDetail, updateVoucherTypes, deleteVoucherTypes } =
     useVoucherTypes();
 
-  const { vid, mid } = useParams();
+  const { vid, mid, year_id } = useParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -98,7 +98,7 @@ const VoucherTypeDetails = () => {
   const handleAgree = async () => {
     setClicked(true);
     await deleteVoucherTypes(values.id, () =>
-      history.replace(`/company/${mid}/master/voucher-type`)
+      history.replace(`/company/${mid}/${year_id}/master/voucher-type`)
     );
     setClicked(false);
   };

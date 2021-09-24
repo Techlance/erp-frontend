@@ -53,7 +53,7 @@ const LCForm = () => {
 
   const { updateImportLC, updateExportLC, deleteLC, getLCDetail } = useLC();
 
-  const { lc_id, mid } = useParams();
+  const { lc_id, mid, year_id } = useParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showValidationModal, setShowValidationModal] = useState(false);
@@ -110,7 +110,7 @@ const LCForm = () => {
 
   const handleAgree = async () => {
     await deleteLC(values.id);
-    history.replace(`/company/${mid}/master/lc/import`);
+    history.replace(`/company/${mid}/${year_id}/master/lc/import`);
   };
 
   return (

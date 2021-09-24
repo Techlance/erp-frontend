@@ -38,7 +38,7 @@ const CostCategoryForm = () => {
     });
   };
 
-  const { cat_id, mid } = useParams();
+  const { cat_id, mid, year_id } = useParams();
 
   const [checkList, setCheckList] = useState({});
 
@@ -64,14 +64,14 @@ const CostCategoryForm = () => {
   const handleUpdateCostCategory = async () => {
     setClicked(true);
     await updateCostCategory(values, () =>
-      history.replace(`/company/${mid}/master/cost-center/category`)
+      history.replace(`/company/${mid}/${year_id}/master/cost-center/category`)
     );
     setClicked(false);
   };
 
   const handleAgree = async () => {
     await deleteCostCategory(values.id);
-    history.replace(`/company/${mid}/master/cost-center/category`);
+    history.replace(`/company/${mid}/${year_id}/master/cost-center/category`);
   };
 
   return (
