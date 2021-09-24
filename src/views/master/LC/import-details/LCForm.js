@@ -45,7 +45,7 @@ const LCForm = () => {
   let lc_amount_reg = false;
   let day_reg = false;
   const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
-  const dayRegex = new RegExp("^[0-9]{0,2}$");
+  const dayRegex = new RegExp("^[0-9]{1,2}$");
 
   const history = useHistory();
 
@@ -252,19 +252,19 @@ const LCForm = () => {
                     InputProps={{
                       color:
                         dayRegex.test(values.days_for_submit_to_bank) ||
-                        values.days_for_submit_to_bank.length == 0
+                        values.days_for_submit_to_bank.length !== 0
                           ? "primary"
                           : "error",
                     }}
                     helperText={
                       dayRegex.test(values.days_for_submit_to_bank) ||
-                      values.days_for_submit_to_bank.length == 0
+                      values.days_for_submit_to_bank.length !== 0
                         ? ""
                         : "Days cannot be negative and can only be 2 digit integer."
                     }
                     error={
                       dayRegex.test(values.days_for_submit_to_bank) ||
-                      values.days_for_submit_to_bank.length == 0
+                      values.days_for_submit_to_bank.length !== 0
                         ? false
                         : true
                     }
@@ -273,7 +273,7 @@ const LCForm = () => {
                   {
                     (day_reg =
                       dayRegex.test(values.days_for_submit_to_bank) ||
-                      values.days_for_submit_to_bank.length == 0
+                      values.days_for_submit_to_bank.length !== 0
                         ? true
                         : false)
                   }
@@ -403,19 +403,19 @@ const LCForm = () => {
                     InputProps={{
                       color:
                         lcAmountRegex.test(values.lc_amount) ||
-                        values.lc_amount.length == 0
+                        values.lc_amount.length !== 0
                           ? "primary"
                           : "error",
                     }}
                     helperText={
-                      values.lc_amount.length == 0 ||
+                      values.lc_amount.length !== 0 ||
                       lcAmountRegex.test(values.lc_amount)
                         ? ""
                         : "LC Amount cannot be negative and can only be number."
                     }
                     error={
                       lcAmountRegex.test(values.lc_amount) ||
-                      values.lc_amount.length == 0
+                      values.lc_amount.length !== 0
                         ? false
                         : true
                     }
@@ -424,7 +424,7 @@ const LCForm = () => {
                   {
                     (lc_amount_reg =
                       lcAmountRegex.test(values.lc_amount) ||
-                      values.lc_amount.length == 0
+                      values.lc_amount.length !== 0
                         ? true
                         : false)
                   }
