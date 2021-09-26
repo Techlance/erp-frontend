@@ -93,7 +93,7 @@ const LedgerBalance = () => {
                 fullWidth
                 id="amt"
                 label="Amount"
-                value={values?.amt}
+                value={values?.amt && Math.abs(values?.amt)}
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
                 type="number"
@@ -134,7 +134,7 @@ const LedgerBalance = () => {
                   fullWidth
                   id="fc_amount"
                   label="FC Amount"
-                  value={values?.fc_amount}
+                  value={values?.fc_amount && Math.abs(values?.fc_amount)}
                   InputLabelProps={{ shrink: true }}
                   onChange={handleChange}
                   type="number"

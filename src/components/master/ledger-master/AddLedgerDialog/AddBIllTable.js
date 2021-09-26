@@ -181,7 +181,7 @@ const AddBillTable = ({
                   fullWidth
                   id="fc_amount"
                   label="FC Amount"
-                  value={row.fc_amount}
+                  value={row.fc_amount && Math.abs(row.fc_amount)}
                   InputLabelProps={{ shrink: true }}
                   onChange={(e) => {
                     setBillwise(index, e);

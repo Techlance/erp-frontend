@@ -128,8 +128,8 @@ const EditAmendDialog = ({ open, handleClose, data }) => {
               id="lc_amount"
               label="LC Amount"
               type="number"
-              InputProps={{ inputProps: { min: 1 } }}
-              value={values.lc_amount}
+              InputProps={{ inputProps: { min: 0 } }}
+              value={values.lc_amount && Math.abs(values.lc_amount)}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
             />

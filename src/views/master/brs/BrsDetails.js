@@ -127,7 +127,8 @@ const BrsDetails = () => {
                     fullWidth
                     id="amount"
                     label="Amount"
-                    value={values.amount}
+                    value={values.amount && Math.abs(values.amount)}
+                    inputProps={{ min: 0 }}
                     onChange={handleChange}
                     type="text"
                   />
