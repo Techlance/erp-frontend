@@ -156,7 +156,7 @@ const AddBillTable = ({
                 fullWidth
                 id="amt"
                 label="Amount"
-                value={row.amt}
+                value={row.amt && Math.abs(row.amt)}
                 InputLabelProps={{ shrink: true }}
                 type="number"
                 InputProps={{

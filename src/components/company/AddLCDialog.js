@@ -323,7 +323,7 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             label="LC Amount"
             type="number"
             required
-            value={values.lc_amount}
+            value={values.lc_amount && Math.abs(values.lc_amount)}
             InputLabelProps={{ shrink: true }}
             InputProps={{
               color: lcAmountRegex.test(values.lc_amount) ? "primary" : "error",
