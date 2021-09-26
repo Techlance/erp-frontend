@@ -31,8 +31,8 @@ const useStyles = makeStyles({
     left: "20px",
   },
 });
-let amount_reg = false;
-const AmountRegex = new RegExp("^[0-9]+$");
+
+const AmountRegex = new RegExp("^([0-9]*[.])?[0-9]*$");
 
 const AddBillTable = ({
   fcName,
@@ -160,31 +160,18 @@ const AddBillTable = ({
                 InputLabelProps={{ shrink: true }}
                 type="number"
                 InputProps={{
-                  color:
-                    AmountRegex.test(row.amt) || row.amt.length == 0
-                      ? "primary"
-                      : "error",
+                  color: AmountRegex.test(row.amt) ? "primary" : "error",
                 }}
                 helperText={
-                  row.amt.length == 0 || AmountRegex.test(row.amt)
+                  AmountRegex.test(row.amt)
                     ? ""
                     : "Amount should be a positive integer."
                 }
-                error={
-                  AmountRegex.test(row.amt) || row.amt.length == 0
-                    ? false
-                    : true
-                }
+                error={AmountRegex.test(row.amt) ? false : true}
                 onChange={(e) => {
                   setBillwise(index, e);
                 }}
               />
-              {
-                (amount_reg =
-                  AmountRegex.test(row.amt) || row.amt.length == 0
-                    ? true
-                    : false)
-              }
             </TableCell>
 
             {fcName && fcName?.id !== base_currency && (

@@ -176,32 +176,20 @@ const AddCompanyDialog = ({ open, handleClose }) => {
               id="email"
               InputLabelProps={{ shrink: true }}
               InputProps={{
-                color:
-                  emailRegex.test(values.email) || values.email.length == 0
-                    ? "primary"
-                    : "error",
+                color: emailRegex.test(values.email) ? "primary" : "error",
               }}
               helperText={
-                emailRegex.test(values.email) || values.email.length == 0
+                emailRegex.test(values.email)
                   ? ""
                   : "Please enter a valid email."
               }
               label="Email"
               type="email"
               value={values.email}
-              error={
-                emailRegex.test(values.email) || values.email.length == 0
-                  ? false
-                  : true
-              }
+              error={emailRegex.test(values.email) ? false : true}
               onChange={handleChange}
             />
-            {
-              (emailreg =
-                emailRegex.test(values.email) || values.email.length == 0
-                  ? true
-                  : false)
-            }
+            {(emailreg = emailRegex.test(values.email) ? true : false)}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -210,30 +198,16 @@ const AddCompanyDialog = ({ open, handleClose }) => {
               label="Website"
               InputLabelProps={{ shrink: true }}
               InputProps={{
-                color:
-                  urlRegex.test(values.website) || values.website.length == 0
-                    ? "primary"
-                    : "error",
+                color: urlRegex.test(values.website) ? "primary" : "error",
               }}
               helperText={
-                urlRegex.test(values.website) || values.website.length == 0
-                  ? ""
-                  : "Please enter a valid URL."
+                urlRegex.test(values.website) ? "" : "Please enter a valid URL."
               }
               value={values.website}
-              error={
-                urlRegex.test(values.website) || values.website.length == 0
-                  ? false
-                  : true
-              }
+              error={urlRegex.test(values.website) ? false : true}
               onChange={handleChange}
             />
-            {
-              (urlreg =
-                urlRegex.test(values.website) || values.website.length == 0
-                  ? true
-                  : false)
-            }
+            {(urlreg = urlRegex.test(values.website) ? true : false)}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -244,33 +218,17 @@ const AddCompanyDialog = ({ open, handleClose }) => {
               value={values.contact_no}
               InputLabelProps={{ shrink: true }}
               InputProps={{
-                color:
-                  phoneRegex.test(values.contact_no) ||
-                  values.contact_no.length == 0
-                    ? "primary"
-                    : "error",
+                color: phoneRegex.test(values.contact_no) ? "primary" : "error",
               }}
               helperText={
-                phoneRegex.test(values.contact_no) ||
-                values.contact_no.length == 0
+                phoneRegex.test(values.contact_no)
                   ? ""
                   : "Please enter a valid Contact No."
               }
-              error={
-                phoneRegex.test(values.contact_no) ||
-                values.contact_no.length == 0
-                  ? false
-                  : true
-              }
+              error={phoneRegex.test(values.contact_no) ? false : true}
               onChange={handleChange}
             />
-            {
-              (phonereg =
-                phoneRegex.test(values.contact_no) ||
-                values.contact_no.length == 0
-                  ? true
-                  : false)
-            }
+            {(phonereg = phoneRegex.test(values.contact_no) ? true : false)}
           </Grid>
           <Grid item xs={12} sm={6}>
             <Stack direction="row">

@@ -18,7 +18,9 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
 
   const { company } = useSelector((state) => state.companyMaster);
 
-  const lcAmountRegex = new RegExp("^[0-9]+$");
+  // const lcAmountRegex = new RegExp("^[0-9]+$");
+  const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
+
   const dayRegex = new RegExp("^[0-9]{0,2}$");
 
   let flag = true; // Show Payables for import
@@ -185,30 +187,19 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             value={values.days_for_submit_to_bank}
             InputLabelProps={{ shrink: true }}
             InputProps={{
-              color:
-                dayRegex.test(values.days_for_submit_to_bank) ||
-                values.days_for_submit_to_bank.length == 0
-                  ? "primary"
-                  : "error",
+              color: dayRegex.test(values.days_for_submit_to_bank)
+                ? "primary"
+                : "error",
             }}
             helperText={
-              dayRegex.test(values.days_for_submit_to_bank) ||
-              values.days_for_submit_to_bank.length == 0
+              dayRegex.test(values.days_for_submit_to_bank)
                 ? ""
                 : "Days cannot be negative and can only be integer."
             }
-            error={
-              dayRegex.test(values.days_for_submit_to_bank) ||
-              values.days_for_submit_to_bank.length == 0
-                ? false
-                : true
-            }
+            error={dayRegex.test(values.days_for_submit_to_bank) ? false : true}
             onChange={handleChange}
           />
-          {dayRegex.test(values.days_for_submit_to_bank) ||
-          values.days_for_submit_to_bank.length == 0
-            ? true
-            : false}
+          {dayRegex.test(values.days_for_submit_to_bank) ? true : false}
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -335,21 +326,14 @@ const AddLCDialog = ({ open, handleClose, values, setValues }) => {
             value={values.lc_amount}
             InputLabelProps={{ shrink: true }}
             InputProps={{
-              color:
-                lcAmountRegex.test(values.lc_amount) || values.lc_amount == 0
-                  ? "primary"
-                  : "error",
+              color: lcAmountRegex.test(values.lc_amount) ? "primary" : "error",
             }}
             helperText={
-              lcAmountRegex.test(values.lc_amount) || values.lc_amount == 0
+              lcAmountRegex.test(values.lc_amount)
                 ? ""
                 : "LC Amount cannot be negative and can only be number."
             }
-            error={
-              lcAmountRegex.test(values.lc_amount) || values.lc_amount == 0
-                ? false
-                : true
-            }
+            error={lcAmountRegex.test(values.lc_amount) ? false : true}
             onChange={handleChange}
           />
           {lcAmountRegex.test(values.lc_amount) ? true : false}

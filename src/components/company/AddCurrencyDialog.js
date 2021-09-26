@@ -63,7 +63,8 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
     }
   };
 
-  const codeRegex = new RegExp("^([A-Z]){3}$");
+  const codeRegex = new RegExp("^[A-Z]{3}$");
+
   let code_reg = false;
   return (
     <Dialog
@@ -101,21 +102,14 @@ const AddCurrenyDialog = ({ open, handleClose }) => {
           InputLabelProps={{ shrink: true }}
           value={values.currency}
           InputProps={{
-            color:
-              codeRegex.test(values.currency) || values.currency == 0
-                ? "primary"
-                : "error",
+            color: codeRegex.test(values.currency) ? "primary" : "error",
           }}
           helperText={
-            codeRegex.test(values.currency) || values.currency == 0
+            codeRegex.test(values.currency)
               ? ""
-              : "Code length should be equals to 3."
+              : "Code should be 3 lengthed alphabets only."
           }
-          error={
-            codeRegex.test(values.currency) || values.currency == 0
-              ? false
-              : true
-          }
+          error={codeRegex.test(values.currency) ? false : true}
           onChange={(event) => {
             event.target.value = event.target.value.toUpperCase();
             handleChange(event);
