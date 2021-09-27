@@ -27,9 +27,9 @@ const createUserGroupAsync = async (data, dispatch) => {
   });
 };
 
-const updateUserGroupAsync = async (id, data, dispatch) => {
+const updateUserGroupAsync = async (data, dispatch) => {
   const response = await instance.put(
-    `/user/edit-user-group/${id}`,
+    `/user/edit-user-group/${data.id}`,
     dataToForm(data)
   );
 
