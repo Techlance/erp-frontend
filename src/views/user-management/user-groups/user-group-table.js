@@ -71,31 +71,35 @@ const UserGroupTable = () => {
               </TableCell>
               <TableCell align="center">
                 <Stack flex direction="row" justifyContent="space-around">
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    aria-label="more-details"
-                    startIcon={<EditIcon />}
-                    onClick={() => {
-                      setData(row);
-                      setShowEditModal(true);
-                    }}
-                  >
-                    <Typography>Edit</Typography>
-                  </Button>
+                  <AnimateButton>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      aria-label="more-details"
+                      startIcon={<EditIcon />}
+                      onClick={() => {
+                        setData(row);
+                        setShowEditModal(true);
+                      }}
+                    >
+                      <Typography>Edit</Typography>
+                    </Button>
+                  </AnimateButton>
 
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    aria-label="delete-details"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => {
-                      setData(row);
-                      setShowDeleteModal(true);
-                    }}
-                  >
-                    Delete
-                  </Button>
+                  <AnimateButton>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      aria-label="delete-details"
+                      startIcon={<DeleteIcon />}
+                      onClick={() => {
+                        setData(row);
+                        setShowDeleteModal(true);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </AnimateButton>
                 </Stack>
               </TableCell>
             </TableRow>
