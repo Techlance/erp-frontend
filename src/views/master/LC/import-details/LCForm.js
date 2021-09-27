@@ -44,8 +44,10 @@ const LCForm = () => {
 
   let lc_amount_reg = false;
   let day_reg = false;
+  // const lcAmountRegex = new RegExp("^[0-9]+$");
   const lcAmountRegex = new RegExp("^([0-9]*[.])?[0-9]+$");
-  const dayRegex = new RegExp("^[0-9]{0,2}$");
+
+  const dayRegex = new RegExp("^[0-9]{1,2}$");
 
   const history = useHistory();
 
@@ -53,7 +55,7 @@ const LCForm = () => {
 
   const { updateImportLC, updateExportLC, deleteLC, getLCDetail } = useLC();
 
-  const { lc_id, mid } = useParams();
+  const { lc_id, mid, year_id } = useParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showValidationModal, setShowValidationModal] = useState(false);
@@ -110,7 +112,7 @@ const LCForm = () => {
 
   const handleAgree = async () => {
     await deleteLC(values.id);
-    history.replace(`/company/${mid}/master/lc/import`);
+    history.replace(`/company/${mid}/${year_id}/master/lc/import`);
   };
 
   return (
@@ -250,32 +252,26 @@ const LCForm = () => {
                     value={values.days_for_submit_to_bank}
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
-                      color:
-                        dayRegex.test(values.days_for_submit_to_bank) ||
-                        values.days_for_submit_to_bank.length == 0
-                          ? "primary"
-                          : "error",
+                      color: dayRegex.test(values.days_for_submit_to_bank)
+                        ? "primary"
+                        : "error",
                     }}
                     helperText={
-                      dayRegex.test(values.days_for_submit_to_bank) ||
-                      values.days_for_submit_to_bank.length == 0
+                      dayRegex.test(values.days_for_submit_to_bank)
                         ? ""
                         : "Days cannot be negative and can only be 2 digit integer."
                     }
                     error={
-                      dayRegex.test(values.days_for_submit_to_bank) ||
-                      values.days_for_submit_to_bank.length == 0
+                      dayRegex.test(values.days_for_submit_to_bank)
                         ? false
                         : true
                     }
                     onChange={handleChange}
                   />
                   {
-                    (day_reg =
-                      dayRegex.test(values.days_for_submit_to_bank) ||
-                      values.days_for_submit_to_bank.length == 0
-                        ? true
-                        : false)
+                    (day_reg = dayRegex.test(values.days_for_submit_to_bank)
+                      ? true
+                      : false)
                   }
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -397,36 +393,26 @@ const LCForm = () => {
                     id="lc_amount"
                     label="LC Amount"
                     required
-                    type="tel"
-                    value={values.lc_amount}
+                    type="number"
+                    value={values.lc_amount && Math.abs(values.lc_amount)}
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
-                      color:
-                        lcAmountRegex.test(values.lc_amount) ||
-                        values.lc_amount.length == 0
-                          ? "primary"
-                          : "error",
+                      color: lcAmountRegex.test(values.lc_amount)
+                        ? "primary"
+                        : "error",
                     }}
                     helperText={
-                      values.lc_amount.length == 0 ||
                       lcAmountRegex.test(values.lc_amount)
                         ? ""
                         : "LC Amount cannot be negative and can only be number."
                     }
-                    error={
-                      lcAmountRegex.test(values.lc_amount) ||
-                      values.lc_amount.length == 0
-                        ? false
-                        : true
-                    }
+                    error={lcAmountRegex.test(values.lc_amount) ? false : true}
                     onChange={handleChange}
                   />
                   {
-                    (lc_amount_reg =
-                      lcAmountRegex.test(values.lc_amount) ||
-                      values.lc_amount.length == 0
-                        ? true
-                        : false)
+                    (lc_amount_reg = lcAmountRegex.test(values.lc_amount)
+                      ? true
+                      : false)
                   }
                 </Grid>
 

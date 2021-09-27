@@ -35,7 +35,7 @@ const CostCenterForm = () => {
     deleteCostCenter,
   } = useCostCenter();
 
-  const { cen_id, mid } = useParams();
+  const { cen_id, mid, year_id } = useParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -81,7 +81,7 @@ const CostCenterForm = () => {
 
   const handleAgree = async () => {
     await deleteCostCenter(values.id);
-    history.replace(`/company/${mid}/master/cost-center/center`);
+    history.replace(`/company/${mid}/${year_id}/master/cost-center/center`);
   };
 
   return (

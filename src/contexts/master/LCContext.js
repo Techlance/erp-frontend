@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // reducer - state management
-
+// renamed
 // project imports
 import Loader from "../../ui-component/Loader";
 

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 const UserForm = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { aid, mid } = useParams();
+  const { aid, mid, year_id } = useParams();
 
   const { company_account_heads } = useSelector((state) => state.ledgerMaster);
 
@@ -135,7 +135,7 @@ const UserForm = () => {
 
   const handleAgree = async () => {
     await deleteCompanyAccountHead(values.id, mid);
-    history.replace(`/company/${mid}/master/ledger-master/head/`);
+    history.replace(`/company/${mid}/${year_id}/master/ledger-master/head/`);
   };
 
   return (

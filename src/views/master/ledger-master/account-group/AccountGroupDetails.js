@@ -68,7 +68,7 @@ const UserForm = () => {
     deleteCompanyAccountGroup,
   } = useLedgerMaster();
 
-  const { gid, mid } = useParams();
+  const { gid, mid, year_id } = useParams();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -152,7 +152,7 @@ const UserForm = () => {
 
   const handleAgree = async () => {
     await deleteCompanyAccountGroup(values.id);
-    history.replace(`/company/${mid}/master/ledger-master/group`);
+    history.replace(`/company/${mid}/${year_id}/master/ledger-master/group`);
   };
 
   return (

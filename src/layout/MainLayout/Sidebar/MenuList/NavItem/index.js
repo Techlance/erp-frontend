@@ -57,12 +57,13 @@ const useStyles = makeStyles((theme) => ({
 const NavItem = ({ item, level }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { mid } = useParams();
+  const { mid, year_id } = useParams();
   const customization = useSelector((state) => state.customization);
   const matchesSM = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   // By th3c0d3br34ker :)
   item.url = item.url?.replace(":mid", mid);
+  item.url = item.url?.replace(":year_id", year_id);
 
   const Icon = item.icon;
   const itemIcon = item.icon ? (

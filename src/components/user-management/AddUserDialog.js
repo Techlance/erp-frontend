@@ -111,29 +111,17 @@ const AddUserDialog = ({ open, handleClose }) => {
               value={values.email}
               InputLabelProps={{ shrink: true }}
               InputProps={{
-                color:
-                  emailRegex.test(values.email) || values.email.length == 0
-                    ? "primary"
-                    : "error",
+                color: emailRegex.test(values.email) ? "primary" : "error",
               }}
               helperText={
-                emailRegex.test(values.email) || values.email.length == 0
+                emailRegex.test(values.email)
                   ? ""
                   : "Please enter a valid email."
               }
-              error={
-                emailRegex.test(values.email) || values.email.length == 0
-                  ? false
-                  : true
-              }
+              error={emailRegex.test(values.email) ? false : true}
               onChange={handleChange}
             />
-            {
-              (emailreg =
-                emailRegex.test(values.email) || values.email.length == 0
-                  ? true
-                  : false)
-            }
+            {(emailreg = emailRegex.test(values.email) ? true : false)}
           </Grid>
 
           <Grid item xs={12}>

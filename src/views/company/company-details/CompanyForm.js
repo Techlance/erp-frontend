@@ -66,7 +66,7 @@ const CompanyForm = () => {
   let phonereg = false;
   let cr_no_reg = false;
   const emailRegex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+.+[a-z]{2,3}$");
-  const crNoRegex = new RegExp("^[^!@#$%^&*()]+$");
+  const crNoRegex = new RegExp("^[^!@#$%^&*()]*$");
   const phoneRegex = new RegExp(
     "^[+]?[0-9]{3}?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$"
   );
@@ -166,14 +166,14 @@ const CompanyForm = () => {
                 value={values.company_name}
                 InputLabelProps={{ shrink: true }}
                 InputProps={{
-                  color: values.company_name.length == 0 ? "error" : "primary",
+                  color: values.company_name.length === 0 ? "error" : "primary",
                 }}
                 helperText={
-                  values.company_name.length == 0
+                  values.company_name.length === 0
                     ? "Company cannot be null."
                     : ""
                 }
-                error={values.company_name.length == 0 ? true : false}
+                error={values.company_name.length === 0 ? true : false}
                 onChange={handleChange}
               />
             </Grid>
@@ -187,12 +187,12 @@ const CompanyForm = () => {
                 value={values.address}
                 InputLabelProps={{ shrink: true }}
                 InputProps={{
-                  color: values.address.length == 0 ? "error" : "primary",
+                  color: values.address.length === 0 ? "error" : "primary",
                 }}
                 helperText={
-                  values.address.length == 0 ? "Address cannot be null." : ""
+                  values.address.length === 0 ? "Address cannot be null." : ""
                 }
-                error={values.address.length == 0 ? true : false}
+                error={values.address.length === 0 ? true : false}
                 onChange={handleChange}
               />
             </Grid>
@@ -204,14 +204,14 @@ const CompanyForm = () => {
                 label="Country"
                 value={values.country}
                 InputProps={{
-                  color: values.country.length == 0 ? "error" : "primary",
+                  color: values.country.length === 0 ? "error" : "primary",
                 }}
                 helperText={
-                  values.country.length == 0
+                  values.country.length === 0
                     ? "Country Name cannot be null."
                     : ""
                 }
-                error={values.country.length == 0 ? true : false}
+                error={values.country.length === 0 ? true : false}
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
               />
@@ -225,12 +225,12 @@ const CompanyForm = () => {
                 value={values.state}
                 InputLabelProps={{ shrink: true }}
                 InputProps={{
-                  color: values.state.length == 0 ? "error" : "primary",
+                  color: values.state.length === 0 ? "error" : "primary",
                 }}
                 helperText={
-                  values.state.length == 0 ? "State Name cannot be null." : ""
+                  values.state.length === 0 ? "State Name cannot be null." : ""
                 }
-                error={values.state.length == 0 ? true : false}
+                error={values.state.length === 0 ? true : false}
                 onChange={handleChange}
               />
             </Grid>
@@ -244,17 +244,17 @@ const CompanyForm = () => {
                 value={values.email}
                 InputProps={{
                   color:
-                    emailRegex.test(values.email) || values.email.length == 0
+                    emailRegex.test(values.email) || values.email.length === 0
                       ? "primary"
                       : "error",
                 }}
                 helperText={
-                  emailRegex.test(values.email) || values.email.length == 0
+                  emailRegex.test(values.email) || values.email.length === 0
                     ? ""
                     : "Please enter a valid email."
                 }
                 error={
-                  emailRegex.test(values.email) || values.email.length == 0
+                  emailRegex.test(values.email) || values.email.length === 0
                     ? false
                     : true
                 }
@@ -262,7 +262,7 @@ const CompanyForm = () => {
               />
               {
                 (emailreg =
-                  emailRegex.test(values.email) || values.email.length == 0
+                  emailRegex.test(values.email) || values.email.length === 0
                     ? true
                     : false)
               }
@@ -276,17 +276,17 @@ const CompanyForm = () => {
                 value={values.website}
                 InputProps={{
                   color:
-                    urlRegex.test(values.website) || values.website.length == 0
+                    urlRegex.test(values.website) || values.website.length === 0
                       ? "primary"
                       : "error",
                 }}
                 helperText={
-                  urlRegex.test(values.website) || values.website.length == 0
+                  urlRegex.test(values.website) || values.website.length === 0
                     ? ""
                     : "Please enter a valid URL."
                 }
                 error={
-                  urlRegex.test(values.website) || values.website.length == 0
+                  urlRegex.test(values.website) || values.website.length === 0
                     ? false
                     : true
                 }
@@ -294,7 +294,7 @@ const CompanyForm = () => {
               />
               {
                 (urlreg =
-                  urlRegex.test(values.website) || values.website.length == 0
+                  urlRegex.test(values.website) || values.website.length === 0
                     ? true
                     : false)
               }
@@ -310,19 +310,19 @@ const CompanyForm = () => {
                 InputProps={{
                   color:
                     phoneRegex.test(values.contact_no) ||
-                    values.contact_no.length == 0
+                    values.contact_no.length === 0
                       ? "primary"
                       : "error",
                 }}
                 helperText={
                   phoneRegex.test(values.contact_no) ||
-                  values.contact_no.length == 0
+                  values.contact_no.length === 0
                     ? ""
                     : "Please enter a valid Contact No."
                 }
                 error={
                   phoneRegex.test(values.contact_no) ||
-                  values.contact_no.length == 0
+                  values.contact_no.length === 0
                     ? false
                     : true
                 }
@@ -331,7 +331,7 @@ const CompanyForm = () => {
               {
                 (phonereg =
                   phoneRegex.test(values.contact_no) ||
-                  values.contact_no.length == 0
+                  values.contact_no.length === 0
                     ? true
                     : false)
               }
@@ -368,17 +368,17 @@ const CompanyForm = () => {
                 value={values.cr_no}
                 InputProps={{
                   color:
-                    crNoRegex.test(values.cr_no) || values.cr_no.length == 0
+                    crNoRegex.test(values.cr_no) || values.cr_no.length === 0
                       ? "primary"
                       : "error",
                 }}
                 helperText={
-                  crNoRegex.test(values.cr_no) || values.cr_no.length == 0
+                  crNoRegex.test(values.cr_no) || values.cr_no.length === 0
                     ? ""
                     : "CR No. should not contain any symbols."
                 }
                 error={
-                  crNoRegex.test(values.cr_no) || values.cr_no.length == 0
+                  crNoRegex.test(values.cr_no) || values.cr_no.length === 0
                     ? false
                     : true
                 }
@@ -386,7 +386,7 @@ const CompanyForm = () => {
               />
               {
                 (cr_no_reg =
-                  crNoRegex.test(values.cr_no) || values.cr_no.length == 0
+                  crNoRegex.test(values.cr_no) || values.cr_no.length === 0
                     ? true
                     : false)
               }
@@ -437,19 +437,19 @@ const CompanyForm = () => {
                 InputProps={{
                   color:
                     crNoRegex.test(values.tax_id_no) ||
-                    values.tax_id_no.length == 0
+                    values.tax_id_no.length === 0
                       ? "primary"
                       : "error",
                 }}
                 helperText={
                   crNoRegex.test(values.tax_id_no) ||
-                  values.tax_id_no.length == 0
+                  values.tax_id_no.length === 0
                     ? ""
                     : "TAX ID No. should not contain any symbols."
                 }
                 error={
                   crNoRegex.test(values.tax_id_no) ||
-                  values.tax_id_no.length == 0
+                  values.tax_id_no.length === 0
                     ? false
                     : true
                 }
@@ -458,7 +458,7 @@ const CompanyForm = () => {
               {
                 (cr_no_reg =
                   crNoRegex.test(values.tax_id_no) ||
-                  values.tax_id_no.length == 0
+                  values.tax_id_no.length === 0
                     ? true
                     : false)
               }
@@ -473,31 +473,27 @@ const CompanyForm = () => {
                 InputProps={{
                   color:
                     crNoRegex.test(values.vat_id_no) ||
-                    values.vat_id_no.length == 0
+                    values.vat_id_no.length === 0
                       ? "primary"
                       : "error",
                 }}
                 helperText={
                   crNoRegex.test(values.vat_id_no) ||
-                  values.vat_id_no.length == 0
+                  values.vat_id_no.length === 0
                     ? ""
                     : "VAT ID No. should not contain any symbols."
                 }
                 error={
                   crNoRegex.test(values.vat_id_no) ||
-                  values.vat_id_no.length == 0
+                  values.vat_id_no.length === 0
                     ? false
                     : true
                 }
                 onChange={handleChange}
               />
-              {
-                (cr_no_reg =
-                  crNoRegex.test(values.vat_id_no) ||
-                  values.vat_id_no.length == 0
-                    ? true
-                    : false)
-              }
+              {crNoRegex.test(values.vat_id_no) || values.vat_id_no.length === 0
+                ? true
+                : false}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -510,14 +506,14 @@ const CompanyForm = () => {
                 value={values.year_start_date}
                 InputProps={{
                   color:
-                    values.year_start_date.length == 0 ? "error" : "primary",
+                    values.year_start_date.length === 0 ? "error" : "primary",
                 }}
                 helperText={
-                  values.year_start_date.length == 0
+                  values.year_start_date.length === 0
                     ? "Start Date cannot be null."
                     : ""
                 }
-                error={values.year_start_date.length == 0 ? true : false}
+                error={values.year_start_date.length === 0 ? true : false}
                 onChange={handleChange}
               />
             </Grid>
@@ -529,17 +525,17 @@ const CompanyForm = () => {
                 label="Year End Date"
                 InputLabelProps={{ shrink: true }}
                 type="date"
-                InputProps={{ inputProps: { min: values.year_end_date } }}
                 value={values.year_end_date}
                 InputProps={{
-                  color: values.year_end_date.length == 0 ? "error" : "primary",
+                  color:
+                    values.year_end_date.length === 0 ? "error" : "primary",
                 }}
                 helperText={
-                  values.year_end_date.length == 0
+                  values.year_end_date.length === 0
                     ? "End Date cannot be null."
                     : ""
                 }
-                error={values.year_end_date.length == 0 ? true : false}
+                error={values.year_end_date.length === 0 ? true : false}
                 onChange={handleChange}
               />
             </Grid>

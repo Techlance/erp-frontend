@@ -123,7 +123,8 @@ const AddAmendmentDialog = ({ open, handleClose }) => {
               id="lc_amount"
               label="LC Amount"
               type="number"
-              value={values.lc_amount}
+              value={values.lc_amount && Math.abs(values.lc_amount)}
+              inputProps={{ min: 0 }}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
             />

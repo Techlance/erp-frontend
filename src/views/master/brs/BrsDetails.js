@@ -34,7 +34,7 @@ import SaveIcon from "@material-ui/icons/SaveRounded";
 const BrsDetails = () => {
   const history = useHistory();
   const theme = useTheme();
-  const { brs_id, mid } = useParams();
+  const { brs_id, mid, year_id } = useParams();
 
   const { brs_detail } = useSelector((state) => state.brs);
 
@@ -74,7 +74,7 @@ const BrsDetails = () => {
 
   const handleAgree = async () => {
     await deleteBrs(values.id);
-    history.replace(`/company/${mid}/master/op-bal-brs`);
+    history.replace(`/company/${mid}/${year_id}/master/op-bal-brs`);
   };
 
   useEffect(() => {
@@ -127,7 +127,8 @@ const BrsDetails = () => {
                     fullWidth
                     id="amount"
                     label="Amount"
-                    value={values.amount}
+                    value={values.amount && Math.abs(values.amount)}
+                    inputProps={{ min: 0 }}
                     onChange={handleChange}
                     type="text"
                   />
