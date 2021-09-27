@@ -21,81 +21,36 @@ const initialState = {
 
 const userPermissionsReducer = (state = initialState, action) => {
   switch (action.type) {
-    // case userRightsActions.CREATE_USER: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
-    // case userRightsActions.EDIT_USER: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
     case userManagementUserActions.VIEW_USER: {
       return {
         ...state,
         user_accounts: action.payload,
       };
     }
-    // case userRightsActions.DELETE_USER: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
     case userManagementUserActions.VIEW_USER_BY_ID: {
       return {
         ...state,
         current_user_account: action.payload.data,
       };
     }
-    // case userRightsActions.CREATE_USER_GROUP: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
-    // case userRightsActions.EDIT_USER_GROUP: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
     case userManagementUserGroups.VIEW_USER_GROUP: {
       return {
         ...state,
         user_groups: action.payload,
       };
     }
-    // case userRightsActions.DELETE_USER_GROUP: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
     case userManagementUserGroups.VIEW_USER_GROUP_BY_ID: {
       return {
         ...state,
         current_user_group: action.payload,
       };
     }
-    // case userRightsActions.CREATE_USER_RIGHTS: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
-    // case userRightsActions.EDIT_USER_RIGHTS: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
     case userRightsActions.VIEW_USER_RIGHTS: {
       return {
         ...state,
         user_rights: action.payload,
       };
     }
-    // case userRightsActions.DELETE_USER_RIGHTS: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
     case userRightsActions.VIEW_USER_RIGHTS_BY_ID: {
       return {
         ...state,

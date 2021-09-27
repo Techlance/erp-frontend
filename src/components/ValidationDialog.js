@@ -47,7 +47,7 @@ const ValidationDialog = ({ open, handleClose, handleAgree, title, body }) => {
           loading={loading}
           color="error"
         >
-          OKAY
+          Okay
         </LoadingButton>
       </DialogActions>
     </Dialog>

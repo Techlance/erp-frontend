@@ -23,7 +23,6 @@ import {
 
   // User Company Groups API
   getUserCompanyGroupByID,
-  updateUserCompanyGroupAsync,
   createUserCompanyGroupAsync,
 
   // User Groups API
@@ -91,7 +90,7 @@ export const UserPermissionProvider = ({ children }) => {
   };
 
   const updateUserCompanyGroup = async (data) => {
-    await updateUserCompanyGroupAsync(data, dispatch);
+    await updateUserGroupAsync(data, dispatch);
 
     await getUserCompanyGroupByID(state.current_user_account.id, dispatch);
   };

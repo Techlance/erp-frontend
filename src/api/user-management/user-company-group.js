@@ -36,15 +36,29 @@ const createUserCompanyGroupAsync = async (data, dispatch) => {
 };
 
 const updateUserCompanyGroupAsync = async (data, dispatch) => {
-  const response = await instance.put(
-    `/company/edit-user-company/${data.id}`,
-    dataToForm(data)
-  );
+  try {
+    const response = await instance.put(
+      `/company/edit-user-company/${data.id}`,
+      dataToForm(data)
+    );
 
-  sendNotification({
-    dispatch,
-    response,
-  });
+    sendNotification({
+      dispatch,
+      response,
+    });
+  } catch (error) {
+    console.log("Error while editing User Group.");
+
+    sendNotification({
+      dispatch,
+      response: {
+        data: {
+          success: false,
+          message: "Error while editing User Group",
+        },
+      },
+    });
+  }
 };
 
 export {

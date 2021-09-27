@@ -4,7 +4,6 @@ import { dataToForm } from "../../utils";
 
 // project imports
 import instance from "../../utils/axios";
-// import { dataToForm } from "../utils";
 import sendNotification from "../../utils/sendNotification";
 
 const getUserGroupsAsync = async (dispatch) => {
@@ -28,9 +27,9 @@ const createUserGroupAsync = async (data, dispatch) => {
   });
 };
 
-const updateUserGroupAsync = async (id, data, dispatch) => {
+const updateUserGroupAsync = async (data, dispatch) => {
   const response = await instance.put(
-    `/user/edit-user-group/${id}`,
+    `/user/edit-user-group/${data.id}`,
     dataToForm(data)
   );
 
@@ -41,12 +40,26 @@ const updateUserGroupAsync = async (id, data, dispatch) => {
 };
 
 const deleteUserGroupAsync = async (id, dispatch) => {
-  const response = await instance.delete(`/user/delete-user-group/${id}`);
+  try {
+    const response = await instance.delete(`/user/delete-user-group/${id}`);
 
-  sendNotification({
-    dispatch,
-    response,
-  });
+    sendNotification({
+      dispatch,
+      response,
+    });
+  } catch (error) {
+    console.log("Error while deleting user group.");
+
+    sendNotification({
+      dispatch,
+      response: {
+        data: {
+          success: false,
+          message: "Error while deleting user group.",
+        },
+      },
+    });
+  }
 };
 
 export {
