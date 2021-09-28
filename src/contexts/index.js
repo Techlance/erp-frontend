@@ -10,6 +10,8 @@ import { VoucherTypeProvider } from "./master/VoucherTypesContext";
 import { BrsProvider } from "./master/BrsContext";
 import { LcProvider } from "./master/LCContext";
 import { BudgetProvider } from "./master/BudgetContext";
+import { PurchaseProvider } from './transaction/PurchaseContext';
+
 
 const AppContextProvider = ({ children }) => {
   return (
@@ -22,7 +24,11 @@ const AppContextProvider = ({ children }) => {
                 <BrsProvider>
                   <LcProvider>
                     <BudgetProvider>
-                      <CostCenterProvider>{children}</CostCenterProvider>
+                      <CostCenterProvider>
+                        <PurchaseProvider>
+                          {children}
+                        </PurchaseProvider>
+                      </CostCenterProvider>
                     </BudgetProvider>
                   </LcProvider>
                 </BrsProvider>

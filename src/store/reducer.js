@@ -16,6 +16,7 @@ const reducer = combineReducers({
   voucherTypes: reducers.voucherTypesReducer,
   brs: reducers.brsReducer,
   budget: reducers.budgetReducer,
+  purchase: reducers.PurchaseReducer
 });
 
 export default reducer;

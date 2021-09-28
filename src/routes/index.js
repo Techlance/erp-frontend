@@ -9,6 +9,7 @@ import MasterRoutes from "./MasterRoutes";
 
 // project imports
 import config from "./../config";
+import TransactionRoutes from "./TransactionRoutes";
 
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
@@ -28,6 +29,10 @@ const Routes = () => {
 
         {/* Route for Master */}
         <MasterRoutes />
+
+        {/* Route for Transactions */}
+        <TransactionRoutes/>
+        
       </React.Fragment>
     </Switch>
   );

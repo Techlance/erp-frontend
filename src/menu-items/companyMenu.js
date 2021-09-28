@@ -227,7 +227,7 @@ export const company_menu = {
               id: "credit-purchase ",
               title: <FormattedMessage id="menu.credit-purchase" />,
               type: "item",
-              //   url: "/admin/user-manager/groups",
+                url: "/company/:mid/:year_id/transactions/purchase/credit",
             },
           ],
         },

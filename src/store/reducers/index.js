@@ -33,3 +33,6 @@ export * from "./master/lcReducer";
 
 // Budget
 export * from "./master/budgetReducer";
+
+// Trancations - Purchase
+export * from './transaction/purchaseReducer';
