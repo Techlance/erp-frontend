@@ -109,12 +109,16 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
   const [documentValues,setDocumentValues] = useState({});
   
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
-    setErrorIndex(null);
+      if(activeStep!==3){
+          setActiveStep(activeStep + 1);
+          setErrorIndex(null);
+      }
   };
 
   const handleBack = () => {
-    setActiveStep(activeStep - 1);
+      if(activeStep!==0){
+        setActiveStep(activeStep - 1);
+      }
   };
 
   const setDefault = () => {
