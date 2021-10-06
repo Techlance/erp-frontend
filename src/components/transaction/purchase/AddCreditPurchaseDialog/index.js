@@ -112,7 +112,9 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
     billwise: [],
   });
   const [ledgerValues, setLedgerValues] = useState({});
-  const [documentValues, setDocumentValues] = useState({});
+  const [documentValues, setDocumentValues] = useState({
+    files: [],
+  });
 
   const handleNext = () => {
     if (activeStep !== 3) {
