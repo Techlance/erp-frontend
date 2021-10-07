@@ -4,6 +4,7 @@
     "private": true,
     "homepage": "",
     "dependencies": {
+        "'": "file:mui/icons-material/KeyboardArrowUp'",
         "@auth0/auth0-spa-js": "^1.14.0",
         "@date-io/date-fns": "1.x",
         "@emotion/react": "^11.1.5",
