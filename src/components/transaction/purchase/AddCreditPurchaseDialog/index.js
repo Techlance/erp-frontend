@@ -22,17 +22,21 @@ import useAuth from "../../../../hooks/useAuth";
 import { useParams } from "react-router";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import CancelIcon from "@material-ui/icons/Cancel";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import { useSelector } from "react-redux";
 
 import BillwiseDetailsForm from "./BillwiseDetailsForm";
 import DocumentForm from "./DocumentForm";
 import CreditPurchaseForm from "./CreditPurchaseForm";
-import LedgerForm from './LedgerForm'
+import LedgerForm from "./LedgerForm";
 
 // step options
-const steps = ["Transaction Details", "Bill-Wise Details", "Ledger Details", "Documents"];
+const steps = [
+  "Transaction Details",
+  "Bill-Wise Details",
+  "Ledger Details",
+  "Documents",
+];
 
 function getStepContent(
   step,
@@ -47,49 +51,48 @@ function getStepContent(
   setLedgerValues,
   documentValues,
   setDocumentValues
-
 ) {
   switch (step) {
     case 0:
-        // Transaction Details
-        return (
-            <CreditPurchaseForm
-            handleNext={handleNext}
-            setErrorIndex={setErrorIndex}  
-            values={values}
-            setValues={setValues}
-            />
-        );
+      // Transaction Details
+      return (
+        <CreditPurchaseForm
+          handleNext={handleNext}
+          setErrorIndex={setErrorIndex}
+          values={values}
+          setValues={setValues}
+        />
+      );
     case 1:
-        // Billwise Details
-        return (
-            <BillwiseDetailsForm
-            handleNext={handleNext}
-            setErrorIndex={setErrorIndex}  
-            values={billwiseValues}
-            setValues={setBillwiseValues}
-            />
-        );
+      // Billwise Details
+      return (
+        <BillwiseDetailsForm
+          handleNext={handleNext}
+          setErrorIndex={setErrorIndex}
+          values={billwiseValues}
+          setValues={setBillwiseValues}
+        />
+      );
     case 2:
-        // Ledger Details
-        return (
-            <LedgerForm
-            handleNext={handleNext}
-            setErrorIndex={setErrorIndex}  
-            values={ledgerValues}
-            setValues={setLedgerValues}
-            />
-        );
+      // Ledger Details
+      return (
+        <LedgerForm
+          handleNext={handleNext}
+          setErrorIndex={setErrorIndex}
+          values={ledgerValues}
+          setValues={setLedgerValues}
+        />
+      );
     case 3:
-        // Document Uploads
-        return (
-            <DocumentForm
-            handleNext={handleNext}
-            setErrorIndex={setErrorIndex}  
-            values={documentValues}
-            setValues={setDocumentValues}
-            />
-        );
+      // Document Uploads
+      return (
+        <DocumentForm
+          handleNext={handleNext}
+          setErrorIndex={setErrorIndex}
+          values={documentValues}
+          setValues={setDocumentValues}
+        />
+      );
     default:
       throw new Error("Unknown step");
   }
@@ -101,13 +104,18 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
   const { user } = useAuth();
   const { mid, year_id } = useParams();
   const { company } = useSelector((state) => state.companyMaster);
-//   const {  } = useLedgerMaster();
+  //   const {  } = useLedgerMaster();
   const [clicked, setClicked] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [errorIndex, setErrorIndex] = useState(null);
   const [values,setValues] = useState(null);
-  const [billwiseValues,setBillwiseValues] = useState({});
+  const [billwiseValues, setBillwiseValues] = useState({
+    billwise: [],
+  });
+  const [documentValues, setDocumentValues] = useState({
+    files: [],
+  });
   const [ledgerValues,setLedgerValues] = useState([
     {
       ledger_code:"abc",
@@ -163,7 +171,6 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
       ]
     }
   ]);
-  const [documentValues,setDocumentValues] = useState({});
   
   const handleNext = () => {
       if(activeStep!==3){
@@ -171,12 +178,12 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
           setActiveStep(activeStep + 1);
           setErrorIndex(null);
       }
-  };
+  }
 
   const handleBack = () => {
-      if(activeStep!==0){
-        setActiveStep(activeStep - 1);
-      }
+    if (activeStep !== 0) {
+      setActiveStep(activeStep - 1);
+    }
   };
 
   const setDefault = () => {
@@ -214,7 +221,9 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="body2">Create A New Purcase Credit Transaction</Typography>
+          <Typography variant="body2">
+            Create A New Purcase Credit Transaction
+          </Typography>
         </DialogContentText>
 
         <Stepper nonLinear activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
@@ -264,8 +273,7 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
       </DialogContent>
       <DialogActions sx={{ px: 2.5 }}>
         <Grid container justifyContent="space-between">
-          <Grid item>
-          </Grid>
+          <Grid item></Grid>
           <Grid item>
             <Grid container spacing={2.5}>
                 <Grid item>
