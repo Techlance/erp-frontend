@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 // material-ui
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Divider, Grid, makeStyles, Typography } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../../store/constant";
@@ -14,20 +14,34 @@ import MainCard from "../../../../ui-component/cards/MainCard";
 import { IconArrowRight } from "@tabler/icons";
 import CustomDataGrid from "../../../../ui-component/CustomDataGrid";
 import AddCreditPurchaseDialog from "../../../../components/transaction/purchase/AddCreditPurchaseDialog";
+import SelectParentVoucher from "../../../../components/transaction/purchase/AddCreditPurchaseDialog/SelectParentVoucher";
+import usePurchase from "../../../../hooks/usePurchase";
 
 //-----------------------|| CreditPurchase List ||-----------------------//
+
+const useStyles = makeStyles((theme) => ({
+  divider: {
+    margin: "2rem 0",
+    borderColor: theme.palette.primary.dark,
+  },
+}));
+
 const CreditPurchase = () => {
   const { pathname } = useLocation();
+  const classes = useStyles();
+  const [{ company }, { voucher_list, parent_voucher }] = useSelector((state) => [
+    state.companyMaster,
+    state.purchase,
+  ]);
 
-//   const [{ company }, { company_CreditPurchases }] = useSelector((state) => [
-//     state.companyMaster,
-//     state.CreditPurchaseMaster,
-//   ]);
-
-//   const { get_function } = usePurchaseMaster();
+  const { selectParentVoucher } = usePurchase();
 
   const [loading, setLoading] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+
+  const onChange = async (item) => {
+    await selectParentVoucher(item);
+  };
 
   const columns = [
     {
@@ -88,6 +102,7 @@ const CreditPurchase = () => {
             <Typography variant="h3">Credit Purchases</Typography>
           </Grid>
           <Grid item>
+          {voucher_list && parent_voucher && (
             <AnimateButton>
               <Button
                 variant="contained"
@@ -98,16 +113,24 @@ const CreditPurchase = () => {
                 Add Credit Purchase
               </Button>
             </AnimateButton>
+          )}
           </Grid>
         </Grid>
       }
       content={true}
     >
-      <CustomDataGrid
-        columns={columns}
-        rows={[]}
-        loading={loading}
-      />
+      <SelectParentVoucher captionLabel="Select Voucher" onChange={onChange} />
+      {voucher_list && parent_voucher && (
+        <>
+          <Divider
+            variant="middle"
+            py={4}
+            flexItem
+            className={classes.divider}
+          />
+          <CustomDataGrid columns={columns} rows={[]} loading={loading} />
+        </>
+      )}
       <AddCreditPurchaseDialog
         open={showAddModal}
         handleClose={() => {

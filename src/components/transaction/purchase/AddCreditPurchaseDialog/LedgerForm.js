@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 
-import { Grid } from "@material-ui/core";
+import { Button, Grid, Paper, TableContainer } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "../../../../store/constant";
 
 // material-ui
-import { TextField } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core';
+import LedgerFormRow from './LedgerFormRow';
+import AddIcon from '@material-ui/icons/Add';
+
 
 // project imports
-import useAuth from "../../../../hooks/useAuth";
+import useAuth from "../../../../hooks/useAuth";  
 
 const LedgerForm = ({
   handleNext,
@@ -19,14 +22,22 @@ const LedgerForm = ({
 }) => {
   const { user } = useAuth();
 
-  useEffect(() => {
-    setValues({
-      ...values,
-      created_by: user.email,
-    });
+  const keydownHandler = (e) => {
+    if(e.keyCode===76 && e.ctrlKey){
+      e.preventDefault();
+      console.log("create ledger")
+    }
+  }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  useEffect(()=>{
+    
+    document.addEventListener('keydown',keydownHandler);
+
+    return() =>{
+      document.removeEventListener('keydown',keydownHandler);
+    }
+
+  })
 
   const handleChange = (event) => {
     setValues({
@@ -52,15 +63,33 @@ const LedgerForm = ({
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12} sm={12}>
-        <TextField
-          fullWidth
-          required
-          id="ledger_name"
-          label="Ledger Name"
-          value={"null"}
-          InputLabelProps={{ shrink: true }}
-          onChange={handleChange}
-        />
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell>Ledger Code</TableCell>
+                <TableCell align="left">Account</TableCell>
+                <TableCell align="left">Amount</TableCell>
+                <TableCell align="left">FC Amount</TableCell>
+                <TableCell align="left">FC Rate</TableCell>
+                <TableCell align="left">Remarks</TableCell>
+                <TableCell align="left">Current Balance</TableCell>
+                <TableCell align="left">Delete</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {values.map((row) => (
+                <LedgerFormRow key={row.name} row={row} />
+              ))}
+              <TableRow>
+                <TableCell colSpan={9} align="right">
+                <Button variant="outlined" startIcon={<AddIcon />}> Add Ledger (Ctrl + L)</Button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
     </Grid>
   );

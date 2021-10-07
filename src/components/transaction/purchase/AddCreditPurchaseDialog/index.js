@@ -13,13 +13,15 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
+  StepButton,
 } from "@material-ui/core";
 
 // project imports
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import useAuth from "../../../../hooks/useAuth";
 import { useParams } from "react-router";
-import SaveIcon from "@material-ui/icons/SaveRounded";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import CancelIcon from "@material-ui/icons/Cancel";
 import LoadingButton from "../../../../ui-component/LoadingButton";
 import { useSelector } from "react-redux";
@@ -102,14 +104,70 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
 //   const {  } = useLedgerMaster();
   const [clicked, setClicked] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const [completed, setCompleted] = useState({});
   const [errorIndex, setErrorIndex] = useState(null);
   const [values,setValues] = useState(null);
   const [billwiseValues,setBillwiseValues] = useState({});
-  const [ledgerValues,setLedgerValues] = useState({});
+  const [ledgerValues,setLedgerValues] = useState([
+    {
+      ledger_code:"abc",
+      account:"acc",
+      amount:20,
+      fc_amount:2,
+      remarks:"remakrs",
+      current_balance:"300 Cr",
+      cost_category:
+      [
+          {
+          name:"cc",
+          cost_centers:[
+            {
+              name:"css",
+              amount:10
+            },
+            {
+              name:"bss",
+              amount:20
+            }
+          ]
+        },
+        {
+          name:"cc",
+          cost_centers:[
+            {
+              name:"css",
+              amount:10
+            },
+            {
+              name:"bss",
+              amount:20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      ledger_code:"def",
+      account:"acc2",
+      amount:30,
+      fc_amount:2,
+      remarks:"remakrs",
+      current_balance:"200 Dr",
+      cost_category:
+      [
+        {
+          name:"cc",
+          cost_centers:[
+          ]
+        }
+      ]
+    }
+  ]);
   const [documentValues,setDocumentValues] = useState({});
   
   const handleNext = () => {
       if(activeStep!==3){
+          handleComplete();
           setActiveStep(activeStep + 1);
           setErrorIndex(null);
       }
@@ -132,13 +190,24 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
     handleClose();
   };
 
+  const handleStep = (step) => () => {
+    setActiveStep(step);
+  };
+
+  const handleComplete = () => {
+    const newCompleted = completed;
+    newCompleted[activeStep] = true;
+    setCompleted(newCompleted);
+    // handleNext();
+  };
+
   return (
     <Dialog
       open={open}
       onClose={handleClearClose}
       aria-labelledby="create-purchase-credit"
       fullWidth
-      maxWidth={"md"}
+      maxWidth={"lg"}
     >
       <DialogTitle id="form-dialog-title">
         <Typography variant="h4">Create Purcase Credit Transaction</Typography>
@@ -148,8 +217,8 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
           <Typography variant="body2">Create A New Purcase Credit Transaction</Typography>
         </DialogContentText>
 
-        <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-          {steps?.map((label, index) => {
+        <Stepper nonLinear activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          {/* {steps?.map((label, index) => {
             const labelProps = {};
 
             if (index === errorIndex) {
@@ -167,7 +236,14 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
                 <StepLabel {...labelProps}>{label}</StepLabel>
               </Step>
             );
-          })}
+          })} */}
+          {steps.map((label, index) => (
+            <Step key={label} completed={completed[index]}>
+              <StepButton color="inherit" onClick={handleStep(index)}>
+                {label}
+              </StepButton>
+            </Step>
+          ))}
         </Stepper>
         <React.Fragment>
           {getStepContent(
@@ -195,12 +271,12 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
                 <Grid item>
                   <AnimateButton>
                     <Button
-                      color="error"
+                      color="secondary"
                       variant="contained"
                       size="small"
                       onClick={handleBack}
                       disabled={clicked}
-                      startIcon={<CancelIcon />}
+                      startIcon={<KeyboardArrowLeft />}
                     >
                       Back
                     </Button>
@@ -213,7 +289,7 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
                   size="small"
                   onClick={handleNext}
                   loading={clicked}
-                  startIcon={<SaveIcon />}
+                  endIcon={<KeyboardArrowRight />}
                 >
                   {activeStep === 3 ? "Add" : "Next"}
                 </LoadingButton>

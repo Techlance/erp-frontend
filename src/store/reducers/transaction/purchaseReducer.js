@@ -1,18 +1,28 @@
 // action - state management
-import * as actionTypes from "../../actions";
+import {purchaseActions} from "../../actions";
 
 //-----------------------|| LEDGER MASTER REDUCER ||-----------------------//
 
 // constant
-const initialState = { };
+const initialState = {
+  parent_voucher:null,
+  voucher_list:null
+ };
 
 const PurchaseReducer = (state = initialState, action) => {
   switch (action.type) {
-    // case actionTypes.GET_PURCHASE_CREDIT: {
-    //   return {
-    //     ...state,
-    //   };
-    // }
+    case purchaseActions.GET_VOUCHER_LIST: {
+      return {
+        ...state,
+        voucher_list:action.payload
+      };
+    }
+    case purchaseActions.SELECT_PARENT_VOUCHER: {
+      return {
+        ...state,
+        parent_voucher:action.payload
+      };
+    }
     default: {
       return {
         ...state,
