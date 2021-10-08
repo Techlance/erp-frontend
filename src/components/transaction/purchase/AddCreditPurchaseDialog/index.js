@@ -109,7 +109,22 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [errorIndex, setErrorIndex] = useState(null);
-  const [values,setValues] = useState(null);
+  const [values, setValues] = useState({
+    trans_type: null,
+    voucher_no: "",
+    narration: "",
+    party_name: "",
+    lc_no: null,
+    supplier_inv_no: "",
+    supplier_inv_date: "",
+    payment_terms: "",
+    supllier_name: "",
+    supplier_address: "",
+    shipped_by: "",
+    shipped_from_add: "",
+    company_master_id: mid,
+    created_by: user.email,
+  });
   const [billwiseValues, setBillwiseValues] = useState({
     billwise: [],
   });
@@ -227,25 +242,6 @@ const AddCreditPurchaseDialog = ({ open, handleClose }) => {
         </DialogContentText>
 
         <Stepper nonLinear activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-          {/* {steps?.map((label, index) => {
-            const labelProps = {};
-
-            if (index === errorIndex) {
-              labelProps.optional = (
-                <Typography variant="caption" color="error">
-                  Error
-                </Typography>
-              );
-
-              labelProps.error = true;
-            }
-
-            return (
-              <Step key={label}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            );
-          })} */}
           {steps.map((label, index) => (
             <Step key={label} completed={completed[index]}>
               <StepButton color="inherit" onClick={handleStep(index)}>
